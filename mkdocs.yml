@@ -1,0 +1,7 @@
+site_name: 杜晋华 个人WIKI
+nav:
+    - 主页: index.md
+    - 简介: test.md
+    - MkDocs: more.md
+theme:
+    name: 'material'
