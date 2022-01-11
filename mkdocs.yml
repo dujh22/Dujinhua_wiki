@@ -1,9 +1,9 @@
 site_name: 杜晋华 个人WIKI
 nav:
-    - 主页: index.md
-    - 教育经历: education.md
+    - 简述: index.md
+    - 在研项目: now.md
     - 本科经历: research_topic.md
-    - 当前工作: now.md
+    - 教育背景: education.md
     - MkDocs: more.md
 theme:
     name: 'material'
