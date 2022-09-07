@@ -1,9 +1,10 @@
 site_name: 杜晋华 个人WIKI
 nav:
-    - 简述: index.md
-    - 在研项目: now.md
-    - 本科经历: research_topic.md
+    - 个人简介: index.md
+    - 研究生经历: postgraduate_experience.md
+    - 本科经历: undergraduate_experience.md
     - 教育背景: education.md
+    - 生活交友: living.md
     - MkDocs: more.md
 theme:
     name: 'material'
