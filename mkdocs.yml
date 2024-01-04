@@ -4,7 +4,5 @@ nav:
     - 研究生经历: postgraduate_experience.md
     - 本科经历: undergraduate_experience.md
     - 教育背景: education.md
-    - 生活交友: living.md
-    - MkDocs: more.md
 theme:
     name: 'material'
