@@ -15,9 +15,8 @@
 
 - ### 医疗大模型
 
-
-| **面向智慧医疗的智能数字医生MedGPT** |
-| ------------------------------------ |  |
+| **面向智慧医疗的智能数字医生MedGPT** | 课题 |
+| ------------------------------------ | ------------------------------------|
 | **报告**《ChatGPT创造了AI狂潮》      | 微软邀约 |
 
 - ### 参与研究
@@ -35,16 +34,23 @@
 
 ## 学术论著
 
-[14] Jinhua Du. ChatFUV：Chat Chain for Follow-Up Visit (在投)
-[13] Jinhua Du. NewMed：Large Language Modeling Technology Enables Full Process Digital Intelligence in Medical Care (在投)
-[12] Jinhua Du. Doctor：The Most Reliable Digital Intelligence Healthcare Large Language Model System (在投)
-[11] Jinhua Du. AiMed: Artificial Intelligence large language model for chinese Medicine (在投)
-[10] Jinhua Du. OpenMonet：Open Model Orchestration Network (在投)
-[9] Jinhua Du. MedRed： A Framework for Reliable Assisted Decision Making in a Medical Large Model (在投)
-[8] Jinhua Du. Med-Eval: Benchmarks for the Medical Large Language Model (在投)
-[7] Jinhua Du. MedLib: Research on the construction of a knowledge library for medical large language modeling (在投)
+[14] Jinhua Du. ChatFUV：Chat Chain for Follow-Up Visit (在投)   
 
-[6] Yuyang Liu,Xiaoying Li,Yan Luo,Jinhua Du,Huiling Ren,Junhui Wang,Hao Yin,Xiaoli Tang,and Hui Liu. Towards a Large Language Models-driven Medical Literature Retrieval and QA System: Framework Design and Evaluation[J]. Journal of the American Medical Informatics Association(JAMIA). 2023. (在投)
+[13] Jinhua Du. NewMed：Large Language Modeling Technology Enables Full Process Digital Intelligence in Medical Care (在投)
+
+[12] Jinhua Du. Doctor：The Most Reliable Digital Intelligence Healthcare Large Language Model System (在投)
+
+[11] Jinhua Du. AiMed: Artificial Intelligence large language model for chinese Medicine (在投)
+
+[10] Jinhua Du. OpenMonet：Open Model Orchestration Network (在投)
+
+[9] Jinhua Du. MedRed： A Framework for Reliable Assisted Decision Making in a Medical Large Model (在投) 
+
+[8] Jinhua Du. Med-Eval: Benchmarks for the Medical Large Language Model (在投) 
+
+[7] Jinhua Du. MedLib: Research on the construction of a knowledge library for medical large language modeling (在投) 
+
+[6] Yuyang Liu,Xiaoying Li,Yan Luo,Jinhua Du,Huiling Ren,Junhui Wang,Hao Yin,Xiaoli Tang,and Hui Liu. Towards a Large Language Models-driven Medical Literature Retrieval and QA System: Framework Design and Evaluation[J]. Journal of the American Medical Informatics Association(JAMIA). 2023. (在投)  
 
 [5] 医学知识大模型训练用语料数据集构建研究 (在投)
 
