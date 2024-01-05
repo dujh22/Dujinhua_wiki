@@ -54,13 +54,13 @@
 
 [5] 医学知识大模型训练用语料数据集构建研究 (在投)
 
-[4] 张瑞麟, 杜晋华, 尹浩. [Research of Client Selection Algorithm in Cross-device Federated Learning]([Research of Client Selection Algorithm in Cross-device Federated Learning (jos.org.cn)](https://www.jos.org.cn/josen/article/abstract/nb023))[J]. Journal of Software.
+[4] 张瑞麟, 杜晋华, 尹浩. [Research of Client Selection Algorithm in Cross-device Federated Learning (jos.org.cn)](https://www.jos.org.cn/josen/article/abstract/nb023)[J]. Journal of Software.
 
 [3] Jinhua Du and Hao Yin. KLDP: A Data Profiling Technique Based on Knowledge Graph and Large Language Modeling，2023 IEEE 22nd International Conference on Trust, Security and Privacy in Computing and Communications (TrustCom)，2023.11（DOI 10.1109/TrustCom60117.2023.00329）
 
 [2] Jinhua Du and Hao Yin. KrNER：A Novel Named Entity Recognition Method Based on Knowledge Enhancement and Remote Supervision[C]. 2023 IEEE 22nd International Conference on Trust, Security and Privacy in Computing and Communications (TrustCom), 2023.11.（DOI 10.1109/TrustCom60117.2023.00328）
 
-[1]杜晋华, 尹浩, 冯嵩. [中文电子病历命名实体识别的研究与进展]([中文电子病历命名实体识别的研究与进展 (ejournal.org.cn)](https://www.ejournal.org.cn/CN/abstract/abstract13029.shtml))[J]. 电子学报, 2022, 50(12): 3030-3053.
+[1]杜晋华, 尹浩, 冯嵩. [中文电子病历命名实体识别的研究与进展 (ejournal.org.cn)](https://www.ejournal.org.cn/CN/abstract/abstract13029.shtml)[J]. 电子学报, 2022, 50(12): 3030-3053.
 
 ## 媒体报道
 
