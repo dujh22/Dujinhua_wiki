@@ -60,7 +60,7 @@
 
 [2] Jinhua Du and Hao Yin. KrNER：A Novel Named Entity Recognition Method Based on Knowledge Enhancement and Remote Supervision[C]. 2023 IEEE 22nd International Conference on Trust, Security and Privacy in Computing and Communications (TrustCom), 2023.11.（DOI 10.1109/TrustCom60117.2023.00328）
 
-[1]杜晋华, 尹浩, 冯嵩. [中文电子病历命名实体识别的研究与进展 (ejournal.org.cn)](https://www.ejournal.org.cn/CN/abstract/abstract13029.shtml)[J]. 电子学报, 2022, 50(12): 3030-3053.
+[1]杜晋华, 尹浩, 冯嵩. [中文电子病历命名实体识别的研究与进展 ](https://www.ejournal.org.cn/CN/abstract/abstract13029.shtml)[J]. 电子学报, 2022, 50(12): 3030-3053.
 
 ## 媒体报道
 

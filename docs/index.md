@@ -2,6 +2,8 @@
 
 国家奖学金获得者、北京市优秀本科毕业生
 
+标志性工作：[Med-Eval](https://dujh22.github.io/)
+
 ## 基本信息
 
 | 学分绩点     | 3.92/4.00 | 出生日期     | 2000.04.01   | 民族     | 汉族         |
@@ -10,15 +12,11 @@
 
 ## 相关链接
 
-| 项目           | 内容                                                         |
-| -------------- | ------------------------------------------------------------ |
-| **电子邮件**   | [dujinhua2021@163.com](dujinhua2021@163.com)<br />[dujh22@mails.tsinghua.edu.cn](dujh22@mails.tsinghua.edu.cn) |
-| **个人主页**   | [https://dujh22.github.io/Dujinhua_wiki/](https://dujh22.github.io/Dujinhua_wiki/) |
-| **联系方式**   | +86 17812185508<br />WeChat：d18935225290                    |
-| **CSDN主页**   | [杜晋华-清华](https://blog.csdn.net/qq_44372652?spm=1000.2115.3001.5343) |
-| **GitHub主页** | [https://github.com/dujh22](https://github.com/dujh22)       |
-| 百度学者       | https://xueshu.baidu.com/homepage/dujinhua                   |
-| 谷歌学者       | [Jinhua Du](https://scholar.google.com/citations?user=fLKerfcAAAAJ&hl=zh-CN&oi=ao) |
+| 项目           | 内容                                                         | 项目         | 内容                                                         |
+| -------------- | ------------------------------------------------------------ | ------------ | ------------------------------------------------------------ |
+| **电子邮件**   | [dujinhua2021@163.com](dujinhua2021@163.com)<br />[dujh22@mails.tsinghua.edu.cn](dujh22@mails.tsinghua.edu.cn) | **联系方式** | +86 17812185508<br />WeChat：d18935225290                    |
+| **GitHub主页** | [https://github.com/dujh22](https://github.com/dujh22)       | **CSDN主页** | [杜晋华-清华](https://blog.csdn.net/qq_44372652?spm=1000.2115.3001.5343) |
+| 谷歌学者       | [Jinhua Du](https://scholar.google.com/citations?user=fLKerfcAAAAJ&hl=zh-CN&oi=ao) | 百度学者     | [杜晋华](https://xueshu.baidu.com/homepage/dujinhua)         |
 
 ## 相关技能
 
