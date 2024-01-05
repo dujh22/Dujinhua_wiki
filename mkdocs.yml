@@ -1,7 +1,7 @@
 site_name: 杜晋华 个人WIKI
 nav:
     - 个人简介: index.md
-    - 研究生经历: postgraduate_experience.md
+    - 博士经历: postgraduate_experience.md
     - 本科经历: undergraduate_experience.md
     - 教育背景: education.md
 theme:
