@@ -1,6 +1,6 @@
 ## 研究体系
 
-<img src="images/研究体系.png" alt="mkdocs"  />
+<img src="images/研究体系.jpg" alt="mkdocs"  />
 
 ## 研究课题
 
