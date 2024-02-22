@@ -3,5 +3,6 @@ nav:
     - 个人简介: index.md
     - 博士经历: postgraduate_experience.md
     - 本科经历: undergraduate_experience.md
+    - 研究历史: history.md
 theme:
     name: 'material'

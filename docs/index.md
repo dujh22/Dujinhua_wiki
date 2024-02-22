@@ -6,17 +6,19 @@
 
 ## 基本信息
 
-| 学分绩点     | 3.92/4.00 | 出生日期     | 2000.04.01   | 民族     | 汉族         |
-| ------------ | --------- | ------------ | ------------ | -------- | ------------ |
-| **综合排名** | **1/329** | **政治面貌** | **中共党员** | **籍贯** | **山西灵丘** |
+| 学分绩点     | 3.95/4.00 | 出生日期     | 2000.04.01   |
+| ------------ | --------- | ------------ | ------------ |
+| **综合排名** | **1/329** | **政治面貌** | **中共党员** |
 
 ## 相关链接
 
-| 项目           | 内容                                                         | 项目         | 内容                                                         |
-| -------------- | ------------------------------------------------------------ | ------------ | ------------------------------------------------------------ |
-| **电子邮件**   | [dujinhua2021@163.com](dujinhua2021@163.com)<br />[dujh22@mails.tsinghua.edu.cn](dujh22@mails.tsinghua.edu.cn) | **联系方式** | +86 17812185508<br />WeChat：d18935225290                    |
-| **GitHub主页** | [https://github.com/dujh22](https://github.com/dujh22)       | **CSDN主页** | [杜晋华-清华](https://blog.csdn.net/qq_44372652?spm=1000.2115.3001.5343) |
-| 谷歌学者       | [Jinhua Du](https://scholar.google.com/citations?user=fLKerfcAAAAJ&hl=zh-CN&oi=ao) | 百度学者     | [杜晋华](https://xueshu.baidu.com/homepage/dujinhua)         |
+| 项目           | 内容                                                         |
+| -------------- | ------------------------------------------------------------ |
+| **电子邮件**   | [dujh22@mails.tsinghua.edu.cn](dujh22@mails.tsinghua.edu.cn) |
+| **GitHub主页** | [https://github.com/dujh22](https://github.com/dujh22)       |
+| 谷歌学者       | [Jinhua Du](https://scholar.google.com/citations?user=fLKerfcAAAAJ&hl=zh-CN&oi=ao) |
+| **CSDN主页**   | [杜晋华-清华](https://blog.csdn.net/qq_44372652?spm=1000.2115.3001.5343) |
+| 百度学者       | [杜晋华](https://xueshu.baidu.com/homepage/dujinhua)         |
 
 ## 相关技能
 
