@@ -1,6 +1,6 @@
 ## [研究体系](https://bt7cezha1x.feishu.cn/docx/IgcDdcVwSoQ94vxjJMMcHXfJnwf?from=from_copylink)
 
-<img src="images/研究体系.jpg" alt="https://bt7cezha1x.feishu.cn/docx/IgcDdcVwSoQ94vxjJMMcHXfJnwf?from=from_copylink"  />
+<img src="images/研究体系.jpg" alt="点击标题跳转查看"  />
 
 ## 研究课题
 
