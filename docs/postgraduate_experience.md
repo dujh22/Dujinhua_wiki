@@ -67,26 +67,26 @@
 
 负责选择课题、课题调研、文献综述、理论创新、相关实验和论文书写
 
-| **电子病历的命名实体识别**                                   | 子课题     |
-| ------------------------------------------------------------ | ---------- |
-| **论文**《面向中文电子病历命名实体识别的深度学习模型研究》   | 北京市优毕 |
-| **论文**《中文电子病历命名实体识别的研究与进展》             | 北大核心   |
-| **论文**《MoNER：A Novel Medical-Oriented Named Entity Recognition Method Based on Remote Supervision》 | CCF-B      |
+| **电子病历的命名实体识别**                                   | 子课题     | 补充     |
+| ------------------------------------------------------------ | ---------- | -------- |
+| **论文**《面向中文电子病历命名实体识别的深度学习模型研究》   | 北京市优毕 |          |
+| **论文**《[中文电子病历命名实体识别的研究与进展 ](https://www.ejournal.org.cn/CN/abstract/abstract13029.shtml)》 | 北大核心   | 电子学报 |
+| **论文**《[KrNER：A Novel Named Entity Recognition Method Based on Knowledge Enhancement and Remote Supervision](https://bt7cezha1x.feishu.cn/file/EwvobK1RXo6lxQxLp1FcNuuJnRd?from=from_copylink)》 | CCF-B      | CSE2023  |
 
-| **支持卫生健康数据要素的医疗知识图谱**                    | 子课题 |
-| --------------------------------------------------------- | ------ |
-| **论文**《PoKG：Patient Sketch based on knowledge graph》 | CCF-B  |
+| **支持卫生健康数据要素的医疗知识图谱**                       | 子课题 | 补充    |
+| ------------------------------------------------------------ | ------ | ------- |
+| **论文**《[KLDP: A Data Profiling Technique Based on Knowledge Graph and Large Language Modeling](https://bt7cezha1x.feishu.cn/file/CCuFboQc4okTn4xNpZJcsXqGngf?from=from_copylink)》 | CCF-B  | CSE2023 |
 
-| **面向数据和知识双轮驱动的智慧医疗大模型研究**               | 子课题     |
-| ------------------------------------------------------------ | ---------- |
-| **报告**《ChatGPT创造了AI狂潮》                              | 微软邀约   |
-| **论文**《AiMed: Artificial Intelligence large language model for chinese Medicine》 | **CCF-A**  |
-| **论文**《ChatFUV：Chat Chain for Follow-Up Visit》          | **CCF-A**  |
-| **系统**《AiMed医学知识大模型应用服务系统》                  | 软件著作权 |
-| **论文**《MedRad : A Framework for Reliable Assisted Decision Making in a Medical LargeLanguage Model》 | **CCF-A**  |
-| **论文**《NewMed：Large Language Modeling Technology Enables Full Process Digital Intelligence in Medical Care》 | **CCF-A**  |
-| **论文**《Doctor：The Most Reliable Digital Intelligence Healthcare Large Language Model System》 | **CCF-A**  |
-| **论文**《MedLib: Research on the construction of a knowledge library for medical large language modeling》 | **CCF-A**  |
+| **面向数据和知识双轮驱动的智慧医疗大模型研究**               | 子课题     | 项目代码                                   | 补充       |
+| ------------------------------------------------------------ | ---------- | ------------------------------------------ | ---------- |
+| **报告**《ChatGPT创造了AI狂潮》                              | 微软邀约   |                                            |            |
+| **论文**《[AiMed: Artificial Intelligence large language model for chinese Medicine](https://bt7cezha1x.feishu.cn/file/Ycv2bwmm7oUvtuxsQcac7nMunxb?from=from_copylink)》 | **CCF-A**  | [AiMed](https://github.com/dujh22/AiMed)   | IJCAI2024  |
+| **论文**《[ChatFUV：Chat Chain for Follow-Up Visit](https://bt7cezha1x.feishu.cn/file/ZAv6brkkpoupROxLY2NcxWdRnoe?from=from_copylink)》 | **CCF-A**  |                                            | IJCAI2024  |
+| **系统**《AiMed医学知识大模型应用服务系统》                  | 软件著作权 |                                            |            |
+| **论文**《[MedRad : A Framework for Reliable Assisted Decision Making in a Medical LargeLanguage Model](https://bt7cezha1x.feishu.cn/file/DqC4b1knBosvcrxpQ81cUcS9n8g?from=from_copylink)》 | **CCF-A**  | [MedRad](https://github.com/dujh22/MedRad) | ICML       |
+| **论文**《[NewMed：Large Language Modeling Technology Enables Full Process Digital Intelligence in Medical Care](https://bt7cezha1x.feishu.cn/file/LXRyboPqzo9OmZxGleEcpa0PnSh?from=from_copylink)》 | CCF-B      |                                            | CogSci2024 |
+| **论文**《Doctor：The Most Reliable Digital Intelligence Healthcare Large Language Model System》 | **CCF-A**  |                                            |            |
+| **论文**《MedLib: Research on the construction of a knowledge library for medical large language modeling》 | **CCF-A**  |                                            |            |
 
 ### 参与研究：医工交叉+网络
 
@@ -94,11 +94,11 @@
 
 负责专业技术交叉研究、相关理论创新与应用落地、论文书写
 
-| **区块链链上链下数据可信交互关键技术研究**                   | 纵向-科技部 |
-| ------------------------------------------------------------ | ----------- |
-| **网站**《[Open Data Entry 数据开放入口](https://www.opende.org.cn/)》 | 公共服务    |
-| **论文**《Med-Eval: Blockchain Assessment Platform for Medical Large Language Model》 | **CCF-A**   |
-| **论文**《OpenMonet：Open Model Orchestration Network 》     | **CCF-A**   |
+| **区块链链上链下数据可信交互关键技术研究**                   | 纵向-科技部 | 补充 |
+| ------------------------------------------------------------ | ----------- | ---- |
+| **网站**《[Open Data Entry 数据开放入口](https://www.opende.org.cn/)》 | 公共服务    |      |
+| **论文**《[Med-Eval: Blockchain Assessment Platform for Medical Large Language Model](https://bt7cezha1x.feishu.cn/file/Rua0bq3DRo53EyxMC96civ5cnZe?from=from_copylink)》 | **CCF-A**   | ICML |
+| **论文**《OpenMonet：Open Model Orchestration Network 》     | **CCF-A**   |      |
 
 数智涌现的新一代智慧医疗（子课题）
 
@@ -106,21 +106,23 @@
 
 | **老年肾功能减退临床综合评估管理及早期预警体系建立**         | 纵向-科技部 |
 | ------------------------------------------------------------ | ----------- |
-| **论文**《Research of Client Selection Algorithm in Cross-device Federated Learning》 | 北大核心    |
+| **论文**《[Research of Client Selection Algorithm in Cross-device Federated Learning](https://www.jos.org.cn/josen/article/abstract/nb023)》 | 北大核心    |
 | 医疗数据标注**系统**、中文分词处理**系统**、上千种疾病预测**系统**、智能自问诊**系统** | 相关服务    |
 
 ## 学习情况
 
+各项目代码均在Github上进行了开源（持续更新中）
+
 | 类型     | 具体方向                                 | 主要技能   | 相关成果                                                     |
 | -------- | ---------------------------------------- | ---------- | ------------------------------------------------------------ |
-| 机器学习 | 高级机器学习（A）                        | ML         | MedRad : 一个医学大模型的可靠辅助决策框架                    |
+| 机器学习 | 高级机器学习（A）                        | ML         | MedRad : 一个医学大模型的可靠辅助决策框架<br />RAG-NEWS：使用RAG帮助LLM获取最新新闻 [[项目代码](https://github.com/dujh22/RAG-NEWS)] |
 |          | 数智安全与标准化（A）                    | 科技法律   | AI算法透明性实现与评估——以推荐系统为例                       |
 |          | 计算语言学（A）                          | NLP-Base   | 微调中⽂预训练模型进⾏⽂本分类                               |
 |          | 信息检索的前沿研究（A）                  | IR         | 面向多源异构健康大数据的数智医疗搜索引擎                     |
 |          | 大数据分析与处理（A）                    | 大数据分析 | 多模态对话场景与话题切换理解                                 |
-|          | 数据挖掘：原理与算法                     | 数据挖掘   | 在线新闻热度预测<br />糖尿病患者入院数据聚类分析             |
+|          | 数据挖掘：原理与算法                     | 数据挖掘   | 在线新闻热度预测<br />糖尿病患者入院数据聚类分析 [[项目代码](https://github.com/dujh22/DM_ClusterAnalysisOfPatientData)] |
 |          | 知识工程                                 | NLP-KG     | 基于 MAVEN 数据集实现事件抽取<br />跨语言知识图谱            |
-|          | 人工智能原理                             | AI         | 基于机器学习的中英机器翻译                                   |
+|          | 人工智能原理                             | AI         | 基于机器学习的中英机器翻译<br />基于先验知识的阅读理解 [[项目代码](https://github.com/dujh22/KE_Knowledge-oriented_reading_comprehension)] |
 |          | 并行计算、算法与算法复杂性理论、组合数学 | 高性能计算 | Π求解的并行化研究<br />组合数学在人工智能领域的应用          |
 | 其他     | 相关技能学习                             | 综合       | 中国马克思主义与当代（A）、自然辩证法概论（A），大数据分析、大数据与生物统计学、大数据实践、博士生英语（免修）、职业能力扩展训练 |
 
