@@ -110,7 +110,7 @@ Zhipu认为：从当前人类已经实现的智能到达超级智能，将通过
 | **面向数据和知识双轮驱动的智慧医疗大模型研究**                                                                                                                                                    | 子课题          | 代码                                |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- | --------------------------------------- |
 | **报告**《ChatGPT创造了AI狂潮》                                                                                                                                                                   | 微软邀约        |                                         |
-| **论文**《[AiMed: Artificial Intelligence large language model for chinese Medicine](https://bt7cezha1x.feishu.cn/file/Ycv2bwmm7oUvtuxsQcac7nMunxb?from=from_copylink)》                             |  | [AiMed](https://github.com/dujh22/AiMed)   |
+| **论文**《[AiMed: Artificial Intelligent Large Language Model for Medicine in China](https://ieeexplore.ieee.org/document/10803480)》 | IEEE | [AiMed](https://github.com/dujh22/AiMed)   |
 | **论文**《[ChatFUV：Chat Chain for Follow-Up Visit](https://bt7cezha1x.feishu.cn/file/ZAv6brkkpoupROxLY2NcxWdRnoe?from=from_copylink)》                                                              |  |                                         |
 | **系统**《AiMed医学知识大模型应用服务系统》                                                                                                                                                       | 软件著作权      |                                         |
 | **论文**《[MedRad : A Framework for Reliable Assisted Decision Making in a Medical LargeLanguage Model](https://bt7cezha1x.feishu.cn/file/DqC4b1knBosvcrxpQ81cUcS9n8g?from=from_copylink)》          |  | [MedRad](https://github.com/dujh22/MedRad) |
@@ -158,6 +158,8 @@ Zhipu认为：从当前人类已经实现的智能到达超级智能，将通过
 
 ## 已发表学术论著
 
+[6] J. Du, X. Li, Z. Jiang, Y. Liu, H. Yin and H. Liu, "[AiMed: Artificial Intelligent Large Language Model for Medicine in China](https://ieeexplore.ieee.org/document/10803480)," 2024 IEEE International Conference on Medical Artificial Intelligence (MedAI), Chongqing, China, 2024, pp. 360-365, doi: 10.1109/MedAI62885.2024.00054. （IEEE）
+
 [5] 吕婷钰,李晓瑛,张颖, 刘宇炀, 杜晋华等. [中文医学知识大模型问答语料数据集构建研究](https://d.wanfangdata.com.cn/periodical/yxqbgz202405004)[J]. 医学信息学杂志,2024,45(5):20-25. DOI:10.3969/j.issn.1673-6036.2024.05.004. (中国科技核心期刊，五作)
 
 [4] 张瑞麟, 杜晋华, 尹浩. [Research of Client Selection Algorithm in Cross-device Federated Learning (jos.org.cn)](https://www.jos.org.cn/josen/article/abstract/nb023)[J]. Journal of Software. (CCF-A类推荐中文科技期刊，THU-B类期刊，北大中文核心期刊，二作)
@@ -170,13 +172,11 @@ Zhipu认为：从当前人类已经实现的智能到达超级智能，将通过
 
 ## 未发表学术论著
 
-[8] Jinhua Du. ChatFUV：Chat Chain for Follow-Up Visit
+[7] Jinhua Du. ChatFUV：Chat Chain for Follow-Up Visit
 
-[7] Jinhua Du. NewMed：Large Language Modeling Technology Enables Full Process Digital Intelligence in Medical Care
+[6] Jinhua Du. NewMed：Large Language Modeling Technology Enables Full Process Digital Intelligence in Medical Care
 
-[6] Jinhua Du. Doctor：The Most Reliable Digital Intelligence Healthcare Large Language Model System
-
-[5] Jinhua Du. AiMed: Artificial Intelligence large language model for chinese Medicine
+[5] Jinhua Du. Doctor：The Most Reliable Digital Intelligence Healthcare Large Language Model System
 
 [4] Jinhua Du. OpenMonet：Open Model Orchestration Network
 
