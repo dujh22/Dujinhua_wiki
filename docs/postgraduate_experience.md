@@ -188,13 +188,13 @@ Zhipu认为：从当前人类已经实现的智能到达超级智能，将通过
 
 ## 已发表软件著作权
 
-[1] AiMed医学知识大模型应用服务系统-软件著作权（2024.2.29）
+[1] AiMed医学知识大模型应用服务系统-软件著作权（2024.2.29），可在中国科学院医学信息研究所相关系统中获得服务：[AiMed医学知识大模型](http://aimed.imicams.ac.cn/#/)由中国医学科学院医学信息研究所与清华大学OpenDE团队联合自主研发， 面向医学科研创新提供医学知识问答与智能文献服务。
 
 ## 媒体报道
 
 [2] 优秀实践个人风采 | [计算机系杜晋华：铁血担当，逐梦公安](https://mp.weixin.qq.com/s/RyUsmJ1ZuZ38XbXRmd3a8A) 
 
-[1]  [第三届中国医学信息学学科发展大会](https://mp.weixin.qq.com/s/RDQUcnGLRciSwub1HuOh4Q) (2023.11.25) 作为第一完成人的AiMed大模型[发布](https://bt7cezha1x.feishu.cn/wiki/Bu3YwOsyyixkswkYGS1cjbXPnMf?from=from_copylink)，同名github代码和hugging face参数已开源，相应论文[AiMed: Artificial Intelligent Large Language Model for Medicine in China](https://ieeexplore.ieee.org/document/10803480)已发表在国际会议MedAI上。
+[1]  [第三届中国医学信息学学科发展大会](https://mp.weixin.qq.com/s/RDQUcnGLRciSwub1HuOh4Q) (2023.11.25) 作为第一完成人的AiMed大模型[发布](https://bt7cezha1x.feishu.cn/wiki/Bu3YwOsyyixkswkYGS1cjbXPnMf?from=from_copylink)，同名[github代码](https://github.com/dujh22/AiMed)和[hugging face参数](https://huggingface.co/DuJinHua/AiMed)已开源，相应论文[AiMed: Artificial Intelligent Large Language Model for Medicine in China](https://ieeexplore.ieee.org/document/10803480)已发表在国际会议MedAI上。
 
 ## 评奖评优
 
