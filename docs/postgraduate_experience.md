@@ -158,7 +158,7 @@ Zhipu认为：从当前人类已经实现的智能到达超级智能，将通过
 
 ## 已发表学术论著
 
-[6] J. Du, X. Li, Z. Jiang, Y. Liu, H. Yin and H. Liu, "[AiMed: Artificial Intelligent Large Language Model for Medicine in China](https://ieeexplore.ieee.org/document/10803480)," 2024 IEEE International Conference on Medical Artificial Intelligence (MedAI), Chongqing, China, 2024, pp. 360-365, doi: 10.1109/MedAI62885.2024.00054. （IEEE）
+[6] J. Du, X. Li, Z. Jiang, Y. Liu, H. Yin and H. Liu, "[AiMed: Artificial Intelligent Large Language Model for Medicine in China](https://ieeexplore.ieee.org/document/10803480)," 2024 IEEE International Conference on Medical Artificial Intelligence (MedAI), Chongqing, China, 2024, pp. 360-365, doi: 10.1109/MedAI62885.2024.00054. （IEEE，一作）
 
 [5] 吕婷钰,李晓瑛,张颖, 刘宇炀, 杜晋华等. [中文医学知识大模型问答语料数据集构建研究](https://d.wanfangdata.com.cn/periodical/yxqbgz202405004)[J]. 医学信息学杂志,2024,45(5):20-25. DOI:10.3969/j.issn.1673-6036.2024.05.004. (中国科技核心期刊，五作)
 
