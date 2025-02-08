@@ -194,7 +194,7 @@ Zhipu认为：从当前人类已经实现的智能到达超级智能，将通过
 
 [2] 优秀实践个人风采 | [计算机系杜晋华：铁血担当，逐梦公安](https://mp.weixin.qq.com/s/RyUsmJ1ZuZ38XbXRmd3a8A) 
 
-[1]  [第三届中国医学信息学学科发展大会](https://mp.weixin.qq.com/s/RDQUcnGLRciSwub1HuOh4Q) (2023.11.25) 作为第一完成人的AiMed大模型[发布](https://bt7cezha1x.feishu.cn/wiki/Bu3YwOsyyixkswkYGS1cjbXPnMf?from=from_copylink)，同名github代码和hugging face参数已开源，相应论文会同步更新
+[1]  [第三届中国医学信息学学科发展大会](https://mp.weixin.qq.com/s/RDQUcnGLRciSwub1HuOh4Q) (2023.11.25) 作为第一完成人的AiMed大模型[发布](https://bt7cezha1x.feishu.cn/wiki/Bu3YwOsyyixkswkYGS1cjbXPnMf?from=from_copylink)，同名github代码和hugging face参数已开源，相应论文[AiMed: Artificial Intelligent Large Language Model for Medicine in China](https://ieeexplore.ieee.org/document/10803480)已发表在国际会议MedAI上。
 
 ## 评奖评优
 
