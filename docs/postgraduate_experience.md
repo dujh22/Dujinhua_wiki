@@ -1,5 +1,7 @@
 ## 研究体系
 
+2024～2025年主要研究大语言模型底层技术
+
 2021～2023年体系架构详见：[研究体系](https://bt7cezha1x.feishu.cn/docx/IgcDdcVwSoQ94vxjJMMcHXfJnwf?from=from_copylink)
 
 面向健康大数据的数智医疗自然语言处理技术研究：数字孪生患者 & AI数字医生
