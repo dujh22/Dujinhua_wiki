@@ -1,19 +1,46 @@
 ## 2025年
 
-更新中
+| 月份 | 周次 | 日期  | 内容                                                         |
+| ---- | ---- | ----- | ------------------------------------------------------------ |
+|      |      | 9     | 1. banlan ｜文档整理 ：v1.0-语音问题集中反馈<br/>2. banlan ｜文档整理 ：Coaiching1.0 语音技术文档<br/>3. banlan ｜iPhone侧测试：移动端视觉和语音的跑通和性能测试（iphone）<br/>4. [计研五三党团班工作台账](https://zhipu-ai.feishu.cn/docx/FvbhdIFY3otljqxCQ0ycmgxInbc)未完成工作 1h已投入 |
+| 2    | 1    | 8     | 1. ✅ [dujh22/LLM-DailyDigest](https://github.com/dujh22/LLM-DailyDigest) ｜修改自动运行脚本的潜在bug 25min<br/>2. ✅ 安装Vscode Insiders 的 Copilot Agent功能 33min<br/>3. ⭕️ 更新个人wiki<br/>4. ❌ o1模型的泛化性评估与研究<br/>5. ❌ 整理微信近日新增工作 ｜ 微信即时文档解析<br/> |
+|      |      | 1:7   | 1. ✅ 读O1 Replication Journey – Part 2- Surpassing O1-preview through Simple Distillation Big Progress or Bitter Lesson<br/>2. ✅ 读State-of-the-art generalisation research in NLP: A taxonomy and review<br/>3. ⭕️ 参与kaggle竞赛：[AI Mathematical Olympiad - Progress Prize 2](https://www.kaggle.com/competitions/ai-mathematical-olympiad-progress-prize-2)<br/>4. ✅ 考虑形成较好的记录流<br/>5. [dujh22/LLM-DailyDigest](https://github.com/dujh22/LLM-DailyDigest) ｜ 优化arxiv完成构建pipeline ✅｜ 新增每日可以自动执行程序 ✅｜ 自动新增1.27～2.6arxiv日报 ✅ |
+| 1    | 总结 |       | 1. o1模型的泛化性评估与研究 第一个月<br/>2. 超越人类专家顶尖水平的LLM研究 研究方向确定<br/>3. 元评估-诗歌场景算法实现 |
+|      | 5    | 27:31 | o1模型的泛化性评估与研究：文献整理，关键文献阅读             |
+|      | 4    | 20:26 | 1. o1模型的泛化性评估与研究：基本复现，研究计划，原始代码整理，文献搜集<br/>2. 如何写一篇论文<br/>3. 超越人类专家顶尖水平的LLM研究 回顾元评估和元学习<br/>4. AML-LLM-V1.pdf 写书 |
+|      | 3    | 13:19 | 1. aml课程总分合计<br/>2. 元评估工作回顾<br/>3. o1模型的泛化性评估与研究 |
+|      | 2    | 6:12  | 1. o1基本实现<br/>2. 元评估-诗歌场景算法实现<br/>3. aml课程大小作品批改 |
+|      | 1    | 1:5   | 1. o1基本实现<br/>2. malaymmlu细分评测                       |
 
 ## 2024年
 
-| 论文标题                                                                                                                              | 投稿期刊       |
-| ------------------------------------------------------------------------------------------------------------------------------------- | -------------- |
-| ChatFUV：Chat Chain for Follow-Up Visit 用聊天链开发个性化随访方案                                                                    | IJCAI人工智能  |
-| AiMed: Artificial Intelligence large language model for chinese Medicine 面向中文医学的人工智能大语言模型                             | IJCAI人工智能  |
+| 论文标题                                                     | 投稿期刊       |
+| ------------------------------------------------------------ | -------------- |
+| ChatFUV：Chat Chain for Follow-Up Visit 用聊天链开发个性化随访方案 | IJCAI人工智能  |
+| AiMed: Artificial Intelligence large language model for chinese Medicine 面向中文医学的人工智能大语言模型 | IJCAI人工智能  |
 | NewMed：Large Language Modeling Technology Enables Full Process Digital Intelligence in Medical Care 大语言模型技术赋能全流程数智医疗 | CogSci认知科学 |
-| MedRad:一个医学大模型的可靠辅助决策框架                                                                                               | ICML机器学习   |
-| Med-Eval: Benchmarks for the Medical Large Language Model 医疗大语言模型测评基准                                                      | ICML机器学习   |
-| Doctor：The Most Reliable Digital Intelligence Healthcare Large Language Model System 最可靠的数智医疗大模型系统                      | -              |
-| OpenMonet：Open Model Orchestration Network 开放模型协作网络                                                                          | -              |
-| MedLib: Research on the construction of a knowledge library for medical large language modeling 面向医学大语言模型的知识库构建研究    | -              |
+| MedRad:一个医学大模型的可靠辅助决策框架                      | ICML机器学习   |
+| Med-Eval: Benchmarks for the Medical Large Language Model 医疗大语言模型测评基准 | ICML机器学习   |
+| Doctor：The Most Reliable Digital Intelligence Healthcare Large Language Model System 最可靠的数智医疗大模型系统 | -              |
+| OpenMonet：Open Model Orchestration Network 开放模型协作网络 | -              |
+| MedLib: Research on the construction of a knowledge library for medical large language modeling 面向医学大语言模型的知识库构建研究 | -              |
+
+| **月份** | **周次** | **周总结**                                                   |
+| :------- | :------- | :----------------------------------------------------------- |
+| 12       |          | 1. KEG大模型训练营讲师深度学习基础<br/>2. Malay LLM<br/>3. AML课程结课筹备：作业baseline、panel、评分标准与大作业节课、论文场地申请<br/>4. AML书籍编撰 |
+|          | 5        | 1. 大模型最新研究和技术探讨<br/>2. O1标准程序提供            |
+|          | 4        | 1. 2024秋季学期系内述职、校内述职<br/>2. AML结课筹备         |
+|          | 3        | 1. 评估说明<br/>2. O1作业设计<br/>3. AML课程第二次panel组织<br/>4. AML课程评分标准制定 |
+|          | 2        | 1. 预训练代码解析<br/>2. 数据说明<br/>3. 课程大作业说明PPT   |
+|          | 1        | 1.  KEG大模型训练营讲师深度学习基础<br/>2.  Malay LLM：讨论后续工作分工-Internal Progress Notes \|内部进展记录<br/>3. 课程最终大作业相关通知：场地申请、网站维护 |
+| 11       |          | 1. 课程对外网站搭建https://www.aminer.cn/aml2024<br/>2. AML算力平台搭建[Computing Platform 教程 Tutorial](https://zhipu-ai.feishu.cn/docx/YheDdE5Nloa0EYxIJRsc2ds2nCF)<br/>3. Meta Evaluation: Use LLM to evaluate the LLM evaluator 元评估：用LLM来评估LLM评估器<br/>4.  立项申请-诗歌等艺术性文本的评测平台 |
+|          | 5        | 1. 古诗评测GLM写诗 立项申请-诗歌等艺术性文本的评测平台 <br/>2. Meta Evaluation<br/>3. 课程对外的网站<br/>4. 准备写大模型书<br/>5. Malay LLM<br/>6. 校级惠妍英才奖学金(二等)奖学金<br/>7. KEG大模型训练营讲师 |
+|          | 4        | 1. Meta Evaluation: Use LLM to evaluate the LLM evaluator 元评估：用LLM来评估LLM评估器<br/>2. 暑期必修实践获得金奖 |
+|          | 3        | 1. 课程对外网站搭建https://www.aminer.cn/aml2024<br/>2. AML算力平台搭建[Computing Platform 教程 Tutorial](https://zhipu-ai.feishu.cn/docx/YheDdE5Nloa0EYxIJRsc2ds2nCF) |
+|          | 2        | 1. Openreview互评 <br/>2. 学习：DPO、PPO、easyRL、cursor、RL+Agent |
+|          | 1        | 1. Chat课件制作Decoding  & Decoding Acceleration<br/>2. Self-Play课件制作Self-Learning |
+
+1-10月份数据未同步，得空同步～～～
 
 ## 2023年
 

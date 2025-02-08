@@ -1,8 +1,34 @@
+## 第二阶段研究体系
+
 2024～2025年主要研究大语言模型底层技术，师从唐杰教授
 
+超越人类专家顶尖水平的LLM研究
 
+### 存在挑战
 
-## 研究体系
+OpenAI认为：从当前人类已经实现的智能到达超级智能，将通过：AI学会语言✅——AI能够解决问题✅——AI能够使用工具⭕️——AI能够自我学习——AI能够自成组织，五个步骤完成。
+
+Zhipu认为：从当前人类已经实现的智能到达超级智能，将通过：语言能力✅——推理能力✅——学习能力——认知能力——意识智能，五个步骤完成。
+
+### 研究路径
+
+待更新
+
+### 研究成果
+
+#### 主要研究：大模型推理
+
+大模型数学推理、多模态推理
+
+#### 参与研究：大模型训练与评估
+
+大模型国际化、大模型评估（艺术、教育与多语言等）
+
+#### 其他研究：大模型应用
+
+大模型在公安的应用、大模型在医疗的应用
+
+## 第一阶段研究体系
 
 2021～2023年体系架构详见：[研究体系](https://bt7cezha1x.feishu.cn/docx/IgcDdcVwSoQ94vxjJMMcHXfJnwf?from=from_copylink)
 
@@ -63,46 +89,46 @@
 
 基于知识进行用户服务与相关的检索、生成
 
-## 研究课题
+### 研究成果
 
-### 主要研究：大数据+自然语言处理（大模型）
+#### 主要研究：大模型+大数据+自然语言处理
 
 面向医疗大数据分析与利用的自然语言处理技术研究（博士课题）
 
 负责选择课题、课题调研、文献综述、理论创新、相关实验和论文书写
 
-| **电子病历的命名实体识别**                                                                                                                                                                        | 子课题     | 补充     |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | -------- |
-| **论文**《面向中文电子病历命名实体识别的深度学习模型研究》                                                                                                                                        | 北京市优毕 |          |
-| **论文**《[中文电子病历命名实体识别的研究与进展 ](https://www.ejournal.org.cn/CN/abstract/abstract13029.shtml)》                                                                                     | 北大核心   | 电子学报 |
-| **论文**《[KrNER：A Novel Named Entity Recognition Method Based on Knowledge Enhancement and Remote Supervision](https://bt7cezha1x.feishu.cn/file/EwvobK1RXo6lxQxLp1FcNuuJnRd?from=from_copylink)》 | CCF-B      | CSE2023  |
+| **电子病历的命名实体识别**                                   | 子课题     | 补充     |
+| ------------------------------------------------------------ | ---------- | -------- |
+| **论文**《面向中文电子病历命名实体识别的深度学习模型研究》   | 北京市优毕 |          |
+| **论文**《[中文电子病历命名实体识别的研究与进展 ](https://www.ejournal.org.cn/CN/abstract/abstract13029.shtml)》 | 北大核心   | 电子学报 |
+| **论文**《[KrNER：A Novel Named Entity Recognition Method Based on Knowledge Enhancement and Remote Supervision](https://bt7cezha1x.feishu.cn/file/EwvobK1RXo6lxQxLp1FcNuuJnRd?from=from_copylink)》 | CCF-C      | CSE2023  |
 
-| **支持卫生健康数据要素的医疗知识图谱**                                                                                                                                             | 子课题 | 补充    |
-| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ | ------- |
-| **论文**《[KLDP: A Data Profiling Technique Based on Knowledge Graph and Large Language Modeling](https://bt7cezha1x.feishu.cn/file/CCuFboQc4okTn4xNpZJcsXqGngf?from=from_copylink)》 | CCF-B  | CSE2023 |
+| **支持卫生健康数据要素的医疗知识图谱**                       | 子课题 | 补充    |
+| ------------------------------------------------------------ | ------ | ------- |
+| **论文**《[KLDP: A Data Profiling Technique Based on Knowledge Graph and Large Language Modeling](https://bt7cezha1x.feishu.cn/file/CCuFboQc4okTn4xNpZJcsXqGngf?from=from_copylink)》 | CCF-C  | CSE2023 |
 
-| **面向数据和知识双轮驱动的智慧医疗大模型研究**                                                                                                                                                    | 子课题          | 项目代码                                | 补充       |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- | --------------------------------------- | ---------- |
-| **报告**《ChatGPT创造了AI狂潮》                                                                                                                                                                   | 微软邀约        |                                         |            |
-| **论文**《[AiMed: Artificial Intelligence large language model for chinese Medicine](https://bt7cezha1x.feishu.cn/file/Ycv2bwmm7oUvtuxsQcac7nMunxb?from=from_copylink)》                             | **CCF-A** | [AiMed](https://github.com/dujh22/AiMed)   | IJCAI2024  |
-| **论文**《[ChatFUV：Chat Chain for Follow-Up Visit](https://bt7cezha1x.feishu.cn/file/ZAv6brkkpoupROxLY2NcxWdRnoe?from=from_copylink)》                                                              | **CCF-A** |                                         | IJCAI2024  |
-| **系统**《AiMed医学知识大模型应用服务系统》                                                                                                                                                       | 软件著作权      |                                         |            |
-| **论文**《[MedRad : A Framework for Reliable Assisted Decision Making in a Medical LargeLanguage Model](https://bt7cezha1x.feishu.cn/file/DqC4b1knBosvcrxpQ81cUcS9n8g?from=from_copylink)》          | **CCF-A** | [MedRad](https://github.com/dujh22/MedRad) | ICML       |
-| **论文**《[NewMed：Large Language Modeling Technology Enables Full Process Digital Intelligence in Medical Care](https://bt7cezha1x.feishu.cn/file/LXRyboPqzo9OmZxGleEcpa0PnSh?from=from_copylink)》 | CCF-B           |                                         | CogSci2024 |
-| **论文**《Doctor：The Most Reliable Digital Intelligence Healthcare Large Language Model System》                                                                                                 | **CCF-A** |                                         |            |
-| **论文**《MedLib: Research on the construction of a knowledge library for medical large language modeling》                                                                                       | **CCF-A** |                                         |            |
+| **面向数据和知识双轮驱动的智慧医疗大模型研究**                                                                                                                                                    | 子课题          | 代码                                |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- | --------------------------------------- |
+| **报告**《ChatGPT创造了AI狂潮》                                                                                                                                                                   | 微软邀约        |                                         |
+| **论文**《[AiMed: Artificial Intelligence large language model for chinese Medicine](https://bt7cezha1x.feishu.cn/file/Ycv2bwmm7oUvtuxsQcac7nMunxb?from=from_copylink)》                             |  | [AiMed](https://github.com/dujh22/AiMed)   |
+| **论文**《[ChatFUV：Chat Chain for Follow-Up Visit](https://bt7cezha1x.feishu.cn/file/ZAv6brkkpoupROxLY2NcxWdRnoe?from=from_copylink)》                                                              |  |                                         |
+| **系统**《AiMed医学知识大模型应用服务系统》                                                                                                                                                       | 软件著作权      |                                         |
+| **论文**《[MedRad : A Framework for Reliable Assisted Decision Making in a Medical LargeLanguage Model](https://bt7cezha1x.feishu.cn/file/DqC4b1knBosvcrxpQ81cUcS9n8g?from=from_copylink)》          |  | [MedRad](https://github.com/dujh22/MedRad) |
+| **论文**《[NewMed：Large Language Modeling Technology Enables Full Process Digital Intelligence in Medical Care](https://bt7cezha1x.feishu.cn/file/LXRyboPqzo9OmZxGleEcpa0PnSh?from=from_copylink)》 |            |                                         |
+| **论文**《Doctor：The Most Reliable Digital Intelligence Healthcare Large Language Model System》                                                                                                 |  |                                         |
+| **论文**《MedLib: Research on the construction of a knowledge library for medical large language modeling》                                                                                       |  |                                         |
 
-### 参与研究：医工交叉+网络
+#### 参与研究：医工交叉+网络
 
 大模型与区块链（子课题）
 
 负责专业技术交叉研究、相关理论创新与应用落地、论文书写
 
-| **区块链链上链下数据可信交互关键技术研究**                                                                                                                             | 纵向-科技部     | 补充 |
-| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- | ---- |
-| **网站**《[Open Data Entry 数据开放入口](https://www.opende.org.cn/)》                                                                                                    | 公共服务        |      |
-| **论文**《[Med-Eval: Blockchain Assessment Platform for Medical Large Language Model](https://bt7cezha1x.feishu.cn/file/Rua0bq3DRo53EyxMC96civ5cnZe?from=from_copylink)》 | **CCF-A** | ICML |
-| **论文**《OpenMonet：Open Model Orchestration Network 》                                                                                                               | **CCF-A** |      |
+| **区块链链上链下数据可信交互关键技术研究**                                                                                                                             | 纵向-科技部     |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- |
+| **网站**《[Open Data Entry 数据开放入口](https://www.opende.org.cn/)》                                                                                                    | 公共服务        |
+| **论文**《[Med-Eval: Blockchain Assessment Platform for Medical Large Language Model](https://bt7cezha1x.feishu.cn/file/Rua0bq3DRo53EyxMC96civ5cnZe?from=from_copylink)》 |  |
+| **论文**《OpenMonet：Open Model Orchestration Network 》                                                                                                               |  |
 
 数智涌现的新一代智慧医疗（子课题）
 
@@ -130,64 +156,83 @@
 |          | 并行计算、算法与算法复杂性理论、组合数学 | 高性能计算 | Π求解的并行化研究<br />组合数学在人工智能领域的应用                                                                                    |
 | 其他     | 相关技能学习                             | 综合       | 中国马克思主义与当代（A）、自然辩证法概论（A），大数据分析、大数据与生物统计学、大数据实践、博士生英语（免修）、职业能力扩展训练        |
 
-## 学术论著
+## 已发表学术论著
 
-[14] Jinhua Du. ChatFUV：Chat Chain for Follow-Up Visit (CCF-A在投)
+[5] 吕婷钰,李晓瑛,张颖, 刘宇炀, 杜晋华等. [中文医学知识大模型问答语料数据集构建研究](https://d.wanfangdata.com.cn/periodical/yxqbgz202405004)[J]. 医学信息学杂志,2024,45(5):20-25. DOI:10.3969/j.issn.1673-6036.2024.05.004. (中国科技核心期刊，五作)
 
-[13] Jinhua Du. NewMed：Large Language Modeling Technology Enables Full Process Digital Intelligence in Medical Care (CCF-A在投)
+[4] 张瑞麟, 杜晋华, 尹浩. [Research of Client Selection Algorithm in Cross-device Federated Learning (jos.org.cn)](https://www.jos.org.cn/josen/article/abstract/nb023)[J]. Journal of Software. (CCF-A类推荐中文科技期刊，THU-B类期刊，北大中文核心期刊，二作)
 
-[12] Jinhua Du. Doctor：The Most Reliable Digital Intelligence Healthcare Large Language Model System (在研)
+[3] Jinhua Du and Hao Yin. KLDP: A Data Profiling Technique Based on Knowledge Graph and Large Language Modeling，2023 IEEE 22nd International Conference on Trust, Security and Privacy in Computing and Communications (TrustCom)，2023.11（DOI 10.1109/TrustCom60117.2023.00329）（CCF-C类推荐国际学术会议，一作）
 
-[11] Jinhua Du. AiMed: Artificial Intelligence large language model for chinese Medicine (CCF-A在投)
+[2]Du J, Yin H. [KrNER: A Novel Named Entity Recognition Method Based on Knowledge Enhancement and Remote Supervision](https://ieeexplore.ieee.org/abstract/document/10538843)[C]//2023 IEEE 22nd International Conference on Trust, Security and Privacy in Computing and Communications (TrustCom). IEEE, 2023: 2323-2332.（CCF-C类推荐国际学术会议，一作）
 
-[10] Jinhua Du. OpenMonet：Open Model Orchestration Network (在研)
+[1]杜晋华, 尹浩, 冯嵩. [中文电子病历命名实体识别的研究与进展 ](https://www.ejournal.org.cn/CN/abstract/abstract13029.shtml)[J]. 电子学报, 2022, 50(12): 3030-3053. (CCF-A类推荐中文科技期刊，THU-B类期刊，北大中文核心期刊，一作)
 
-[9] Jinhua Du. MedRed： A Framework for Reliable Assisted Decision Making in a Medical Large Model (CCF-A在投)
+## 未发表学术论著
 
-[8] Jinhua Du. Med-Eval: Benchmarks for the Medical Large Language Model (CCF-A在投)
+[8] Jinhua Du. ChatFUV：Chat Chain for Follow-Up Visit
 
-[7] Jinhua Du. MedLib: Research on the construction of a knowledge library for medical large language modeling (在研)
+[7] Jinhua Du. NewMed：Large Language Modeling Technology Enables Full Process Digital Intelligence in Medical Care
 
-[6] Yuyang Liu,Xiaoying Li,Yan Luo,Jinhua Du,Huiling Ren,Junhui Wang,Hao Yin,Xiaoli Tang,and Hui Liu. Towards a Large Language Models-driven Medical Literature Retrieval and QA System: Framework Design and Evaluation[J]. Journal of the American Medical Informatics Association(JAMIA). 2023. (SCI在投)
+[6] Jinhua Du. Doctor：The Most Reliable Digital Intelligence Healthcare Large Language Model System
 
-[5] 医学知识大模型训练用语料数据集构建研究 (中文核心在投)
+[5] Jinhua Du. AiMed: Artificial Intelligence large language model for chinese Medicine
 
-[4] 张瑞麟, 杜晋华, 尹浩. [Research of Client Selection Algorithm in Cross-device Federated Learning (jos.org.cn)](https://www.jos.org.cn/josen/article/abstract/nb023)[J]. Journal of Software.
+[4] Jinhua Du. OpenMonet：Open Model Orchestration Network
 
-[3] Jinhua Du and Hao Yin. KLDP: A Data Profiling Technique Based on Knowledge Graph and Large Language Modeling，2023 IEEE 22nd International Conference on Trust, Security and Privacy in Computing and Communications (TrustCom)，2023.11（DOI 10.1109/TrustCom60117.2023.00329）
+[3] Jinhua Du. MedRed： A Framework for Reliable Assisted Decision Making in a Medical Large Model
 
-[2] Jinhua Du and Hao Yin. KrNER：A Novel Named Entity Recognition Method Based on Knowledge Enhancement and Remote Supervision[C]. 2023 IEEE 22nd International Conference on Trust, Security and Privacy in Computing and Communications (TrustCom), 2023.11.（DOI 10.1109/TrustCom60117.2023.00328）
+[2] Jinhua Du. Med-Eval: Benchmarks for the Medical Large Language Model
 
-[1]杜晋华, 尹浩, 冯嵩. [中文电子病历命名实体识别的研究与进展 ](https://www.ejournal.org.cn/CN/abstract/abstract13029.shtml)[J]. 电子学报, 2022, 50(12): 3030-3053.
+[1] Jinhua Du. MedLib: Research on the construction of a knowledge library for medical large language modeling 
+
+## 已发表软件著作权
+
+[1] AiMed医学知识大模型应用服务系统-软件著作权（2024.2.29）
 
 ## 媒体报道
 
-- [第三届中国医学信息学学科发展大会](https://mp.weixin.qq.com/s/RDQUcnGLRciSwub1HuOh4Q) (2023.11.25) 作为第一完成人的AiMed大模型[发布](https://bt7cezha1x.feishu.cn/wiki/Bu3YwOsyyixkswkYGS1cjbXPnMf?from=from_copylink)，同名github代码和hugging face参数已开源，之后相应论文会同步更新.
+[2] 优秀实践个人风采 | [计算机系杜晋华：铁血担当，逐梦公安](https://mp.weixin.qq.com/s/RyUsmJ1ZuZ38XbXRmd3a8A) 
+
+[1]  [第三届中国医学信息学学科发展大会](https://mp.weixin.qq.com/s/RDQUcnGLRciSwub1HuOh4Q) (2023.11.25) 作为第一完成人的AiMed大模型[发布](https://bt7cezha1x.feishu.cn/wiki/Bu3YwOsyyixkswkYGS1cjbXPnMf?from=from_copylink)，同名github代码和hugging face参数已开源，相应论文会同步更新
 
 ## 评奖评优
 
-| 项目 | 内容                                                         | 单位                     | 时间    |
-| ---- | ------------------------------------------------------------ | ------------------------ | ------- |
-| 评优 | 计算机系研团优秀部员                                         | 清华大学计算机系         | 2023.05 |
-|      | 探臻科技部优秀部员                                           | 清华大学                 | 2022.12 |
-|      | 第十六届研究生新生骨干培训班暨第三十七期团校（研究生班）优秀学员 | 清华大学研究生委员会     | 2022.08 |
-| 评奖 | 社会实践金奖（全校排名第二）                                 | 清华大学党委研究生工作部 | 2024.11 |
-|      |                                                              |                          |         |
-|      |                                                              |                          |         |
+| 项目   | 内容                                                         | 单位                     | 时间    |
+| ------ | ------------------------------------------------------------ | ------------------------ | ------- |
+| 评优   | 优秀研究生干部                                               | 清华大学计算机系         | 2024.06 |
+|        | 计算机系研团优秀部员                                         | 清华大学计算机系         | 2023.05 |
+|        | 探臻科技部优秀部员                                           | 清华大学                 | 2022.12 |
+|        | 第十六届研究生新生骨干培训班暨第三十七期团校（研究生班）优秀学员 | 清华大学研究生委员会     | 2022.08 |
+| 评奖   | 社会实践金奖支队（全校排名第二）                             | 清华大学党委研究生工作部 | 2024.11 |
+|        | 北京市挑战杯金奖，国家挑战杯三等奖                           | 共青团北京市委员会       | 2024.09 |
+|        | 社会实践奖学金                                               | 清华大学                 | 2024.09 |
+|        | 校级惠妍英才奖学金(二等)奖学金                               | 清华大学                 | 2024.09 |
+| 感谢信 | 浙江舟山市感谢信                                             | 舟山市委人才工作领导小组 | 2024.09 |
+|        | 浙江舟山市定海区公安局感谢信                                 | 公安局网安大队           | 2024.09 |
+|        | 浙江杭州高新区                                               | 人社局                   | 2023.07 |
 
 ## 工作实践
 
-| 分类   | 地点                                                          | 职位                     | 时间            |
-| ------ | ------------------------------------------------------------- | ------------------------ | --------------- |
-| 实验室 | 北京信息科学与技术国家研究中心-大数据驱动的知识管理和决策团队 | 实验室助理研究           | 2021.09-至今    |
-| 实习   | 湖南网数科技有限公司                                          | AI算法岗                 | 2022.08         |
-| 社工   | 计研五二班                                                    | 团支书                   | 2022.08-至今    |
-| 社工   | 清华大学计算机系团委                                          | 实践部书记               | 2022.08-至今    |
-| 社工   | 清华大学探臻科技评论社                                        | 采编部干事：AI社群负责人 | 2022.08-2023.08 |
-| 社工   | 清华大学研究生学生会                                          | 体育部                   | 2022.08-2023.08 |
+| 分类   | 地点                                                         | 职位               | 时间            |
+| ------ | ------------------------------------------------------------ | ------------------ | --------------- |
+| 实验室 | [清华大学计算机系知识工程研究室（KEG）](https://keg.cs.tsinghua.edu.cn/) | 实验室博士生       | 2024.02-至今    |
+| 实验室 | 北京信息科学与技术国家研究中心-大数据驱动的知识管理和决策团队 | 实验室助理研究员   | 2021.09-2024.02 |
+| 实习   | [北京智谱华章科技有限公司](https://zhipuai.cn/aboutus)- AI院 | 实习生             | 2024.03-至今    |
+| 实习   | 浙江省舟山市公安局定海分局网络安全大队                       | 外聘专家           | 2024.07-2024.08 |
+| 实习   | 湖南网数科技有限公司                                         | AI算法岗           | 2022.08         |
+| 社工   | 清华大学校团委实践部-平台组                                  | 定岗组长           | 2024.09-至今    |
+| 社工   | 清华大学计算机系计研五三班                                   | 带班助理           | 2024.09-至今    |
+| 社工   | 清华大学计算机系计研五三班                                   | 党支书             | 2024.09-至今    |
+| 社工   | 清华大学计算机系计研五二班                                   | 团支书             | 2022.08-2023.09 |
+| 社工   | 清华大学计算机系团委实践部                                   | 书记               | 2023.05-2024.06 |
+| 社工   | 清华大学计算机系团委实践部                                   | 部员               | 2022.09-2023.05 |
+| 社工   | 清华大学探臻科技评论社采编部                                 | 干事：AI社群负责人 | 2022.08-2023.08 |
+| 社工   | 清华大学研究生学生会体育部                                   | 干事               | 2022.08-2023.08 |
 
-#### 2022年9月至今
-
+- 担任课程助教（AML&ML课是唐杰老师面向研究生开设的中英双语课程），做课件、课程设计、作业设计、网站、讲座、写书、授课、两次论文会议场地主席、加每个学生和嘉宾联系方式沟通
+- 两次参与清华智库研讨会并作为代表发言
+- 2024年暑期，作为支队队长，带领团队前往浙江省舟山市开展为期六周的暑期社会实践活动。在此期间，不仅在个人所在的定海区公安局成功完成了“犯罪预测大模型建立”项目，让公安大数据用于实际民生需要，还组织了跨区域、跨单位的丰富实践活动，充分彰显清华人学思践悟，挺膺担当的精神，赢得公安局和团队同学们的双重赞誉，获得校级金奖
 - 担任计算机系团委实践部骨干，负责暑期研究生社会实践评奖材料整理、新闻稿撰写以及高校企业行的策划、外联、组织活动，在清华大学新闻网上**以第一通讯员身份发表一篇文章**，协助发布若干实践推送
 - 担任校学生会体育部骨干，负责现场宣传材料收集，参加并获得**2022年校园马拉松10km奖牌，2023年校园马拉松半马奖牌**
 - 担任校学生会探臻科技评论社采编部骨干，负责**科技热点查新与评论**工作以及**采访院士**与新闻稿撰写工作，负责一周科技咨询相关工作6次，对应发表6篇推送
