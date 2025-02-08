@@ -6,7 +6,7 @@
 
 国家奖学金获得者、北京市优秀本科毕业生
 
-标志性工作：[Med-Eval](https://dujh22.github.io/)、[AiMed](https://www.opende.org.cn/demo/chat)、[Doctor](https://www.mclouds.org.cn/doctor)、MedGPT
+标志性工作：[AML](https://www.aminer.cn/aml2024)、[AML- LLM](https://github.com/dujh22/AML-LLM)、[Med-Eval](https://dujh22.github.io/)、[AiMed](https://www.opende.org.cn/demo/chat)、[Doctor](https://www.mclouds.org.cn/doctor)、MedGPT
 
 ## 基本信息
 
