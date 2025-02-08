@@ -2,117 +2,98 @@
 
 更新中
 
-
-
 ## 2024研究历史
 
-| 论文标题                                                     | 投稿期刊       |
-| ------------------------------------------------------------ | -------------- |
-| ChatFUV：Chat Chain for Follow-Up Visit 用聊天链开发个性化随访方案 | IJCAI人工智能  |
-| AiMed: Artificial Intelligence large language model for chinese Medicine 面向中文医学的人工智能大语言模型 | IJCAI人工智能  |
+| 论文标题                                                                                                                              | 投稿期刊       |
+| ------------------------------------------------------------------------------------------------------------------------------------- | -------------- |
+| ChatFUV：Chat Chain for Follow-Up Visit 用聊天链开发个性化随访方案                                                                    | IJCAI人工智能  |
+| AiMed: Artificial Intelligence large language model for chinese Medicine 面向中文医学的人工智能大语言模型                             | IJCAI人工智能  |
 | NewMed：Large Language Modeling Technology Enables Full Process Digital Intelligence in Medical Care 大语言模型技术赋能全流程数智医疗 | CogSci认知科学 |
-| MedRad:一个医学大模型的可靠辅助决策框架                      | ICML机器学习   |
-| Med-Eval: Benchmarks for the Medical Large Language Model 医疗大语言模型测评基准 | ICML机器学习   |
-| Doctor：The Most Reliable Digital Intelligence Healthcare Large Language Model System 最可靠的数智医疗大模型系统 | -              |
-| OpenMonet：Open Model Orchestration Network 开放模型协作网络 | -              |
-| MedLib: Research on the construction of a knowledge library for medical large language modeling 面向医学大语言模型的知识库构建研究 | -              |
-
-## 2024研究历史
-
-| 论文标题                                                     | 投稿期刊       |
-| ------------------------------------------------------------ | -------------- |
-| ChatFUV：Chat Chain for Follow-Up Visit 用聊天链开发个性化随访方案 | IJCAI人工智能  |
-| AiMed: Artificial Intelligence large language model for chinese Medicine 面向中文医学的人工智能大语言模型 | IJCAI人工智能  |
-| NewMed：Large Language Modeling Technology Enables Full Process Digital Intelligence in Medical Care 大语言模型技术赋能全流程数智医疗 | CogSci认知科学 |
-| MedRad:一个医学大模型的可靠辅助决策框架                      | ICML机器学习   |
-| Med-Eval: Benchmarks for the Medical Large Language Model 医疗大语言模型测评基准 | ICML机器学习   |
-| Doctor：The Most Reliable Digital Intelligence Healthcare Large Language Model System 最可靠的数智医疗大模型系统 | -              |
-| OpenMonet：Open Model Orchestration Network 开放模型协作网络 | -              |
-| MedLib: Research on the construction of a knowledge library for medical large language modeling 面向医学大语言模型的知识库构建研究 | -              |
-
-
+| MedRad:一个医学大模型的可靠辅助决策框架                                                                                               | ICML机器学习   |
+| Med-Eval: Benchmarks for the Medical Large Language Model 医疗大语言模型测评基准                                                      | ICML机器学习   |
+| Doctor：The Most Reliable Digital Intelligence Healthcare Large Language Model System 最可靠的数智医疗大模型系统                      | -              |
+| OpenMonet：Open Model Orchestration Network 开放模型协作网络                                                                          | -              |
+| MedLib: Research on the construction of a knowledge library for medical large language modeling 面向医学大语言模型的知识库构建研究    | -              |
 
 
 
 ## 2023研究历史
 
-| 任务                 | 任务详述                                                     |
-| -------------------- | ------------------------------------------------------------ |
-| 模型选择             | 分开单独链接                                                 |
-| 知识库外挂           | 相似患者第一批：预处理2万条电子病历数据：从SQL导出为格式化json |
-| 知识库统计           | AiMed现行数据                                                |
-| 知识库外挂           | 指南                                                         |
-| 系实践述职           | 材料准备                                                     |
-| CSE论文report        | KrNER：PPT                                                   |
-| CSE论文report        | PoKG：PPT                                                    |
-| 系实践述职           | 现场述职                                                     |
-| AiMed1.0发布：版权   | 版权问题                                                     |
-| CSE论文report        | KrNER：对应讲稿准备，外加视频录制                            |
-| CSE论文report        | PoKG：对应讲稿准备，外加视频录制                             |
-| AiMed1.0发布：服务   | 敏感信息过滤                                                 |
-| CSE论文report        | 参会做现场汇报                                               |
-| 多模型链条           | 相关研究调研                                                 |
-| 高级机器学习         | HW1-Tokenization及压缩率比较-共计5篇论文/5个实验             |
-| AiMed1.0发布         | AiMed1.0项目开源                                             |
-| AiMed1.0发布         | AiMed1.0-chat参数发布                                        |
-| AiMed1.0发布         | AiMed1.0-paperabs参数发布                                    |
-| AiMed1.0发布         | AiMed1.0-前端对接                                            |
-| AiMed1.0发布         | AiMed1.0-后端对接                                            |
-| AiMed1.0发布：参数   | 我们可以发布一个基本的AiMed走完全程的模型参数AiMed-Base      |
-| 中国马克思主义与当代 | 选题确定                                                     |
-| 社工                 | 软件合办智源活动                                             |
-| AiMed1.0发布         | 对接医信所工作                                               |
-| LLM调研              |                                                              |
-| AiMed2.0             | 数据准备                                                     |
-| LLM                  | 相关调研                                                     |
-| 高级机器学习         | Project proposal                                             |
-| 高级机器学习         | 项目提案                                                     |
-| AiMed2.0训练         | AiMed2.0-Chat对话模型训练-第一轮                             |
-| AiMed2.0训练         | AiMed2.0-Chat对话模型训练-第一轮-相关测试                    |
-| 高级机器学习         | 项目提案PPT                                                  |
-| 中国马克思主义与当代 | PPT                                                          |
-| 专利                 | 邱师兄专利修改                                               |
-| 高级机器学习         | 项目提案PPT                                                  |
-| 中国马克思主义与当代 | PPT                                                          |
-| 专利                 | 邱师兄专利修改                                               |
-| 高级机器学习         | Project proposal PPT                                         |
-| 高级机器学习         | 项目提案PPT                                                  |
-| 高级机器学习         | Project proposal PPT对应讲稿                                 |
-| 医信所汇报PPT        |                                                              |
-| 高级机器学习         | 项目提案PPT对应讲稿                                          |
-| 高级机器学习         | 项目讨论                                                     |
-| 张瑞麟师兄           | 软件学报材料准备                                             |
-| 高级机器学习         | 准备小组讨论                                                 |
-| AiMed接口优化        | 敏感信息                                                     |
-| Doctor1.0部署        | 模型部署到长沙机房                                           |
-| LLM                  | 相关调研                                                     |
-| 张瑞麟师兄           | 软件学报材料准备                                             |
-| 高级机器学习         | 项目讨论                                                     |
-| Doctor               | 完成指南库和病历库的相关开发                                 |
-| AiMed1.0发布：服务   | 相似患者第二批：预处理6万条电子病历数据：从SQL导出为格式化json |
-| 工程库与检索         | 药品说明书、检验、指南库                                     |
-| 处理长沙文档         | 切换到长沙权限才可访问                                       |
-| 高级机器学习         | 第二次作业：RLHF在多模态领域的应用                           |
-| Med-eval             | 制定整体推进计划                                             |
-| Med-eval             | 相关同事分工推进                                             |
-| 高级机器学习         | poster                                                       |
-| 高级机器学习         | PPT                                                          |
-| Med-eval             | 制定整体推进计划                                             |
-| Med-eval             | 相关同事分工推进                                             |
-| Med-eval             | 数据集的构建：3个数据集                                      |
-| Med-eval             | 以及点对点和各位同学的分工                                   |
-| Med-eval             | RAG相关整理                                                  |
-| 高级机器学习         | 第三次作业：RAG                                              |
-| 区块链               | 大作业                                                       |
-| 高级机器学习         | MedRed：论文维护位置                                         |
-| AiMed1.0             | AiMed: 面向中文医学的人工智能大语言模型                      |
-| ChatFUV1.0           | ChatFUV：Chat Chain for Follow-Up Visit 用聊天链开发个性化随访方案 |
+| 任务                 | 任务详述                                                                                             |
+| -------------------- | ---------------------------------------------------------------------------------------------------- |
+| 模型选择             | 分开单独链接                                                                                         |
+| 知识库外挂           | 相似患者第一批：预处理2万条电子病历数据：从SQL导出为格式化json                                       |
+| 知识库统计           | AiMed现行数据                                                                                        |
+| 知识库外挂           | 指南                                                                                                 |
+| 系实践述职           | 材料准备                                                                                             |
+| CSE论文report        | KrNER：PPT                                                                                           |
+| CSE论文report        | PoKG：PPT                                                                                            |
+| 系实践述职           | 现场述职                                                                                             |
+| AiMed1.0发布：版权   | 版权问题                                                                                             |
+| CSE论文report        | KrNER：对应讲稿准备，外加视频录制                                                                    |
+| CSE论文report        | PoKG：对应讲稿准备，外加视频录制                                                                     |
+| AiMed1.0发布：服务   | 敏感信息过滤                                                                                         |
+| CSE论文report        | 参会做现场汇报                                                                                       |
+| 多模型链条           | 相关研究调研                                                                                         |
+| 高级机器学习         | HW1-Tokenization及压缩率比较-共计5篇论文/5个实验                                                     |
+| AiMed1.0发布         | AiMed1.0项目开源                                                                                     |
+| AiMed1.0发布         | AiMed1.0-chat参数发布                                                                                |
+| AiMed1.0发布         | AiMed1.0-paperabs参数发布                                                                            |
+| AiMed1.0发布         | AiMed1.0-前端对接                                                                                    |
+| AiMed1.0发布         | AiMed1.0-后端对接                                                                                    |
+| AiMed1.0发布：参数   | 我们可以发布一个基本的AiMed走完全程的模型参数AiMed-Base                                              |
+| 中国马克思主义与当代 | 选题确定                                                                                             |
+| 社工                 | 软件合办智源活动                                                                                     |
+| AiMed1.0发布         | 对接医信所工作                                                                                       |
+| LLM调研              |                                                                                                      |
+| AiMed2.0             | 数据准备                                                                                             |
+| LLM                  | 相关调研                                                                                             |
+| 高级机器学习         | Project proposal                                                                                     |
+| 高级机器学习         | 项目提案                                                                                             |
+| AiMed2.0训练         | AiMed2.0-Chat对话模型训练-第一轮                                                                     |
+| AiMed2.0训练         | AiMed2.0-Chat对话模型训练-第一轮-相关测试                                                            |
+| 高级机器学习         | 项目提案PPT                                                                                          |
+| 中国马克思主义与当代 | PPT                                                                                                  |
+| 专利                 | 邱师兄专利修改                                                                                       |
+| 高级机器学习         | 项目提案PPT                                                                                          |
+| 中国马克思主义与当代 | PPT                                                                                                  |
+| 专利                 | 邱师兄专利修改                                                                                       |
+| 高级机器学习         | Project proposal PPT                                                                                 |
+| 高级机器学习         | 项目提案PPT                                                                                          |
+| 高级机器学习         | Project proposal PPT对应讲稿                                                                         |
+| 医信所汇报PPT        |                                                                                                      |
+| 高级机器学习         | 项目提案PPT对应讲稿                                                                                  |
+| 高级机器学习         | 项目讨论                                                                                             |
+| 张瑞麟师兄           | 软件学报材料准备                                                                                     |
+| 高级机器学习         | 准备小组讨论                                                                                         |
+| AiMed接口优化        | 敏感信息                                                                                             |
+| Doctor1.0部署        | 模型部署到长沙机房                                                                                   |
+| LLM                  | 相关调研                                                                                             |
+| 张瑞麟师兄           | 软件学报材料准备                                                                                     |
+| 高级机器学习         | 项目讨论                                                                                             |
+| Doctor               | 完成指南库和病历库的相关开发                                                                         |
+| AiMed1.0发布：服务   | 相似患者第二批：预处理6万条电子病历数据：从SQL导出为格式化json                                       |
+| 工程库与检索         | 药品说明书、检验、指南库                                                                             |
+| 处理长沙文档         | 切换到长沙权限才可访问                                                                               |
+| 高级机器学习         | 第二次作业：RLHF在多模态领域的应用                                                                   |
+| Med-eval             | 制定整体推进计划                                                                                     |
+| Med-eval             | 相关同事分工推进                                                                                     |
+| 高级机器学习         | poster                                                                                               |
+| 高级机器学习         | PPT                                                                                                  |
+| Med-eval             | 制定整体推进计划                                                                                     |
+| Med-eval             | 相关同事分工推进                                                                                     |
+| Med-eval             | 数据集的构建：3个数据集                                                                              |
+| Med-eval             | 以及点对点和各位同学的分工                                                                           |
+| Med-eval             | RAG相关整理                                                                                          |
+| 高级机器学习         | 第三次作业：RAG                                                                                      |
+| 区块链               | 大作业                                                                                               |
+| 高级机器学习         | MedRed：论文维护位置                                                                                 |
+| AiMed1.0             | AiMed: 面向中文医学的人工智能大语言模型                                                              |
+| ChatFUV1.0           | ChatFUV：Chat Chain for Follow-Up Visit 用聊天链开发个性化随访方案                                   |
 | NewMed1.0            | NewMed：Large Language Modeling Technology Enables Full Process Digital Intelligence in Medical Care |
-| Med-Eval1.0          | Med-Eval: Benchmarks for the Medical Large Language Model 医疗大语言模型测评基准 |
-| MedRad1.0            | MedRed：论文维护位置                                         |
-| 联邦学习论文         | 软件学报材料邮寄                                             |
-
-
+| Med-Eval1.0          | Med-Eval: Benchmarks for the Medical Large Language Model 医疗大语言模型测评基准                     |
+| MedRad1.0            | MedRed：论文维护位置                                                                                 |
+| 联邦学习论文         | 软件学报材料邮寄                                                                                     |
 
 ## 2022研究历史
 
@@ -160,4 +141,3 @@
 | 11   | 1    | 上课 / 研究性论文MoNER三修 / 患者为中心知识图谱综述                                                                                                                                   |
 |      | 2    | 上课 / 老年肾功能减退临评估及预警-语言处理交流会议 / 预训练语言模型看作知识图谱的研究趋势                                                                                             |
 | 12   | 1    | 1上半个月：新冠 2.下半个月：忙期末 上课 / 研究性论文MoNER四修 / 数据与知识联合驱动的智慧患者管理2.0 / 嵌套类实体识别实验                                                              |
-
