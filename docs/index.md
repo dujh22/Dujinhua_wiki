@@ -10,19 +10,20 @@
 
 ## 基本信息
 
-| 学分绩点           | 3.95/4.00       | 出生日期           | 2000.04.01         |
-| ------------------ | --------------- | ------------------ | ------------------ |
-| **综合排名** | **1/329** | **政治面貌** | **中共党员** |
+| 学分绩点           | 3.95 / 4.00       |
+| ------------------ | ----------------- |
+| **综合排名** | **1 / 329** |
+| 出生日期           | 2000.04.01        |
 
 ## 相关链接
 
-| 项目                 | 内容                                                                            |
-| -------------------- | ------------------------------------------------------------------------------- |
-| **电子邮件**   | [dujh22@mails.tsinghua.edu.cn](dujh22@mails.tsinghua.edu.cn)                       |
-| **GitHub主页** | [https://github.com/dujh22](https://github.com/dujh22)                             |
-| 谷歌学者             | [Jinhua Du](https://scholar.google.com/citations?user=fLKerfcAAAAJ&hl=zh-CN&oi=ao) |
-| **CSDN主页**   | [杜晋华-清华](https://blog.csdn.net/qq_44372652?spm=1000.2115.3001.5343)           |
-| 百度学者             | [杜晋华](https://xueshu.baidu.com/homepage/dujinhua)                               |
+| 项目                 | 内容                                                                                                                                                                                                                                                              |
+| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **电子邮件**   | [dujh22@mails.tsinghua.edu.cn](dujh22@mails.tsinghua.edu.cn)                                                                                                                                                                                                         |
+| **GitHub主页** | [https://github.com/dujh22](https://github.com/dujh22)                                                                                                                                                                                                               |
+| 学者主页             | [Google Scholoar](https://scholar.google.com/citations?user=fLKerfcAAAAJ&hl=zh-CN&oi=ao)、[百度学者](https://xueshu.baidu.com/homepage/dujinhua)、[Aminer](https://cn.aminer.org/profile/jinhua-du/61e5205542323c8f84eaafb8)                                               |
+| 数据库               | [ACL](https://aclanthology.org/people/jinhua-du/)、[DBLP](https://dblp.org/pid/61/2112)、[ORCID](https://orcid.org/0009-0008-4170-6452)、[IEEE](https://ieeexplore.ieee.org/author/37088802547)、[SEMANTIC SCHOLAR](https://www.semanticscholar.org/author/Jinhua-Du/2303801604) |
+| **博客主页**   | [CSDN](https://blog.csdn.net/qq_44372652?spm=1000.2115.3001.5343)                                                                                                                                                                                                    |
 
 ## 相关技能
 
