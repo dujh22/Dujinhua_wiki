@@ -1,18 +1,24 @@
-## 第二阶段研究体系
+本科第四年至博士二年级期间，研究重心转向医学大数据与知识工程领域，发表及在研论文13篇。研究目标在于利用海量医学数据进行疾病预测与知识发现，解决民生相关的科学与工程问题。工作贯穿从底层数据处理、算法建模到顶层系统设计，以支持医学智能应用的落地。
 
-2024～2026年主要研究大语言模型底层技术，师从唐杰教授
+博士二年级后，研究方向进一步转向大语言模型的底层推理能力，目前在研论文3篇。起初从医学场景扩展至公安、多语言等多领域大模型训练，发现模型性能的可靠性与泛化性均受到底层推理能力的显著制约。由此系统开展针对推理能力的研究，从评测方法、数据构建与算法机制三方面展开探索。
 
-超越人类专家顶尖水平的LLM研究
+## 第二阶段研究体系：偏理论
+
+2024年至今主要研究大语言模型底层技术，师从唐杰教授
+
+超越人类专家顶尖水平的LLM研究：《基础模型的推理可靠性与泛化性研究（Towards Reliable and Generalizable Reasoning in Foundation Models）》
 
 ### 存在挑战
 
-OpenAI认为：从当前人类已经实现的智能到达超级智能，将通过：AI学会语言✅——AI能够解决问题✅——AI能够使用工具⭕️——AI能够自我学习——AI能够自成组织，五个步骤完成。
+OpenAI认为：从当前人类已经实现的智能到达超级智能，将通过：AI学会语言✅——AI能够解决问题✅——AI能够使用工具✅——AI能够自我学习⌛️——AI能够自成组织，五个步骤完成。
 
-Zhipu认为：从当前人类已经实现的智能到达超级智能，将通过：语言能力✅——推理能力✅——学习能力——认知能力——意识智能，五个步骤完成。
+Zhipu认为：从当前人类已经实现的智能到达超级智能，将通过：语言能力✅——推理能力✅——学习能力⌛️——认知能力——意识智能，五个步骤完成。
 
 ### 研究路径
 
-待更新
+随着大规模语言模型（LLMs）在医疗、公安、多语言、数学与代码智能等关键领域取得突破，其底层推理能力成为影响模型可靠性、泛化性与应用边界的核心瓶颈。当前模型往往表现出“看似会做题，但不知为何正确”与“场景切换后能力不稳定”等问题，导致模型在高风险场景中的可信性受限。
+
+基于前期在跨领域模型训练与数据体系建设中的实践经验，本研究旨在从理论与工程角度系统研究：**如何精准衡量、持续提升和跨场景稳定迁移大模型的逻辑推理能力**，为可信AI与可解释智能奠定理论与方法论基础。
 
 ### 研究成果
 
@@ -20,15 +26,35 @@ Zhipu认为：从当前人类已经实现的智能到达超级智能，将通过
 
 大模型数学推理、多模态推理
 
-#### 参与研究：大模型训练与评估
+| 论文                                                         | 期刊/会议名 | 作者顺位 | 类别   |
+| ------------------------------------------------------------ | ----------- | -------- | ------ |
+| [Glm-4.5: Agentic, reasoning, and coding (arc) foundation models](https://arxiv.org/abs/2508.06471) | Arxiv       | 非一作   | 预印本 |
+| [A Survey of Post-Training Scaling in Large Language Models](https://aclanthology.org/2025.acl-long.140/) | ACL         | 非一作   | CCF-A  |
 
-大模型国际化、大模型评估（艺术、教育与多语言等）
+| 项目 | 具体产出                                                     | 时间            |
+| ---- | ------------------------------------------------------------ | --------------- |
+| 逻辑 | 论文盲审中                                                   | 2025.03-至今    |
+| 数学 | Enhancing Mathematical Reasoning in Multimodal Large Language Models 提升多模态大型语言模型的数学推理能力 | 2024.03-2024.10 |
+| 通用 | Self-Learning：Evaluation & Data & New Scaling Law           | 2024.12-2025.01 |
 
-#### 其他研究：大模型应用
+#### 主要研究：大模型训练与评估
 
-大模型在公安的应用、大模型在医疗的应用
+| 项目   | 具体产出                                                     | 时间            |
+| ------ | ------------------------------------------------------------ | --------------- |
+| 国际化 | 开发"一带一路主权大模型"MalayGLM, 携手马来西亚本地头部家族集团,帮助马来西亚建设国家级主权大模型,赋能马来西亚大模型行业生态发展。  <br />这是真正意义上首次实现中国主权大模型在友好国家落地的巨大突破。（评测上获得SOTA结果） | 2024.09-2025.03 |
+| 国际化 | ChatGLM回答中中英混杂问题解决                                | 2024.03-2024.06 |
+| 评估   | 元评估                                                       | 2024.12-2025.02 |
+| 评估   | Leveraging Models as Teachers: A Comprehensive Evaluation of Reasoning Abilities in Large Language Models 以模型为师：大模型推理能力的综合评估 （艺术、教育与多语言等） | 2024.03-2024.09 |
+| 评估   | 类o1模型的泛化性评估与研究                                   | 2024.09-2025.03 |
 
-## 第一阶段研究体系
+#### 主要研究：大模型应用
+
+大模型在公安、医疗、体育健康方面的应用
+
+* 犯罪预测大模型的建立
+* 体育多智能体系统构建
+
+## 第一阶段研究体系：偏工程
 
 2021～2023年体系架构详见：[研究体系](https://bt7cezha1x.feishu.cn/docx/IgcDdcVwSoQ94vxjJMMcHXfJnwf?from=from_copylink)
 
@@ -73,21 +99,10 @@ Zhipu认为：从当前人类已经实现的智能到达超级智能，将通过
 
 具体路径：
 
-1. 知识获取：数据挖掘
-
-从海量的电子病历数据中尽可能提取信息
-
-2. 知识管理：图谱/大模型
-
-利用患者信息和相关知识构建患者图谱与知识图谱
-
-3. 知识推理：预测/生成/推荐
-
-在图谱和大模型上进行相关的预测、生成与推荐
-
-4. 知识引擎：搜索/对话
-
-基于知识进行用户服务与相关的检索、生成
+1. 知识获取：数据挖掘｜从海量的电子病历数据中尽可能提取信息
+2. 知识管理：图谱/大模型｜利用患者信息和相关知识构建患者图谱与知识图谱
+3. 知识推理：预测/生成/推荐｜在图谱和大模型上进行相关的预测、生成与推荐
+4. 知识引擎：搜索/对话｜基于知识进行用户服务与相关的检索、生成
 
 ### 研究成果
 
@@ -107,16 +122,19 @@ Zhipu认为：从当前人类已经实现的智能到达超级智能，将通过
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ | ------- |
 | **论文**《[KLDP: A Data Profiling Technique Based on Knowledge Graph and Large Language Modeling](https://bt7cezha1x.feishu.cn/file/CCuFboQc4okTn4xNpZJcsXqGngf?from=from_copylink)》 | CCF-C  | CSE2023 |
 
-| **面向数据和知识双轮驱动的智慧医疗大模型研究**                                                                                                                                                    | 子课题     | 代码                                    |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | --------------------------------------- |
-| **报告**《ChatGPT创造了AI狂潮》                                                                                                                                                                   | 微软邀约   |                                         |
-| **论文**《[AiMed: Artificial Intelligent Large Language Model for Medicine in China](https://ieeexplore.ieee.org/document/10803480)》                                                                | IEEE       | [AiMed](https://github.com/dujh22/AiMed)   |
-| **论文**《[ChatFUV：Chat Chain for Follow-Up Visit](https://bt7cezha1x.feishu.cn/file/ZAv6brkkpoupROxLY2NcxWdRnoe?from=from_copylink)》                                                              |            |                                         |
-| **系统**《AiMed医学知识大模型应用服务系统》                                                                                                                                                       | 软件著作权 |                                         |
-| **论文**《[MedRad : A Framework for Reliable Assisted Decision Making in a Medical LargeLanguage Model](https://bt7cezha1x.feishu.cn/file/DqC4b1knBosvcrxpQ81cUcS9n8g?from=from_copylink)》          |            | [MedRad](https://github.com/dujh22/MedRad) |
-| **论文**《[NewMed：Large Language Modeling Technology Enables Full Process Digital Intelligence in Medical Care](https://bt7cezha1x.feishu.cn/file/LXRyboPqzo9OmZxGleEcpa0PnSh?from=from_copylink)》 |            |                                         |
-| **论文**《Doctor：The Most Reliable Digital Intelligence Healthcare Large Language Model System》                                                                                                 |            |                                         |
-| **论文**《MedLib: Research on the construction of a knowledge library for medical large language modeling》                                                                                       |            |                                         |
+| **面向数据和知识双轮驱动的智慧医疗大模型研究**                                                                                                                                                           | 子课题      | 代码                                    |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- | --------------------------------------- |
+| **报告**《ChatGPT创造了AI狂潮》                                                                                                                                                                          | 微软邀约    |                                         |
+| **论文**《[AiMed: Artificial Intelligent Large Language Model for Medicine in China](https://ieeexplore.ieee.org/document/10803480)》                                                                       | IEEE        | [AiMed](https://github.com/dujh22/AiMed)   |
+| **论文**《[ChatFUV：Chat Chain for Follow-Up Visit](https://bt7cezha1x.feishu.cn/file/ZAv6brkkpoupROxLY2NcxWdRnoe?from=from_copylink)》                                                                     |             |                                         |
+| **系统**《AiMed医学知识大模型应用服务系统》                                                                                                                                                              | 软件著作权  |                                         |
+| **论文**《[MedRad : A Framework for Reliable Assisted Decision Making in a Medical LargeLanguage Model](https://bt7cezha1x.feishu.cn/file/DqC4b1knBosvcrxpQ81cUcS9n8g?from=from_copylink)》                 |             | [MedRad](https://github.com/dujh22/MedRad) |
+| **论文**《[Toward a Large Language Model-Driven Medical Knowledge Retrieval and QA System: Framework Design and Evaluation](https://doi.org/10.1016/j.eng.2025.02.010)》                                    | Engineering |                                         |
+| **论文**《[Towards Artificial Intelligence for Science: A Case Study of Using ChatGPT for Disease Causality Discovery from Biomedical Literature](https://ieeexplore.ieee.org/abstract/document/11373497)》 | SCI 一区    |                                         |
+| **论文**《[Large Language Models Driven Reliable Clinical Decision-Making: Framework and Application](https://www.sciencedirect.com/science/article/pii/S294995342500030X)》                                | SCI 三区    |                                         |
+| **论文**《[NewMed：Large Language Modeling Technology Enables Full Process Digital Intelligence in Medical Care](https://bt7cezha1x.feishu.cn/file/LXRyboPqzo9OmZxGleEcpa0PnSh?from=from_copylink)》        |             |                                         |
+| **论文**《Doctor：The Most Reliable Digital Intelligence Healthcare Large Language Model System》                                                                                                        |             |                                         |
+| **论文**《MedLib: Research on the construction of a knowledge library for medical large language modeling》                                                                                              |             |                                         |
 
 #### 参与研究：医工交叉+网络
 
@@ -158,6 +176,16 @@ Zhipu认为：从当前人类已经实现的智能到达超级智能，将通过
 
 ## 已发表学术论著
 
+[11] Zeng A, Lv X, Zheng Q, et al. [Glm-4.5: Agentic, reasoning, and coding (arc) foundation models](https://arxiv.org/abs/2508.06471)[J]. arXiv preprint arXiv:2508.06471, 2025. (Arxiv)
+
+[10] Du J, Li X, Liu Y, et al. [Large language models driven reliable clinical decision-making: Framework and application](https://www.sciencedirect.com/science/article/pii/S294995342500030X)[J]. Informatics and Health, 2025. (SCI 三区，一作)
+
+[9] X. Li, J. Du, Y. Liu, H. Yin and H. Liu, "[Towards Artificial Intelligence for Science: A Case Study of Using ChatGPT for Disease Causality Discovery from Biomedical Literature](https://ieeexplore.ieee.org/abstract/document/11373497)," in Big Data Mining and Analytics, vol. 9, no. 2, pp. 554-562, April 2026, doi: 10.26599/BDMA.2025.9020086. (SCI 1区《Big Data Mining and Analytic》，共同一作)
+
+[8] Liu Y, Li X, Luo Y, et al. [Toward a Large Language Model-Driven Medical Knowledge Retrieval and QA System: Framework Design and Evaluation](https://doi.org/10.1016/j.eng.2025.02.010)[J]. Engineering, 2025.(SCI 1区《Engineering》,四作)
+
+[7] Hanyu Lai, Xiao Liu, Junjie Gao, Jiale Cheng, Zehan Qi, Yifan Xu, Shuntian Yao, Dan Zhang, Jinhua Du, Zhenyu Hou, Xin Lv, Minlie Huang, Yuxiao Dong, and Jie Tang. 2025. [A Survey of Post-Training Scaling in Large Language Models](https://aclanthology.org/2025.acl-long.140/). In Proceedings of the 63rd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers), pages 2771–2791, Vienna, Austria. Association for Computational Linguistics.(CCF-A:ACL)
+
 [6] J. Du, X. Li, Z. Jiang, Y. Liu, H. Yin and H. Liu, "[AiMed: Artificial Intelligent Large Language Model for Medicine in China](https://ieeexplore.ieee.org/document/10803480)," 2024 IEEE International Conference on Medical Artificial Intelligence (MedAI), Chongqing, China, 2024, pp. 360-365, doi: 10.1109/MedAI62885.2024.00054. （IEEE，一作）
 
 [5] 吕婷钰,李晓瑛,张颖, 刘宇炀, 杜晋华等. [中文医学知识大模型问答语料数据集构建研究](https://d.wanfangdata.com.cn/periodical/yxqbgz202405004)[J]. 医学信息学杂志,2024,45(5):20-25. DOI:10.3969/j.issn.1673-6036.2024.05.004. (中国科技核心期刊，五作)
@@ -172,15 +200,15 @@ Zhipu认为：从当前人类已经实现的智能到达超级智能，将通过
 
 ## 未发表学术论著
 
-[7] Jinhua Du. ChatFUV：Chat Chain for Follow-Up Visit
+[7-9] 匿名审稿中
 
-[6] Jinhua Du. NewMed：Large Language Modeling Technology Enables Full Process Digital Intelligence in Medical Care
+[6] Jinhua Du. ChatFUV：Chat Chain for Follow-Up Visit
 
-[5] Jinhua Du. Doctor：The Most Reliable Digital Intelligence Healthcare Large Language Model System
+[5] Jinhua Du. NewMed：Large Language Modeling Technology Enables Full Process Digital Intelligence in Medical Care
 
-[4] Jinhua Du. OpenMonet：Open Model Orchestration Network
+[4] Jinhua Du. Doctor：The Most Reliable Digital Intelligence Healthcare Large Language Model System
 
-[3] Jinhua Du. MedRed： A Framework for Reliable Assisted Decision Making in a Medical Large Model
+[3] Jinhua Du. OpenMonet：Open Model Orchestration Network
 
 [2] Jinhua Du. Med-Eval: Benchmarks for the Medical Large Language Model
 
@@ -192,25 +220,36 @@ Zhipu认为：从当前人类已经实现的智能到达超级智能，将通过
 
 ## 媒体报道
 
-[2] 优秀实践个人风采 | [计算机系杜晋华：铁血担当，逐梦公安](https://mp.weixin.qq.com/s/RyUsmJ1ZuZ38XbXRmd3a8A)
+[3] 2025年“大模型雁行计划"发起者｜[岁末回眸・展望：千里同途，共赴时代新征程](https://mp.weixin.qq.com/s/xNk6H0mLj7C6sqeaiSaUcQ)
+
+[2] 2024年优秀实践个人风采 | [计算机系杜晋华：铁血担当，逐梦公安](https://mp.weixin.qq.com/s/RyUsmJ1ZuZ38XbXRmd3a8A)
 
 [1]  [第三届中国医学信息学学科发展大会](https://mp.weixin.qq.com/s/RDQUcnGLRciSwub1HuOh4Q) (2023.11.25) 作为第一完成人的AiMed大模型[发布](https://bt7cezha1x.feishu.cn/wiki/Bu3YwOsyyixkswkYGS1cjbXPnMf?from=from_copylink)，同名[github代码](https://github.com/dujh22/AiMed)和[hugging face参数](https://huggingface.co/DuJinHua/AiMed)已开源，相应论文[AiMed: Artificial Intelligent Large Language Model for Medicine in China](https://ieeexplore.ieee.org/document/10803480)已发表在国际会议MedAI上。
 
 ## 评奖评优
 
-| 项目   | 内容                                                             | 单位                     | 时间    |
-| ------ | ---------------------------------------------------------------- | ------------------------ | ------- |
-| 评优   | 优秀研究生干部                                                   | 清华大学计算机系         | 2024.06 |
-|        | 计算机系研团优秀部员                                             | 清华大学计算机系         | 2023.05 |
-|        | 探臻科技部优秀部员                                               | 清华大学                 | 2022.12 |
-|        | 第十六届研究生新生骨干培训班暨第三十七期团校（研究生班）优秀学员 | 清华大学研究生委员会     | 2022.08 |
-| 评奖   | 社会实践金奖支队（全校排名第二）                                 | 清华大学党委研究生工作部 | 2024.11 |
-|        | 北京市挑战杯金奖，国家挑战杯三等奖                               | 共青团北京市委员会       | 2024.09 |
-|        | 社会实践奖学金                                                   | 清华大学                 | 2024.09 |
-|        | 校级惠妍英才奖学金(二等)奖学金                                   | 清华大学                 | 2024.09 |
-| 感谢信 | 浙江舟山市感谢信                                                 | 舟山市委人才工作领导小组 | 2024.09 |
-|        | 浙江舟山市定海区公安局感谢信                                     | 公安局网安大队           | 2024.09 |
-|        | 浙江杭州高新区                                                   | 人社局                   | 2023.07 |
+| 项目   | 内容                                           | 单位                       | 时间    |
+| ------ | ---------------------------------------------- | -------------------------- | ------- |
+| 评优   | 优秀共青团员                                   | 共青团清华大学委员会       | 2025.10 |
+|        | 带领班级获评卓越班团（第一名）、结对班团       | 清华大学                   | 2025.09 |
+|        | 社会工作研讨优秀学员                           | 清华大学                   | 2025.04 |
+|        | 带领班级获评笃行班团                           | 共青团清华大学研究生委员会 | 2025.03 |
+|        | 优秀研究生干部                                 | 清华大学计算机系           | 2024.06 |
+|        | 计算机系研团优秀部员                           | 清华大学计算机系           | 2023.05 |
+|        | 探臻科技部优秀部员                             | 清华大学                   | 2022.12 |
+|        | 研究生新生骨干培训班暨团校（研究生班）优秀学员 | 清华大学研究生委员会       | 2022.08 |
+| 评奖   | 《软件学报》2024年高被关注研究者               | 《软件学报》编辑部         | 2026.01 |
+|        | 清华之友-合肥英才奖学金                        | 清华大学                   | 2025.12 |
+|        | 清华大学马约翰杯健美比赛第五名                 | 清华大学学生健美协会       | 2025.12 |
+|        | “计算未来”博硕学术论坛卓越奖（第一名）       | 清华大学计算机系           | 2025.10 |
+|        | 社会工作二等奖学金                             | 清华大学                   | 2024.12 |
+|        | 校级惠妍英才奖学金(二等)奖学金                 | 清华大学                   | 2024.12 |
+|        | 社会实践优秀奖                                 | 清华大学                   | 2024.12 |
+|        | 社会实践金奖支队（全校排名第二）               | 清华大学党委研究生工作部   | 2024.11 |
+|        | 北京市挑战杯金奖，国家挑战杯三等奖             | 共青团北京市委员会         | 2024.09 |
+| 感谢信 | 浙江舟山市感谢信                               | 舟山市委人才工作领导小组   | 2024.09 |
+|        | 浙江舟山市定海区公安局感谢信                   | 公安局网安大队             | 2024.09 |
+|        | 浙江杭州高新区                                 | 人社局                     | 2023.07 |
 
 ## 工作实践
 
@@ -221,7 +260,7 @@ Zhipu认为：从当前人类已经实现的智能到达超级智能，将通过
 | 实习   | [北京智谱华章科技有限公司](https://zhipuai.cn/aboutus)- AI院             | 实习生             | 2024.03-至今    |
 | 实习   | 浙江省舟山市公安局定海分局网络安全大队                                | 外聘专家           | 2024.07-2024.08 |
 | 实习   | 湖南网数科技有限公司                                                  | AI算法岗           | 2022.08         |
-| 社工   | 清华大学校团委实践部-平台组                                           | 定岗组长           | 2024.09-至今    |
+| 社工   | 清华大学校团委实践部-平台组                                           | 定岗组长           | 2024.09-2025.03 |
 | 社工   | 清华大学计算机系计研五三班                                            | 带班助理           | 2024.09-至今    |
 | 社工   | 清华大学计算机系计研五三班                                            | 党支书             | 2024.09-至今    |
 | 社工   | 清华大学计算机系计研五二班                                            | 团支书             | 2022.08-2023.09 |

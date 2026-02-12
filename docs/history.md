@@ -1,46 +1,71 @@
+## 2026年
+
+| 月份 | 内容                                                         |
+| ---- | ------------------------------------------------------------ |
+| 1    | 1.Logic完成ICML 转投<br />2.LRM完成整体算法设计和基本工程规划，论文初稿形成<br />3.项目/申报：国自科（循证医学 + LLM 协同决策）方向材料 |
+
 ## 2025年
 
-| 月份 | 周次 | 日期  | 内容                                                         |
-| ---- | ---- | ----- | ------------------------------------------------------------ |
-|      |      | 9     | 1. banlan ｜文档整理 ：v1.0-语音问题集中反馈<br/>2. banlan ｜文档整理 ：Coaiching1.0 语音技术文档<br/>3. banlan ｜iPhone侧测试：移动端视觉和语音的跑通和性能测试（iphone）<br/>4. [计研五三党团班工作台账](https://zhipu-ai.feishu.cn/docx/FvbhdIFY3otljqxCQ0ycmgxInbc)未完成工作 1h已投入 |
-| 2    | 1    | 8     | 1. ✅ [dujh22/LLM-DailyDigest](https://github.com/dujh22/LLM-DailyDigest) ｜修改自动运行脚本的潜在bug 25min<br/>2. ✅ 安装Vscode Insiders 的 Copilot Agent功能 33min<br/>3. ⭕️ 更新个人wiki<br/>4. ❌ o1模型的泛化性评估与研究<br/>5. ❌ 整理微信近日新增工作 ｜ 微信即时文档解析<br/> |
-|      |      | 1:7   | 1. ✅ 读O1 Replication Journey – Part 2- Surpassing O1-preview through Simple Distillation Big Progress or Bitter Lesson<br/>2. ✅ 读State-of-the-art generalisation research in NLP: A taxonomy and review<br/>3. ⭕️ 参与kaggle竞赛：[AI Mathematical Olympiad - Progress Prize 2](https://www.kaggle.com/competitions/ai-mathematical-olympiad-progress-prize-2)<br/>4. ✅ 考虑形成较好的记录流<br/>5. [dujh22/LLM-DailyDigest](https://github.com/dujh22/LLM-DailyDigest) ｜ 优化arxiv完成构建pipeline ✅｜ 新增每日可以自动执行程序 ✅｜ 自动新增1.27～2.6arxiv日报 ✅ |
-| 1    | 总结 |       | 1. o1模型的泛化性评估与研究 第一个月<br/>2. 超越人类专家顶尖水平的LLM研究 研究方向确定<br/>3. 元评估-诗歌场景算法实现 |
-|      | 5    | 27:31 | o1模型的泛化性评估与研究：文献整理，关键文献阅读             |
-|      | 4    | 20:26 | 1. o1模型的泛化性评估与研究：基本复现，研究计划，原始代码整理，文献搜集<br/>2. 如何写一篇论文<br/>3. 超越人类专家顶尖水平的LLM研究 回顾元评估和元学习<br/>4. AML-LLM-V1.pdf 写书 |
-|      | 3    | 13:19 | 1. aml课程总分合计<br/>2. 元评估工作回顾<br/>3. o1模型的泛化性评估与研究 |
-|      | 2    | 6:12  | 1. o1基本实现<br/>2. 元评估-诗歌场景算法实现<br/>3. aml课程大小作品批改 |
-|      | 1    | 1:5   | 1. o1基本实现<br/>2. malaymmlu细分评测                       |
+1. 研究兴趣：元评估、超越人类水平LLM研究、推理泛化性研究
+2. 主要聚焦：大模型逻辑推理能力提升（数据构造、模型训练、benchmark构造）
+3. 投稿情况：ARR➡️ICLR➡️ICML，在投1篇，合作1篇，在研1篇
+4. 其他：健美比赛第五名、博士生学术论坛第一名
+
+| 月份 | 内容                                                         |
+| ---- | ------------------------------------------------------------ |
+| 12   | 1. LRM文献调研<br />2. ICML投稿准备 <br />3. 健美比赛第五名  |
+| 11   | 1. Logic修改；2. 综述；3.算法研究；3. 开题准备<br />1. 腾讯青云奖学金申请<br />2. Logic训练 <br />3. 论文ICLR出分 ICLR审稿意见，Logic补充实验 |
+| 10   | 1. ICLR2026投稿+ICLR审稿<br />2. 开源SFT+RL方法复现与使用评测与数据合成实验设计训练实验结果  <br />3. poster与oral准备：博硕学术论坛第一名 |
+| 9    | Logic工作投ICLR：补实验 / 打磨论文稿件                       |
+| 8    | 1. Logic：论文修改<br />2. 综述：大纲；论文收集<br />3. 其他论文：AI4Sports类文章《EDMIT：An End-to-End Agentic Framework for Enhanced Decision-Making in Interactive Motion Tutoring 》  <br />头脑风暴：dLLM 扩散语言模型Universal Model 通用大模型  <br />论文定稿：Towards Artificial Intelligence for Science: A Case Study of Using ChatGPT for Disease Causality Discovery from Biomedical Literature （SCI二区） <br />4. 其他：党建论文；雁行计划：数实融合新引擎·智创产业新未来——大模型驱动数字中国建设 项目实施，报告1.1W字+外宣 |
+| 7    | 1. benchmark工作初步结束                                     |
+| 6    | 1. 梳理了整体论文写作思路，大体完成论文核心部分的初稿<br />2. 代码开发初步完成核心功能<br />3. 收集10个元数据 |
+| 5    | 1. 【科研】benchmark写代码、论文草稿<br />2. 【论文】迈向科学的人工智能：使用 ChatGPT 进行疾病因果关系发现的案例研究-审稿意见思考 |
+| 4    | 1. 逻辑推理训练28个SFT模型、2个CPT模型<br />2. 修改1篇论文<br />3. 构造数据14W  <br />4. 2篇文章初步构造框架 |
+| 3    | 1. 基座逻辑推理能力提升：模型训练 47个模型                   |
+| 2    | 1. 基座逻辑推理能力提升项目启动<br />2. 调研  <br />3. 基本数据构造  <br />4. 基本训练尝试 |
+| 1    | 1. 类o1模型的泛化性评估与研究 第一个月<br />2. 超越人类专家顶尖水平的LLM研究 研究方向确定<br />3. 元评估-诗歌场景算法实现 |
 
 ## 2024年
 
-| 论文标题                                                     | 投稿期刊       |
-| ------------------------------------------------------------ | -------------- |
-| ChatFUV：Chat Chain for Follow-Up Visit 用聊天链开发个性化随访方案 | IJCAI人工智能  |
-| AiMed: Artificial Intelligence large language model for chinese Medicine 面向中文医学的人工智能大语言模型 | IJCAI人工智能  |
+1. 导师：唐杰，在智谱AI实习，担任唐老师研究生课程AML&ML助教
+2. 担任计算机系党支部书记&带班助理
+3. 负责学校团委公共系统“同行”平台
+4. 获得2024年“挑战杯”首都大学生创业计划竞赛金奖（北京市一等）、国三等奖
+5. 获得社会实践金奖（全校排名第二）、清华大学优秀共青团员、计算机系优秀学生干部、公安机关外聘专家证书、2封市级政府红头文件感谢信
+6. 获得社会实践奖学金、校级惠妍英才奖学金(二等)奖学金
+7. 一篇二作中文核心论文《Research of Client Selection Algorithm in Cross-device Federated Learning》发表，一篇五作国家普刊论文《Study on the Construction of a Question-Answer Corpus Dataset for Chinese Medical Knowledge Large Language Models》发表，一个《AiMed医学知识大模型应用服务系统软件著作权》软件著作权
+8. 研究聚焦：大模型数学推理、多模态推理、大模型国际化、大模型在公安的应用、大模型高级推理、大模型评估（艺术、教育与多语言等）
+9. 两个论文会议场地主编
+10. 一个网站
+11. 一个应用
+12. 两个系统：公安、医疗
+
+| 论文标题                                                                                                                              | 投稿期刊       |
+| ------------------------------------------------------------------------------------------------------------------------------------- | -------------- |
+| ChatFUV：Chat Chain for Follow-Up Visit 用聊天链开发个性化随访方案                                                                    | IJCAI人工智能  |
+| AiMed: Artificial Intelligence large language model for chinese Medicine 面向中文医学的人工智能大语言模型                             | IJCAI人工智能  |
 | NewMed：Large Language Modeling Technology Enables Full Process Digital Intelligence in Medical Care 大语言模型技术赋能全流程数智医疗 | CogSci认知科学 |
-| MedRad:一个医学大模型的可靠辅助决策框架                      | ICML机器学习   |
-| Med-Eval: Benchmarks for the Medical Large Language Model 医疗大语言模型测评基准 | ICML机器学习   |
-| Doctor：The Most Reliable Digital Intelligence Healthcare Large Language Model System 最可靠的数智医疗大模型系统 | -              |
-| OpenMonet：Open Model Orchestration Network 开放模型协作网络 | -              |
-| MedLib: Research on the construction of a knowledge library for medical large language modeling 面向医学大语言模型的知识库构建研究 | -              |
+| MedRad:一个医学大模型的可靠辅助决策框架                                                                                               | ICML机器学习   |
+| Med-Eval: Benchmarks for the Medical Large Language Model 医疗大语言模型测评基准                                                      | ICML机器学习   |
+| Doctor：The Most Reliable Digital Intelligence Healthcare Large Language Model System 最可靠的数智医疗大模型系统                      | -              |
+| OpenMonet：Open Model Orchestration Network 开放模型协作网络                                                                          | -              |
+| MedLib: Research on the construction of a knowledge library for medical large language modeling 面向医学大语言模型的知识库构建研究    | -              |
 
-| **月份** | **周次** | **周总结**                                                   |
-| :------- | :------- | :----------------------------------------------------------- |
-| 12       |          | 1. KEG大模型训练营讲师深度学习基础<br/>2. Malay LLM<br/>3. AML课程结课筹备：作业baseline、panel、评分标准与大作业节课、论文场地申请<br/>4. AML书籍编撰 |
-|          | 5        | 1. 大模型最新研究和技术探讨<br/>2. O1标准程序提供            |
-|          | 4        | 1. 2024秋季学期系内述职、校内述职<br/>2. AML结课筹备         |
-|          | 3        | 1. 评估说明<br/>2. O1作业设计<br/>3. AML课程第二次panel组织<br/>4. AML课程评分标准制定 |
-|          | 2        | 1. 预训练代码解析<br/>2. 数据说明<br/>3. 课程大作业说明PPT   |
-|          | 1        | 1.  KEG大模型训练营讲师深度学习基础<br/>2.  Malay LLM：讨论后续工作分工-Internal Progress Notes \|内部进展记录<br/>3. 课程最终大作业相关通知：场地申请、网站维护 |
-| 11       |          | 1. 课程对外网站搭建https://www.aminer.cn/aml2024<br/>2. AML算力平台搭建[Computing Platform 教程 Tutorial](https://zhipu-ai.feishu.cn/docx/YheDdE5Nloa0EYxIJRsc2ds2nCF)<br/>3. Meta Evaluation: Use LLM to evaluate the LLM evaluator 元评估：用LLM来评估LLM评估器<br/>4.  立项申请-诗歌等艺术性文本的评测平台 |
-|          | 5        | 1. 古诗评测GLM写诗 立项申请-诗歌等艺术性文本的评测平台 <br/>2. Meta Evaluation<br/>3. 课程对外的网站<br/>4. 准备写大模型书<br/>5. Malay LLM<br/>6. 校级惠妍英才奖学金(二等)奖学金<br/>7. KEG大模型训练营讲师 |
-|          | 4        | 1. Meta Evaluation: Use LLM to evaluate the LLM evaluator 元评估：用LLM来评估LLM评估器<br/>2. 暑期必修实践获得金奖 |
-|          | 3        | 1. 课程对外网站搭建https://www.aminer.cn/aml2024<br/>2. AML算力平台搭建[Computing Platform 教程 Tutorial](https://zhipu-ai.feishu.cn/docx/YheDdE5Nloa0EYxIJRsc2ds2nCF) |
-|          | 2        | 1. Openreview互评 <br/>2. 学习：DPO、PPO、easyRL、cursor、RL+Agent |
-|          | 1        | 1. Chat课件制作Decoding  & Decoding Acceleration<br/>2. Self-Play课件制作Self-Learning |
-
-1-10月份数据未同步，得空同步～～～
+| **月份** | **月总结**                                                                                                                                                                                                                                      |
+| :------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 12             | KEG大模型训练营讲师-深度度学习基础<br />Malay LLM  <br />AML课程结课筹备：作业baseline、panel、评分标准与大作业节课、论文场地申请AML书籍编撰                                                                                                         |
+| 11             | 课程对外网站搭建https://www.aminer.cn/aml2024<br />AML算力平台搭建  <br />Computing Platform 教程 Tutorial  <br />Meta Evaluation: Use LLM to evaluate the LLM evaluator 元评估：用LLM来评估LLM评估器   <br />立项申请-诗歌等艺术性文本的评测平台 |
+| 10             | Reinforcement Learning Survey、Self-Learning：Evaluation&amp; Data &amp; New Scaling Law课件制作  <br />Post_Training_Scaling_Laws_Survey综述改修                                                                                                    |
+| 9              | Enhancing Mathematical Reasoning in Multimodal Large Language Models 提升多模态大型语言模型的数学推理能力                                                                                                                                             |
+| 8              | 社会实践总结math文献调研                                                                                                                                                                                                                              |
+| 7              | chatglm数学推理\|项目进展-month4：math2-prm evaluation fix暑期博士生必修实践项目                                                                                                                                                                      |
+| 6              | chatglm数学推理\|项目进展-month3：模型\|PPO Training 训练RLHF模型模型检验\|PRM]                                                                                                                                                                       |
+| 5              | chatglm数学推理\|项目进展-month2：模型\|PRM Inference 采用过程奖励模型进行基本推理模型\|PRM Training 训练过程奖励模型模型\|PRM Evaluation 对过程奖励模型进行评估                                                                                      |
+| 4              | chatglm数学推理\|项目进展-month1：数据构造\|自动化逐步标注人类反馈算法\|前向自动标注与后向评分反馈结合进行计算过程奖励                                                                                                                                |
+| 3              | 1.chatglm国际化 2.中英混杂问题处理                                                                                                                                                                                                                    |
+| 2              | 个人材料准备                                                                                                                                                                                                                                          |
+| 1              | 论文投稿*6                                                                                                                                                                                                                                            |
 
 ## 2023年
 
