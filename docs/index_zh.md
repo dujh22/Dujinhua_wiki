@@ -1,7 +1,7 @@
 # 杜晋华
 
 <p align="center">
-  <img src="images/杜晋华照片.jpg" alt="杜晋华" width="180" style="border-radius: 8px;" />
+  <img src="/images/杜晋华照片.jpg" alt="Jinhua Du" width="180" style="border-radius: 8px;" />
 </p>
 
 ---

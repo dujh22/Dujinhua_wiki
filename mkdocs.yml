@@ -1,13 +1,13 @@
-site_name: Junhua Du Personal Wiki (杜晋华 个人WIKI)
+site_name: Junhua Du Personal Wiki
 nav:
-    - Profile (EN): index_en.md
-    - 个人简介 (ZH): index_zh.md
-    - Postgraduate Experience (EN): postgraduate_experience_en.md
-    - 博士经历 (ZH): postgraduate_experience_zh.md
-    - Undergraduate Experience (EN): undergraduate_experience_en.md
-    - 本科经历 (ZH): undergraduate_experience_zh.md
-    - Research History (EN): history_en.md
-    - 研究历史 (ZH): history_zh.md
+    - Profile: index.md
+    - 个人简介: index_zh.md
+    - Postgraduate Experience: postgraduate_experience_en.md
+    - 博士经历: postgraduate_experience_zh.md
+    - Undergraduate Experience: undergraduate_experience_en.md
+    - 本科经历: undergraduate_experience_zh.md
+    - Research History: history_en.md
+    - 研究历史: history_zh.md
 theme:
     name: 'material'
 
