@@ -7,6 +7,8 @@
   <a href="#phase-1-research-engineering-oriented">Engineering-oriented research</a>
   <a href="#coursework">Coursework</a>
   <a href="#published-academic-works">Publications</a>
+  <a href="#social-work-articles">Social work articles</a>
+  <a href="#patents">Patents</a>
   <a href="#honors-awards">Honors</a>
   <a href="#work-experience">Experience</a>
 </nav>
@@ -20,6 +22,8 @@ After the second year of doctoral studies, the research direction further shifte
 Since 2024, the primary focus has been on large language model underlying technologies, under the supervision of Prof. Jie Tang.
 
 LLM research surpassing top human expert levels: *Towards Reliable and Generalizable Reasoning in Foundation Models*
+
+On April 28, 2026, passed the first doctoral proposal review at the Institute of Software. Research topic: *Key Technologies for the Self-Evolution of Reasoning Capabilities in Foundation Models* (《面向基础模型推理能力自进化的关键技术研究》).
 
 ### Existing Challenges
 
@@ -41,7 +45,9 @@ Mathematical reasoning and multimodal reasoning in large models
 
 | Paper | Venue | Author Position | Category |
 | ----- | ----- | --------------- | -------- |
-| [Glm-4.5: Agentic, reasoning, and coding (arc) foundation models](https://arxiv.org/abs/2508.06471) | Arxiv | Non-first author | Preprint |
+| [GLM-5: from Vibe Coding to Agentic Engineering](https://arxiv.org/abs/2602.15763) | arXiv | Non-first author | Preprint |
+| [From Player to Master: Enhancing Test-Time Learning of LLM Agents via Reinforcement Learning over Memory](https://arxiv.org/abs/2605.16959) | ICML 2026 | Non-first author | CCF-A |
+| [GLM-4.5: Agentic, Reasoning, and Coding (ARC) Foundation Models](https://arxiv.org/abs/2508.06471) | arXiv | Non-first author | Preprint |
 | [A Survey of Post-Training Scaling in Large Language Models](https://aclanthology.org/2025.acl-long.140/) | ACL | Non-first author | CCF-A |
 
 | Project | Specific Output | Period |
@@ -189,11 +195,15 @@ All project code is open-sourced on GitHub (continuously updated)
 
 ## Published Academic Works
 
-[11] Zeng A, Lv X, Zheng Q, et al. [Glm-4.5: Agentic, reasoning, and coding (arc) foundation models](https://arxiv.org/abs/2508.06471)[J]. arXiv preprint arXiv:2508.06471, 2025. (Arxiv)
+[13] [GLM-5: from Vibe Coding to Agentic Engineering](https://arxiv.org/abs/2602.15763). arXiv preprint arXiv:2602.15763, 2026. (Preprint)
+
+[12] Peiyi Wang, Chen Ling, Nianlong Gu, Jinhua Du, Zhongyuan Peng, Yuhang Zhou, Kaibo Fu, Yunpeng Huang, Jiaming Ji, Jun Zhu, and Jie Tang. [From Player to Master: Enhancing Test-Time Learning of LLM Agents via Reinforcement Learning over Memory](https://arxiv.org/abs/2605.16959). ICML 2026.
+
+[11] Zeng A, Lv X, Zheng Q, et al. [GLM-4.5: Agentic, Reasoning, and Coding (ARC) Foundation Models](https://arxiv.org/abs/2508.06471)[J]. arXiv preprint arXiv:2508.06471, 2025. (Preprint)
 
 [10] Du J, Li X, Liu Y, et al. [Large language models driven reliable clinical decision-making: Framework and application](https://www.sciencedirect.com/science/article/pii/S294995342500030X)[J]. Informatics and Health, 2025. (SCI Q3, First Author)
 
-[9] X. Li, J. Du, Y. Liu, H. Yin and H. Liu, "[Towards Artificial Intelligence for Science: A Case Study of Using ChatGPT for Disease Causality Discovery from Biomedical Literature](https://ieeexplore.ieee.org/abstract/document/11373497)," in Big Data Mining and Analytics, vol. 9, no. 2, pp. 554-562, April 2026, doi: 10.26599/BDMA.2025.9020086. (SCI Q1 *Big Data Mining and Analytics*, Co-first Author)
+[9] X. Li, J. Du, Y. Liu, H. Yin and H. Liu, "[Towards Artificial Intelligence for Science: A Case Study of Using ChatGPT for Disease Causality Discovery from Biomedical Literature](https://ieeexplore.ieee.org/document/11373497)," in *Big Data Mining and Analytics*, vol. 9, no. 2, pp. 554-562, April 2026, doi: 10.26599/BDMA.2025.9020086. (SCI Q1 *Big Data Mining and Analytics*, Co-first Author; formally published online and indexed in IEEE Xplore in February 2026.)
 
 [8] Liu Y, Li X, Luo Y, et al. [Toward a Large Language Model-Driven Medical Knowledge Retrieval and QA System: Framework Design and Evaluation](https://doi.org/10.1016/j.eng.2025.02.010)[J]. Engineering, 2025. (SCI Q1 *Engineering*, Fourth Author)
 
@@ -227,6 +237,16 @@ All project code is open-sourced on GitHub (continuously updated)
 
 [1] Jinhua Du. MedLib: Research on the construction of a knowledge library for medical large language modeling
 
+## Social Work Articles { #social-work-articles }
+
+[2] Sun Hao, Huang Yue, Li Ling, Yan Ruotian, and Du Jinhua. *Improving Graduate Education Quality and Efficiency through Party-Building-Led Collaborative Education*. Department of Computer Science and Technology, Tsinghua University, 2026.
+
+[1] Zhang Xuefeng, An Wenhao, Lin Shiwei, and Du Jinhua. *Advancing High-Quality Graduate Community Development through a Vertically Organized Education Structure*. Department of Computer Science and Technology, Tsinghua University, 2025.
+
+## Patents { #patents }
+
+[1] *Method, Apparatus, and System for Evaluating the Logical Reasoning Capability of Large Language Models* (July 2026).
+
 ## Published Software Copyrights
 
 [1] AiMed Medical Knowledge Large Model Application Service System — Software Copyright (2024.02.29). Service available at the Institute of Medical Information, Chinese Academy of Medical Sciences: [AiMed Medical Knowledge Large Model](http://aimed.imicams.ac.cn/#/) — Jointly developed by the Institute of Medical Information, Chinese Academy of Medical Sciences and Tsinghua University OpenDE team, providing medical knowledge Q&A and intelligent literature services for medical research and innovation.
@@ -243,7 +263,12 @@ All project code is open-sourced on GitHub (continuously updated)
 
 | Category | Content | Unit | Date |
 | -------- | ------- | ---- | ---- |
-| Recognition | Outstanding Communist Youth League Member | Tsinghua University Communist Youth League Committee | 2025.10 |
+| Recognition | Tsinghua University Outstanding Student Communist Party Member | Tsinghua University | 2026.06 |
+| | Tsinghua University Three-Good Student | Tsinghua University | 2026.06 |
+| | Tsinghua University Outstanding Student Primary-Level Party Organization (Party Branch) | Tsinghua University | 2026.06 |
+| | Tsinghua University Grade-A Youth League Branch | Tsinghua University | 2026.06 |
+| | Ranked 9th out of 667 in the university-wide 2025 graduate Party branch evaluation | Tsinghua University | 2026.05 |
+| | Outstanding Communist Youth League Member | Tsinghua University Communist Youth League Committee | 2025.10 |
 | | Led class to Excellence Class & League (1st place), Paired Class & League | Tsinghua University | 2025.09 |
 | | Outstanding Trainee in Social Work Seminar | Tsinghua University | 2025.04 |
 | | Led class to Dedication Class & League | Tsinghua University Graduate Communist Youth League Committee | 2025.03 |
@@ -251,7 +276,8 @@ All project code is open-sourced on GitHub (continuously updated)
 | | Outstanding Department Member, Computer Science Graduate League | Tsinghua University Computer Science Department | 2023.05 |
 | | Outstanding Department Member, Tanzhen Technology Department | Tsinghua University | 2022.12 |
 | | Outstanding Trainee, Graduate New Student Cadre Training & League School | Tsinghua University Graduate Committee | 2022.08 |
-| Awards | 2024 Journal of Software Highly Cited Researcher | Journal of Software Editorial Board | 2026.01 |
+| Awards | *Research of Client Selection Algorithm in Cross-device Federated Learning* — 2024 *Journal of Software* Highly Noted Research Paper | *Journal of Software* Editorial Board | 2026.01 |
+| | *Research of Client Selection Algorithm in Cross-device Federated Learning* — 2024 *Journal of Software* Highly Noted Review Paper | *Journal of Software* Editorial Board | 2026.01 |
 | | Tsinghua Friends - Hefei Elite Scholarship | Tsinghua University | 2025.12 |
 | | Tsinghua University Ma Yuehan Cup Bodybuilding Competition 5th Place | Tsinghua University Student Bodybuilding Association | 2025.12 |
 | | "Computing Future" Doctoral Forum Excellence Award (1st) | Tsinghua University Computer Science Department | 2025.10 |

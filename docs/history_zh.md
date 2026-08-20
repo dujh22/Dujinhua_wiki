@@ -14,8 +14,15 @@
 
 博士四年级
 
-| 月份 | 内容                                                                                                                                    |
-| ---- | --------------------------------------------------------------------------------------------------------------------------------------- |
+[2026 年全年工作日志](https://github.com/dujh22/Daily-Work-Log-Public/blob/main/logs/2026/README.md)
+
+| 月份 | 内容 |
+| ---- | ---- |
+| 7    | 专利：大语言模型的逻辑推理能力的评测方法、装置和系统 |
+| 6    | 1. 党支部获评先进基层党组织、甲级团支部<br />2. 个人获评优秀共产党员、三好学生 |
+| 5    | 党支部评议排名 9 / 667 |
+| 4    | 4 月 28 日，软件所第一次开题通过，课题《面向基础模型推理能力自进化的关键技术研究》 |
+| 2    | 1. [GLM-5: from Vibe Coding to Agentic Engineering](https://arxiv.org/abs/2602.15763) 发布于 arXiv<br />2. BDMA 论文 [Towards Artificial Intelligence for Science: A Case Study of Using ChatGPT for Disease Causality Discovery from Biomedical Literature](https://ieeexplore.ieee.org/document/11373497) 正式在线出版并被 IEEE 收录 |
 | 1    | 1.Logic完成ICML 转投<br />2.LRM完成整体算法设计和基本工程规划，论文初稿形成<br />3.项目/申报：国自科（循证医学 + LLM 协同决策）方向材料 |
 
 ## 2025年 博三 { #year-2025 }

@@ -7,6 +7,8 @@
   <a href="#engineering-research">偏工程研究</a>
   <a href="#coursework">学习情况</a>
   <a href="#publications">学术论著</a>
+  <a href="#social-work-articles">社会工作成果</a>
+  <a href="#patents">专利</a>
   <a href="#honors">评奖评优</a>
   <a href="#experience">工作实践</a>
 </nav>
@@ -20,6 +22,8 @@
 2024年至今主要研究大语言模型底层技术，师从唐杰教授
 
 超越人类专家顶尖水平的LLM研究：《基础模型的推理可靠性与泛化性研究（Towards Reliable and Generalizable Reasoning in Foundation Models）》
+
+2026年4月28日，软件所第一次开题通过，研究课题为《面向基础模型推理能力自进化的关键技术研究》。
 
 ### 存在挑战
 
@@ -41,8 +45,10 @@ Zhipu认为：从当前人类已经实现的智能到达超级智能，将通过
 
 | 论文                                                         | 期刊/会议名 | 作者顺位 | 类别   |
 | ------------------------------------------------------------ | ----------- | -------- | ------ |
-| [Glm-4.5: Agentic, reasoning, and coding (arc) foundation models](https://arxiv.org/abs/2508.06471) | Arxiv       | 非一作   | 预印本 |
-| [A Survey of Post-Training Scaling in Large Language Models](https://aclanthology.org/2025.acl-long.140/) | ACL         | 非一作   | CCF-A  |
+| [GLM-5: from Vibe Coding to Agentic Engineering](https://arxiv.org/abs/2602.15763) | arXiv | 非一作 | 预印本 |
+| [From Player to Master: Enhancing Test-Time Learning of LLM Agents via Reinforcement Learning over Memory](https://arxiv.org/abs/2605.16959) | ICML 2026 | 非一作 | CCF-A |
+| [GLM-4.5: Agentic, Reasoning, and Coding (ARC) Foundation Models](https://arxiv.org/abs/2508.06471) | arXiv | 非一作 | 预印本 |
+| [A Survey of Post-Training Scaling in Large Language Models](https://aclanthology.org/2025.acl-long.140/) | ACL | 非一作 | CCF-A |
 
 | 项目 | 具体产出                                                     | 时间            |
 | ---- | ------------------------------------------------------------ | --------------- |
@@ -189,11 +195,15 @@ Zhipu认为：从当前人类已经实现的智能到达超级智能，将通过
 
 ## 已发表学术论著 { #publications }
 
-[11] Zeng A, Lv X, Zheng Q, et al. [Glm-4.5: Agentic, reasoning, and coding (arc) foundation models](https://arxiv.org/abs/2508.06471)[J]. arXiv preprint arXiv:2508.06471, 2025. (Arxiv)
+[13] [GLM-5: from Vibe Coding to Agentic Engineering](https://arxiv.org/abs/2602.15763). arXiv preprint arXiv:2602.15763, 2026.（预印本）
+
+[12] Peiyi Wang, Chen Ling, Nianlong Gu, Jinhua Du, Zhongyuan Peng, Yuhang Zhou, Kaibo Fu, Yunpeng Huang, Jiaming Ji, Jun Zhu, and Jie Tang. [From Player to Master: Enhancing Test-Time Learning of LLM Agents via Reinforcement Learning over Memory](https://arxiv.org/abs/2605.16959). ICML 2026.
+
+[11] Zeng A, Lv X, Zheng Q, et al. [GLM-4.5: Agentic, Reasoning, and Coding (ARC) Foundation Models](https://arxiv.org/abs/2508.06471)[J]. arXiv preprint arXiv:2508.06471, 2025.（预印本）
 
 [10] Du J, Li X, Liu Y, et al. [Large language models driven reliable clinical decision-making: Framework and application](https://www.sciencedirect.com/science/article/pii/S294995342500030X)[J]. Informatics and Health, 2025. (SCI 三区，一作)
 
-[9] X. Li, J. Du, Y. Liu, H. Yin and H. Liu, "[Towards Artificial Intelligence for Science: A Case Study of Using ChatGPT for Disease Causality Discovery from Biomedical Literature](https://ieeexplore.ieee.org/abstract/document/11373497)," in Big Data Mining and Analytics, vol. 9, no. 2, pp. 554-562, April 2026, doi: 10.26599/BDMA.2025.9020086. (SCI 1区《Big Data Mining and Analytic》，共同一作)
+[9] X. Li, J. Du, Y. Liu, H. Yin and H. Liu, "[Towards Artificial Intelligence for Science: A Case Study of Using ChatGPT for Disease Causality Discovery from Biomedical Literature](https://ieeexplore.ieee.org/document/11373497)," in *Big Data Mining and Analytics*, vol. 9, no. 2, pp. 554-562, April 2026, doi: 10.26599/BDMA.2025.9020086.（中科院一区期刊 *Big Data Mining and Analytics*，共同一作；2026年2月正式在线出版并被 IEEE 数据库收录）
 
 [8] Liu Y, Li X, Luo Y, et al. [Toward a Large Language Model-Driven Medical Knowledge Retrieval and QA System: Framework Design and Evaluation](https://doi.org/10.1016/j.eng.2025.02.010)[J]. Engineering, 2025.(SCI 1区《Engineering》,四作)
 
@@ -227,6 +237,16 @@ Zhipu认为：从当前人类已经实现的智能到达超级智能，将通过
 
 [1] Jinhua Du. MedLib: Research on the construction of a knowledge library for medical large language modeling
 
+## 社会工作成果文章 { #social-work-articles }
+
+[2] 孙豪，黄越，李伶，严若天，杜晋华. 党建引领协同育人推进研究生培养提质增效. 清华大学计算机科学与技术系，2026.
+
+[1] 张学峰，安文浩，林士伟，杜晋华. 纵向建制育人推进研究生集体建设高质量发展. 清华大学计算机科学与技术系，2025.
+
+## 专利 { #patents }
+
+[1] 大语言模型的逻辑推理能力的评测方法、装置和系统（2026年7月）。
+
 ## 已发表软件著作权
 
 [1] AiMed医学知识大模型应用服务系统-软件著作权（2024.2.29），可在中国科学院医学信息研究所相关系统中获得服务：[AiMed医学知识大模型](http://aimed.imicams.ac.cn/#/)由中国医学科学院医学信息研究所与清华大学OpenDE团队联合自主研发， 面向医学科研创新提供医学知识问答与智能文献服务。
@@ -243,7 +263,12 @@ Zhipu认为：从当前人类已经实现的智能到达超级智能，将通过
 
 | 项目   | 内容                                           | 单位                       | 时间    |
 | ------ | ---------------------------------------------- | -------------------------- | ------- |
-| 评优   | 优秀共青团员                                   | 共青团清华大学委员会       | 2025.10 |
+| 评优   | 清华大学学生优秀共产党员                       | 清华大学                   | 2026.06 |
+|        | 清华大学三好学生                               | 清华大学                   | 2026.06 |
+|        | 清华大学学生先进基层党组织（党支部）           | 清华大学                   | 2026.06 |
+|        | 清华大学甲级团支部                             | 清华大学                   | 2026.06 |
+|        | 2025年度研究生党支部评议全校第9/667名          | 清华大学                   | 2026.05 |
+|        | 优秀共青团员                                   | 共青团清华大学委员会       | 2025.10 |
 |        | 带领班级获评卓越班团（第一名）、结对班团       | 清华大学                   | 2025.09 |
 |        | 社会工作研讨优秀学员                           | 清华大学                   | 2025.04 |
 |        | 带领班级获评笃行班团                           | 共青团清华大学研究生委员会 | 2025.03 |
@@ -251,7 +276,8 @@ Zhipu认为：从当前人类已经实现的智能到达超级智能，将通过
 |        | 计算机系研团优秀部员                           | 清华大学计算机系           | 2023.05 |
 |        | 探臻科技部优秀部员                             | 清华大学                   | 2022.12 |
 |        | 研究生新生骨干培训班暨团校（研究生班）优秀学员 | 清华大学研究生委员会       | 2022.08 |
-| 评奖   | 《软件学报》2024年高被关注研究者               | 《软件学报》编辑部         | 2026.01 |
+| 评奖   | 《跨设备联邦学习中的客户端选择算法》获《软件学报》2024年高被关注研究论文 | 《软件学报》编辑部 | 2026.01 |
+|        | 《跨设备联邦学习中的客户端选择算法》获《软件学报》2024年高被关注综述论文 | 《软件学报》编辑部 | 2026.01 |
 |        | 清华之友-合肥英才奖学金                        | 清华大学                   | 2025.12 |
 |        | 清华大学马约翰杯健美比赛第五名                 | 清华大学学生健美协会       | 2025.12 |
 |        | “计算未来”博硕学术论坛卓越奖（第一名）       | 清华大学计算机系           | 2025.10 |

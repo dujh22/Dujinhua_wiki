@@ -14,8 +14,15 @@
 
 Doctoral Year 4
 
-| Month | Content                                                                                                                                                                                                                                                                        |
-| ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+[Full-year work log for 2026](https://github.com/dujh22/Daily-Work-Log-Public/blob/main/logs/2026/README.md)
+
+| Month | Content |
+| ----- | ------- |
+| 7     | Patent: *Method, Apparatus, and System for Evaluating the Logical Reasoning Capability of Large Language Models* |
+| 6     | 1. Party branch recognized as a Tsinghua University Outstanding Student Primary-Level Party Organization and a Tsinghua University Grade-A Youth League Branch<br />2. Personally recognized as a Tsinghua University Outstanding Student Communist Party Member and a Tsinghua University Three-Good Student |
+| 5     | Party branch evaluation ranking: 9 / 667 |
+| 4     | On April 28, passed the first doctoral proposal review at the Institute of Software for the topic *Key Technologies for the Self-Evolution of Reasoning Capabilities in Foundation Models* (《面向基础模型推理能力自进化的关键技术研究》) |
+| 2     | 1. [GLM-5: from Vibe Coding to Agentic Engineering](https://arxiv.org/abs/2602.15763) released on arXiv<br />2. The BDMA paper [Towards Artificial Intelligence for Science: A Case Study of Using ChatGPT for Disease Causality Discovery from Biomedical Literature](https://ieeexplore.ieee.org/document/11373497) was formally published online and included in IEEE Xplore |
 | 1     | 1. Logic paper resubmitted to ICML<br />2. LRM: overall algorithm design and basic engineering plan completed; initial draft formed<br />3. Projects/Applications: National Natural Science Foundation materials (evidence-based medicine + LLM collaborative decision-making) |
 
 ## 2025 — Year 3 (Ph.D.)

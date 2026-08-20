@@ -1,0 +1,136 @@
+:root {
+  --aml-ink: #172033;
+  --aml-muted: #5b6577;
+  --aml-line: #dce3ed;
+  --aml-surface: #ffffff;
+  --aml-soft: #f4f7fb;
+  --aml-brand: #2857c5;
+  --aml-brand-dark: #173a91;
+  --aml-shadow: 0 12px 34px rgba(22, 42, 82, 0.09);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body.aml-archive {
+  margin: 0;
+  color: var(--aml-ink);
+  background: var(--aml-soft);
+  font: 16px/1.72 -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+}
+a { color: var(--aml-brand); text-underline-offset: 0.16em; }
+a:hover { color: var(--aml-brand-dark); }
+img { max-width: 100%; height: auto; }
+
+.archive-banner {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  color: #fff;
+  background: linear-gradient(120deg, #152b67, #2857c5 62%, #4079e6);
+  box-shadow: 0 4px 22px rgba(12, 31, 75, 0.22);
+}
+.archive-banner__inner {
+  width: min(1180px, calc(100% - 32px));
+  min-height: 72px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+.archive-banner strong { display: block; font-size: 1.04rem; }
+.archive-banner span { display: block; opacity: 0.78; font-size: 0.84rem; }
+.archive-banner nav { display: flex; gap: 10px; flex: 0 0 auto; }
+.archive-banner a {
+  color: #fff;
+  padding: 7px 12px;
+  border: 1px solid rgba(255,255,255,.42);
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: .88rem;
+}
+.archive-banner a:hover { background: rgba(255,255,255,.13); }
+
+#main { min-height: auto !important; margin: 0 !important; }
+.billboard, .bs-header { width: 100%; }
+.billboard img, .bs-header img { display: block; width: 100%; object-fit: cover; }
+.container {
+  width: min(1180px, calc(100% - 32px));
+  margin: 28px auto 64px;
+}
+.container > .row {
+  display: grid;
+  grid-template-columns: 230px minmax(0, 1fr);
+  gap: 26px;
+  align-items: start;
+}
+.row { min-width: 0; }
+.col-md-3, .col-md-9, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 { min-width: 0; }
+.bs-sidebar {
+  position: sticky;
+  top: 100px;
+  padding: 14px;
+  border: 1px solid var(--aml-line);
+  border-radius: 16px;
+  background: rgba(255,255,255,.94);
+  box-shadow: var(--aml-shadow);
+}
+.bs-sidenav, .bs-sidenav ul { list-style: none; margin: 0; padding: 0; }
+.bs-sidenav li + li { margin-top: 3px; }
+.bs-sidenav a {
+  display: block;
+  padding: 8px 11px;
+  border-radius: 9px;
+  color: #3e4b62;
+  text-decoration: none;
+}
+.bs-sidenav a:hover, .bs-sidenav .active > a { color: var(--aml-brand-dark); background: #eaf0ff; }
+
+.bs-content {
+  margin: 0 0 20px;
+  padding: 24px 28px;
+  overflow: hidden;
+  border: 1px solid var(--aml-line);
+  border-radius: 16px;
+  background: var(--aml-surface);
+  box-shadow: var(--aml-shadow);
+}
+.bs-content h1 { margin: 0; font-size: clamp(1.45rem, 2.1vw, 2rem); line-height: 1.25; }
+.bs-content h2, .bs-content h3 { line-height: 1.35; }
+.bs-content hr { border: 0; border-top: 1px solid var(--aml-line); margin: 15px 0 18px; }
+.bs-content p { margin: .65em 0; }
+.bs-content blockquote {
+  margin: 1em 0;
+  padding: 10px 16px;
+  border-left: 4px solid #82a2eb;
+  background: #f5f8ff;
+}
+.bs-content table {
+  width: 100% !important;
+  margin: 14px 0 20px;
+  border-collapse: collapse;
+  display: block;
+  overflow-x: auto;
+  white-space: normal;
+}
+.bs-content th, .bs-content td {
+  min-width: 120px;
+  padding: 10px 12px;
+  border: 1px solid var(--aml-line) !important;
+  vertical-align: top;
+  text-align: left;
+}
+.bs-content th { background: #eef3fc; color: #263859; }
+.bs-content tr:nth-child(even) td { background: #fafcff; }
+.bs-content [style*="font-size"] { max-width: 100%; }
+
+@media (max-width: 860px) {
+  .archive-banner { position: relative; }
+  .archive-banner__inner { padding: 13px 0; align-items: flex-start; flex-direction: column; gap: 10px; }
+  .container { width: min(100% - 20px, 760px); margin-top: 16px; }
+  .container > .row { grid-template-columns: 1fr; }
+  .bs-sidebar { position: static; }
+  .bs-sidenav { display: flex; flex-wrap: wrap; gap: 4px; }
+  .bs-sidenav li + li { margin-top: 0; }
+  .bs-content { padding: 20px 16px; border-radius: 13px; }
+}
