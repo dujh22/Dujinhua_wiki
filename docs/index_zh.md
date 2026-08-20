@@ -22,6 +22,38 @@
   </div>
 </section>
 
+<section class="resume-panel" aria-label="个人简历">
+  <div class="resume-panel__intro">
+    <p class="resume-panel__eyebrow">个人简历</p>
+    <p class="resume-panel__title">在线查阅或下载简历</p>
+    <p class="resume-panel__description">可选择中文或英文版本，快速了解我的教育背景、研究经历、项目成果与荣誉。</p>
+  </div>
+  <div class="resume-options">
+    <div class="resume-option">
+      <div class="resume-option__meta">
+        <span>中文</span>
+        <strong>中文简历</strong>
+        <small>PDF · 2 页</small>
+      </div>
+      <div class="resume-option__actions">
+        <a class="resume-link resume-link--primary" href="../assets/cv/Jinhua_Du_CV_zh.pdf" target="_blank" rel="noopener">在线查阅</a>
+        <a class="resume-link" href="../assets/cv/Jinhua_Du_CV_zh.pdf" download>下载 PDF</a>
+      </div>
+    </div>
+    <div class="resume-option">
+      <div class="resume-option__meta">
+        <span>英文</span>
+        <strong>英文简历</strong>
+        <small>PDF · 2 页</small>
+      </div>
+      <div class="resume-option__actions">
+        <a class="resume-link resume-link--primary" href="../assets/cv/Jinhua_Du_CV_en.pdf" target="_blank" rel="noopener">在线查阅</a>
+        <a class="resume-link" href="../assets/cv/Jinhua_Du_CV_en.pdf" download>下载 PDF</a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <div class="home-nav-grid">
   <a href="../postgraduate_experience_zh/">
     <span>当前研究</span>
