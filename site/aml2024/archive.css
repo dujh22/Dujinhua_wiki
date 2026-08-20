@@ -53,7 +53,7 @@ img { max-width: 100%; height: auto; }
 
 #main { min-height: auto !important; margin: 0 !important; }
 .billboard, .bs-header { width: 100%; }
-.billboard img, .bs-header img { display: block; width: 100%; object-fit: cover; }
+.bs-header img { display: block; width: 100%; object-fit: cover; }
 .container {
   width: min(1180px, calc(100% - 32px));
   margin: 28px auto 64px;
@@ -105,16 +105,62 @@ img { max-width: 100%; height: auto; }
   border-left: 4px solid #82a2eb;
   background: #f5f8ff;
 }
-.bs-content table {
-  width: 100% !important;
+.course-part {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 28px 0 14px;
+  color: var(--aml-brand-dark);
+  font-size: 1.18rem;
+  font-weight: 700;
+}
+.course-part::before,
+.course-part::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--aml-line);
+}
+.table-scroll {
+  width: 100%;
+  max-width: 100%;
   margin: 14px 0 20px;
-  border-collapse: collapse;
-  display: block;
   overflow-x: auto;
+  border: 1px solid var(--aml-line);
+  border-radius: 12px;
+  -webkit-overflow-scrolling: touch;
+}
+.table-scroll:focus-visible {
+  outline: 3px solid rgba(40, 87, 197, .28);
+  outline-offset: 3px;
+}
+.bs-content table {
+  display: table;
+  width: 100% !important;
+  margin: 0;
+  border-collapse: collapse;
+  table-layout: auto;
   white-space: normal;
 }
+.bs-content caption {
+  padding: 10px 12px;
+  color: var(--aml-muted);
+  background: #f7f9fd;
+  font-size: .9rem;
+  font-weight: 600;
+  text-align: left;
+}
+.course-table { min-width: 760px; }
+.report-table { min-width: 860px; }
+.course-table th,
+.course-table td { width: auto !important; }
+.course-table th:nth-child(1) { width: 18% !important; }
+.course-table th:nth-child(2) { width: 38% !important; }
+.course-table th:nth-child(3) { width: 17% !important; }
+.course-table th:nth-child(4) { width: 14% !important; }
+.course-table th:nth-child(5) { width: 13% !important; }
 .bs-content th, .bs-content td {
-  min-width: 120px;
+  min-width: 108px;
   padding: 10px 12px;
   border: 1px solid var(--aml-line) !important;
   vertical-align: top;
@@ -123,6 +169,58 @@ img { max-width: 100%; height: auto; }
 .bs-content th { background: #eef3fc; color: #263859; }
 .bs-content tr:nth-child(even) td { background: #fafcff; }
 .bs-content [style*="font-size"] { max-width: 100%; }
+.person-card {
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid var(--aml-line);
+  border-radius: 14px;
+  background: #fafcff;
+}
+.person-card--lead {
+  display: grid;
+  grid-template-columns: 128px minmax(0, 1fr);
+  gap: 20px;
+  align-items: center;
+  max-width: 520px;
+}
+.person-card__avatar {
+  display: block;
+  width: 96px;
+  height: 96px;
+  margin: 0 auto 10px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.person-card--lead .person-card__avatar {
+  width: 128px;
+  height: 128px;
+  margin: 0;
+}
+.person-card__details { display: grid; gap: 4px; }
+.person-card__name { color: var(--aml-brand-dark); font-size: 1rem; }
+.person-card__role {
+  display: inline-flex;
+  align-self: center;
+  width: fit-content;
+  margin-top: 2px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  color: var(--aml-brand-dark);
+  background: #e7eeff;
+  font-size: .78rem;
+  font-weight: 700;
+}
+.person-card__affiliation { display: block; color: var(--aml-muted); font-size: .9rem; }
+.people-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-align: center;
+}
+.people-grid .person-card__role { margin: 3px auto 0; }
 
 @media (max-width: 860px) {
   .archive-banner { position: relative; }
@@ -133,4 +231,15 @@ img { max-width: 100%; height: auto; }
   .bs-sidenav { display: flex; flex-wrap: wrap; gap: 4px; }
   .bs-sidenav li + li { margin-top: 0; }
   .bs-content { padding: 20px 16px; border-radius: 13px; }
+  .course-table { min-width: 700px; font-size: .92rem; }
+  .report-table { min-width: 780px; font-size: .92rem; }
+}
+
+@media (max-width: 520px) {
+  .course-part { gap: 8px; margin-top: 22px; font-size: 1.08rem; }
+  .person-card--lead { grid-template-columns: 88px minmax(0, 1fr); gap: 14px; }
+  .person-card--lead .person-card__avatar { width: 88px; height: 88px; }
+  .people-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .people-grid .person-card { padding: 12px 8px; }
+  .people-grid .person-card__avatar { width: 76px; height: 76px; }
 }

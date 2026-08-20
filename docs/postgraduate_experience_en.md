@@ -43,12 +43,12 @@ Based on practical experience from cross-domain model training and data system c
 
 Mathematical reasoning and multimodal reasoning in large models
 
-| Paper | Venue | Author Position | Category |
+| Paper | Venue | Role | Category |
 | ----- | ----- | --------------- | -------- |
-| [GLM-5: from Vibe Coding to Agentic Engineering](https://arxiv.org/abs/2602.15763) | arXiv | Non-first author | Preprint |
-| [From Player to Master: Enhancing Test-Time Learning of LLM Agents via Reinforcement Learning over Memory](https://arxiv.org/abs/2605.16959) | ICML 2026 | Non-first author | CCF-A |
-| [GLM-4.5: Agentic, Reasoning, and Coding (ARC) Foundation Models](https://arxiv.org/abs/2508.06471) | arXiv | Non-first author | Preprint |
-| [A Survey of Post-Training Scaling in Large Language Models](https://aclanthology.org/2025.acl-long.140/) | ACL | Non-first author | CCF-A |
+| [GLM-5: from Vibe Coding to Agentic Engineering](https://arxiv.org/abs/2602.15763) | arXiv | Key contributor | Preprint |
+| [From Player to Master: Enhancing Test-Time Learning of LLM Agents via Reinforcement Learning over Memory](https://arxiv.org/abs/2605.16959) | ICML 2026 | Key contributor | CCF-A |
+| [GLM-4.5: Agentic, Reasoning, and Coding (ARC) Foundation Models](https://arxiv.org/abs/2508.06471) | arXiv | Key contributor | Preprint |
+| [A Survey of Post-Training Scaling in Large Language Models](https://aclanthology.org/2025.acl-long.140/) | ACL | Key contributor | CCF-A |
 
 | Project | Specific Output | Period |
 | ------- | --------------- | ------ |
