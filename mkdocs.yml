@@ -74,4 +74,4 @@ markdown_extensions:
       custom_checkbox: true
 
 extra_css:
-  - stylesheets/extra.css?v=20260820-2
+  - stylesheets/extra.css
