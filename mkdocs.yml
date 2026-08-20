@@ -1,13 +1,77 @@
-site_name: Junhua Du Personal Wiki
-nav:
-    - Profile: index.md
-    - 个人简介: index_zh.md
-    - Postgraduate Experience: postgraduate_experience_en.md
-    - 博士经历: postgraduate_experience_zh.md
-    - Undergraduate Experience: undergraduate_experience_en.md
-    - 本科经历: undergraduate_experience_zh.md
-    - Research History: history_en.md
-    - 研究历史: history_zh.md
-theme:
-    name: 'material'
+site_name: Jinhua Du | 杜晋华
+site_url: https://dujh22.github.io/Dujinhua_wiki/
+repo_url: https://github.com/dujh22/Dujinhua_wiki
+repo_name: dujh22/Dujinhua_wiki
+edit_uri: ""
+site_description: Bilingual academic homepage of Jinhua Du, featuring research, education, publications, honors, and project history.
+site_author: Jinhua Du
 
+theme:
+  name: material
+  language: en
+  font: false
+  icon:
+    logo: material/account-school-outline
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: blue
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: light-blue
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.tracking
+    - navigation.top
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - search.share
+    - content.code.copy
+
+nav:
+  - English:
+      - Profile: index.md
+      - Postgraduate Experience: postgraduate_experience_en.md
+      - Undergraduate Experience: undergraduate_experience_en.md
+      - Research History: history_en.md
+  - 中文:
+      - 个人简介: index_zh.md
+      - 博士经历: postgraduate_experience_zh.md
+      - 本科经历: undergraduate_experience_zh.md
+      - 研究历史: history_zh.md
+
+hooks:
+  - hooks.py
+
+plugins:
+  - search:
+      lang:
+        - en
+        - zh
+
+markdown_extensions:
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
+  - pymdownx.tasklist:
+      custom_checkbox: true
+
+extra_css:
+  - stylesheets/extra.css

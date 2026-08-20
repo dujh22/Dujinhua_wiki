@@ -1,18 +1,44 @@
 # Jinhua Du
 
-<p align="center">
-  <img src="images/杜晋华照片.jpg" alt="Jinhua Du" width="180" style="border-radius: 8px;" />
-</p>
+<div class="page-language-switch" aria-label="Language switcher">
+  <span>English</span>
+  <a href="index_zh/">中文</a>
+</div>
 
----
+<section class="profile-hero">
+  <div class="profile-portrait">
+    <img src="images/杜晋华照片.jpg" alt="Jinhua Du" />
+  </div>
+  <div class="profile-summary">
+    <p class="profile-kicker">Researcher · Large Language Models · Knowledge Engineering</p>
+    <p class="profile-role">Ph.D. in Computer Science and Technology, Tsinghua University | KEG Lab, Class of 2022</p>
+    <p><strong>Advisor</strong>: <a href="https://keg.cs.tsinghua.edu.cn/jietang/">Jie Tang</a></p>
+    <p>Research focuses on <strong>Machine Learning</strong>, <strong>Big Data</strong>, and <strong>Natural Language Processing</strong> (Large Language Models)</p>
+    <div class="profile-actions">
+      <a class="profile-button profile-button--primary" href="postgraduate_experience_en/">Explore research</a>
+      <a class="profile-button" href="mailto:dujh22@mails.tsinghua.edu.cn">Email</a>
+      <a class="profile-button" href="https://github.com/dujh22">GitHub</a>
+    </div>
+  </div>
+</section>
 
-Ph.D. in Computer Science and Technology, Tsinghua University | KEG Lab, Class of 2022
-
-**Advisor**: [Jie Tang](https://keg.cs.tsinghua.edu.cn/jietang/)
-
-Research focuses on **Machine Learning**, **Big Data**, and **Natural Language Processing** (Large Language Models)
-
----
+<div class="home-nav-grid">
+  <a href="postgraduate_experience_en/">
+    <span>Current focus</span>
+    <strong>Postgraduate research</strong>
+    <small>LLM reasoning, medical intelligence, publications and honors</small>
+  </a>
+  <a href="undergraduate_experience_en/">
+    <span>Foundations</span>
+    <strong>Undergraduate experience</strong>
+    <small>Machine learning, robotics, competitions and practice</small>
+  </a>
+  <a href="history_en/">
+    <span>Timeline</span>
+    <strong>Research history</strong>
+    <small>A year-by-year and month-by-month record of research progress</small>
+  </a>
+</div>
 
 ## Research Interests
 

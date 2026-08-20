@@ -1,15 +1,44 @@
 # 杜晋华
 
+<div class="page-language-switch" aria-label="语言切换">
+  <a href="../">English</a>
+  <span>中文</span>
+</div>
 
----
+<section class="profile-hero">
+  <div class="profile-portrait">
+    <img src="../images/杜晋华照片.jpg" alt="杜晋华" />
+  </div>
+  <div class="profile-summary">
+    <p class="profile-kicker">大语言模型 · 知识工程 · 智能系统</p>
+    <p class="profile-role">清华大学计算机科学与技术系工学博士 | KEG实验室2022级</p>
+    <p><strong>导师</strong>：<a href="https://keg.cs.tsinghua.edu.cn/jietang/">唐杰</a></p>
+    <p>主要研究<strong>机器学习</strong>、<strong>大数据</strong>与<strong>自然语言处理</strong>（大模型）</p>
+    <div class="profile-actions">
+      <a class="profile-button profile-button--primary" href="../postgraduate_experience_zh/">查看研究经历</a>
+      <a class="profile-button" href="mailto:dujh22@mails.tsinghua.edu.cn">邮件联系</a>
+      <a class="profile-button" href="https://github.com/dujh22">GitHub</a>
+    </div>
+  </div>
+</section>
 
-清华大学计算机科学与技术系工学博士 | KEG实验室2022级
-
-**导师**：[唐杰](https://keg.cs.tsinghua.edu.cn/jietang/)
-
-主要研究**机器学习**、**大数据**与**自然语言处理**（大模型）
-
----
+<div class="home-nav-grid">
+  <a href="../postgraduate_experience_zh/">
+    <span>当前研究</span>
+    <strong>博士经历</strong>
+    <small>大模型推理、医学智能、学术成果与荣誉</small>
+  </a>
+  <a href="../undergraduate_experience_zh/">
+    <span>研究基础</span>
+    <strong>本科经历</strong>
+    <small>机器学习、机器人、科创竞赛与工作实践</small>
+  </a>
+  <a href="../history_zh/">
+    <span>时间轴</span>
+    <strong>研究历史</strong>
+    <small>按年份和月份记录研究方向与阶段进展</small>
+  </a>
+</div>
 
 ## 研究方向
 

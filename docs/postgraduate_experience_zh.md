@@ -1,8 +1,21 @@
+# 博士经历
+
+<div class="page-language-switch"><a href="../postgraduate_experience_en/">English</a><span>中文</span></div>
+
+<nav class="page-jump-links" aria-label="本页概览">
+  <a href="#theory-research">偏理论研究</a>
+  <a href="#engineering-research">偏工程研究</a>
+  <a href="#coursework">学习情况</a>
+  <a href="#publications">学术论著</a>
+  <a href="#honors">评奖评优</a>
+  <a href="#experience">工作实践</a>
+</nav>
+
 本科第四年至博士二年级期间，研究重心转向医学大数据与知识工程领域，发表及在研论文13篇。研究目标在于利用海量医学数据进行疾病预测与知识发现，解决民生相关的科学与工程问题。工作贯穿从底层数据处理、算法建模到顶层系统设计，以支持医学智能应用的落地。
 
 博士二年级后，研究方向进一步转向大语言模型的底层推理能力，目前在研论文3篇。起初从医学场景扩展至公安、多语言等多领域大模型训练，发现模型性能的可靠性与泛化性均受到底层推理能力的显著制约。由此系统开展针对推理能力的研究，从评测方法、数据构建与算法机制三方面展开探索。
 
-## 第二阶段研究体系：偏理论
+## 第二阶段研究体系：偏理论 { #theory-research }
 
 2024年至今主要研究大语言模型底层技术，师从唐杰教授
 
@@ -54,7 +67,7 @@ Zhipu认为：从当前人类已经实现的智能到达超级智能，将通过
 * 犯罪预测大模型的建立
 * 体育多智能体系统构建
 
-## 第一阶段研究体系：偏工程
+## 第一阶段研究体系：偏工程 { #engineering-research }
 
 2021～2023年体系架构详见：[研究体系](https://bt7cezha1x.feishu.cn/docx/IgcDdcVwSoQ94vxjJMMcHXfJnwf?from=from_copylink)
 
@@ -157,7 +170,7 @@ Zhipu认为：从当前人类已经实现的智能到达超级智能，将通过
 | **论文**《[Research of Client Selection Algorithm in Cross-device Federated Learning](https://www.jos.org.cn/josen/article/abstract/nb023)》 | 北大核心    |
 | 医疗数据标注**系统**、中文分词处理**系统**、上千种疾病预测**系统**、智能自问诊**系统**                                  | 相关服务    |
 
-## 学习情况
+## 学习情况 { #coursework }
 
 各项目代码均在Github上进行了开源（持续更新中）
 
@@ -174,7 +187,7 @@ Zhipu认为：从当前人类已经实现的智能到达超级智能，将通过
 |          | 并行计算、算法与算法复杂性理论、组合数学 | 高性能计算 | Π求解的并行化研究<br />组合数学在人工智能领域的应用                                                                                    |
 | 其他     | 相关技能学习                             | 综合       | 中国马克思主义与当代（A）、自然辩证法概论（A），大数据分析、大数据与生物统计学、大数据实践、博士生英语（免修）、职业能力扩展训练        |
 
-## 已发表学术论著
+## 已发表学术论著 { #publications }
 
 [11] Zeng A, Lv X, Zheng Q, et al. [Glm-4.5: Agentic, reasoning, and coding (arc) foundation models](https://arxiv.org/abs/2508.06471)[J]. arXiv preprint arXiv:2508.06471, 2025. (Arxiv)
 
@@ -226,7 +239,7 @@ Zhipu认为：从当前人类已经实现的智能到达超级智能，将通过
 
 [1]  [第三届中国医学信息学学科发展大会](https://mp.weixin.qq.com/s/RDQUcnGLRciSwub1HuOh4Q) (2023.11.25) 作为第一完成人的AiMed大模型[发布](https://bt7cezha1x.feishu.cn/wiki/Bu3YwOsyyixkswkYGS1cjbXPnMf?from=from_copylink)，同名[github代码](https://github.com/dujh22/AiMed)和[hugging face参数](https://huggingface.co/DuJinHua/AiMed)已开源，相应论文[AiMed: Artificial Intelligent Large Language Model for Medicine in China](https://ieeexplore.ieee.org/document/10803480)已发表在国际会议MedAI上。
 
-## 评奖评优
+## 评奖评优 { #honors }
 
 | 项目   | 内容                                           | 单位                       | 时间    |
 | ------ | ---------------------------------------------- | -------------------------- | ------- |
@@ -251,7 +264,7 @@ Zhipu认为：从当前人类已经实现的智能到达超级智能，将通过
 |        | 浙江舟山市定海区公安局感谢信                   | 公安局网安大队             | 2024.09 |
 |        | 浙江杭州高新区                                 | 人社局                     | 2023.07 |
 
-## 工作实践
+## 工作实践 { #experience }
 
 | 分类   | 地点                                                                  | 职位               | 时间            |
 | ------ | --------------------------------------------------------------------- | ------------------ | --------------- |

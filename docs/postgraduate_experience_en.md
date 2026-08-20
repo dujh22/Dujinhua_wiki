@@ -1,5 +1,16 @@
 # Postgraduate Experience
 
+<div class="page-language-switch"><span>English</span><a href="../postgraduate_experience_zh/">中文</a></div>
+
+<nav class="page-jump-links" aria-label="Page overview">
+  <a href="#phase-2-research-theory-oriented">Theory-oriented research</a>
+  <a href="#phase-1-research-engineering-oriented">Engineering-oriented research</a>
+  <a href="#coursework">Coursework</a>
+  <a href="#published-academic-works">Publications</a>
+  <a href="#honors-awards">Honors</a>
+  <a href="#work-experience">Experience</a>
+</nav>
+
 From the fourth year of undergraduate studies through the second year of doctoral studies, the research focus shifted to medical big data and knowledge engineering, with 13 papers published or in progress. The research objective is to harness massive medical data for disease prediction and knowledge discovery, addressing science and engineering problems related to people's livelihoods. The work spans from underlying data processing and algorithmic modeling to high-level system design, supporting the deployment of medical intelligence applications.
 
 After the second year of doctoral studies, the research direction further shifted toward the underlying reasoning capabilities of large language models, with 3 papers currently in progress. Beginning with expansion from medical scenarios to public security, multilingual, and other domains of large model training, it was found that both model reliability and generalization are significantly constrained by underlying reasoning capabilities. This led to systematic research on reasoning abilities, exploring from three perspectives: evaluation methods, data construction, and algorithmic mechanisms.

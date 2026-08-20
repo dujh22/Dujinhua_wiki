@@ -1,5 +1,15 @@
 # Research History
 
+<div class="page-language-switch"><span>English</span><a href="../history_zh/">中文</a></div>
+
+<nav class="page-jump-links" aria-label="Year navigation">
+  <a href="#2026-year-4-phd">2026</a>
+  <a href="#2025-year-3-phd">2025</a>
+  <a href="#2024-year-2-phd">2024</a>
+  <a href="#2023-year-1-phd">2023</a>
+  <a href="#2022-year-0-phd">2022</a>
+</nav>
+
 ## 2026 — Year 4 (Ph.D.)
 
 Doctoral Year 4

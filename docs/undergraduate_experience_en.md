@@ -1,5 +1,16 @@
 # Undergraduate Experience
 
+<div class="page-language-switch"><span>English</span><a href="../undergraduate_experience_zh/">中文</a></div>
+
+<nav class="page-jump-links" aria-label="Page overview">
+  <a href="#research-projects">Research</a>
+  <a href="#academic-publications">Publications</a>
+  <a href="#media-coverage">Media</a>
+  <a href="#honors-awards">Honors</a>
+  <a href="#competitions">Competitions</a>
+  <a href="#work-experience">Experience</a>
+</nav>
+
 During the first three years of undergraduate studies, the primary focus was on machine learning research, covering numerical analysis, reinforcement learning, and robotics. A total of 6 high-quality papers were published. The research journey began by standing out in the ACM competition team and being selected for scientific research. After winning First Prize in the Mathematical Contest in Modeling (MCM), he was recognized by the robotics team advisor and served as team captain, leading the team to tackle multi-agent system collaboration problems. Research spanned from low-level algorithms and multi-robot coordination to high-level system design.
 
 ## Research Projects

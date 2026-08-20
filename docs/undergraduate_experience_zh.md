@@ -1,6 +1,19 @@
+# 本科经历
+
+<div class="page-language-switch"><a href="../undergraduate_experience_en/">English</a><span>中文</span></div>
+
+<nav class="page-jump-links" aria-label="本页概览">
+  <a href="#research-projects">研究课题</a>
+  <a href="#publications">学术论著</a>
+  <a href="#media">媒体报道</a>
+  <a href="#honors">评奖评优</a>
+  <a href="#competitions">科创竞赛</a>
+  <a href="#experience">工作实践</a>
+</nav>
+
 本科阶段前三年主要从事机器学习方向的研究，研究内容涵盖数值分析、强化学习及机器人技术，共发表高质量论文6篇。研究起点源于从ACM竞赛队中脱颖而出，被进一步选拔参与科学研究。在美国大学生数学建模竞赛中获一等奖后，受到机器人队指导教授的认可，担任机器人队队长，带领团队攻克多智能体系统协作问题，研究内容涵盖从底层算法、多机协作到上层系统设计。
 
-## 研究课题
+## 研究课题 { #research-projects }
 
 1. 国家级大学生创新创业训练计划项目：[基于ROS的多级足球机器人系统的开发](http://gjcxcy.bjtu.edu.cn/NewLXItemListForStudentDetail.aspx?ItemNo=802204&year=2021&type=%E5%AD%A6%E7%94%9F%E6%9F%A5%E8%AF%A2&IsLXItem=1)（2020-2021）
 
@@ -17,7 +30,7 @@
 4. 软件著作权：机器学习的伺服电线弯折摇摆软件（2021.04）
 5. 软件著作权：智慧型半人工酒店系统（2020.07）
 
-## 学术论著
+## 学术论著 { #publications }
 
 [1]**Jinhua Du**; Qinyu Zheng; Yuqing Wang. Mid-term and long-term prediction of carbon emissions in Jiangsu Province based on PCA-STIRPAT improved GA-BP. *International Conference on Electromechanical Control Technology and Transportation (ICECTT)*. 2021 Vol. 1 - 978-989-758-312-4:1120-1125.（实验室项目：数值分析）
 
@@ -31,12 +44,12 @@
 
 [6]**杜晋华**. [基于主成分分析对“禁瓶令”效果的研究](https://kns.cnki.net/kcms/detail/detail.aspx?dbcode=CJFD&dbname=CJFDLAST2021&filename=DLXZ202009022&uniplatform=NZKPT&v=%25mmd2BqLBs1RDDv5DBijMSE3REU8nCy41yUntFlLVsb5i392CPqC8D12oGFJtgKJUZn5z). *智能计算机与应用*. 2021, 10(09):90-94.（实验室项目：数值分析）
 
-## 媒体报道
+## 媒体报道 { #media }
 
 - 先锋 | [杜晋华：以终为始 以行为知](https://mp.weixin.qq.com/s/8sos9Ky1WKftvNeOP1-7cg)——中国地质大学(北京)"北地先锋"十佳学生
 - 纸面上的艺术·竹骨里的情怀 | [传统手艺面临的困扰与对策](http://sxx.youth.cn/jxqc/sxxxw/202001/t20200119_12172938.htm)——首都大中专学生暑期社会实践优秀团队
 
-## 评奖评优
+## 评奖评优 { #honors }
 
 | 项目   | 内容                                         | 难度        | 时间        |
 | ------ | -------------------------------------------- | ----------- | ----------- |
@@ -47,7 +60,7 @@
 |        | 评为“三好学生”2 次                         | 学院前 3%   | 2018 - 2020 |
 |        | 评为“优秀学生干部”                         | 学院前 3%   | 2021        |
 
-## 科创竞赛
+## 科创竞赛 { #competitions }
 
 | 序号 | 年级 | 获奖名称                                                                          | 竞赛组织单位                                 | 获奖时间       |
 | ---- | ---- | --------------------------------------------------------------------------------- | -------------------------------------------- | -------------- |
@@ -88,7 +101,7 @@
 | 35   | 大一 | 中国地质大学（北京）第四届大学生计算机大赛—程序设计天梯赛三等奖                  | 中国地质大学（北京）                         | 2019年4月1日   |
 | 36   | 大一 | 中国地质大学（北京）第十二届大学生程序设计竞赛二等奖                              | 中国地质大学（北京）                         | 2018年12月28日 |
 
-## 工作实践
+## 工作实践 { #experience }
 
 | 分类       | 地点                     | 职位                                      | 时间        |
 | ---------- | ------------------------ | ----------------------------------------- | ----------- |
