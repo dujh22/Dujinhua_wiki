@@ -46,7 +46,7 @@ Zhipu认为：从当前人类已经实现的智能到达超级智能，将通过
 | 论文                                                         | 期刊/会议名 | 参与角色 | 类别   |
 | ------------------------------------------------------------ | ----------- | -------- | ------ |
 | [GLM-5: from Vibe Coding to Agentic Engineering](https://arxiv.org/abs/2602.15763) | arXiv | 主要参与 | 预印本 |
-| [From Player to Master: Enhancing Test-Time Learning of LLM Agents via Reinforcement Learning over Memory](https://arxiv.org/abs/2605.16959) | ICML 2026 | 主要参与 | CCF-A |
+| [From Player to Master: Enhancing Test-Time Learning of LLM Agents via Reinforcement Learning over Memory](https://arxiv.org/abs/2606.08656) | [ICML 2026](https://icml.cc/virtual/2026/poster/62463) | 主要参与 | CCF-A |
 | [GLM-4.5: Agentic, Reasoning, and Coding (ARC) Foundation Models](https://arxiv.org/abs/2508.06471) | arXiv | 主要参与 | 预印本 |
 | [A Survey of Post-Training Scaling in Large Language Models](https://aclanthology.org/2025.acl-long.140/) | ACL | 主要参与 | CCF-A |
 
@@ -197,7 +197,7 @@ Zhipu认为：从当前人类已经实现的智能到达超级智能，将通过
 
 [13] [GLM-5: from Vibe Coding to Agentic Engineering](https://arxiv.org/abs/2602.15763). arXiv preprint arXiv:2602.15763, 2026.（预印本）
 
-[12] Peiyi Wang, Chen Ling, Nianlong Gu, Jinhua Du, Zhongyuan Peng, Yuhang Zhou, Kaibo Fu, Yunpeng Huang, Jiaming Ji, Jun Zhu, and Jie Tang. [From Player to Master: Enhancing Test-Time Learning of LLM Agents via Reinforcement Learning over Memory](https://arxiv.org/abs/2605.16959). ICML 2026.
+[12] Yishuo Cai, Xingyu Guo, Xuancheng Huang, Jinhua Du, Can Huang, Wenxuan Huang, Wenhan Ma, Yuyang Hu, Aohan Zeng, Jie Tang, and Xu Sun. [From Player to Master: Enhancing Test-Time Learning of LLM Agents via Reinforcement Learning over Memory](https://arxiv.org/abs/2606.08656). Accepted by [ICML 2026](https://icml.cc/virtual/2026/poster/62463).
 
 [11] Zeng A, Lv X, Zheng Q, et al. [GLM-4.5: Agentic, Reasoning, and Coding (ARC) Foundation Models](https://arxiv.org/abs/2508.06471)[J]. arXiv preprint arXiv:2508.06471, 2025.（预印本）
 

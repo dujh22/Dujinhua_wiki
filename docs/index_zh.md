@@ -87,6 +87,7 @@
 - [GLM-5](https://arxiv.org/abs/2602.15763)、[GLM4.5](https://arxiv.org/abs/2508.06471)、MalayGLM
 - [AML](../aml2024/)、[AML-LLM](https://github.com/dujh22/AML-LLM)、[LLMDailyDigest](https://dujh22.github.io/LLMDailyDigestWeb/)
 - [Med-Eval](https://dujh22.github.io/)、[AiMed](http://aimed.imicams.ac.cn/)、MedGPT
+- [THU53](https://dujh22.github.io/THUCS53/)
 
 ---
 

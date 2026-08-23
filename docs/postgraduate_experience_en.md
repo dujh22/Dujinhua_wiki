@@ -46,7 +46,7 @@ Mathematical reasoning and multimodal reasoning in large models
 | Paper | Venue | Role | Category |
 | ----- | ----- | --------------- | -------- |
 | [GLM-5: from Vibe Coding to Agentic Engineering](https://arxiv.org/abs/2602.15763) | arXiv | Key contributor | Preprint |
-| [From Player to Master: Enhancing Test-Time Learning of LLM Agents via Reinforcement Learning over Memory](https://arxiv.org/abs/2605.16959) | ICML 2026 | Key contributor | CCF-A |
+| [From Player to Master: Enhancing Test-Time Learning of LLM Agents via Reinforcement Learning over Memory](https://arxiv.org/abs/2606.08656) | [ICML 2026](https://icml.cc/virtual/2026/poster/62463) | Key contributor | CCF-A |
 | [GLM-4.5: Agentic, Reasoning, and Coding (ARC) Foundation Models](https://arxiv.org/abs/2508.06471) | arXiv | Key contributor | Preprint |
 | [A Survey of Post-Training Scaling in Large Language Models](https://aclanthology.org/2025.acl-long.140/) | ACL | Key contributor | CCF-A |
 
@@ -197,7 +197,7 @@ All project code is open-sourced on GitHub (continuously updated)
 
 [13] [GLM-5: from Vibe Coding to Agentic Engineering](https://arxiv.org/abs/2602.15763). arXiv preprint arXiv:2602.15763, 2026. (Preprint)
 
-[12] Peiyi Wang, Chen Ling, Nianlong Gu, Jinhua Du, Zhongyuan Peng, Yuhang Zhou, Kaibo Fu, Yunpeng Huang, Jiaming Ji, Jun Zhu, and Jie Tang. [From Player to Master: Enhancing Test-Time Learning of LLM Agents via Reinforcement Learning over Memory](https://arxiv.org/abs/2605.16959). ICML 2026.
+[12] Yishuo Cai, Xingyu Guo, Xuancheng Huang, Jinhua Du, Can Huang, Wenxuan Huang, Wenhan Ma, Yuyang Hu, Aohan Zeng, Jie Tang, and Xu Sun. [From Player to Master: Enhancing Test-Time Learning of LLM Agents via Reinforcement Learning over Memory](https://arxiv.org/abs/2606.08656). Accepted by [ICML 2026](https://icml.cc/virtual/2026/poster/62463).
 
 [11] Zeng A, Lv X, Zheng Q, et al. [GLM-4.5: Agentic, Reasoning, and Coding (ARC) Foundation Models](https://arxiv.org/abs/2508.06471)[J]. arXiv preprint arXiv:2508.06471, 2025. (Preprint)
 
