@@ -80,14 +80,14 @@
 ## 荣誉与生活
 
 - 国家奖学金获得者、北京市优秀本科毕业生
-- 酷爱健身，师从北京市大学生健美协会秘书长，跑龄14年，喜欢各种运动，清华大学健美比赛第五名
+- 酷爱健身，曾担任北京市大学生健美协会秘书长的学生助理2年，也是自媒体健身UP主；跑龄14年，喜欢各类运动，获清华大学健美比赛第五名
 
 ## 标志性工作
 
-- [GLM-5](https://arxiv.org/abs/2602.15763)、[GLM4.5](https://arxiv.org/abs/2508.06471)、MalayGLM
-- [AML](../aml2024/)、[AML-LLM](https://github.com/dujh22/AML-LLM)、[LLMDailyDigest](https://dujh22.github.io/LLMDailyDigestWeb/)
-- [Med-Eval](https://dujh22.github.io/)、[AiMed](http://aimed.imicams.ac.cn/)、MedGPT
-- [THU53](https://dujh22.github.io/THUCS53/)
+- [GLM-5](https://arxiv.org/abs/2602.15763)：推动基础模型从 Vibe Coding 走向智能体工程；[GLM-4.5](https://arxiv.org/abs/2508.06471)：统一智能体、推理与编程能力的开源模型；MalayGLM：服务马来西亚本地生态的主权大模型。
+- [AML](https://dujh22.github.io/Dujinhua_wiki/aml2024/)：高级机器学习课程网站；[AML-LLM](https://github.com/dujh22/AML-LLM)：系统介绍大语言模型基础、进展与应用的教材项目；[LLMDailyDigest](https://dujh22.github.io/LLMDailyDigestWeb/)：每日精选论文、开源框架、数据集与行业动态。
+- [Med-Eval](https://dujh22.github.io/)：医疗大语言模型评测基准；[AiMed](http://aimed.imicams.ac.cn/)：支持中文医学知识问答、论文阅读与文献检索；MedGPT：探索大模型在医疗场景中的应用。
+- [THU53](https://dujh22.github.io/THUCS53/)：清华大学计算机系计研五三支部官方主页。
 
 ---
 

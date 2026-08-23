@@ -80,14 +80,14 @@
 ## Honors & Life
 
 - National Scholarship recipient, Outstanding Undergraduate Graduates of Beijing
-- Fitness enthusiast, trained under the Secretary-General of Beijing University Students Bodybuilding Association; 14 years of running experience; enjoys various sports; 5th place in Tsinghua University Bodybuilding Competition
+- Fitness enthusiast and fitness content creator; served for two years as student assistant to the Secretary-General of the Beijing University Students Bodybuilding Association; 14 years of running experience; enjoys a wide range of sports; placed fifth in the Tsinghua University Bodybuilding Competition
 
 ## Representative Work
 
-- [GLM-5](https://arxiv.org/abs/2602.15763), [GLM4.5](https://arxiv.org/abs/2508.06471), MalayGLM
-- [AML](aml2024/), [AML-LLM](https://github.com/dujh22/AML-LLM), [LLMDailyDigest](https://dujh22.github.io/LLMDailyDigestWeb/)
-- [Med-Eval](https://dujh22.github.io/), [AiMed](http://aimed.imicams.ac.cn/), MedGPT
-- [THU53](https://dujh22.github.io/THUCS53/)
+- [GLM-5](https://arxiv.org/abs/2602.15763) advances foundation models from vibe coding to agentic engineering; [GLM-4.5](https://arxiv.org/abs/2508.06471) unifies agentic, reasoning, and coding capabilities; MalayGLM is a sovereign language model developed for Malaysia's local ecosystem.
+- [AML](https://dujh22.github.io/Dujinhua_wiki/aml2024/) is the Advanced Machine Learning course website; [AML-LLM](https://github.com/dujh22/AML-LLM) is a textbook project covering the foundations, advances, and applications of LLMs; [LLMDailyDigest](https://dujh22.github.io/LLMDailyDigestWeb/) curates daily papers, open-source frameworks, datasets, and industry updates.
+- [Med-Eval](https://dujh22.github.io/) is a medical LLM evaluation benchmark; [AiMed](http://aimed.imicams.ac.cn/) supports Chinese medical knowledge Q&A, paper reading, and literature retrieval; MedGPT explores LLM applications in healthcare.
+- [THU53](https://dujh22.github.io/THUCS53/) is the official website of Tsinghua University's CS Class 53 graduate student Party branch.
 
 ---
 
