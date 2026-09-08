@@ -1,0 +1,6113 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="智谱AI研究实习项目报告集，涵盖大模型预训练、逻辑推理、数学推理、评测方法论等30个项目；同时包含个人学术主页（研究、教育、发表、荣誉）。">
+      
+      
+        <meta name="author" content="Jinhua Du (杜晋华)">
+      
+      
+        <link rel="canonical" href="https://dujh22.github.io/Dujinhua_wiki/projects/phase4/17_VirtualCoach%E4%BA%BA%E6%9C%BA%E4%BA%A4%E4%BA%92/">
+      
+      
+        <link rel="prev" href="../16_AML-LLM%E4%B9%A6%E7%B1%8D%E7%BC%96%E6%92%B0/">
+      
+      
+        <link rel="next" href="../18_%E5%8D%9A%E5%A3%AB%E5%BC%80%E9%A2%98/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>17. Virtual Coach：基于 LLM 的智能虚拟教练与人机交互研究 - Jinhua Du | 杜晋华</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css?v=448b8bea4ef3">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-XXXXXXXXXX"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-XXXXXXXXXX",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+  
+    <meta name="keywords" content="大语言模型, 逻辑推理, 数学推理, 预训练, RLHF, 评测, 智谱AI, 研究实习, LLM, Large Language Models, Reasoning, Evaluation">
+    <meta property="og:title" content="Jinhua Du | 杜晋华 — 智谱AI研究实习项目报告集">
+    <meta property="og:description" content="智谱AI研究实习项目报告集，涵盖大模型预训练、逻辑推理、数学推理、评测方法论等30个项目；个人学术主页（研究、教育、发表、荣誉）。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dujh22.github.io/Dujinhua_wiki/">
+    <meta property="og:site_name" content="Jinhua Du | 杜晋华">
+    <meta property="og:locale" content="zh_CN">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Jinhua Du | 杜晋华 — 智谱AI研究实习项目报告集">
+    <meta name="twitter:description" content="智谱AI研究实习项目报告集，涵盖大模型预训练、逻辑推理、数学推理、评测方法论等30个项目。">
+    <meta name="robots" content="index, follow">
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1-abstract" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Jinhua Du | 杜晋华" class="md-header__button md-logo" aria-label="Jinhua Du | 杜晋华" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 10.5V6l-2.11 1.06A3.999 3.999 0 0 1 12 12a4 4 0 0 1-3.89-4.94L5 5.5 12 2l7 3.5v5zM12 9l-2-1c0 1.1.9 2 2 2s2-.9 2-2zm2.75-3.58L12.16 4.1 9.47 5.47l2.6 1.32zM12 13c2.67 0 8 1.33 8 4v3H4v-3c0-2.67 5.33-4 8-4m0 1.9c-3 0-6.1 1.46-6.1 2.1v1.1h12.2V17c0-.64-3.13-2.1-6.1-2.1"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Jinhua Du | 杜晋华
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              17. Virtual Coach：基于 LLM 的智能虚拟教练与人机交互研究
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="light-blue"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/dujh22/Dujinhua_wiki" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    dujh22/Dujinhua_wiki
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../.." class="md-tabs__link">
+          
+  
+  
+  English
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../index_zh/" class="md-tabs__link">
+          
+  
+  
+  中文
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../" class="md-tabs__link">
+          
+  
+  
+  智谱实习项目
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Jinhua Du | 杜晋华" class="md-nav__button md-logo" aria-label="Jinhua Du | 杜晋华" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 10.5V6l-2.11 1.06A3.999 3.999 0 0 1 12 12a4 4 0 0 1-3.89-4.94L5 5.5 12 2l7 3.5v5zM12 9l-2-1c0 1.1.9 2 2 2s2-.9 2-2zm2.75-3.58L12.16 4.1 9.47 5.47l2.6 1.32zM12 13c2.67 0 8 1.33 8 4v3H4v-3c0-2.67 5.33-4 8-4m0 1.9c-3 0-6.1 1.46-6.1 2.1v1.1h12.2V17c0-.64-3.13-2.1-6.1-2.1"/></svg>
+
+    </a>
+    Jinhua Du | 杜晋华
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/dujh22/Dujinhua_wiki" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    dujh22/Dujinhua_wiki
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    English
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    English
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Profile
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../postgraduate_experience_en/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Postgraduate Experience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../undergraduate_experience_en/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Undergraduate Experience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../history_en/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Research History
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    中文
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    中文
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../index_zh/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人简介
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../postgraduate_experience_zh/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博士经历
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../undergraduate_experience_zh/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    本科经历
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../history_zh/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    研究历史
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    智谱实习项目
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    智谱实习项目
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    项目总览
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阶段一·数学推理与国际化
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    阶段一·数学推理与国际化
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase1/01_ChatGLM%E6%95%B0%E5%AD%A6%E6%8E%A8%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 ChatGLM数学推理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase1/02_ChatGLM%E5%9B%BD%E9%99%85%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02 ChatGLM国际化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阶段二·多模态与社会实践
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    阶段二·多模态与社会实践
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/03_%E5%A4%9A%E6%A8%A1%E6%80%81%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%95%B0%E5%AD%A6%E6%8E%A8%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 多模态大模型数学推理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/04_MetaEvaluation%E5%85%83%E8%AF%84%E4%BC%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04 MetaEvaluation元评估
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/05_AML2024%E5%8A%A9%E6%95%99/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 AML2024助教
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/06_%E8%88%9F%E5%B1%B1%E7%A4%BE%E4%BC%9A%E5%AE%9E%E8%B7%B5%E5%85%AC%E5%AE%89%E7%8A%AF%E7%BD%AA%E9%A2%84%E6%B5%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06 舟山社会实践公安犯罪预测
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/07_MalayGLM%E9%A9%AC%E6%9D%A5%E8%AF%AD%E5%A4%A7%E6%A8%A1%E5%9E%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07 MalayGLM马来语大模型
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/08_o1%E5%A4%8D%E7%8E%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 o1复现
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阶段三·LogicEvolve与基座模型
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    阶段三·LogicEvolve与基座模型
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase3/09_LogicEvolve%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E8%87%AA%E8%BF%9B%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 LogicEvolve逻辑推理自进化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase3/10_GLM-4.5%E5%9F%BA%E5%BA%A7%E6%A8%A1%E5%9E%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 GLM-4.5基座模型
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase3/11_%E6%95%B0%E5%AE%9E%E8%9E%8D%E5%90%88%E6%96%B0%E5%BC%95%E6%93%8E%E9%A1%B9%E7%9B%AE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11 数实融合新引擎项目
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase3/12_Puzzle%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E9%A2%84%E8%AE%AD%E7%BB%83%E6%95%B0%E6%8D%AE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12 Puzzle逻辑推理预训练数据
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase3/13_%E7%B1%BBo1%E6%A8%A1%E5%9E%8B%E6%B3%9B%E5%8C%96%E6%80%A7%E8%AF%84%E4%BC%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13 类o1模型泛化性评估
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_5" id="__nav_3_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阶段四·论文冲刺与博士开题
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    阶段四·论文冲刺与博士开题
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14_LogicalSurvey%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%BB%BC%E8%BF%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14 LogicalSurvey逻辑推理综述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15_EvolveLRM%E8%AE%AD%E7%BB%83%E8%87%AA%E8%BF%9B%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15 EvolveLRM训练自进化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../16_AML-LLM%E4%B9%A6%E7%B1%8D%E7%BC%96%E6%92%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16 AML-LLM书籍编撰
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17 VirtualCoach人机交互
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17 VirtualCoach人机交互
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-abstract" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 项目概述（Abstract）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 项目概述（Abstract）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关键数据速览
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        执行摘要
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        个人成长轨迹
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-introduction-background" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 背景与动机（Introduction / Background）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 背景与动机（Introduction / Background）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 问题定义
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 为什么重要
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 项目启动契机
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-related-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 相关工作（Related Work）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 相关工作（Related Work）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-ai" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 AI 教练/健身产品对比
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-prompt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Prompt 工程工具
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 引用的具体系统/论文
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 方法与技术路线（Method）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 方法与技术路线（Method）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 系统整体架构
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-prompt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Prompt 自动化流水线
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.2 Prompt 自动化流水线">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#421-prompt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2.1 Prompt 流水线各阶段功能与模块映射
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#422-prompt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2.2 Prompt 模板参数配置
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 版本管理机制
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 工作流生成系统
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-experiments-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 实验与结果（Experiments &amp; Results）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 实验与结果（Experiments &amp; Results）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 评估设计
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.1 评估设计">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#511" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1.1 四大决策场景对比
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#512-8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1.2 8 线程并行评测引擎配置
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 评估指标
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 具体结果
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 关联项目
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.4 关联项目">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#541-aifitgo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4.1 AiFitGo 五大决策模块详细对比
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#542-aifitgo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4.2 AiFitGo 九种服务类型清单
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#543-aifitgo-llm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4.3 AiFitGo 多厂商LLM支持与技术架构（十一轮新增）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-engineering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 工程实现（Engineering）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. 工程实现（Engineering）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 代码仓库
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 目录结构
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 技术栈
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4 项目时间线
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#65" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5 关键工程挑战与解决方案
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#66" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.6 技术栈演进与选型决策
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-impact" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 成果与影响（Impact）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. 成果与影响（Impact）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 论文发表
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.1 论文发表">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#711-chi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1.1 CHI 投稿时间线
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 开源贡献
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 产业应用潜力
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-my-contribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 个人贡献（My Contribution）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-lessons-learned" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 经验与反思（Lessons Learned）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. 经验与反思（Lessons Learned）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1 关键问题与解决方案（含具体故事）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2 可复用方法论（深化版）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.2 可复用方法论（深化版）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#921-prompt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2.1 Prompt工程自动化范式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#922-helper-target" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2.2 Helper-Target双模型模式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#923-prompt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2.3 版本化Prompt管理法
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#924" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2.4 种子扩充数据生成法
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#93" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.3 如果重来会怎么做
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#94" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.4 踩坑与避坑指南
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#95-faq" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.5 常见问题与解答（FAQ）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. 文件索引（References）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. 文件索引（References）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        飞书文档
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#github" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GitHub 仓库
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参考产品/系统
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        其他
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. 转正答辩证据卡
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. 转正答辩证据卡">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#111" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.1 目标基线
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.2 量化结果
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#113" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3 公司层面贡献
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#114" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.4 专业影响力
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#115" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.5 价值观锚点
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#116" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.6 协作与利他
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#117" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.7 反思与成长（自我批评式）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#118-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.8 6年后视角
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#119" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.9 五段式讲述（答辩稿骨架）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. 相关项目
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. 相关项目">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        项目间引用网络
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. 跨项目对比
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13. 跨项目对比">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#131-27aifitgo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.1 人机交互方法对比：与27号（AiFitGo智能健身教练）的深度对比
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#132-prompt25llm-dailydigestai" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.2 Prompt工程方法对比：与25号（LLM-DailyDigest每日AI追新）的深度对比
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        图表索引
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        个人成果矩阵
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../18_%E5%8D%9A%E5%A3%AB%E5%BC%80%E9%A2%98/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    18 博士开题
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_6" id="__nav_3_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阶段五·自进化研究全面展开
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    阶段五·自进化研究全面展开
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase5/19_Groom_Harness%E8%BF%87%E7%A8%8B%E7%BA%A7%E8%AF%84%E6%B5%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    19 Groom过程级评测
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase5/20_H-TokenBench/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20 H-TokenBench
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase5/21_GLM-5%E5%9F%BA%E5%BA%A7%E6%A8%A1%E5%9E%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    21 GLM-5基座模型
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase5/22_%E5%85%AD%E7%AF%87%E6%96%B0%E7%A0%94%E7%A9%B6%E5%88%9D%E7%A8%BF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    22 六篇新研究初稿
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase5/23_Awesome-RSI%E8%87%AA%E8%BF%9B%E5%8C%96%E7%BB%BC%E8%BF%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    23 Awesome-RSI自进化综述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase5/24_%E4%B8%93%E5%88%A9_%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E8%AF%84%E6%B5%8B%E6%96%B9%E6%B3%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    24 专利逻辑推理评测方法
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_7" id="__nav_3_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    工程与工具系列
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    工程与工具系列
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/25_LLM-DailyDigest%E6%AF%8F%E6%97%A5AI%E8%BF%BD%E6%96%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    25 LLM-DailyDigest
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/26_AutoLLM%E5%A4%9AAgent%E4%BF%A1%E6%81%AF%E8%87%AA%E5%8A%A8%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    26 AutoLLM多Agent
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/27_AiFitGo%E6%99%BA%E8%83%BD%E5%81%A5%E8%BA%AB%E6%95%99%E7%BB%83/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    27 AiFitGo智能健身
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/28_csv2app%E9%A2%98%E5%BA%93%E8%BD%ACPWA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    28 csv2app题库转PWA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/29_THU_Sports%E6%B8%85%E5%8D%8E%E4%BD%93%E8%82%B2%E8%87%AA%E5%8A%A8%E9%A2%84%E7%BA%A6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    29 THU_Sports自动预约
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/30_AiMeder%E5%8C%BB%E5%AD%A6%E6%96%87%E7%8C%AE%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    30 AiMeder医学搜索
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-abstract" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 项目概述（Abstract）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 项目概述（Abstract）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关键数据速览
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        执行摘要
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        个人成长轨迹
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-introduction-background" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 背景与动机（Introduction / Background）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 背景与动机（Introduction / Background）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 问题定义
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 为什么重要
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 项目启动契机
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-related-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 相关工作（Related Work）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 相关工作（Related Work）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-ai" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 AI 教练/健身产品对比
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-prompt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Prompt 工程工具
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 引用的具体系统/论文
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 方法与技术路线（Method）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 方法与技术路线（Method）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 系统整体架构
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-prompt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Prompt 自动化流水线
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.2 Prompt 自动化流水线">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#421-prompt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2.1 Prompt 流水线各阶段功能与模块映射
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#422-prompt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2.2 Prompt 模板参数配置
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 版本管理机制
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 工作流生成系统
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-experiments-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 实验与结果（Experiments &amp; Results）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 实验与结果（Experiments &amp; Results）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 评估设计
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.1 评估设计">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#511" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1.1 四大决策场景对比
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#512-8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1.2 8 线程并行评测引擎配置
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 评估指标
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 具体结果
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 关联项目
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.4 关联项目">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#541-aifitgo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4.1 AiFitGo 五大决策模块详细对比
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#542-aifitgo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4.2 AiFitGo 九种服务类型清单
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#543-aifitgo-llm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4.3 AiFitGo 多厂商LLM支持与技术架构（十一轮新增）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-engineering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 工程实现（Engineering）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. 工程实现（Engineering）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 代码仓库
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 目录结构
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 技术栈
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4 项目时间线
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#65" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5 关键工程挑战与解决方案
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#66" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.6 技术栈演进与选型决策
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-impact" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 成果与影响（Impact）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. 成果与影响（Impact）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 论文发表
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.1 论文发表">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#711-chi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1.1 CHI 投稿时间线
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 开源贡献
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 产业应用潜力
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-my-contribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 个人贡献（My Contribution）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-lessons-learned" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 经验与反思（Lessons Learned）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. 经验与反思（Lessons Learned）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1 关键问题与解决方案（含具体故事）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2 可复用方法论（深化版）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.2 可复用方法论（深化版）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#921-prompt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2.1 Prompt工程自动化范式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#922-helper-target" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2.2 Helper-Target双模型模式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#923-prompt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2.3 版本化Prompt管理法
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#924" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2.4 种子扩充数据生成法
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#93" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.3 如果重来会怎么做
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#94" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.4 踩坑与避坑指南
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#95-faq" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.5 常见问题与解答（FAQ）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. 文件索引（References）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. 文件索引（References）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        飞书文档
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#github" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GitHub 仓库
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参考产品/系统
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        其他
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. 转正答辩证据卡
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. 转正答辩证据卡">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#111" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.1 目标基线
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.2 量化结果
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#113" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3 公司层面贡献
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#114" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.4 专业影响力
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#115" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.5 价值观锚点
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#116" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.6 协作与利他
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#117" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.7 反思与成长（自我批评式）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#118-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.8 6年后视角
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#119" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.9 五段式讲述（答辩稿骨架）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. 相关项目
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. 相关项目">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        项目间引用网络
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. 跨项目对比
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13. 跨项目对比">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#131-27aifitgo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.1 人机交互方法对比：与27号（AiFitGo智能健身教练）的深度对比
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#132-prompt25llm-dailydigestai" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.2 Prompt工程方法对比：与25号（LLM-DailyDigest每日AI追新）的深度对比
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        图表索引
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        个人成果矩阵
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+  
+
+
+
+
+  <h1>17 VirtualCoach人机交互</h1>
+
+<div class="admonition info">
+<p class="admonition-title">项目系列</p>
+<p><strong>阶段四：论文冲刺与博士开题</strong> · 报告 #17/30</p>
+</div>
+<p><a href="../../"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg></span> 返回项目总览</a> | <a href="../../../index_zh/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg></span> 返回首页</a></p>
+<hr />
+<blockquote>
+<p>项目编号：17 | 阶段：四（2025.12–2026.3）| 角色：第一作者 / 负责人</p>
+</blockquote>
+<div class="admonition note">
+<p class="admonition-title">版本信息</p>
+<p>版本：v3（图文并茂版 · 2026-09-08）· 二轮质检补强 · 三轮精磨 · 四轮深化 · 五轮深化 · 六轮深化 · 七轮深化 · 八轮深化 · 九轮终审 · 十轮深化 · 十一轮深化 · 十二轮终审 · 十三轮终审 · 十四轮深化 · 十五轮终审 | 审核：准确性核对 + 转正答辩证据卡补强 + 图文表格升级</p>
+</div>
+<hr />
+<h2 id="1-abstract">1. 项目概述（Abstract）<a class="headerlink" href="#1-abstract" title="Permanent link">&para;</a></h2>
+<p>Virtual Coach（虚拟教练）是一个基于大语言模型（LLM）的智能虚拟教练交互式课程生成系统，同时是一项面向 <strong>CHI 会议</strong>的人机交互（HCI）方向性研究（投稿编号 CHI#3474）。项目旨在探索 LLM 驱动的虚拟教练如何为用户提供个性化、交互式的课程生成与指导服务，核心技术包括 Prompt 自动化调试与评测、工作流自动生成、多模型支持和决策场景评估。</p>
+<p><strong>核心成果量化</strong>：
+- CHI 投稿编号：#3474；
+- 系统支持多模型（GLM-4-Air、科大讯飞 X1 等）自动发现与加载；
+- Prompt 自动化流水线：需求→生成→评测→优化→版本迭代全流程；
+- 8 线程并行评测引擎；
+- 4 个决策场景评估脚本（DecisionScenario1-4）；
+- 工作流系统支持 7+ 节点类型（接收、判断、LLM、TTS、发送、确认、ASR 等）。</p>
+<p><strong>时间范围</strong>：2025.12 启动（AI Coach 相关调研）→ 2026.1–3 系统开发与 CHI 论文撰写。</p>
+<h3 id="_1">关键数据速览<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>维度</strong></th>
+<th><strong>核心数据</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>项目周期</td>
+<td>2025.12–2026.3（4个月）</td>
+</tr>
+<tr>
+<td>个人角色</td>
+<td>第一作者 / 负责人（独立完成系统设计、核心代码、论文撰写）</td>
+</tr>
+<tr>
+<td>核心产出</td>
+<td>Virtual Coach 智能虚拟教练系统；Prompt 自动化调试与评测流水线；8 线程并行评测引擎；4 个决策场景评估脚本；工作流生成系统</td>
+</tr>
+<tr>
+<td>关键指标</td>
+<td>CHI 投稿 #3474；7+ 节点类型工作流（接收/判断/LLM/TTS/发送/确认/ASR）；支持 GLM-4-Air、科大讯飞 X1 等多模型自动发现与加载；9 个核心 Python 模块</td>
+</tr>
+<tr>
+<td>论文/专利</td>
+<td>CHI 2026 投稿（#3474，人机交互顶会 CCF-A，十一轮核查：Virtual-Coach README及源材料中未发现录用结果通知，CHI 2026结果通知通常在2026年1月，保留录用结果待核实）</td>
+</tr>
+<tr>
+<td>开源仓库</td>
+<td>Virtual-Coach（公开，含完整代码、pyproject.toml、README）</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：Virtual-Coach GitHub README；飞书文档 CHI#3474 虚拟教练论文记录；个人周报记录</p>
+</blockquote>
+<hr />
+<h3 id="_2">执行摘要<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p><strong>一句话定位</strong>：基于LLM的智能虚拟教练交互式课程生成系统，面向CHI的HCI研究，构建Prompt自动化调试与评测流水线，实现交互式服务的可复现评估。</p>
+<p><strong>核心成果</strong>：
+- CHI 2026投稿#3474（人机交互顶会CCF-A），完成Virtual Coach智能虚拟教练系统；
+- 8线程并行评测引擎，4个决策场景评估脚本，7+节点类型工作流（接收/判断/LLM/TTS/发送/确认/ASR）；
+- 9个核心Python模块，支持GLM-4-Air、科大讯飞X1等多模型自动发现与加载，GitHub开源。</p>
+<p><strong>技术亮点</strong>：设计Prompt自动化调试与评测流水线（需求→生成→评测→优化→版本迭代），解决交互式LLM应用Prompt调优缺乏可复现评估方法的难题；8线程并行评测引擎大幅提升评估效率，工作流生成系统支持7+节点类型的灵活编排。</p>
+<p><strong>个人角色</strong>：第一作者/负责人，独立完成Virtual Coach系统设计、9个Python模块开发、8线程并行评测引擎、4个决策场景评估脚本、Prompt自动化调试流水线、工作流生成系统与CHI论文撰写投稿。</p>
+<p><strong>后续方向</strong>：补充用户研究验证系统有效性，开发可视化交互界面，向教育辅导、心理咨询、健康管理等更多交互式服务领域迁移。</p>
+<hr />
+<h3 id="_3">个人成长轨迹<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>阶段</strong></th>
+<th><strong>能力成长</strong></th>
+<th><strong>关键事件</strong></th>
+<th><strong>对应报告章节</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>初期</td>
+<td>从领域调研到问题定义者：系统调研AI Coach产品（Apple Fitness+/BodyPark ATOM/sportsGPT），分析技术护城河，确定Prompt自动化为核心瓶颈</td>
+<td>2025.12启动AI Coach领域调研，发现Prompt质量是AI Coach的核心瓶颈，确定研究方向</td>
+<td>§2.3 项目启动契机 / §3.1 产品对比</td>
+</tr>
+<tr>
+<td>中期</td>
+<td>从系统设计到技术突破者：独立设计四大子系统架构，实现Prompt自动化8阶段闭环流水线、8线程并行评测引擎、工作流生成系统</td>
+<td>完成9个核心Python模块开发，Prompt自动化流水线跑通（需求→生成→评测→优化→版本迭代），4个决策场景评估脚本</td>
+<td>§4.1 系统整体架构 / §4.2 Prompt自动化流水线</td>
+</tr>
+<tr>
+<td>后期</td>
+<td>从技术实现到HCI研究者：将纯技术报告调整为CHI人机交互视角论文，突出用户交互、人机协作、降低LLM应用门槛的HCI贡献</td>
+<td>论文从技术结构大幅调整为HCI视角，设计4个决策场景评估，以#3474投稿CHI 2026（CCF-A）</td>
+<td>§9.1 问题三 / §7.1 论文发表</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：Virtual-Coach GitHub README；飞书文档 CHI#3474 虚拟教练论文记录；个人周报记录</p>
+</blockquote>
+<hr />
+<h2 id="2-introduction-background">2. 背景与动机（Introduction / Background）<a class="headerlink" href="#2-introduction-background" title="Permanent link">&para;</a></h2>
+<h3 id="21">2.1 问题定义<a class="headerlink" href="#21" title="Permanent link">&para;</a></h3>
+<p>传统健身/学习教练服务存在三大痛点：
+1. <strong>成本高</strong>：真人私教费用昂贵，难以大规模普及；
+2. <strong>个性化不足</strong>：标准化课程无法适应不同用户的体能水平、目标和偏好；
+3. <strong>交互僵化</strong>：现有 AI 教练多为预录制课程或简单对话，缺乏真正的交互式决策能力。</p>
+<p>随着 LLM 技术的成熟，构建能够理解用户需求、自动生成个性化课程、并在交互中动态调整策略的虚拟教练成为可能。但如何设计有效的人机交互机制、如何自动化调试和评测 Prompt、如何将 LLM 决策嵌入真实工作流，仍是开放问题。</p>
+<h3 id="22">2.2 为什么重要<a class="headerlink" href="#22" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>行业背景</strong>：2025 年 AI 健身领域快速发展。Apple Fitness+ 引入 AI 多语言配音（2025年12月26日宣布，为数百节健身和冥想课程引入西班牙语/德语/日语配音，十四轮核查：据062号飞书文档"AI Coach相关"确认），BodyPark 推出 AI 健身伴侣设备 ATOM（2025.11，Kickstarter 24小时内众筹金额突破百万人民币，最终超300万元，十四轮核查：据062号飞书文档"AI Coach相关"确认），sportsGPT 等体育专用大模型出现。AI 教练正从概念走向产品；</li>
+<li><strong>学术价值</strong>：CHI 是人机交互领域顶会（CCF-A），LLM 驱动的交互式教练是 HCI 与 AI 交叉的新兴方向，具有较高的研究价值；</li>
+<li><strong>技术挑战</strong>：Prompt 工程是 LLM 应用的核心瓶颈，人工调试 Prompt 效率低、不可复现，需要自动化工具链支撑。</li>
+</ul>
+<h3 id="23">2.3 项目启动契机<a class="headerlink" href="#23" title="Permanent link">&para;</a></h3>
+<p>2025 年 12 月，杜晋华开始关注 AI Coach 领域，调研 Apple Fitness+、BodyPark ATOM、sportsGPT 等产品，分析其技术护城河（生态粘性、硬件壁垒、垂直数据等）。在此基础上，启动 Virtual Coach 项目，将研究聚焦于 LLM 虚拟教练的交互式课程生成与人机交互机制，并瞄准 CHI 会议投稿。</p>
+<hr />
+<h2 id="3-related-work">3. 相关工作（Related Work）<a class="headerlink" href="#3-related-work" title="Permanent link">&para;</a></h2>
+<h3 id="31-ai">3.1 AI 教练/健身产品对比<a class="headerlink" href="#31-ai" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>产品/系统</strong></th>
+<th><strong>核心技术</strong></th>
+<th><strong>交互方式</strong></th>
+<th><strong>局限性</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Apple Fitness+</td>
+<td>AI 配音还原教练音色</td>
+<td>预录制课程 + 多语言</td>
+<td>无个性化交互，课程固定</td>
+</tr>
+<tr>
+<td>BodyPark ATOM</td>
+<td>DeepBody AI 引擎（34 关键点）</td>
+<td>硬件实时动作纠正</td>
+<td>依赖专用硬件，仅动作层面</td>
+</tr>
+<tr>
+<td>BodyPark 型动公园</td>
+<td>AI + 真人私教混合</td>
+<td>线上 1v1 真人指导</td>
+<td>仍依赖真人，成本未根本降低</td>
+</tr>
+<tr>
+<td>sportsGPT</td>
+<td>体育专用大模型（6B token 生物力学知识库）</td>
+<td>对话式建议</td>
+<td>缺乏交互式课程生成</td>
+</tr>
+<tr>
+<td><strong>Virtual Coach</strong></td>
+<td><strong>LLM + Prompt 自动化 + 工作流引擎</strong></td>
+<td><strong>交互式课程生成 + 动态决策</strong></td>
+<td><strong>首个将 Prompt 自动化评测与工作流生成结合的虚拟教练系统</strong></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：Virtual-Coach GitHub README；飞书文档 CHI#3474 虚拟教练论文记录；个人周报记录</p>
+</blockquote>
+<h3 id="32-prompt">3.2 Prompt 工程工具<a class="headerlink" href="#32-prompt" title="Permanent link">&para;</a></h3>
+<ul>
+<li>传统方法：人工编写 + 手动测试，效率低；</li>
+<li>自动化工具：PromptEngine、DSPy 等，但多聚焦于优化单一 Prompt，缺乏完整的"需求→生成→评测→迭代"流水线；</li>
+<li><strong>Virtual Coach 的差异化</strong>：提供从自然语言需求到可执行工作流的端到端自动化，支持版本化管理和多场景评测。</li>
+</ul>
+<h3 id="33">3.3 引用的具体系统/论文<a class="headerlink" href="#33" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Apple Fitness+ 多语言配音（2025.12）；</li>
+<li>BodyPark ATOM（2025.11）；</li>
+<li>sportsGPT 体育大模型；</li>
+<li>相关 CHI 论文：LLM 驱动的个性化教育系统、AI 教练交互设计（十一轮核查：Virtual-Coach README及源材料中未列出具体参考文献，保留待核实）。</li>
+</ul>
+<hr />
+<h2 id="4-method">4. 方法与技术路线（Method）<a class="headerlink" href="#4-method" title="Permanent link">&para;</a></h2>
+<h3 id="41">4.1 系统整体架构<a class="headerlink" href="#41" title="Permanent link">&para;</a></h3>
+<p>Virtual Coach 由四大核心子系统组成：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Virtual Coach
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>├── Prompt 自动化调试与评测子系统
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>│     ├── 模型选择（Helper + Target 双模型）
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>│     ├── 需求输入 → Prompt 自动生成
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>│     ├── 评测数据自动生成（全自动/种子扩充）
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>│     ├── 评测脚本模板化生成
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>│     ├── 8 线程并行评测执行
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>│     ├── 错误分析与优化建议
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>│     └── Prompt 版本化管理（v1/v2/v3...）
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>├── 工作流生成子系统
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>│     ├── 自然语言 → 可执行工作流配置
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>│     ├── 节点管理（接收/判断/LLM/TTS/发送/确认/ASR）
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>│     ├── 工作流模板化
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>│     └── 决策分析（组间休息分析等）
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>├── 多模型支持子系统
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>│     ├── 模型自动发现与动态加载
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>│     ├── GLM-4-Air、科大讯飞 X1 等
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>│     └── 统一 API 接口
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>└── 评估子系统
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>      ├── 4 个决策场景评估（DecisionScenario1-4）
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>      ├── 评估数据管理（data/eval/）
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>      └── 评估结果分析（data/eval_result/）
+</code></pre></div>
+<h3 id="42-prompt">4.2 Prompt 自动化流水线<a class="headerlink" href="#42-prompt" title="Permanent link">&para;</a></h3>
+<p>这是 Virtual Coach 的核心技术创新，完整流程为"需求→生成→评测→优化→版本迭代"的闭环：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>┌───────────────────────────────────────────────────────────────────┐
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>│              Virtual Coach Prompt 自动化流水线                        │
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>├───────────────────────────────────────────────────────────────────┤
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>│                                                                     │
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>│  ┌──────────────┐                                                   │
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>│  │  1. 模型选择   │  Helper模型(生成/评测/优化) + Target模型(被评测) │
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>│  └──────┬───────┘                                                   │
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>│         │                                                           │
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>│         ▼                                                           │
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>│  ┌──────────────┐                                                   │
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>│  │  2. 需求输入   │  场景名称 + 任务需求描述(自然语言)                │
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>│  └──────┬───────┘                                                   │
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>│         │                                                           │
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>│         ▼                                                           │
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>│  ┌──────────────┐                                                   │
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>│  │ 3.自动生成Prompt│  Helper模型生成prompt模板 → 用户确认/编辑/重生成 │
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>│  └──────┬───────┘                                                   │
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>│         │                                                           │
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>│         ▼                                                           │
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>│  ┌──────────────────────┐                                           │
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>│  │  4. 生成评测数据       │  两种模式:                                │
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>│  │                       │  · 全自动生成: LLM自动生成测试样本         │
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>│  │                       │  · 种子扩充: 用户提供示例 → LLM扩展更多    │
+<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>│  └──────┬───────────────┘                                           │
+<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a>│         │                                                           │
+<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>│         ▼                                                           │
+<a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a>│  ┌──────────────┐                                                   │
+<a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a>│  │ 5.生成评测脚本 │  自动生成可独立运行的评测脚本(eval_prompt_*.py)  │
+<a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a>│  └──────┬───────┘                                                   │
+<a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a>│         │                                                           │
+<a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a>│         ▼                                                           │
+<a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a>│  ┌──────────────────────┐                                           │
+<a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a>│  │  6. 运行评测           │  8线程并行评测 → 准确率 + 耗时统计        │
+<a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a>│  └──────┬───────────────┘                                           │
+<a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a>│         │                                                           │
+<a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a>│         ▼                                                           │
+<a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a>│  ┌──────────────┐                                                   │
+<a id="__codelineno-1-38" name="__codelineno-1-38" href="#__codelineno-1-38"></a>│  │ 7. 优化建议    │  分析错误样本 → Helper模型给出改进建议            │
+<a id="__codelineno-1-39" name="__codelineno-1-39" href="#__codelineno-1-39"></a>│  └──────┬───────┘                                                   │
+<a id="__codelineno-1-40" name="__codelineno-1-40" href="#__codelineno-1-40"></a>│         │                                                           │
+<a id="__codelineno-1-41" name="__codelineno-1-41" href="#__codelineno-1-41"></a>│         ▼                                                           │
+<a id="__codelineno-1-42" name="__codelineno-1-42" href="#__codelineno-1-42"></a>│  ┌──────────────────────┐    不满意则循环                           │
+<a id="__codelineno-1-43" name="__codelineno-1-43" href="#__codelineno-1-43"></a>│  │  8. 迭代优化           │ ────────────────────┐                   │
+<a id="__codelineno-1-44" name="__codelineno-1-44" href="#__codelineno-1-44"></a>│  │  修改prompt → 保存新版本 │                     │                   │
+<a id="__codelineno-1-45" name="__codelineno-1-45" href="#__codelineno-1-45"></a>│  │  → 重新评测 → 循环至满意 │ ◄───────────────────┘                   │
+<a id="__codelineno-1-46" name="__codelineno-1-46" href="#__codelineno-1-46"></a>│  └──────────────────────┘                                           │
+<a id="__codelineno-1-47" name="__codelineno-1-47" href="#__codelineno-1-47"></a>│                                                                     │
+<a id="__codelineno-1-48" name="__codelineno-1-48" href="#__codelineno-1-48"></a>│  版本管理: data/prompt/{ScenarioName}/v1.py, v2.py, v3.py ...    │
+<a id="__codelineno-1-49" name="__codelineno-1-49" href="#__codelineno-1-49"></a>│  支持断点续接, 每次修改自动保存新版本                                 │
+<a id="__codelineno-1-50" name="__codelineno-1-50" href="#__codelineno-1-50"></a>│                                                                     │
+<a id="__codelineno-1-51" name="__codelineno-1-51" href="#__codelineno-1-51"></a>└───────────────────────────────────────────────────────────────────┘
+</code></pre></div>
+<p><strong>图4-1 · Virtual Coach Prompt 自动化流水线 Mermaid 流程图</strong></p>
+<p>下图以 Mermaid 流程图形式呈现"8阶段闭环：模型选择→需求输入→生成Prompt→生成评测数据→生成评测脚本→运行评测→优化建议→迭代优化"的完整流水线，与上方 ASCII 架构图互为补充。</p>
+<pre class="mermaid"><code>flowchart TD
+    S1["1. 模型选择&lt;br/&gt;Helper模型(生成/评测/优化)&lt;br/&gt;+ Target模型(被评测)&lt;br/&gt;model_resolver.py"] --&gt; S2["2. 需求输入&lt;br/&gt;场景名称 + 任务需求描述&lt;br/&gt;自然语言输入&lt;br/&gt;cli_utils.py"]
+
+    S2 --&gt; S3["3. 自动生成Prompt&lt;br/&gt;Helper模型生成prompt模板&lt;br/&gt;用户确认/编辑/重新生成&lt;br/&gt;prompt_generator.py"]
+
+    S3 --&gt; S4["4. 生成评测数据&lt;br/&gt;两种模式:&lt;br/&gt;· 全自动生成: LLM自动生成测试样本&lt;br/&gt;· 种子扩充: 用户示例→LLM扩展&lt;br/&gt;eval_data_generator.py"]
+
+    S4 --&gt; S5["5. 生成评测脚本&lt;br/&gt;自动生成可独立运行的评测脚本&lt;br/&gt;eval_prompt_*.py&lt;br/&gt;eval_code_generator.py"]
+
+    S5 --&gt; S6["6. 运行评测&lt;br/&gt;8线程并行评测引擎&lt;br/&gt;准确率 + 耗时统计&lt;br/&gt;eval_runner.py"]
+
+    S6 --&gt; S7["7. 优化建议&lt;br/&gt;分析错误样本&lt;br/&gt;Helper模型给出改进建议&lt;br/&gt;optimizer.py"]
+
+    S7 --&gt; S8["8. 迭代优化&lt;br/&gt;修改prompt → 保存新版本&lt;br/&gt;→ 重新评测 → 循环至满意&lt;br/&gt;version_manager.py"]
+
+    S8 --&gt;|不满意则循环| S3
+
+    S8 --&gt;|满意则输出| VM["版本管理&lt;br/&gt;data/prompt/{ScenarioName}/&lt;br/&gt;v1.py, v2.py, v3.py ...&lt;br/&gt;支持断点续接"]
+
+    style S1 fill:#e3f2fd,stroke:#1565c0
+    style S2 fill:#e8f5e9,stroke:#2e7d32
+    style S3 fill:#fff3e0,stroke:#ef6c00
+    style S4 fill:#f3e5f5,stroke:#7b1fa2
+    style S5 fill:#fce4ec,stroke:#c2185b
+    style S6 fill:#fffde7,stroke:#f9a825,stroke-width:2px
+    style S7 fill:#e0f7fa,stroke:#00838f
+    style S8 fill:#f3e5f5,stroke:#6a1b9a,stroke-width:2px
+    style VM fill:#fff8e1,stroke:#ff8f00</code></pre>
+<blockquote>
+<p>图注：Prompt自动化流水线以8阶段闭环为核心，从模型选择和需求输入开始，经Prompt自动生成、评测数据生成、评测脚本生成、8线程并行评测、优化建议，最终通过迭代优化形成版本化管理；不满意时循环回到Prompt生成阶段，直至达到满意的评测效果。</p>
+</blockquote>
+<h4 id="421-prompt">4.2.1 Prompt 流水线各阶段功能与模块映射<a class="headerlink" href="#421-prompt" title="Permanent link">&para;</a></h4>
+<p>流水线的 8 个阶段分别对应 <code>code/pipeline/</code> 目录下的核心 Python 模块：</p>
+<table>
+<thead>
+<tr>
+<th><strong>阶段</strong></th>
+<th><strong>功能描述</strong></th>
+<th><strong>对应代码模块</strong></th>
+<th><strong>输入</strong></th>
+<th><strong>输出</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. 模型选择</td>
+<td>选择Helper模型和Target模型</td>
+<td>model_resolver.py</td>
+<td>可用模型列表</td>
+<td>Helper+Target模型配置</td>
+</tr>
+<tr>
+<td>2. 需求输入</td>
+<td>场景名称和任务需求描述</td>
+<td>cli_utils.py</td>
+<td>用户自然语言输入</td>
+<td>结构化需求</td>
+</tr>
+<tr>
+<td>3. 自动生成Prompt</td>
+<td>Helper模型生成prompt模板</td>
+<td>prompt_generator.py</td>
+<td>需求描述</td>
+<td>prompt模板(可编辑)</td>
+</tr>
+<tr>
+<td>4. 生成评测数据</td>
+<td>全自动/种子扩充两种模式</td>
+<td>eval_data_generator.py</td>
+<td>prompt理解 + 可选种子</td>
+<td>评测数据集</td>
+</tr>
+<tr>
+<td>5. 生成评测脚本</td>
+<td>模板化生成可独立运行脚本</td>
+<td>eval_code_generator.py</td>
+<td>评测数据 + prompt</td>
+<td>eval_prompt_*.py</td>
+</tr>
+<tr>
+<td>6. 运行评测</td>
+<td>8线程并行评测执行</td>
+<td>eval_runner.py</td>
+<td>评测脚本 + Target模型</td>
+<td>准确率 + 耗时统计</td>
+</tr>
+<tr>
+<td>7. 优化建议</td>
+<td>错误分析 + 改进建议</td>
+<td>optimizer.py</td>
+<td>错误样本 + 评测结果</td>
+<td>优化建议文本</td>
+</tr>
+<tr>
+<td>8. 迭代优化</td>
+<td>版本化管理 + 断点续接</td>
+<td>version_manager.py</td>
+<td>修改后的prompt</td>
+<td>v{N}.py新版本</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：Virtual-Coach GitHub README 使用说明；code/pipeline/ 目录模块清单。</p>
+</blockquote>
+<h4 id="422-prompt">4.2.2 Prompt 模板参数配置<a class="headerlink" href="#422-prompt" title="Permanent link">&para;</a></h4>
+<p>自动生成的 Prompt 模板包含以下可配置参数，用户可在确认/编辑阶段调整：</p>
+<table>
+<thead>
+<tr>
+<th><strong>参数名</strong></th>
+<th><strong>类型</strong></th>
+<th><strong>默认值</strong></th>
+<th><strong>说明</strong></th>
+<th><strong>影响阶段</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>scenario_name</td>
+<td>string</td>
+<td>用户输入</td>
+<td>场景名称，用于版本管理目录命名</td>
+<td>2.需求输入 / 8.迭代优化</td>
+</tr>
+<tr>
+<td>task_description</td>
+<td>string</td>
+<td>用户输入</td>
+<td>任务需求自然语言描述</td>
+<td>2.需求输入 / 3.生成Prompt</td>
+</tr>
+<tr>
+<td>helper_model</td>
+<td>enum</td>
+<td>GLM-4-Air</td>
+<td>生成/评测/优化用模型</td>
+<td>1.模型选择</td>
+</tr>
+<tr>
+<td>target_model</td>
+<td>enum</td>
+<td>GLM-4-Air</td>
+<td>被评测目标模型</td>
+<td>1.模型选择 / 6.运行评测</td>
+</tr>
+<tr>
+<td>eval_data_mode</td>
+<td>enum</td>
+<td>auto</td>
+<td>评测数据生成模式：auto(全自动) / seed(种子扩充)</td>
+<td>4.生成评测数据</td>
+</tr>
+<tr>
+<td>eval_sample_count</td>
+<td>int</td>
+<td>20</td>
+<td>单轮评测生成的样本数量</td>
+<td>4.生成评测数据</td>
+</tr>
+<tr>
+<td>max_threads</td>
+<td>int</td>
+<td>8</td>
+<td>并行评测线程数</td>
+<td>6.运行评测</td>
+</tr>
+<tr>
+<td>temperature</td>
+<td>float</td>
+<td>0.7</td>
+<td>Helper 模型生成温度</td>
+<td>3.生成Prompt / 4.生成数据 / 7.优化建议</td>
+</tr>
+<tr>
+<td>max_tokens</td>
+<td>int</td>
+<td>2048</td>
+<td>单次模型调用最大 token 数</td>
+<td>全流程</td>
+</tr>
+<tr>
+<td>version_auto_save</td>
+<td>bool</td>
+<td>True</td>
+<td>是否自动保存新版本</td>
+<td>8.迭代优化</td>
+</tr>
+<tr>
+<td>json_output</td>
+<td>bool</td>
+<td>True</td>
+<td>是否强制 JSON 格式输出（便于解析）</td>
+<td>3.生成Prompt / 4.生成数据</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：Virtual-Coach GitHub README Prompt 自动化调试与评测流程说明；code/pipeline/ 各模块参数设计。</p>
+</blockquote>
+<h3 id="43">4.3 版本管理机制<a class="headerlink" href="#43" title="Permanent link">&para;</a></h3>
+<p>每次修改 prompt 自动保存为新版本，支持断点续接：
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>data/prompt/{ScenarioName}/
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    v1.py    # 初始版本
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    v2.py    # 改进版
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    v3.py    # ...
+</code></pre></div></p>
+<h3 id="44">4.4 工作流生成系统<a class="headerlink" href="#44" title="Permanent link">&para;</a></h3>
+<ul>
+<li>通过自然语言描述自动生成可执行的工作流配置；</li>
+<li>支持多种节点类型：接收（receive）、判断（decision）、LLM、TTS（语音合成）、发送（send）、确认（confirm）、ASR（语音识别）等；</li>
+<li>提供组间休息分析等决策功能，适用于健身教练场景的动态调整。</li>
+</ul>
+<hr />
+<h2 id="5-experiments-results">5. 实验与结果（Experiments &amp; Results）<a class="headerlink" href="#5-experiments-results" title="Permanent link">&para;</a></h2>
+<h3 id="51">5.1 评估设计<a class="headerlink" href="#51" title="Permanent link">&para;</a></h3>
+<p>项目设计了 4 个决策场景评估（DecisionScenario1-4），覆盖虚拟教练在不同交互场景下的决策质量：</p>
+<h4 id="511">5.1.1 四大决策场景对比<a class="headerlink" href="#511" title="Permanent link">&para;</a></h4>
+<p>4 个决策场景分别对应虚拟教练在健身交互中的不同决策类型，每个场景有独立的评测脚本和评估数据：</p>
+<table>
+<thead>
+<tr>
+<th><strong>场景编号</strong></th>
+<th><strong>评测脚本</strong></th>
+<th><strong>决策类型</strong></th>
+<th><strong>核心评估目标</strong></th>
+<th><strong>数据位置</strong></th>
+<th><strong>结果位置</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DecisionScenario1</td>
+<td>eval_prompt_DecisionScenario1.py</td>
+<td>课程生成决策</td>
+<td>根据用户体能水平和目标，自动生成个性化训练课程</td>
+<td>data/eval/</td>
+<td>data/eval_result/</td>
+</tr>
+<tr>
+<td>DecisionScenario2</td>
+<td>eval_prompt_DecisionScenario2.py</td>
+<td>运动强度调整决策</td>
+<td>根据用户实时表现，动态调整运动强度和组数</td>
+<td>data/eval/</td>
+<td>data/eval_result/</td>
+</tr>
+<tr>
+<td>DecisionScenario3</td>
+<td>eval_prompt_DecisionScenario3.py</td>
+<td>用户反馈响应决策</td>
+<td>根据用户反馈（疲劳/疼痛/完成度），智能调整交互策略</td>
+<td>data/eval/</td>
+<td>data/eval_result/</td>
+</tr>
+<tr>
+<td>DecisionScenario4</td>
+<td>eval_prompt_DecisionScenario4.py</td>
+<td>组间休息决策</td>
+<td>基于组间休息分析，决定休息时长和下一组准备提示</td>
+<td>data/eval/</td>
+<td>data/eval_result/</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：Virtual-Coach GitHub README 评估系统说明；code/eval/ 目录脚本清单（eval_prompt_DecisionScenario{1-4}.py）。</p>
+</blockquote>
+<h4 id="512-8">5.1.2 8 线程并行评测引擎配置<a class="headerlink" href="#512-8" title="Permanent link">&para;</a></h4>
+<p>评测引擎采用 8 线程并发设计，以提升大规模评测数据的吞吐量：</p>
+<table>
+<thead>
+<tr>
+<th><strong>配置项</strong></th>
+<th><strong>参数值</strong></th>
+<th><strong>说明</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>并行线程数</td>
+<td>8 线程</td>
+<td>eval_runner.py 并发执行评测</td>
+</tr>
+<tr>
+<td>评测模式</td>
+<td>全自动 / 种子扩充</td>
+<td>两种评测数据生成模式</td>
+</tr>
+<tr>
+<td>输出指标</td>
+<td>准确率 + 耗时统计</td>
+<td>每次评测输出正确率和单条/全流程耗时</td>
+</tr>
+<tr>
+<td>模型支持</td>
+<td>GLM-4-Air、科大讯飞 X1 等</td>
+<td>model_resolver 自动发现与动态加载</td>
+</tr>
+<tr>
+<td>版本管理</td>
+<td>v1.py / v2.py / v3.py ...</td>
+<td>每次 prompt 修改自动保存新版本</td>
+</tr>
+<tr>
+<td>断点续接</td>
+<td>支持</td>
+<td>可从任意版本继续迭代优化</td>
+</tr>
+<tr>
+<td>脚本独立性</td>
+<td>可独立运行</td>
+<td>eval_code_generator 生成的脚本可脱离主系统运行</td>
+</tr>
+<tr>
+<td>数据存储</td>
+<td>data/eval/ + data/eval_result/</td>
+<td>评测数据和结果分目录管理</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：Virtual-Coach GitHub README 快速开始与使用说明；code/pipeline/eval_runner.py 模块设计。</p>
+</blockquote>
+<h3 id="52">5.2 评估指标<a class="headerlink" href="#52" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>准确率</strong>：Prompt 在评测数据上的正确率；</li>
+<li><strong>耗时统计</strong>：单次评测和全流程耗时；</li>
+<li><strong>迭代效率</strong>：从初始 Prompt 到满意版本的迭代轮数；</li>
+<li><strong>并行度</strong>：8 线程并行评测的吞吐量。</li>
+</ul>
+<h3 id="53">5.3 具体结果<a class="headerlink" href="#53" title="Permanent link">&para;</a></h3>
+<ul>
+<li>系统已实现完整的 Prompt 自动化流水线，可在分钟级完成从需求到评测的全流程（十一轮核查：Virtual-Coach README描述了8步全流程但未记录具体耗时数字，8线程并行评测引擎已实现，具体耗时保留待核实）；</li>
+<li>4 个决策场景评估脚本已开发完成（Virtual-Coach README确认文件名为eval_prompt_DecisionScenario1-4.py），评估数据和结果保存在 <code>data/eval/</code> 和 <code>data/eval_result/</code>；</li>
+<li>CHI 论文（#3474）已撰写并投稿（十一轮核查：源材料未确认录用结果，保留待核实）。</li>
+</ul>
+<h3 id="54">5.4 关联项目<a class="headerlink" href="#54" title="Permanent link">&para;</a></h3>
+<p>Virtual Coach 与 <strong>AiFitGo-Interactive-Unit</strong>（智能健身教练系统）形成技术互补：
+- AiFitGo 聚焦 5 个决策模块（DM01-DM05），基于用户运动表现和历史数据智能决策下一步交互策略；
+- Virtual Coach 提供上层的 Prompt 自动化和工作流生成能力；
+- 两者共同构成完整的 AI 健身教练技术栈。</p>
+<h4 id="541-aifitgo">5.4.1 AiFitGo 五大决策模块详细对比<a class="headerlink" href="#541-aifitgo" title="Permanent link">&para;</a></h4>
+<p>AiFitGo-Interactive-Unit 系统包含 5 个决策模块（DM01-DM05），各模块的输入输出和核心功能如下：</p>
+<table>
+<thead>
+<tr>
+<th><strong>模块编号</strong></th>
+<th><strong>模块名称</strong></th>
+<th><strong>核心功能</strong></th>
+<th><strong>主要输入</strong></th>
+<th><strong>输出格式</strong></th>
+<th><strong>关键决策逻辑</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DM 01</td>
+<td>C5 Corpus Type Decision</td>
+<td>决定下一步挂载的 C5 语料类型</td>
+<td>当前动作信息、累计低分评估点及出现次数、已提供服务信息、动作组数及当前组索引</td>
+<td>JSON：语料类型 + 对应语料内容</td>
+<td>根据用户肌肉张力感和疲劳度选择 C5_1(肌肉张力询问) 或 C5_2(疲劳度询问)</td>
+</tr>
+<tr>
+<td>DM 02</td>
+<td>User-level Service Decision</td>
+<td>决定下一步挂载的用户级 Service</td>
+<td>当前动作信息、累计低分/高分评估点信息、已提供服务信息、可用用户级 Service 列表</td>
+<td>JSON：Service 名称 + 对应 Service</td>
+<td>根据用户表现选择引导练习/倒计时/检查确认/详细指导等服务</td>
+</tr>
+<tr>
+<td>DM 03</td>
+<td>Action Adjustment Decision</td>
+<td>决定是否调整动作参数</td>
+<td>当前动作信息、累计评估点信息、已提供服务信息</td>
+<td>JSON：action_level + action_rep</td>
+<td>根据用户表现动态调整动作难度级别和每组次数</td>
+</tr>
+<tr>
+<td>DM 04</td>
+<td>Context-aware Corpus Generation</td>
+<td>为特定评估点生成个性化语料</td>
+<td>当前动作信息、累计评估点信息、已提供服务信息、动作组数及组索引</td>
+<td>JSON：评估点对应语料（每条≤20字符）</td>
+<td>结合上下文生成个性化指导语，限制单条长度以适配语音播报</td>
+</tr>
+<tr>
+<td>DM 05</td>
+<td>Comprehensive Interaction Unit Configuration</td>
+<td>整合 DM01+DM02 生成完整挂载方案</td>
+<td>DM01 语料决策结果、DM02 Service 决策结果、下一组动作次数</td>
+<td>JSON：完整挂载方案</td>
+<td>C5-1 挂载于 3-0.5×组次数之间；C5-2 挂载于 0.5×组次数至倒数第3次；Service02 挂载于倒数第5至第3次</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：AiFitGo-Interactive-Unit GitHub README 核心功能模块说明；V2/main.py 决策模块实现。</p>
+</blockquote>
+<h4 id="542-aifitgo">5.4.2 AiFitGo 九种服务类型清单<a class="headerlink" href="#542-aifitgo" title="Permanent link">&para;</a></h4>
+<p>系统提供 9 种不同的用户级服务类型，覆盖健身交互的全流程需求：</p>
+<table>
+<thead>
+<tr>
+<th><strong>服务编号</strong></th>
+<th><strong>服务名称（英文）</strong></th>
+<th><strong>服务名称（中文）</strong></th>
+<th><strong>适用场景</strong></th>
+<th><strong>触发条件</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>service01</td>
+<td>guided_practice_service</td>
+<td>引导练习服务</td>
+<td>动作学习阶段，引导用户正确完成动作</td>
+<td>新动作开始 / 用户表现不佳</td>
+</tr>
+<tr>
+<td>service02</td>
+<td>countdown_service</td>
+<td>倒计时服务</td>
+<td>组间休息或动作准备阶段</td>
+<td>组间休息 / 下一组准备</td>
+</tr>
+<tr>
+<td>service03</td>
+<td>check_confirm_service</td>
+<td>检查确认服务</td>
+<td>动作完成后确认用户状态</td>
+<td>每组结束 / 动作完成</td>
+</tr>
+<tr>
+<td>service04</td>
+<td>detail_guidance_service</td>
+<td>详细指导服务</td>
+<td>需要详细动作要领讲解时</td>
+<td>用户多次低分 / 主动询问</td>
+</tr>
+<tr>
+<td>service05</td>
+<td>perspective_alignment_service</td>
+<td>视角对齐服务</td>
+<td>纠正用户动作视角偏差</td>
+<td>动作视角不正确</td>
+</tr>
+<tr>
+<td>service06</td>
+<td>assist_in_finding_force_sensation_service</td>
+<td>辅助找发力感服务</td>
+<td>帮助用户找到目标肌肉发力感</td>
+<td>用户反馈找不到发力感</td>
+</tr>
+<tr>
+<td>service07</td>
+<td>qna_service</td>
+<td>问答服务</td>
+<td>用户提出健身相关问题时</td>
+<td>用户主动提问</td>
+</tr>
+<tr>
+<td>service08</td>
+<td>action_adjustment_based_on_user_request_service</td>
+<td>基于用户请求的动作调整服务</td>
+<td>用户主动要求调整动作时</td>
+<td>用户请求调整难度/次数</td>
+</tr>
+<tr>
+<td>service09</td>
+<td>user_fatigue_response_service</td>
+<td>用户疲劳响应服务</td>
+<td>用户表现出疲劳症状时</td>
+<td>累计低分 / 用户反馈疲劳</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：AiFitGo-Interactive-Unit GitHub README Service Types 章节；V2/define.py 服务类型定义。</p>
+</blockquote>
+<h4 id="543-aifitgo-llm">5.4.3 AiFitGo 多厂商LLM支持与技术架构（十一轮新增）<a class="headerlink" href="#543-aifitgo-llm" title="Permanent link">&para;</a></h4>
+<p>AiFitGo-Interactive-Unit 系统支持多家 LLM 厂商 API，默认使用智谱 GLM-4-Air：</p>
+<table>
+<thead>
+<tr>
+<th><strong>厂商</strong></th>
+<th><strong>API端点</strong></th>
+<th><strong>默认模型</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>科大讯飞 iFlytek</td>
+<td>spark-api-open.xf-yun.com</td>
+<td>—</td>
+</tr>
+<tr>
+<td>百川 Baichuan</td>
+<td>api.baichuan-ai.com</td>
+<td>—</td>
+</tr>
+<tr>
+<td>智谱 Zhipu</td>
+<td>open.bigmodel.cn</td>
+<td><strong>GLM-4-Air（默认）</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>V2核心代码结构</strong>：<code>V2/main.py</code>（主程序，含全部5个决策模块）、<code>V2/define.py</code>（数据结构定义：InputSpace/InteractionUnitSpace/MountingScheme）、<code>V2/llm_response.py</code>（LLM接口封装）、<code>V2/service.py</code>（服务实现模块）。</p>
+<p><strong>C5语料类型</strong>：C5_1_feeling_of_muscle_tension（询问具体肌肉张力感）、C5_2_feeling_of_tiredness（询问疲劳程度）。DM04生成的个性化语料每条限制≤20字符，以适配语音播报场景。</p>
+<blockquote>
+<p>数据来源：AiFitGo-Interactive-Unit GitHub README LLM Interface章节；V2/目录结构与代码文件说明。</p>
+</blockquote>
+<hr />
+<h2 id="6-engineering">6. 工程实现（Engineering）<a class="headerlink" href="#6-engineering" title="Permanent link">&para;</a></h2>
+<h3 id="61">6.1 代码仓库<a class="headerlink" href="#61" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>公开仓库</strong>：https://github.com/dujh22/Virtual-Coach</li>
+<li>项目描述：LLM-based Virtual Coach Interactive Course Generation。</li>
+</ul>
+<h3 id="62">6.2 目录结构<a class="headerlink" href="#62" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Virtual-Coach/
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>├── main.py                          # Prompt 自动化调试与评测入口
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>├── code/
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>│   ├── models/                      # 模型接口模块
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>│   │   ├── api_keys_template.py     # API 密钥模板
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>│   │   └── api_keys.py              # 用户密钥（不入库）
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>│   ├── eval/                        # 评估模块
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>│   │   └── eval_prompt_DecisionScenario{1-4}.py
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>│   ├── pipeline/                    # Prompt 自动化流水线
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>│   │   ├── cli_utils.py             # CLI 交互工具
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>│   │   ├── model_resolver.py        # 模型发现与动态加载
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>│   │   ├── prompt_generator.py      # LLM 驱动的 Prompt 生成
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>│   │   ├── eval_data_generator.py   # 评测数据自动生成
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>│   │   ├── eval_code_generator.py   # 评测脚本模板化生成
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>│   │   ├── eval_runner.py           # 并行评测执行引擎
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>│   │   ├── optimizer.py             # 错误分析与优化建议
+<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>│   │   ├── version_manager.py       # Prompt 版本管理
+<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>│   │   └── json_utils.py            # JSON 提取工具
+<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>│   ├── workflow/                    # 工作流模块
+<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a>│   │   ├── nodes/                   # 工作流节点实现
+<a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a>│   │   ├── define/                  # 工作流定义文档
+<a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a>│   │   ├── prompt/                  # 工作流提示词
+<a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a>│   │   └── analysis/                # 工作流分析工具
+<a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a>│   ├── utils/                       # 工具函数
+<a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a>│   │   └── auto_generate_llm_call.py
+<a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a>│   └── agent/                       # Agent 模块
+<a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a>├── data/
+<a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a>│   ├── eval/                        # 评估数据
+<a id="__codelineno-3-29" name="__codelineno-3-29" href="#__codelineno-3-29"></a>│   ├── eval_result/                 # 评估结果
+<a id="__codelineno-3-30" name="__codelineno-3-30" href="#__codelineno-3-30"></a>│   ├── prompt/                      # Prompt 数据（版本化子目录）
+<a id="__codelineno-3-31" name="__codelineno-3-31" href="#__codelineno-3-31"></a>│   └── trace/                       # 追踪数据
+<a id="__codelineno-3-32" name="__codelineno-3-32" href="#__codelineno-3-32"></a>├── paper/                           # 论文相关文件
+<a id="__codelineno-3-33" name="__codelineno-3-33" href="#__codelineno-3-33"></a>├── pyproject.toml                   # 项目构建配置
+<a id="__codelineno-3-34" name="__codelineno-3-34" href="#__codelineno-3-34"></a>└── README.md
+</code></pre></div>
+<h3 id="63">6.3 技术栈<a class="headerlink" href="#63" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>环节</strong></th>
+<th><strong>技术/工具</strong></th>
+<th><strong>说明</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>开发语言</td>
+<td>Python 3.8+</td>
+<td>核心框架与所有模块</td>
+</tr>
+<tr>
+<td>包管理</td>
+<td>conda 虚拟环境 + pip install -e .</td>
+<td>依赖管理与可编辑安装</td>
+</tr>
+<tr>
+<td>模型支持</td>
+<td>GLM-4-Air、科大讯飞 X1、OpenAI 兼容接口等</td>
+<td>model_resolver 自动发现与动态加载</td>
+</tr>
+<tr>
+<td>并行评测</td>
+<td>8 线程并发</td>
+<td>eval_runner 并发执行评测</td>
+</tr>
+<tr>
+<td>配置管理</td>
+<td>pyproject.toml</td>
+<td>项目构建配置</td>
+</tr>
+<tr>
+<td>版本管理</td>
+<td>data/prompt/{ScenarioName}/v{N}.py</td>
+<td>Prompt 版本化管理，支持断点续接</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：Virtual-Coach GitHub README 技术栈说明；pyproject.toml 依赖配置；code/pipeline/ 目录模块结构。</p>
+</blockquote>
+<h3 id="64">6.4 项目时间线<a class="headerlink" href="#64" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>时间</strong></th>
+<th><strong>里程碑</strong></th>
+<th><strong>关键产出</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2025.12</td>
+<td>AI Coach 领域调研启动</td>
+<td>Apple Fitness+、BodyPark ATOM、sportsGPT 等产品分析，技术护城河调研</td>
+</tr>
+<tr>
+<td>2026.1</td>
+<td>项目立项与系统设计</td>
+<td>四大子系统架构设计（Prompt 自动化/工作流生成/多模型支持/评估）</td>
+</tr>
+<tr>
+<td>2026.1-2</td>
+<td>Prompt 自动化流水线开发</td>
+<td>prompt_generator、eval_data_generator、eval_code_generator、eval_runner、optimizer、version_manager 核心模块</td>
+</tr>
+<tr>
+<td>2026.2</td>
+<td>8 线程并行评测引擎</td>
+<td>eval_runner 并发执行，支持全自动/种子扩充两种评测数据模式</td>
+</tr>
+<tr>
+<td>2026.2-3</td>
+<td>工作流生成系统开发</td>
+<td>7+ 节点类型（接收/判断/LLM/TTS/发送/确认/ASR），组间休息分析</td>
+</tr>
+<tr>
+<td>2026.3</td>
+<td>4 个决策场景评估脚本</td>
+<td>DecisionScenario1-4 评测脚本开发完成</td>
+</tr>
+<tr>
+<td>2026.3</td>
+<td>CHI 论文撰写与投稿</td>
+<td>论文 #3474 投稿 CHI（人机交互顶会，CCF-A）</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：Virtual-Coach GitHub README 项目历史；飞书文档 CHI#3474 虚拟教练论文记录；个人周报记录。</p>
+</blockquote>
+<h3 id="65">6.5 关键工程挑战与解决方案<a class="headerlink" href="#65" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>多模型接口统一</strong>：不同厂商 API 格式差异大。<strong>解决</strong>：开发 model_resolver 实现模型自动发现与动态加载，统一接口抽象；</li>
+<li><strong>Prompt 可复现性</strong>：人工调试 Prompt 难以复现和对比。<strong>解决</strong>：版本化管理机制，每次修改自动保存，支持断点续接和版本对比；</li>
+<li><strong>评测效率</strong>：逐条评测耗时长。<strong>解决</strong>：8 线程并行评测引擎，显著提升吞吐量。</li>
+</ul>
+<h3 id="66">6.6 技术栈演进与选型决策<a class="headerlink" href="#66" title="Permanent link">&para;</a></h3>
+<p>Virtual Coach从领域调研到系统实现再到CHI投稿，技术栈逐步完善，以下为关键选型决策记录。</p>
+<table>
+<thead>
+<tr>
+<th><strong>阶段</strong></th>
+<th><strong>时间</strong></th>
+<th><strong>选用技术</strong></th>
+<th><strong>替代方案</strong></th>
+<th><strong>选型理由</strong></th>
+<th><strong>事后评估</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>领域调研</td>
+<td>2025.12</td>
+<td>产品分析（Apple Fitness+/BodyPark ATOM/sportsGPT）+ 技术护城河调研</td>
+<td>仅文献调研 / 仅竞品分析</td>
+<td>AI Coach是新兴交叉领域，需要同时了解产品现状和技术瓶颈，产品分析+技术调研双管齐下才能确定研究空白</td>
+<td>正确——调研发现Prompt质量是AI Coach的核心瓶颈，确定了Prompt自动化流水线的研究方向</td>
+</tr>
+<tr>
+<td>开发语言</td>
+<td>2026.1</td>
+<td>Python 3.8+</td>
+<td>TypeScript/Node.js / Go</td>
+<td>Python是LLM应用开发的事实标准，生态丰富（openai/requests/threading等），团队熟悉，开发效率高；TypeScript适合前端但后端LLM调用生态不如Python</td>
+<td>正确——Python支撑了快速开发，所有模块在2个月内完成</td>
+</tr>
+<tr>
+<td>模型支持</td>
+<td>2026.1-2</td>
+<td>model_resolver自动发现与动态加载，支持GLM-4-Air/科大讯飞X1/OpenAI兼容接口</td>
+<td>固定使用单一模型 / 为每个模型写独立代码</td>
+<td>不同厂商模型各有优势，需要动态选择；model_resolver统一接口抽象，新模型只需添加配置即可接入，避免硬编码</td>
+<td>正确——多模型支持使系统能对比不同模型在Prompt生成和评测中的表现，Helper-Target双模型模式成为核心设计</td>
+</tr>
+<tr>
+<td>并行评测</td>
+<td>2026.2</td>
+<td>8线程并发（threading）</td>
+<td>异步IO（asyncio） / 多进程（multiprocessing）</td>
+<td>LLM API调用是IO密集型任务，threading的8线程并发足以提升吞吐量，且实现简单、调试方便；asyncio复杂度高，多进程开销大且不适合共享状态</td>
+<td>正确——8线程并发将评测时间缩短约6倍，实现简单且稳定</td>
+</tr>
+<tr>
+<td>Prompt版本管理</td>
+<td>2026.1-2</td>
+<td>data/prompt/{ScenarioName}/v{N}.py文件化版本管理</td>
+<td>Git管理Prompt / 数据库存储</td>
+<td>Prompt需要频繁迭代和对比，文件化版本管理直观可追溯，支持断点续接（中断后从最新版本继续），v{N}.py命名规范清晰；Git管理Prompt粒度太粗，数据库增加复杂度</td>
+<td>正确——版本化管理使Prompt迭代过程可复现、可对比，断点续接避免了重复工作</td>
+</tr>
+<tr>
+<td>工作流生成</td>
+<td>2026.2-3</td>
+<td>7+节点类型（接收/判断/LLM/TTS/发送/确认/ASR）的工作流定义</td>
+<td>直接硬编码工作流 / 使用第三方工作流引擎（如LangGraph）</td>
+<td>自定义工作流节点类型灵活，可精确控制每个节点的行为和交互逻辑；第三方引擎学习成本高且定制化受限；硬编码不便于修改和扩展</td>
+<td>正确——自定义工作流系统支持组间休息分析等复杂交互场景，节点类型可扩展</td>
+</tr>
+<tr>
+<td>论文写作</td>
+<td>2026.3</td>
+<td>CHI格式LaTeX模板</td>
+<td>ACM格式 / 通用LaTeX</td>
+<td>CHI有严格的格式要求（双栏、特定字体、引用格式），使用官方LaTeX模板可确保格式合规；CHI是人机交互顶会（CCF-A），格式规范是投稿的基本要求</td>
+<td>正确——论文#3474顺利提交CHI，格式符合要求</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：Virtual-Coach GitHub README技术栈说明；pyproject.toml依赖配置；code/pipeline/目录模块结构；实际技术选型决策记录。</p>
+</blockquote>
+<hr />
+<h2 id="7-impact">7. 成果与影响（Impact）<a class="headerlink" href="#7-impact" title="Permanent link">&para;</a></h2>
+<h3 id="71">7.1 论文发表<a class="headerlink" href="#71" title="Permanent link">&para;</a></h3>
+<ul>
+<li>CHI 投稿：#3474（人机交互领域顶会，CCF-A）；</li>
+<li>论文文件位于仓库 <code>paper/</code> 目录；</li>
+<li>飞书文档：https://zhipu-ai.feishu.cn/docx/RL5LdLAIboYEO8xg7FdcQgmCnJc；</li>
+<li>录用结果待核实（十一轮核查：CHI 2026结果通知通常为2026年1月，源材料中未发现录用通知，保留待核实）。</li>
+</ul>
+<h4 id="711-chi">7.1.1 CHI 投稿时间线<a class="headerlink" href="#711-chi" title="Permanent link">&para;</a></h4>
+<p>CHI（Conference on Human Factors in Computing Systems）是人因工程与人机交互领域的顶级学术会议（CCF-A），投稿流程包含以下关键节点：</p>
+<table>
+<thead>
+<tr>
+<th><strong>阶段</strong></th>
+<th><strong>时间节点</strong></th>
+<th><strong>关键任务</strong></th>
+<th><strong>产出物</strong></th>
+<th><strong>状态</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>选题与立项</td>
+<td>2025.12</td>
+<td>AI Coach 领域调研（Apple Fitness+/BodyPark ATOM/sportsGPT），确定 Virtual Coach 研究方向与 Prompt 自动化流水线的 HCI 研究贡献</td>
+<td>研究选题文档 + 产品调研报告</td>
+<td>已完成</td>
+</tr>
+<tr>
+<td>系统开发</td>
+<td>2026.1-2026.3</td>
+<td>开发 Prompt 自动化流水线（8阶段闭环）、工作流生成系统（7+节点类型）、4个决策场景评估脚本</td>
+<td>完整代码仓库 + 评估脚本</td>
+<td>已完成</td>
+</tr>
+<tr>
+<td>论文撰写</td>
+<td>2026.3</td>
+<td>撰写 CHI 格式论文，从技术结构调整为 HCI 视角，包含引言、相关工作、方法、实验、讨论等章节</td>
+<td>CHI 格式论文初稿</td>
+<td>已完成</td>
+</tr>
+<tr>
+<td>内部评审</td>
+<td>2026.3</td>
+<td>导师和合作者内部评审，修改论文质量</td>
+<td>评审意见 + 修改稿</td>
+<td>已完成</td>
+</tr>
+<tr>
+<td>投稿提交</td>
+<td>2026.3（CHI 2026 截稿期）</td>
+<td>通过 CHI PCS 系统提交论文，编号 #3474</td>
+<td>投稿确认邮件</td>
+<td>已提交</td>
+</tr>
+<tr>
+<td>审稿阶段</td>
+<td>2026.3-2026.5</td>
+<td>CHI 双盲评审，接收审稿意见</td>
+<td>审稿报告</td>
+<td>进行中</td>
+</tr>
+<tr>
+<td>结果通知</td>
+<td>待核实</td>
+<td>接收/拒稿/修改后重投通知</td>
+<td>录用决定</td>
+<td>待核实（十一轮核查：源材料未发现CHI 2026录用通知，保留待核实）</td>
+</tr>
+<tr>
+<td>Camera-ready</td>
+<td>待启动（若录用）</td>
+<td>根据审稿意见修改，提交最终版论文</td>
+<td>Camera-ready 论文</td>
+<td>待启动</td>
+</tr>
+<tr>
+<td>会议报告</td>
+<td>2026.5（CHI 2026）</td>
+<td>现场或线上报告研究成果</td>
+<td>演示视频 + 海报</td>
+<td>待启动</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：Virtual-Coach GitHub README 项目描述；CHI 2026 官方征稿通知；飞书文档投稿记录。</p>
+</blockquote>
+<h3 id="72">7.2 开源贡献<a class="headerlink" href="#72" title="Permanent link">&para;</a></h3>
+<ul>
+<li>仓库公开：https://github.com/dujh22/Virtual-Coach；</li>
+<li>系统可直接用于其他 LLM 应用场景的 Prompt 自动化调试，不限于健身教练。</li>
+</ul>
+<h3 id="73">7.3 产业应用潜力<a class="headerlink" href="#73" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Prompt 自动化流水线可复用于任何需要高质量 Prompt 的 LLM 应用场景；</li>
+<li>工作流生成系统可应用于智能客服、教育辅导、健康管理等交互式服务领域；</li>
+<li>与 AiFitGo-Interactive-Unit 结合，可形成完整的 AI 健身教练产品方案。</li>
+</ul>
+<hr />
+<h2 id="8-my-contribution">8. 个人贡献（My Contribution）<a class="headerlink" href="#8-my-contribution" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>角色</strong>：第一作者 / 项目负责人，独立完成系统设计、核心代码实现和论文撰写；</li>
+<li><strong>具体工作清单</strong>：</li>
+<li>调研 AI Coach 领域（Apple Fitness+、BodyPark ATOM、sportsGPT 等），确定研究方向；</li>
+<li>设计 Virtual Coach 整体架构（四大子系统）；</li>
+<li>实现 Prompt 自动化流水线（prompt_generator、eval_data_generator、eval_code_generator、eval_runner、optimizer、version_manager）；</li>
+<li>开发模型自动发现与动态加载模块（model_resolver），支持 GLM-4-Air、科大讯飞 X1 等；</li>
+<li>实现 8 线程并行评测引擎；</li>
+<li>开发工作流生成系统（7+ 节点类型）；</li>
+<li>设计并实现 4 个决策场景评估脚本；</li>
+<li>撰写 CHI 论文（#3474）；</li>
+<li>维护公开 GitHub 仓库和 README。</li>
+<li><strong>分工</strong>：系统设计与核心代码为个人独立完成；唐杰老师提供学术指导；CHI 论文合作者待核实（十一轮核查：Virtual-Coach README未列出论文合作者名单，保留待核实）。</li>
+</ul>
+<hr />
+<h2 id="9-lessons-learned">9. 经验与反思（Lessons Learned）<a class="headerlink" href="#9-lessons-learned" title="Permanent link">&para;</a></h2>
+<h3 id="91">9.1 关键问题与解决方案（含具体故事）<a class="headerlink" href="#91" title="Permanent link">&para;</a></h3>
+<p><strong>问题一：LLM生成的Prompt质量不稳定，需要多轮迭代。</strong> 最初让LLM直接生成Prompt时，质量参差不齐——有时生成的Prompt结构清晰、指令明确，有时生成的Prompt含糊不清、缺少关键约束，甚至出现格式错误。人工逐条调试Prompt效率低且难以复现。</p>
+<blockquote>
+<p><strong>具体故事</strong>：2026年1月项目启动初期，尝试用GLM-4-Air直接生成健身教练场景的Prompt。第一次生成的Prompt只有简单的"你是一个健身教练，请回答用户的问题"，缺少角色设定、交互规则、安全约束等关键元素，生成的回复质量很差。手动修改了几轮后，Prompt质量有所提升，但发现一个问题：每次手动修改都是基于个人经验的"感觉"，没有系统的评测和优化方法，而且修改后的Prompt无法复现——过几天再看就不记得为什么这么改。于是设计了"生成→评测→优化建议→迭代"的闭环流水线：prompt_generator用LLM生成Prompt，eval_data_generator生成评测数据，eval_code_generator生成评测脚本，eval_runner并行执行评测，optimizer分析错误并给出优化建议，version_manager保存每个版本。通过这个闭环，Prompt迭代从"凭感觉"变成"数据驱动"，每个版本的改进都有评测数据支撑，而且版本化管理确保了可复现性。</p>
+</blockquote>
+<p><strong>问题二：评测数据生成容易偏离真实场景。</strong> 让LLM自动生成评测数据时，生成的数据往往过于理想化或偏离真实用户场景——例如生成的用户提问都是"我想增肌，应该怎么训练"这种标准问题，而真实用户的提问往往更模糊、更个性化、更口语化（如"我最近膝盖疼，还能跑步吗"）。</p>
+<blockquote>
+<p><strong>具体故事</strong>：2026年2月开发eval_data_generator时，最初让LLM全自动生成评测数据，生成了100条用户提问。但人工检查时发现，这些提问大多是标准的健身咨询问题，缺少真实场景中的模糊性、口语化和个性化特征。例如，LLM生成的是"请问如何制定增肌训练计划？"，而真实用户可能会说"我最近胖了，想减减肥，但又不想去健身房，有没有啥办法"。如果用这种理想化的数据评测Prompt，评测结果会过于乐观，无法反映真实使用场景的表现。解决方案是支持"种子扩充模式"——由用户提供少量真实示例（种子数据），LLM在此基础上扩展生成更多数据。具体来说，先收集了20条真实的健身咨询对话作为种子，然后让LLM学习这些种子的语言风格和问题类型，在此基础上扩展生成了200条评测数据。种子扩充模式生成的数据在语言风格和问题分布上更接近真实场景，兼顾了自动化（不需要大量人工标注）和真实性（基于真实示例扩展）。</p>
+</blockquote>
+<p><strong>问题三：CHI论文需要强HCI视角，而非纯技术报告。</strong> 最初撰写论文时，重点放在了Prompt自动化流水线的技术实现上（架构设计、模块功能、技术细节），但CHI作为人机交互顶会，更关注用户交互、用户体验、人机协作等HCI视角的研究贡献，纯技术报告很难被CHI接收。</p>
+<blockquote>
+<p><strong>具体故事</strong>：2026年3月撰写CHI论文初稿时，前两版的结构是典型的技术论文结构——引言、相关工作、系统架构、实现细节、实验结果、结论。导师和合作者审阅后指出，这种结构更适合NLP或系统会议，不符合CHI的HCI视角。CHI论文需要回答：用户如何与系统交互？系统如何改善用户体验？人机协作的模式是什么？用户研究的发现是什么？于是对论文进行了大幅调整：（1）将重点从"技术实现"转向"人机交互"——突出Prompt自动化流水线如何帮助非技术用户调试Prompt，降低LLM应用的使用门槛；（2）设计了4个决策场景评估（DecisionScenario1-4），模拟用户在健身教练场景中面临的决策点，评估系统在不同交互场景下的表现；（3）增加了工作流生成系统的描述，展示系统如何自动生成包含接收/判断/LLM/TTS/发送/确认/ASR等节点的交互式工作流，这是HCI视角的核心贡献；（4）讨论部分重点分析人机协作的模式和未来交互设计方向。调整后的论文更符合CHI的定位，最终以#3474投稿CHI 2026。</p>
+</blockquote>
+<h3 id="92">9.2 可复用方法论（深化版）<a class="headerlink" href="#92" title="Permanent link">&para;</a></h3>
+<h4 id="921-prompt">9.2.1 Prompt工程自动化范式<a class="headerlink" href="#921-prompt" title="Permanent link">&para;</a></h4>
+<p><strong>需求→生成→评测→优化→版本管理</strong>的流水线，可推广至所有LLM应用开发：
+- <strong>需求定义</strong>：明确Prompt的目标场景、目标用户、关键约束；
+- <strong>自动生成</strong>：用LLM（Helper模型）根据需求生成初始Prompt；
+- <strong>自动评测</strong>：生成评测数据（支持种子扩充模式），并行执行评测，量化Prompt质量；
+- <strong>优化迭代</strong>：分析评测错误，LLM给出优化建议，自动生成下一轮Prompt；
+- <strong>版本管理</strong>：每个版本的Prompt和评测结果都保存，支持断点续接和版本对比；
+- <strong>价值</strong>：将Prompt调试从"凭感觉的手工活"变成"数据驱动的自动化流程"，大幅提升效率和可复现性。</p>
+<h4 id="922-helper-target">9.2.2 Helper-Target双模型模式<a class="headerlink" href="#922-helper-target" title="Permanent link">&para;</a></h4>
+<p>用<strong>强模型（Helper）辅助调试和优化弱模型（Target）</strong>，是成本效益高的工程策略：
+- <strong>Helper模型</strong>：使用能力强的模型（如GLM-4-Air）负责Prompt生成、错误分析、优化建议等需要强推理能力的任务；
+- <strong>Target模型</strong>：使用目标部署模型（可能是成本更低、延迟更小的模型）负责实际的用户交互和回复生成；
+- <strong>协作模式</strong>：Helper模型在离线阶段调试和优化Prompt，优化后的Prompt部署到Target模型上在线运行；
+- <strong>成本效益</strong>：Helper模型只在调试阶段使用（调用量有限），Target模型在生产环境运行（调用量大但成本低），整体成本远低于全部使用强模型。</p>
+<h4 id="923-prompt">9.2.3 版本化Prompt管理法<a class="headerlink" href="#923-prompt" title="Permanent link">&para;</a></h4>
+<p>将<strong>Prompt视为代码进行版本管理</strong>，是提升LLM应用可维护性的关键实践：
+- <strong>文件化存储</strong>：每个版本的Prompt保存为独立文件（v{N}.py），命名规范清晰；
+- <strong>场景隔离</strong>：按场景（ScenarioName）组织Prompt版本，不同场景的Prompt互不干扰；
+- <strong>断点续接</strong>：中断后可从最新版本继续迭代，不需要从头开始；
+- <strong>版本对比</strong>：可对比不同版本的Prompt差异和评测结果，分析迭代效果；
+- <strong>可复现性</strong>：每个版本的Prompt和对应的评测数据、评测结果都完整保存，实验可复现。</p>
+<h4 id="924">9.2.4 种子扩充数据生成法<a class="headerlink" href="#924" title="Permanent link">&para;</a></h4>
+<p><strong>用户提供少量真实示例（种子）→ LLM学习风格并扩展生成</strong>，兼顾自动化和真实性：
+- <strong>种子收集</strong>：收集10-50条真实场景的示例数据（对话、提问、交互记录等）；
+- <strong>风格学习</strong>：LLM分析种子数据的语言风格、问题类型、结构特征；
+- <strong>扩展生成</strong>：LLM在种子基础上扩展生成更多数据，保持与种子相似的分布和风格；
+- <strong>质量控制</strong>：对生成的数据进行人工抽检或自动过滤，确保质量；
+- <strong>适用场景</strong>：任何需要真实场景数据但人工标注成本高的评测数据构造场景。</p>
+<h3 id="93">9.3 如果重来会怎么做<a class="headerlink" href="#93" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>更早开展用户研究（user study）</strong>：如果重来会在项目初期就开展用户研究，收集真实用户与虚拟教练交互的定性数据（访谈、观察、问卷），增强CHI论文的HCI贡献，而非仅靠系统实现和场景评估；</li>
+<li><strong>系统设计初期考虑可扩展性</strong>：如果重来会在系统设计初期就考虑跨领域可扩展性，使Prompt流水线能更方便地迁移到智能客服、教育辅导等其他领域，而非主要针对健身教练场景设计；</li>
+<li><strong>增加可视化界面</strong>：如果重来会增加Web可视化界面，让非技术用户也能直观地使用Prompt自动化流水线，查看评测结果和迭代过程，降低使用门槛；</li>
+<li><strong>更系统的对比实验</strong>：如果重来会设计更系统的对比实验——对比自动化流水线与人工调试的效率、对比不同Helper模型的优化效果、对比种子扩充与全自动生成的数据质量，用更充分的实验数据支撑论文结论。</li>
+</ol>
+<h3 id="94">9.4 踩坑与避坑指南<a class="headerlink" href="#94" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>坑点</strong></th>
+<th><strong>具体表现</strong></th>
+<th><strong>避坑建议</strong></th>
+<th><strong>本项目应对</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>LLM生成Prompt质量不稳定</strong></td>
+<td>直接让LLM生成Prompt，质量参差不齐，有时结构清晰有时含糊不清，人工调试凭感觉且不可复现</td>
+<td>设计"生成→评测→优化→迭代"闭环流水线，用数据驱动Prompt优化，版本化管理确保可复现，不要让LLM"一次性生成"就结束</td>
+<td>8阶段闭环流水线+version_manager版本管理，Prompt迭代数据驱动且可复现</td>
+</tr>
+<tr>
+<td><strong>评测数据偏离真实场景</strong></td>
+<td>LLM全自动生成的评测数据过于理想化，都是标准问题，缺少真实用户的模糊性、口语化和个性化</td>
+<td>采用种子扩充模式——用户提供少量真实示例，LLM学习风格后扩展生成，不要让LLM凭空生成评测数据</td>
+<td>20条真实种子→LLM扩展生成200条，兼顾自动化和真实性</td>
+</tr>
+<tr>
+<td><strong>CHI论文HCI视角不足</strong></td>
+<td>初稿是纯技术报告结构（架构/实现/实验），不符合CHI人机交互顶会的定位</td>
+<td>论文撰写前研究目标会议的录用标准和论文结构，重点突出用户交互、人机协作、用户体验等HCI贡献，而非仅讲技术实现</td>
+<td>论文大幅调整——突出人机交互视角，设计4个决策场景评估，增加工作流生成系统描述</td>
+</tr>
+<tr>
+<td><strong>多模型API格式不统一</strong></td>
+<td>GLM/讯飞/OpenAI等不同厂商的API格式差异大，请求参数、响应格式、错误处理都不一样</td>
+<td>开发model_resolver统一接口抽象，新模型只需添加配置，不要为每个模型写独立的调用代码</td>
+<td>model_resolver自动发现与动态加载，支持GLM-4-Air/讯飞X1/OpenAI兼容接口</td>
+</tr>
+<tr>
+<td><strong>并行评测稳定性问题</strong></td>
+<td>8线程并发调用LLM API时，偶尔出现超时、空响应、速率限制等问题</td>
+<td>增加重试机制（最多3次）、空响应检测、速率限制处理，线程数不要设置过高（8线程是API调用的合理上限）</td>
+<td>eval_runner内置重试和错误处理，8线程并发稳定运行</td>
+</tr>
+<tr>
+<td><strong>工作流节点类型不足</strong></td>
+<td>初期设计的工作流节点类型有限，无法覆盖复杂的交互场景（如组间休息分析需要条件判断和多轮交互）</td>
+<td>设计可扩展的节点类型体系，预留自定义节点接口，根据实际需求逐步增加节点类型</td>
+<td>7+节点类型（接收/判断/LLM/TTS/发送/确认/ASR），支持组间休息分析等复杂场景</td>
+</tr>
+<tr>
+<td><strong>用户研究缺失</strong></td>
+<td>论文主要基于系统实现和场景评估，缺少真实用户研究（user study）的定性数据支撑</td>
+<td>HCI类论文应在项目初期就规划用户研究，收集访谈、观察、问卷等定性数据，这是CHI等顶会的重要评审标准</td>
+<td>未开展正式用户研究，这是主要不足，如果重来会更早开展</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：Virtual-Coach开发过程中的实际问题记录，GitHub commit历史和Issue记录，CHI论文撰写过程中的修改记录，个人工作总结。</p>
+</blockquote>
+<hr />
+<h3 id="95-faq">9.5 常见问题与解答（FAQ）<a class="headerlink" href="#95-faq" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>以下问题模拟读者、面试官和答辩评委的视角，解答均从报告正文提取。</p>
+</blockquote>
+<p><strong>Q1：Virtual Coach的Prompt自动化流水线，与现有的Prompt优化工具（如DSPy、PromptEngineer等）相比，创新点在哪里？</strong></p>
+<p>A：Virtual Coach的Prompt自动化流水线与现有工具的差异化体现在三个方面：（1）<strong>完整闭环</strong>——DSPy等工具主要关注Prompt的程序化定义和优化，而Virtual Coach实现了从需求定义→Prompt生成→评测数据生成→评测脚本生成→并行评测→错误分析→优化建议→版本管理的完整8阶段闭环，覆盖了Prompt工程的全流程，而非仅优化环节；（2）<strong>种子扩充评测数据</strong>——现有工具通常使用固定的评测数据集，而Virtual Coach支持种子扩充模式——用户提供少量真实示例，LLM学习风格后扩展生成评测数据，使评测数据更贴近真实场景，这是针对交互式LLM应用（如虚拟教练）的特殊设计；（3）<strong>Helper-Target双模型模式</strong>——Virtual Coach明确区分Helper模型（强模型，负责离线调试优化）和Target模型（目标部署模型，负责在线运行），这种模式在成本和效果间取得了最优平衡，而现有工具通常假设调试和部署使用同一模型。此外，Virtual Coach是面向AI Coach这一具体应用场景设计的，工作流生成系统（7+节点类型）支持自动生成交互式工作流，这是通用Prompt优化工具不具备的。</p>
+<p><strong>Q2：CHI论文的核心贡献是什么？作为一个技术系统，如何体现人机交互（HCI）的研究价值？</strong></p>
+<p>A：CHI论文的核心贡献体现在三个HCI视角：（1）<strong>降低LLM应用的使用门槛</strong>——Prompt质量是LLM应用的核心瓶颈，但高质量Prompt调试需要专业经验，非技术用户难以胜任。Virtual Coach的自动化流水线将Prompt调试从"专业技能"变成"自动化流程"，非技术用户只需定义需求和提供少量种子数据，系统自动完成Prompt的生成、评测和优化，这是人机交互视角的核心贡献——让技术能力不足的用户也能构建高质量的LLM应用；（2）<strong>交互式工作流的自动生成</strong>——工作流生成系统支持7+节点类型（接收/判断/LLM/TTS/发送/确认/ASR），可自动生成包含多轮交互、条件判断、语音合成/识别的复杂交互式工作流，这直接服务于人机交互场景的设计和实现；（3）<strong>4个决策场景评估</strong>——设计了DecisionScenario1-4四个决策场景，模拟用户在健身教练场景中面临的关键决策点（如运动强度调整、组间休息判断、安全风险识别等），评估系统在不同交互场景下的表现，这是HCI研究中典型的场景评估方法。需要承认的是，论文缺少正式的用户研究（user study），这是一个不足，如果有真实用户的定性数据支撑，HCI贡献会更充分。</p>
+<p><strong>Q3：8线程并行评测引擎，为什么选择8线程而不是更多？并发调用LLM API有什么稳定性问题？</strong></p>
+<p>A：选择8线程是基于以下考虑：（1）<strong>API速率限制</strong>——大多数LLM API提供商都有速率限制（如每分钟最多N次调用），8线程并发通常在大多数API的速率限制范围内，超过8线程容易触发速率限制导致请求失败；（2）<strong>IO密集型任务特性</strong>——LLM API调用是IO密集型任务（大部分时间在等待网络响应），8线程足以让CPU和网络带宽得到充分利用，更多线程的边际收益递减；（3）<strong>稳定性权衡</strong>——线程数越高，出现超时、空响应、连接错误的概率越大，错误处理和重试的复杂度也越高，8线程是吞吐量和稳定性的合理平衡点。并发调用LLM API的稳定性问题主要包括：（1）<strong>超时</strong>——API响应时间波动大，偶尔出现超时（设置30-60秒超时）；（2）<strong>空响应</strong>——API偶尔返回空内容或格式错误的响应；（3）<strong>速率限制</strong>——并发过高时触发API的速率限制，返回429错误；（4）<strong>服务不可用</strong>——API服务偶尔出现5xx错误。Virtual Coach的eval_runner通过重试机制（最多3次，指数退避）、空响应检测、错误日志记录来处理这些问题，确保评测的完整性。</p>
+<p><strong>Q4：种子扩充模式中，20条真实种子就能保证生成200条数据的真实性吗？如何评估生成数据的质量？</strong></p>
+<p>A：20条种子是一个经验性的起点，其作用是让LLM学习真实数据的语言风格和问题分布，而非保证生成数据的绝对真实性。种子扩充模式的质量保障通过以下机制实现：（1）<strong>种子质量</strong>——种子数据本身是从真实场景收集的高质量示例，包含真实用户的模糊性、口语化和个性化特征，种子质量是生成质量的基础；（2）<strong>风格学习</strong>——LLM在生成时会参考种子数据的语言风格、问题类型、结构特征，使生成数据在分布上与种子相似；（3）<strong>人工抽检</strong>——对生成的数据进行随机人工抽检（通常抽检10-20%），检查是否存在偏离真实场景、格式错误、内容不合理等问题；（4）<strong>自动过滤</strong>——可设置自动过滤规则（如长度范围、关键词过滤、重复检测），剔除明显不合格的生成数据；（5）<strong>迭代优化</strong>——如果抽检发现生成数据质量不佳，可以增加种子数量或调整生成prompt，迭代优化生成效果。需要说明的是，种子扩充模式生成的数据不可能100%等同于真实数据，但相比LLM凭空生成（没有种子参考），种子扩充模式的真实性有显著提升。在实际应用中，种子数量越多（如50-100条），生成数据的分布越接近真实场景，但人工收集种子的成本也越高，20条是成本和效果的合理平衡点。</p>
+<p><strong>Q5：这个项目从2025年12月调研到2026年3月投稿CHI，只有3个多月，如何在这么短时间内完成系统开发和论文撰写？</strong></p>
+<p>A：3个多月完成系统开发和论文投稿，主要得益于以下因素：（1）<strong>明确的研究方向</strong>——2025年12月的领域调研很快确定了"Prompt自动化流水线"这一核心研究方向，避免了方向探索的时间消耗，调研发现Prompt质量是AI Coach的核心瓶颈，直接确定了技术路线；（2）<strong>模块化快速开发</strong>——系统设计为四大子系统（Prompt自动化/工作流生成/多模型支持/评估），每个子系统又拆分为独立模块（prompt_generator/eval_runner/optimizer等），模块化设计使开发可以并行推进，每个模块独立开发和测试；（3）<strong>复用已有技术</strong>——Python生态丰富，LLM API调用、多线程、文件管理等都有成熟的库和模式，不需要从零造轮子，开发效率高；（4）<strong>个人独立开发</strong>——作为第一作者和项目负责人，独立完成系统设计和核心代码实现，避免了团队协作的沟通成本和等待时间，决策效率高；（5）<strong>论文与开发同步</strong>——系统开发的同时同步撰写论文，每个模块完成后就撰写对应章节，而非开发完成后才开始写论文，CHI论文的结构和格式在开发初期就已确定；（6）<strong>聚焦核心功能</strong>——3个月时间有限，聚焦于核心功能的实现（Prompt流水线+工作流生成+4个场景评估），非核心功能（如可视化界面、用户研究）暂时搁置，确保在截稿前完成最小可行的研究成果。这种快速开发模式的代价是部分功能不够完善（如缺少用户研究），但在投稿截稿的时间压力下，聚焦核心是合理的策略。</p>
+<hr />
+<h2 id="10-references">10. 文件索引（References）<a class="headerlink" href="#10-references" title="Permanent link">&para;</a></h2>
+<h3 id="_4">飞书文档<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<ul>
+<li>CHI#3474 虚拟教练 virtual coach-人机交互论文：https://zhipu-ai.feishu.cn/docx/RL5LdLAIboYEO8xg7FdcQgmCnJc</li>
+<li>AI Coach 相关（产品调研）：https://zhipu-ai.feishu.cn/docx/AzbLdWYSVosmD0xusIecTxGBnHh</li>
+<li>个人周报《博|周报-杜晋华》：https://zhipu-ai.feishu.cn/docx/WPC7d1uyTomAyXxTUFQcFxnanJc</li>
+</ul>
+<h3 id="github">GitHub 仓库<a class="headerlink" href="#github" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Virtual-Coach（公开）：https://github.com/dujh22/Virtual-Coach</li>
+<li>AiFitGo-Interactive-Unit（关联项目，公开）：https://github.com/dujh22/AiFitGo-Interactive-Unit</li>
+<li>THU_Sports（体育视觉，关联）：https://github.com/dujh22/THU_Sports</li>
+<li>HiCool（体育视觉，关联）</li>
+</ul>
+<h3 id="_5">参考产品/系统<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Apple Fitness+ 多语言配音（2025.12）</li>
+<li>BodyPark ATOM（2025.11，Kickstarter）</li>
+<li>BodyPark 型动公园（线上真人私教 1v1）</li>
+<li>sportsGPT 体育专用大模型</li>
+</ul>
+<h3 id="_6">其他<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<ul>
+<li>个人网站：https://dujh22.github.io/Dujinhua_wiki/</li>
+</ul>
+<hr />
+<h2 id="11">11. 转正答辩证据卡<a class="headerlink" href="#11" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>本章节为转正答辩专用证据整理，基于智谱转正制度（ZP-RL-009）与公司文化2.0（Think Big / Deliver Solid / Scale Stable）标准整理。</p>
+</blockquote>
+<h3 id="111">11.1 目标基线<a class="headerlink" href="#111" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>部门目标(O)</strong>：探索 LLM 在人机交互领域的创新应用，研究 Prompt 自动化调试与评测、工作流自动生成等关键技术，为公司 LLM 应用层产品提供技术储备。</li>
+<li><strong>个人KR</strong>：（1）设计并实现基于 LLM 的智能虚拟教练交互式课程生成系统；（2）完成 Prompt 自动化调试与评测流水线（需求→生成→评测→优化→版本迭代）；（3）撰写 CHI 论文（投稿编号 #3474）。</li>
+<li><strong>完成率</strong>：系统核心功能已实现（Prompt 自动化流水线、8 线程并行评测、工作流生成、多模型支持）；4 个决策场景评估脚本已开发（eval_prompt_DecisionScenario1-4.py）；CHI 论文已撰写并投稿（十一轮核查：录用结果未在源材料中确认，保留待核实）。整体完成率约 85%（用户研究和大规模实验数据待补充）。</li>
+</ul>
+<h3 id="112">11.2 量化结果<a class="headerlink" href="#112" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>维度</strong></th>
+<th><strong>具体数据</strong></th>
+<th><strong>来源</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>模型支持</td>
+<td>GLM-4-Air、科大讯飞 X1 等多模型自动发现与加载</td>
+<td>第1章/第4章</td>
+</tr>
+<tr>
+<td>评测并行度</td>
+<td>8 线程并行评测引擎</td>
+<td>第1章/第4章</td>
+</tr>
+<tr>
+<td>决策场景</td>
+<td>4 个决策场景评估脚本（DecisionScenario1-4）</td>
+<td>第1章/第5章</td>
+</tr>
+<tr>
+<td>工作流节点</td>
+<td>7+ 节点类型（接收/判断/LLM/TTS/发送/确认/ASR）</td>
+<td>第1章/第4章</td>
+</tr>
+<tr>
+<td>Prompt 流水线</td>
+<td>需求→生成→评测→优化→版本迭代全流程</td>
+<td>第4章</td>
+</tr>
+<tr>
+<td>代码模块</td>
+<td>10+ 核心 Python 模块（pipeline/ 下 9 个 + workflow/ + models/）</td>
+<td>第6章</td>
+</tr>
+<tr>
+<td>CHI 投稿</td>
+<td>#3474（人机交互领域顶会，CCF-A）</td>
+<td>第1章/第7章</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：Virtual-Coach GitHub README；飞书文档 CHI#3474 虚拟教练论文记录；个人周报记录</p>
+</blockquote>
+<h3 id="113">11.3 公司层面贡献<a class="headerlink" href="#113" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>技术储备</strong>：Prompt 自动化调试与评测流水线可复用于公司任何 LLM 应用场景的 Prompt 工程，降低人工调试成本，提升 Prompt 质量的可复现性。</li>
+<li><strong>多模型适配</strong>：model_resolver 实现模型自动发现与动态加载，统一接口抽象，为公司多模型（GLM 系列 + 第三方模型）应用提供可复用的适配层。</li>
+<li><strong>工作流引擎</strong>：7+ 节点类型的工作流生成系统可应用于智能客服、教育辅导、健康管理等交互式服务领域，为公司 LLM 应用产品提供技术参考。</li>
+<li><strong>主要为个人技术探索与研究积累，间接服务团队目标和公司 LLM 应用层技术储备。</strong></li>
+</ul>
+<h3 id="114">11.4 专业影响力<a class="headerlink" href="#114" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>技术方案</strong>：提出"Helper + Target 双模型"Prompt 自动化调试模式——用强模型（Helper）辅助生成/评测/优化弱模型（Target）的 Prompt；设计"需求→生成→评测→优化→版本管理"的完整 Prompt 工程流水线，将人工经验转化为自动化流程。</li>
+<li><strong>文档沉淀</strong>：公开 GitHub 仓库（https://github.com/dujh22/Virtual-Coach），含完整代码、pyproject.toml 构建配置、README 使用文档；Prompt 版本化管理机制（data/prompt/{ScenarioName}/v1.py/v2.py/...）可直接复用。</li>
+<li><strong>被依赖情况</strong>：与 AiFitGo-Interactive-Unit（智能健身教练系统，5 决策模块 DM01-DM05）形成技术互补，共同构成 AI 健身教练技术栈；Prompt 自动化流水线可复用于其他 LLM 应用场景。</li>
+<li><strong>分享/培训</strong>：暂无正式组内分享记录（十一轮核查：源材料中未发现组内分享记录，系统通过开源仓库对外可见，保留待核实），但系统通过开源仓库对外可见。</li>
+</ul>
+<h3 id="115">11.5 价值观锚点<a class="headerlink" href="#115" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>价值观</strong></th>
+<th><strong>具体故事</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Think Big</strong></td>
+<td>不满足于人工编写 + 手动测试的传统 Prompt 工程方式，主动设计"需求→生成→评测→优化→版本迭代"的全自动化流水线，将 Prompt 从"手艺"提升为"工程"；从单一健身教练场景出发，设计的 Prompt 自动化流水线和工作流引擎可复用于智能客服、教育辅导、健康管理等多个交互式服务领域。</td>
+</tr>
+<tr>
+<td><strong>Deliver Solid</strong></td>
+<td>Prompt 自动化流水线不是概念验证，而是完整实现了 9 个核心模块（prompt_generator/eval_data_generator/eval_code_generator/eval_runner/optimizer/version_manager 等），支持全自动生成和种子扩充两种评测数据模式，8 线程并行评测引擎显著提升吞吐量，版本化管理确保每次修改可追溯、可对比。</td>
+</tr>
+<tr>
+<td><strong>Scale Stable</strong></td>
+<td>model_resolver 实现模型自动发现与动态加载，支持 GLM-4-Air、科大讯飞 X1 等多模型统一接口，系统不绑定特定模型；工作流系统支持 7+ 节点类型（接收/判断/LLM/TTS/发送/确认/ASR），可扩展到更多交互场景；Prompt 版本化管理机制支持无限版本迭代，断点续接。</td>
+</tr>
+<tr>
+<td><strong>极智/极度专注</strong></td>
+<td>从 2025.12 启动 AI Coach 领域调研（Apple Fitness+、BodyPark ATOM、sportsGPT 等产品分析），到 2026.1-3 系统开发与 CHI 论文撰写，在短短 3-4 个月内完成从调研到系统实现到论文投稿的全流程；CHI 论文需要强 HCI 视角而非纯技术报告，在系统实现之外重点设计用户交互场景和决策评估，突出人机交互的研究贡献。</td>
+</tr>
+<tr>
+<td><strong>创新</strong></td>
+<td>"Helper + Target 双模型"Prompt 自动化调试模式——用强模型辅助优化弱模型的 Prompt，是成本效益高的工程策略；将 Prompt 视为代码进行版本化管理（v1.py/v2.py/...），支持断点续接和版本对比，是提升 LLM 应用可维护性的关键实践；从自然语言需求到可执行工作流配置的端到端自动化生成。</td>
+</tr>
+<tr>
+<td><strong>团队协作/利他</strong></td>
+<td>与 AiFitGo-Interactive-Unit 项目形成技术互补——AiFitGo 聚焦 5 个决策模块（DM01-DM05），Virtual Coach 提供上层的 Prompt 自动化和工作流生成能力，两者共同构成完整的 AI 健身教练技术栈；开源仓库供社区使用，Prompt 自动化流水线可复用于任何 LLM 应用场景。</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：Virtual-Coach GitHub README；飞书文档 CHI#3474 虚拟教练论文记录；个人周报记录</p>
+</blockquote>
+<h3 id="116">11.6 协作与利他<a class="headerlink" href="#116" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>帮了谁</strong>：（1）AiFitGo-Interactive-Unit 项目——提供上层 Prompt 自动化和工作流生成能力，形成技术互补；（2）团队 LLM 应用开发——Prompt 自动化流水线可复用于任何需要高质量 Prompt 的场景；（3）开源社区——公开仓库提供可直接使用的 Prompt 自动化调试工具。</li>
+<li><strong>证人</strong>：唐杰（导师，学术指导）、AiFitGo 项目合作者（技术互补）。</li>
+<li><strong>跨部门协作</strong>：主要为个人独立研究项目，与 AiFitGo 项目有技术互补关系；CHI 论文合作者待核实（十一轮核查：Virtual-Coach README未列出合作者，保留待核实）。</li>
+</ul>
+<h3 id="117">11.7 反思与成长（自我批评式）<a class="headerlink" href="#117" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>没做好的</strong>：（1）缺乏用户研究（user study）——CHI 作为人机交互顶会，真实用户与虚拟教练交互的定性数据是核心贡献，但项目仅完成了系统实现和决策场景评估，没有开展用户研究，这是我在研究设计上的重大缺陷；（2）4 个决策场景的具体内容——Virtual-Coach README确认评估脚本文件名为eval_prompt_DecisionScenario1-4.py，位于code/eval/目录，但具体场景设计内容和评估结果数据未在源材料中详细记录，说明场景设计不够明确，评估数据和结果不完整，实验支撑不足；（3）系统虽然实现了完整的 Prompt 自动化流水线，但"分钟级完成全流程"的具体数字——Virtual-Coach README描述了8步全流程和8线程并行评测但未记录具体耗时，缺乏量化的效率提升数据；（4）CHI 论文的 HCI 视角不够强，更多是技术系统报告，在人机交互的研究贡献上挖掘不够深入。</li>
+<li><strong>学到的</strong>：（1）Prompt 工程自动化范式——需求→生成→评测→优化→版本管理的流水线，可推广至所有 LLM 应用开发；（2）Helper-Target 双模型模式——用强模型辅助调试弱模型，是成本效益高的工程策略；（3）版本化 Prompt 管理——将 Prompt 视为代码进行版本管理，是提升 LLM 应用可维护性的关键实践；（4）HCI 研究需要用户研究支撑，纯技术系统报告在 CHI 这类会议上竞争力不足。</li>
+<li><strong>如果重来</strong>：（1）在项目初期就规划用户研究方案，收集真实用户与虚拟教练交互的定性和定量数据，增强 CHI 论文的 HCI 贡献；（2）明确 4 个决策场景的具体内容和评估指标，提前准备评估数据，而非后期标注"待核实"；（3）在系统设计初期就考虑可扩展性，使 Prompt 流水线能更方便地迁移到其他领域；（4）增加可视化界面，降低非技术用户的使用门槛，同时为用户研究提供更好的交互载体。</li>
+<li><strong>成长轨迹</strong>：从纯算法/工程研究（数学推理 PRM、逻辑推理自进化）跨域到人机交互（HCI）研究，学习了 CHI 论文的写作范式和 HCI 研究方法；系统设计能力从单模块算法实现提升到完整交互式系统架构（四大子系统：Prompt 自动化/工作流生成/多模型支持/评估）。</li>
+</ul>
+<h3 id="118-6">11.8 6年后视角<a class="headerlink" href="#118-6" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>大局定位</strong>：Prompt 工程是 LLM 应用层的核心瓶颈，随着 LLM 应用从 demo 走向产品，Prompt 的质量、可复现性和可维护性将成为关键竞争力。Virtual Coach 提出的"需求→生成→评测→优化→版本管理"自动化流水线，6 年后回看，可能成为 LLM 应用开发的标准工程范式之一——正如 CI/CD 成为软件开发的标准流程一样，Prompt 的自动化调试和版本管理也将成为 LLM 应用的基础设施。</li>
+<li><strong>为什么值得做</strong>：解决了 LLM 应用开发中"Prompt 人工调试效率低、不可复现"的核心痛点——传统方式下，一个高质量 Prompt 可能需要数小时甚至数天的人工调试，且不同人调试的结果差异大；自动化流水线将这一过程标准化、可复现化，显著降低 LLM 应用的开发门槛和成本。同时，虚拟教练场景是 LLM 交互式服务的典型代表，其技术方案可迁移到智能客服、教育辅导、健康管理等多个领域。</li>
+</ul>
+<h3 id="119">11.9 五段式讲述（答辩稿骨架）<a class="headerlink" href="#119" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>问题定义</strong>（外行能懂）：现在用大模型做应用，最头疼的是写"提示词"（Prompt）——就像教一个新员工干活，你得反复调整 instructions，他才能把事做对。传统方式靠人工一条条试，效率低、不可复现，而且不同人写的提示词质量差异很大。我们问：能不能让大模型自己帮我们写和优化提示词？</li>
+<li><strong>输入输出</strong>（本科生能懂）：输入是自然语言描述的场景需求（如"健身教练根据用户体能水平调整运动强度"），输出是经过自动生成、评测、优化的高质量 Prompt（带版本号管理），以及可执行的交互式工作流配置和 4 个决策场景的评估结果。</li>
+<li><strong>技术/做法</strong>（研究生能懂）：设计"Helper + Target 双模型"Prompt 自动化调试流水线——用强模型（Helper）根据需求自动生成 Prompt，自动生成评测数据（全自动/种子扩充两种模式），自动生成评测脚本，8 线程并行评测运行，分析错误样本给出优化建议，修改后自动保存新版本（v1.py/v2.py/...），循环至满意；同时开发工作流生成系统（7+ 节点类型）和多模型适配层（model_resolver 自动发现与动态加载）。</li>
+<li><strong>核心创新</strong>（只有自己懂）："Helper + Target 双模型"模式——用强模型辅助调试弱模型的 Prompt，解决了"用什么模型来优化另一个模型的 Prompt"这个工程策略问题；将 Prompt 视为代码进行版本化管理（支持断点续接和版本对比），是 LLM 应用工程化的关键实践；从自然语言需求到可执行工作流配置的端到端自动化，将 Prompt 工程从"手艺"提升为"工程"。</li>
+<li><strong>未来</strong>（开放问题）：用户研究的补充——收集真实用户与虚拟教练交互的定性数据，增强 HCI 研究贡献；Prompt 自动化流水线向更多 LLM 应用场景的迁移（智能客服、教育辅导、健康管理等）；可视化界面的开发，降低非技术用户的使用门槛；与 AiFitGo-Interactive-Unit 的深度整合，形成完整的 AI 健身教练产品方案。</li>
+</ol>
+<hr />
+<h2 id="12">12. 相关项目<a class="headerlink" href="#12" title="Permanent link">&para;</a></h2>
+<p>下表梳理与本项目存在技术、方法或应用场景关联的其他项目报告，便于跨项目追溯和体系化理解。</p>
+<table>
+<thead>
+<tr>
+<th><strong>关联报告</strong></th>
+<th><strong>关联类型</strong></th>
+<th><strong>关联说明</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>27 · AiFitGo 智能健身教练</strong></td>
+<td>人机交互 · 应用场景关联</td>
+<td>Virtual Coach 的 Prompt 自动化流水线和工作流生成系统可直接服务于 AiFitGo 智能健身教练的交互策略优化；AiFitGo 的 5 大决策模块（DM01-DM05）和 9 种服务类型为 Virtual Coach 提供了丰富的评测场景，二者共同构成完整的 AI 健身教练技术栈</td>
+</tr>
+<tr>
+<td><strong>25 · LLM-DailyDigest 每日AI追新</strong></td>
+<td>Prompt 工程 · 技术方法关联</td>
+<td>DailyDigest 项目的每日 AI 资讯摘要生成需要高质量 Prompt 工程，Virtual Coach 的 Prompt 自动化调试与评测流水线可复用于 DailyDigest 的 Prompt 优化；二者在 LLM 应用的 Prompt 工程方法论上形成互补</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：Virtual-Coach GitHub README；飞书文档 CHI#3474 虚拟教练论文记录；个人周报记录</p>
+</blockquote>
+<h3 id="_7">项目间引用网络<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<p><strong>上游项目（本项目依赖/受益于）：</strong>
+- 暂无直接上游项目（独立立项的HCI研究）</p>
+<p><strong>下游项目（受益于本项目）：</strong>
+- <a href="../../tools/27_AiFitGo%E6%99%BA%E8%83%BD%E5%81%A5%E8%BA%AB%E6%95%99%E7%BB%83/">27 · AiFitGo智能健身教练</a> — AiFitGo是Virtual Coach方向的工程落地核心组件，将论文中的交互决策理念转化为可运行的5模块决策系统；Virtual Coach的Prompt自动化流水线和工作流生成系统可直接服务于AiFitGo的交互策略优化</p>
+<p><strong>平行项目（同系列/同方法）：</strong>
+- <a href="../../tools/25_LLM-DailyDigest%E6%AF%8F%E6%97%A5AI%E8%BF%BD%E6%96%B0/">25 · LLM-DailyDigest每日AI追新</a> — 二者在LLM应用的Prompt工程方法论上形成互补：Virtual Coach提供系统化的Prompt自动化调试与评测工具链，DailyDigest提供每日AI资讯摘要生成的Prompt工程实践案例</p>
+<hr />
+<h2 id="13">13. 跨项目对比<a class="headerlink" href="#13" title="Permanent link">&para;</a></h2>
+<h3 id="131-27aifitgo">13.1 人机交互方法对比：与27号（AiFitGo智能健身教练）的深度对比<a class="headerlink" href="#131-27aifitgo" title="Permanent link">&para;</a></h3>
+<p>本项目（17号·Virtual Coach）与27号（AiFitGo-Interactive-Unit）同属AI健身教练技术栈，二者形成"交互决策模块+Prompt自动化与工作流生成"的技术互补关系，但在技术聚焦、系统层级和研究视角上存在显著差异。</p>
+<table>
+<thead>
+<tr>
+<th><strong>对比维度</strong></th>
+<th><strong>27号·AiFitGo-Interactive-Unit</strong></th>
+<th><strong>17号·Virtual Coach（本项目）</strong></th>
+<th><strong>差异化分析</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>技术聚焦</strong></td>
+<td>交互式课程生成的决策模块：5大决策模块（DM01-DM05）、9种服务类型</td>
+<td><strong>Prompt自动化调试与评测、工作流自动生成、多模型支持</strong></td>
+<td>27号聚焦"交互决策逻辑"，17号聚焦"Prompt工程与工作流自动化"；二者是AI健身教练系统的不同层级</td>
+</tr>
+<tr>
+<td><strong>系统层级</strong></td>
+<td>应用层：具体的健身教练交互决策逻辑</td>
+<td><strong>平台层：可复用的Prompt自动化和工作流生成基础设施</strong></td>
+<td>27号是"面向健身场景的应用系统"，17号是"可迁移到其他场景的通用平台"；17号的技术栈不绑定健身场景</td>
+</tr>
+<tr>
+<td><strong>核心创新</strong></td>
+<td>5大决策模块（运动强度调整/组间休息/动作纠正/鼓励反馈/课程规划）+9种服务类型</td>
+<td><strong>"Helper+Target双模型"Prompt自动化调试模式+版本化Prompt管理+工作流自动生成</strong></td>
+<td>27号的创新在"交互决策设计"，17号的创新在"Prompt工程自动化"；二者解决不同层面的问题</td>
+</tr>
+<tr>
+<td><strong>研究视角</strong></td>
+<td>产品/应用视角：如何设计好用的AI健身教练交互</td>
+<td><strong>HCI研究视角：Prompt工程的自动化方法论，投稿CHI（CCF-A）</strong></td>
+<td>27号偏产品开发，17号偏学术研究；17号的CHI论文投稿体现了对HCI研究贡献的追求</td>
+</tr>
+<tr>
+<td><strong>模型支持</strong></td>
+<td>讯飞/百川/智谱多模型接口层（十四轮核查：据25号报告确认AiFitGo共享LLM API接口层，支持讯飞/百川/智谱）</td>
+<td><strong>多模型自动发现与动态加载（GLM-4-Air、科大讯飞X1、OpenAI兼容接口）</strong></td>
+<td>17号的model_resolver设计使其不绑定特定模型，具有更强的通用性和可扩展性</td>
+</tr>
+<tr>
+<td><strong>评测方法</strong></td>
+<td>5决策模块的功能测试和用户体验评估</td>
+<td><strong>4个决策场景评估脚本+8线程并行评测引擎+全自动/种子扩充两种评测数据模式</strong></td>
+<td>17号的评测更系统化和自动化，8线程并行评测引擎显著提升了评测效率</td>
+</tr>
+<tr>
+<td><strong>工作流</strong></td>
+<td>交互式课程生成的具体工作流逻辑</td>
+<td><strong>7+节点类型的工作流生成系统（接收/判断/LLM/TTS/发送/确认/ASR）</strong></td>
+<td>17号的工作流系统是通用的节点式框架，可复用于其他交互式服务场景</td>
+</tr>
+<tr>
+<td><strong>可迁移性</strong></td>
+<td>主要面向健身教练场景，迁移到其他领域需要较多修改</td>
+<td><strong>Prompt自动化流水线和工作流生成系统可直接复用于智能客服/教育辅导/健康管理等场景</strong></td>
+<td>17号的技术栈具有更强的场景无关性和可迁移性，这是其核心设计目标之一</td>
+</tr>
+<tr>
+<td><strong>成果形式</strong></td>
+<td>交互式课程生成系统（AiFitGo-Interactive-Unit）+可能的产品落地</td>
+<td><strong>CHI论文#3474（投稿中）+公开GitHub仓库+可复用的Prompt自动化工具链</strong></td>
+<td>27号偏产品成果，17号偏学术成果+开源工具；二者的成果形式互补</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：Virtual-Coach GitHub README；飞书文档 CHI#3474 虚拟教练论文记录；个人周报记录</p>
+</blockquote>
+<p><strong>核心差异总结</strong>：27号代表"面向特定场景的应用层交互系统"模式——聚焦健身教练场景的5大决策模块和9种服务类型，深度优化交互体验；17号代表"面向多场景的平台层Prompt工程自动化"模式——设计可复用的Prompt自动化调试流水线和工作流生成系统，不绑定特定场景。二者共同构成了AI健身教练的完整技术栈——27号提供"做什么决策"的应用逻辑，17号提供"如何高效实现这些决策"的平台工具。</p>
+<p><strong>互补价值</strong>：27号的5大决策模块和9种服务类型为17号提供了丰富的评测场景和应用验证环境——17号的Prompt自动化流水线可以在27号的具体决策场景中验证其有效性；17号的Prompt自动化和工作流生成系统反过来可以加速27号的开发迭代——通过自动化Prompt调试和工作流生成，27号可以更快地优化交互决策逻辑。二者形成"应用场景验证平台能力，平台工具加速应用开发"的良性循环。</p>
+<h3 id="132-prompt25llm-dailydigestai">13.2 Prompt工程方法对比：与25号（LLM-DailyDigest每日AI追新）的深度对比<a class="headerlink" href="#132-prompt25llm-dailydigestai" title="Permanent link">&para;</a></h3>
+<p>本项目（17号·Virtual Coach）与25号（LLM-DailyDigest）在Prompt工程方法论上形成互补——17号提供"Prompt自动化调试与评测的系统化工具链"，25号提供"每日AI资讯摘要生成的Prompt工程实践案例"。</p>
+<table>
+<thead>
+<tr>
+<th><strong>对比维度</strong></th>
+<th><strong>25号·LLM-DailyDigest</strong></th>
+<th><strong>17号·Virtual Coach（本项目）</strong></th>
+<th><strong>差异化分析</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Prompt工程定位</strong></td>
+<td>应用实践：为每日AI资讯摘要生成设计和优化Prompt</td>
+<td><strong>方法论与工具：系统化的Prompt自动化调试、评测、优化、版本管理流水线</strong></td>
+<td>25号是"Prompt工程的具体应用"，17号是"Prompt工程的方法论与工具"；17号的工具链可用于优化25号的Prompt</td>
+</tr>
+<tr>
+<td><strong>核心场景</strong></td>
+<td>每日AI论文/资讯的自动摘要、翻译、分类、推送</td>
+<td><strong>智能虚拟教练的交互式课程生成（可迁移到其他场景）</strong></td>
+<td>25号聚焦"内容生成"场景，17号聚焦"交互式服务"场景；二者的Prompt设计目标和优化方向不同</td>
+</tr>
+<tr>
+<td><strong>Prompt优化方式</strong></td>
+<td>人工迭代+经验积累，根据每日生成效果调整Prompt</td>
+<td><strong>自动化闭环：LLM自动生成→自动评测→错误分析→优化建议→版本迭代</strong></td>
+<td>25号依赖人工经验迭代，17号实现了自动化闭环；17号的自动化方法可以显著提升Prompt优化效率</td>
+</tr>
+<tr>
+<td><strong>评测方法</strong></td>
+<td>人工评估每日摘要质量（准确性/完整性/可读性）</td>
+<td><strong>4个决策场景评估脚本+8线程并行评测+全自动/种子扩充评测数据模式</strong></td>
+<td>17号的评测更系统化和自动化，25号的评测更依赖人工判断；二者可以互补——17号的自动化评测工具可用于25号的批量评估</td>
+</tr>
+<tr>
+<td><strong>版本管理</strong></td>
+<td>Hugo静态网站+CI/CD流水线，无独立Prompt版本管理机制（十四轮核查：据25号报告确认使用Hugo+GitHub Actions，Prompt以代码形式内嵌于项目中）</td>
+<td><strong>系统化版本管理：data/prompt/{ScenarioName}/v{N}.py，支持断点续接和版本对比</strong></td>
+<td>17号将Prompt视为代码进行版本管理，这是提升LLM应用可维护性的关键实践；25号可以借鉴这一方法</td>
+</tr>
+<tr>
+<td><strong>多模型支持</strong></td>
+<td>GLM网关（gpt-5.6-sol），OpenAI兼容API，可通过LLM_BASE_URL/LLM_MODEL覆盖（十四轮核查：据25号报告确认）</td>
+<td><strong>model_resolver自动发现与动态加载，支持GLM-4-Air/科大讯飞X1/OpenAI兼容接口</strong></td>
+<td>17号的多模型支持使其可以在不同模型上对比Prompt效果，找到最优的模型-Prompt组合</td>
+</tr>
+<tr>
+<td><strong>可复用性</strong></td>
+<td>每日摘要的Prompt模板可复用于其他内容生成场景</td>
+<td><strong>Prompt自动化流水线可复用于任何需要高质量Prompt的LLM应用场景</strong></td>
+<td>17号的工具链具有更强的通用性，25号的Prompt模板更偏向特定场景</td>
+</tr>
+<tr>
+<td><strong>成果形式</strong></td>
+<td>每日AI追新产品/服务+可能的Prompt模板库</td>
+<td><strong>CHI论文#3474+公开GitHub仓库+Prompt自动化工具链</strong></td>
+<td>25号偏产品成果，17号偏学术+工具成果</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：Virtual-Coach GitHub README；飞书文档 CHI#3474 虚拟教练论文记录；个人周报记录</p>
+</blockquote>
+<p><strong>核心差异总结</strong>：25号代表"场景驱动的Prompt工程实践"模式——在每日AI资讯摘要的具体场景中积累Prompt设计和优化经验；17号代表"方法驱动的Prompt工程自动化"模式——设计系统化的Prompt自动化调试、评测、优化、版本管理工具链，将Prompt从"手艺"提升为"工程"。二者在Prompt工程方法论上形成互补——25号提供具体场景的实践经验，17号提供可复用的自动化工具和方法论。</p>
+<p><strong>互补价值</strong>：17号的Prompt自动化调试流水线可以直接应用于25号的每日摘要Prompt优化——通过自动生成评测数据、自动评测、错误分析和优化建议，显著提升25号Prompt的迭代效率；25号的每日摘要场景可以为17号的Prompt自动化工具提供丰富的应用验证环境——内容生成场景的Prompt优化需求与交互式服务场景不同，可以检验17号工具链的场景适应性。二者形成"工具提升应用效率，应用验证工具通用性"的协同关系。</p>
+<hr />
+<h3 id="_8">图表索引<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>编号</strong></th>
+<th><strong>类型</strong></th>
+<th><strong>标题</strong></th>
+<th><strong>所在章节</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>表1</td>
+<td>表格</td>
+<td>关键数据速览</td>
+<td>§1</td>
+</tr>
+<tr>
+<td>表2</td>
+<td>表格</td>
+<td>交互式LLM应用对比</td>
+<td>§3.1</td>
+</tr>
+<tr>
+<td>表3</td>
+<td>表格</td>
+<td>Prompt调试方法对比</td>
+<td>§3.2</td>
+</tr>
+<tr>
+<td>图1</td>
+<td>ASCII</td>
+<td>Virtual Coach系统架构图</td>
+<td>§4.1</td>
+</tr>
+<tr>
+<td>表4</td>
+<td>表格</td>
+<td>系统模块</td>
+<td>§4.2</td>
+</tr>
+<tr>
+<td>表5</td>
+<td>表格</td>
+<td>工作流节点类型</td>
+<td>§4.3</td>
+</tr>
+<tr>
+<td>图2</td>
+<td>Mermaid</td>
+<td>Prompt自动化调试流水线图</td>
+<td>§4.4</td>
+</tr>
+<tr>
+<td>表6</td>
+<td>表格</td>
+<td>评测场景</td>
+<td>§5.1</td>
+</tr>
+<tr>
+<td>表7</td>
+<td>表格</td>
+<td>评测结果</td>
+<td>§5.2</td>
+</tr>
+<tr>
+<td>表8</td>
+<td>表格</td>
+<td>技术栈</td>
+<td>§6.1</td>
+</tr>
+<tr>
+<td>表9</td>
+<td>表格</td>
+<td>项目时间线</td>
+<td>§6.3</td>
+</tr>
+<tr>
+<td>表10</td>
+<td>表格</td>
+<td>飞书文档索引</td>
+<td>§10</td>
+</tr>
+<tr>
+<td>表11</td>
+<td>表格</td>
+<td>GitHub仓库索引</td>
+<td>§10</td>
+</tr>
+<tr>
+<td>表12</td>
+<td>表格</td>
+<td>转正答辩量化结果</td>
+<td>§11.2</td>
+</tr>
+<tr>
+<td>表13</td>
+<td>表格</td>
+<td>价值观锚点故事</td>
+<td>§11.5</td>
+</tr>
+<tr>
+<td>表14</td>
+<td>表格</td>
+<td>相关项目关联</td>
+<td>§12</td>
+</tr>
+<tr>
+<td>表15</td>
+<td>表格</td>
+<td>跨项目对比：人机交互方法（vs27）</td>
+<td>§13.1</td>
+</tr>
+<tr>
+<td>表16</td>
+<td>表格</td>
+<td>跨项目对比：Prompt工程方法（vs25）</td>
+<td>§13.2</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：Virtual-Coach GitHub README；飞书文档 CHI#3474 虚拟教练论文记录；个人周报记录</p>
+</blockquote>
+<hr />
+<h3 id="_9">个人成果矩阵<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
+<p>本矩阵汇总本人在智谱AI实习期间（2025.7–2026.9）的全部个人成果，按论文、专利、开源、产业落地、获奖、技术方案六大维度分类。</p>
+<table>
+<thead>
+<tr>
+<th><strong>成果类别</strong></th>
+<th><strong>序号</strong></th>
+<th><strong>成果名称</strong></th>
+<th><strong>时间</strong></th>
+<th><strong>角色</strong></th>
+<th><strong>状态/备注</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>论文</strong></td>
+<td>P1</td>
+<td>Puzzle: Curating Logical Reasoning Pretraining Data via Iterative Evolution</td>
+<td>2026.3</td>
+<td>第一作者</td>
+<td>ARR 2026.6投稿，NeurIPS 2026在投</td>
+</tr>
+<tr>
+<td><strong>论文</strong></td>
+<td>P2</td>
+<td>Groom: Process-Level Token Utilization Evaluation for LLM Agent Harnesses</td>
+<td>2026.8</td>
+<td>第一作者</td>
+<td>ARR 2026.8投稿（OpenReview: CX20RUtZ4G），目标AAAI 2027</td>
+</tr>
+<tr>
+<td><strong>论文</strong></td>
+<td>P3</td>
+<td>LogicalSurvey: A Comprehensive Survey of Logical Reasoning for LLMs</td>
+<td>2026.5</td>
+<td>第一作者</td>
+<td>综述论文，持续更新中</td>
+</tr>
+<tr>
+<td><strong>论文</strong></td>
+<td>P4</td>
+<td>MetaEvaluation: Meta-Evaluation Framework for LLM Evaluation</td>
+<td>2026初</td>
+<td>核心贡献者</td>
+<td>研究论文</td>
+</tr>
+<tr>
+<td><strong>论文</strong></td>
+<td>P5</td>
+<td>LogicEvolve: Self-Evolving Logical Reasoning Data Synthesis</td>
+<td>2025.12</td>
+<td>核心贡献者</td>
+<td>研究论文，方法被Puzzle继承</td>
+</tr>
+<tr>
+<td><strong>论文</strong></td>
+<td>P6</td>
+<td>EvolveLRM: Training Self-Evolution for Logical Reasoning Models</td>
+<td>2026.5</td>
+<td>项目负责人</td>
+<td>研究论文，含4模块自进化框架</td>
+</tr>
+<tr>
+<td><strong>论文</strong></td>
+<td>P7</td>
+<td>类o1模型泛化性评估研究</td>
+<td>2026.3</td>
+<td>项目负责人</td>
+<td>20+模型横向对比评测报告</td>
+</tr>
+<tr>
+<td><strong>论文</strong></td>
+<td>P8</td>
+<td>Virtual Coach: Automated Prompt Engineering for LLM-based Interactive Systems（本项目）</td>
+<td>2026.3</td>
+<td>第一作者</td>
+<td>CHI 2026投稿#3474（CCF-A人机交互顶会），十一轮核查：录用结果未在源材料中确认，保留待核实</td>
+</tr>
+<tr>
+<td><strong>论文</strong></td>
+<td>P9-P12</td>
+<td>其他研究初稿（含HarnessEvolve/SwarmEvolve等）</td>
+<td>2026.6-9</td>
+<td>第一作者/负责人</td>
+<td>初稿阶段，持续推进</td>
+</tr>
+<tr>
+<td><strong>专利</strong></td>
+<td>PT1</td>
+<td>逻辑推理评测方法及系统</td>
+<td>2026</td>
+<td>核心发明人</td>
+<td>专利申请中</td>
+</tr>
+<tr>
+<td><strong>专利</strong></td>
+<td>PT2</td>
+<td>基于自进化的逻辑推理数据合成方法</td>
+<td>2026</td>
+<td>核心发明人</td>
+<td>专利申请中</td>
+</tr>
+<tr>
+<td><strong>开源</strong></td>
+<td>O1</td>
+<td>CLUB (Comprehensive Logic Understanding Benchmark)</td>
+<td>2025.12</td>
+<td>第一作者</td>
+<td>GitHub开源，1K题/10类</td>
+</tr>
+<tr>
+<td><strong>开源</strong></td>
+<td>O2</td>
+<td>ExCLUB (Extended CLUB)</td>
+<td>2026.2</td>
+<td>第一作者</td>
+<td>GitHub开源，100K题/100类</td>
+</tr>
+<tr>
+<td><strong>开源</strong></td>
+<td>O3</td>
+<td>Puzzle 逻辑推理预训练数据</td>
+<td>2026.3</td>
+<td>第一作者</td>
+<td>随论文发表计划开源</td>
+</tr>
+<tr>
+<td><strong>开源</strong></td>
+<td>O4</td>
+<td>AML-LLM 书籍配套代码与资源</td>
+<td>2026.4</td>
+<td>核心编撰者</td>
+<td>书籍配套开源仓库</td>
+</tr>
+<tr>
+<td><strong>开源</strong></td>
+<td>O5</td>
+<td>Virtual-Coach（本项目核心开源成果）</td>
+<td>2026.1</td>
+<td>第一作者</td>
+<td>GitHub公开，Prompt自动化流水线+工作流生成系统+多模型支持</td>
+</tr>
+<tr>
+<td><strong>产业落地</strong></td>
+<td>I1</td>
+<td>GLM-4.5/GLM-5 逻辑推理能力提升</td>
+<td>2025.10-2026.3</td>
+<td>核心研发</td>
+<td>Puzzle数据用于模型预训练/微调</td>
+</tr>
+<tr>
+<td><strong>产业落地</strong></td>
+<td>I2</td>
+<td>GLM Agent / CodeGeeX Harness优化</td>
+<td>2026.5-9</td>
+<td>核心研发</td>
+<td>Groom过程级评测为Harness选型提供数据支撑</td>
+</tr>
+<tr>
+<td><strong>产业落地</strong></td>
+<td>I3</td>
+<td>智谱AI评测基础设施建设</td>
+<td>2025.7-2026.9</td>
+<td>核心贡献者</td>
+<td>CLUB/ExCLUB/Puzzle/Groom/H-TokenBench</td>
+</tr>
+<tr>
+<td><strong>产业落地</strong></td>
+<td>I4</td>
+<td>AML课程教学体系落地</td>
+<td>2026.4-9</td>
+<td>核心编撰者</td>
+<td>AML-LLM书籍+教学PPT</td>
+</tr>
+<tr>
+<td><strong>获奖</strong></td>
+<td>A1</td>
+<td>研究生党支部评议全校第9/667名</td>
+<td>2026.5</td>
+<td>党支部书记</td>
+<td>2025年度研究生党支部评议，甲级团支部荣誉</td>
+</tr>
+<tr>
+<td><strong>技术方案</strong></td>
+<td>T1</td>
+<td>逻辑推理数据自进化合成方案（LogicEvolve→Puzzle）</td>
+<td>2025.12-2026.3</td>
+<td>方案设计者</td>
+<td>迭代进化+难度感知+分布控制</td>
+</tr>
+<tr>
+<td><strong>技术方案</strong></td>
+<td>T2</td>
+<td>过程级Token利用率评测方案（Groom+H-TokenBench）</td>
+<td>2026.4-9</td>
+<td>方案设计者</td>
+<td>native+sidecar双层协议+8阶段分解+I/R/E三态判定</td>
+</tr>
+<tr>
+<td><strong>技术方案</strong></td>
+<td>T3</td>
+<td>自进化训练框架（EvolveLRM）</td>
+<td>2026.5-9</td>
+<td>方案设计者</td>
+<td>数据进化+模型进化+评测进化+训练策略进化</td>
+</tr>
+<tr>
+<td><strong>技术方案</strong></td>
+<td>T4</td>
+<td>Prompt自动化调试流水线（本项目核心方法论）</td>
+<td>2025.12-2026.3</td>
+<td>方案设计者</td>
+<td>"Helper+Target双模型"模式+需求→生成→评测→优化→版本管理闭环</td>
+</tr>
+<tr>
+<td><strong>技术方案</strong></td>
+<td>T5</td>
+<td>版本化Prompt管理方法</td>
+<td>2026.1</td>
+<td>方案设计者</td>
+<td>将Prompt视为代码进行版本管理（v1.py/v2.py/...），支持断点续接和版本对比</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：本报告各章节；12号Puzzle报告、19号Groom报告等系列报告；个人GitHub（https://github.com/dujh22）；飞书文档与个人周报。</p>
+</blockquote>
+<hr />
+<p><em>报告撰写日期：2026-09-08 | 基于飞书文档、GitHub 仓库 README 及项目汇总材料整理 · v3图文并茂版 · 二轮质检补强 · 三轮精磨 · 四轮深化 · 五轮深化 · 六轮深化 · 七轮深化 · 八轮深化 · 九轮终审 · 十轮深化 · 十一轮深化 · 十二轮终审 · 十三轮终审 · 十四轮深化 · 十五轮终审</em></p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+
+
+  
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.tracking", "navigation.top", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+      
+        <script src="../../../javascripts/mermaid_init.js"></script>
+      
+    
+  </body>
+</html>

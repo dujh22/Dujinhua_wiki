@@ -1,0 +1,5613 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="智谱AI研究实习项目报告集，涵盖大模型预训练、逻辑推理、数学推理、评测方法论等30个项目；同时包含个人学术主页（研究、教育、发表、荣誉）。">
+      
+      
+        <meta name="author" content="Jinhua Du (杜晋华)">
+      
+      
+        <link rel="canonical" href="https://dujh22.github.io/Dujinhua_wiki/projects/phase3/11_%E6%95%B0%E5%AE%9E%E8%9E%8D%E5%90%88%E6%96%B0%E5%BC%95%E6%93%8E%E9%A1%B9%E7%9B%AE/">
+      
+      
+        <link rel="prev" href="../10_GLM-4.5%E5%9F%BA%E5%BA%A7%E6%A8%A1%E5%9E%8B/">
+      
+      
+        <link rel="next" href="../12_Puzzle%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E9%A2%84%E8%AE%AD%E7%BB%83%E6%95%B0%E6%8D%AE/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>11 · 数实融合新引擎项目：大模型驱动数字中国建设 - Jinhua Du | 杜晋华</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css?v=448b8bea4ef3">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-XXXXXXXXXX"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-XXXXXXXXXX",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+  
+    <meta name="keywords" content="大语言模型, 逻辑推理, 数学推理, 预训练, RLHF, 评测, 智谱AI, 研究实习, LLM, Large Language Models, Reasoning, Evaluation">
+    <meta property="og:title" content="Jinhua Du | 杜晋华 — 智谱AI研究实习项目报告集">
+    <meta property="og:description" content="智谱AI研究实习项目报告集，涵盖大模型预训练、逻辑推理、数学推理、评测方法论等30个项目；个人学术主页（研究、教育、发表、荣誉）。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dujh22.github.io/Dujinhua_wiki/">
+    <meta property="og:site_name" content="Jinhua Du | 杜晋华">
+    <meta property="og:locale" content="zh_CN">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Jinhua Du | 杜晋华 — 智谱AI研究实习项目报告集">
+    <meta name="twitter:description" content="智谱AI研究实习项目报告集，涵盖大模型预训练、逻辑推理、数学推理、评测方法论等30个项目。">
+    <meta name="robots" content="index, follow">
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1-abstract" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Jinhua Du | 杜晋华" class="md-header__button md-logo" aria-label="Jinhua Du | 杜晋华" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 10.5V6l-2.11 1.06A3.999 3.999 0 0 1 12 12a4 4 0 0 1-3.89-4.94L5 5.5 12 2l7 3.5v5zM12 9l-2-1c0 1.1.9 2 2 2s2-.9 2-2zm2.75-3.58L12.16 4.1 9.47 5.47l2.6 1.32zM12 13c2.67 0 8 1.33 8 4v3H4v-3c0-2.67 5.33-4 8-4m0 1.9c-3 0-6.1 1.46-6.1 2.1v1.1h12.2V17c0-.64-3.13-2.1-6.1-2.1"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Jinhua Du | 杜晋华
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              11 · 数实融合新引擎项目：大模型驱动数字中国建设
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="light-blue"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/dujh22/Dujinhua_wiki" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    dujh22/Dujinhua_wiki
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../.." class="md-tabs__link">
+          
+  
+  
+  English
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../index_zh/" class="md-tabs__link">
+          
+  
+  
+  中文
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../" class="md-tabs__link">
+          
+  
+  
+  智谱实习项目
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Jinhua Du | 杜晋华" class="md-nav__button md-logo" aria-label="Jinhua Du | 杜晋华" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 10.5V6l-2.11 1.06A3.999 3.999 0 0 1 12 12a4 4 0 0 1-3.89-4.94L5 5.5 12 2l7 3.5v5zM12 9l-2-1c0 1.1.9 2 2 2s2-.9 2-2zm2.75-3.58L12.16 4.1 9.47 5.47l2.6 1.32zM12 13c2.67 0 8 1.33 8 4v3H4v-3c0-2.67 5.33-4 8-4m0 1.9c-3 0-6.1 1.46-6.1 2.1v1.1h12.2V17c0-.64-3.13-2.1-6.1-2.1"/></svg>
+
+    </a>
+    Jinhua Du | 杜晋华
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/dujh22/Dujinhua_wiki" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    dujh22/Dujinhua_wiki
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    English
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    English
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Profile
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../postgraduate_experience_en/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Postgraduate Experience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../undergraduate_experience_en/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Undergraduate Experience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../history_en/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Research History
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    中文
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    中文
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../index_zh/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人简介
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../postgraduate_experience_zh/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博士经历
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../undergraduate_experience_zh/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    本科经历
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../history_zh/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    研究历史
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    智谱实习项目
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    智谱实习项目
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    项目总览
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阶段一·数学推理与国际化
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    阶段一·数学推理与国际化
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase1/01_ChatGLM%E6%95%B0%E5%AD%A6%E6%8E%A8%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 ChatGLM数学推理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase1/02_ChatGLM%E5%9B%BD%E9%99%85%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02 ChatGLM国际化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阶段二·多模态与社会实践
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    阶段二·多模态与社会实践
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/03_%E5%A4%9A%E6%A8%A1%E6%80%81%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%95%B0%E5%AD%A6%E6%8E%A8%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 多模态大模型数学推理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/04_MetaEvaluation%E5%85%83%E8%AF%84%E4%BC%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04 MetaEvaluation元评估
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/05_AML2024%E5%8A%A9%E6%95%99/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 AML2024助教
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/06_%E8%88%9F%E5%B1%B1%E7%A4%BE%E4%BC%9A%E5%AE%9E%E8%B7%B5%E5%85%AC%E5%AE%89%E7%8A%AF%E7%BD%AA%E9%A2%84%E6%B5%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06 舟山社会实践公安犯罪预测
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/07_MalayGLM%E9%A9%AC%E6%9D%A5%E8%AF%AD%E5%A4%A7%E6%A8%A1%E5%9E%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07 MalayGLM马来语大模型
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/08_o1%E5%A4%8D%E7%8E%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 o1复现
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阶段三·LogicEvolve与基座模型
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    阶段三·LogicEvolve与基座模型
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09_LogicEvolve%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E8%87%AA%E8%BF%9B%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 LogicEvolve逻辑推理自进化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10_GLM-4.5%E5%9F%BA%E5%BA%A7%E6%A8%A1%E5%9E%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 GLM-4.5基座模型
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11 数实融合新引擎项目
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11 数实融合新引擎项目
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-abstract" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 项目概述（Abstract）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 项目概述（Abstract）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关键数据速览
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        执行摘要
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        个人成长轨迹
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-introduction-background" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 背景与动机（Introduction / Background）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 背景与动机（Introduction / Background）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 问题定义
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 行业背景
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 项目启动契机
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-related-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 相关工作（Related Work）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 相关工作（Related Work）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 高校社会实践中的科技赋能
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 大模型产业落地实践
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 方法与技术路线（Method）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 方法与技术路线（Method）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 项目整体架构
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 组织模式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 实地走访方案
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 大模型产品地推
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 理论学习
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-experiments-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 实验与结果（Experiments &amp; Results）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 实验与结果（Experiments &amp; Results）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 项目规模
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 验收结果
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 学生工作成效
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-engineering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 工程实现（Engineering）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. 工程实现（Engineering）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 组织架构
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 时间线
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 宣传与传播
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4 技术栈与工具链
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#65" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5 技术栈演进与组织工具选型决策
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-impact" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 成果与影响（Impact）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. 成果与影响（Impact）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 项目验收
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 媒体报道
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 校企合作
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#74" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.4 学生培养
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-my-contribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 个人贡献（My Contribution）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. 个人贡献（My Contribution）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 角色
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 具体工作清单
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#83" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.3 团队分工
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-lessons-learned" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 经验与反思（Lessons Learned）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. 经验与反思（Lessons Learned）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1 关键问题与解决方案（含具体故事）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2 可复用方法论（深化版）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.2 可复用方法论（深化版）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#921" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2.1 "支部+企业+政府"三方联动模式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#922-sop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2.2 社会实践SOP化六步法
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#923" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2.3 实习资源反哺学生工作
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#924" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2.4 宣传前置策略
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#93" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.3 如果重来会怎么做
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#94" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.4 踩坑与避坑指南
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#95-faq" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.5 常见问题与解答（FAQ）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. 文件索引（References）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. 文件索引（References）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        飞书文档
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        媒体报道
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        合作单位
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        本地材料
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. 转正答辩证据卡
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. 转正答辩证据卡">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#111" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.1 目标基线
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.2 量化结果
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#113" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3 公司层面贡献
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#114" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.4 专业影响力
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#115" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.5 价值观锚点
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#116" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.6 协作与利他
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#117" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.7 反思与成长（自我批评式）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#118-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.8 6年后视角
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#119" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.9 五段式讲述（答辩稿骨架）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. 相关项目
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. 相关项目">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        项目间引用网络
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. 跨项目对比
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13. 跨项目对比">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#131-06" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.1 与06号（舟山公安社会实践）对比：社会实践模式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        图表索引
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        个人成果矩阵
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-2026-09-08" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. 第十轮深化补强（2026-09-08）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14. 第十轮深化补强（2026-09-08）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#141" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.1 源材料新利用数据
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#142" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.2 数实融合调研与技术落地的闭环
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#143" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.3 个人贡献量化补充
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12_Puzzle%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E9%A2%84%E8%AE%AD%E7%BB%83%E6%95%B0%E6%8D%AE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12 Puzzle逻辑推理预训练数据
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13_%E7%B1%BBo1%E6%A8%A1%E5%9E%8B%E6%B3%9B%E5%8C%96%E6%80%A7%E8%AF%84%E4%BC%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13 类o1模型泛化性评估
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5" id="__nav_3_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阶段四·论文冲刺与博士开题
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    阶段四·论文冲刺与博士开题
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase4/14_LogicalSurvey%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%BB%BC%E8%BF%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14 LogicalSurvey逻辑推理综述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase4/15_EvolveLRM%E8%AE%AD%E7%BB%83%E8%87%AA%E8%BF%9B%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15 EvolveLRM训练自进化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase4/16_AML-LLM%E4%B9%A6%E7%B1%8D%E7%BC%96%E6%92%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16 AML-LLM书籍编撰
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase4/17_VirtualCoach%E4%BA%BA%E6%9C%BA%E4%BA%A4%E4%BA%92/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17 VirtualCoach人机交互
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase4/18_%E5%8D%9A%E5%A3%AB%E5%BC%80%E9%A2%98/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    18 博士开题
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_6" id="__nav_3_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阶段五·自进化研究全面展开
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    阶段五·自进化研究全面展开
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase5/19_Groom_Harness%E8%BF%87%E7%A8%8B%E7%BA%A7%E8%AF%84%E6%B5%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    19 Groom过程级评测
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase5/20_H-TokenBench/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20 H-TokenBench
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase5/21_GLM-5%E5%9F%BA%E5%BA%A7%E6%A8%A1%E5%9E%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    21 GLM-5基座模型
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase5/22_%E5%85%AD%E7%AF%87%E6%96%B0%E7%A0%94%E7%A9%B6%E5%88%9D%E7%A8%BF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    22 六篇新研究初稿
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase5/23_Awesome-RSI%E8%87%AA%E8%BF%9B%E5%8C%96%E7%BB%BC%E8%BF%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    23 Awesome-RSI自进化综述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase5/24_%E4%B8%93%E5%88%A9_%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E8%AF%84%E6%B5%8B%E6%96%B9%E6%B3%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    24 专利逻辑推理评测方法
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_7" id="__nav_3_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    工程与工具系列
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    工程与工具系列
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/25_LLM-DailyDigest%E6%AF%8F%E6%97%A5AI%E8%BF%BD%E6%96%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    25 LLM-DailyDigest
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/26_AutoLLM%E5%A4%9AAgent%E4%BF%A1%E6%81%AF%E8%87%AA%E5%8A%A8%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    26 AutoLLM多Agent
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/27_AiFitGo%E6%99%BA%E8%83%BD%E5%81%A5%E8%BA%AB%E6%95%99%E7%BB%83/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    27 AiFitGo智能健身
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/28_csv2app%E9%A2%98%E5%BA%93%E8%BD%ACPWA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    28 csv2app题库转PWA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/29_THU_Sports%E6%B8%85%E5%8D%8E%E4%BD%93%E8%82%B2%E8%87%AA%E5%8A%A8%E9%A2%84%E7%BA%A6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    29 THU_Sports自动预约
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/30_AiMeder%E5%8C%BB%E5%AD%A6%E6%96%87%E7%8C%AE%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    30 AiMeder医学搜索
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-abstract" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 项目概述（Abstract）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 项目概述（Abstract）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关键数据速览
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        执行摘要
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        个人成长轨迹
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-introduction-background" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 背景与动机（Introduction / Background）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 背景与动机（Introduction / Background）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 问题定义
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 行业背景
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 项目启动契机
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-related-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 相关工作（Related Work）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 相关工作（Related Work）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 高校社会实践中的科技赋能
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 大模型产业落地实践
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 方法与技术路线（Method）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 方法与技术路线（Method）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 项目整体架构
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 组织模式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 实地走访方案
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 大模型产品地推
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 理论学习
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-experiments-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 实验与结果（Experiments &amp; Results）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 实验与结果（Experiments &amp; Results）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 项目规模
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 验收结果
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 学生工作成效
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-engineering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 工程实现（Engineering）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. 工程实现（Engineering）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 组织架构
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 时间线
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 宣传与传播
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4 技术栈与工具链
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#65" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5 技术栈演进与组织工具选型决策
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-impact" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 成果与影响（Impact）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. 成果与影响（Impact）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 项目验收
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 媒体报道
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 校企合作
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#74" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.4 学生培养
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-my-contribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 个人贡献（My Contribution）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. 个人贡献（My Contribution）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 角色
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 具体工作清单
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#83" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.3 团队分工
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-lessons-learned" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 经验与反思（Lessons Learned）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. 经验与反思（Lessons Learned）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1 关键问题与解决方案（含具体故事）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2 可复用方法论（深化版）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.2 可复用方法论（深化版）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#921" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2.1 "支部+企业+政府"三方联动模式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#922-sop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2.2 社会实践SOP化六步法
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#923" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2.3 实习资源反哺学生工作
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#924" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2.4 宣传前置策略
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#93" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.3 如果重来会怎么做
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#94" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.4 踩坑与避坑指南
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#95-faq" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.5 常见问题与解答（FAQ）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. 文件索引（References）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. 文件索引（References）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        飞书文档
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        媒体报道
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        合作单位
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        本地材料
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. 转正答辩证据卡
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. 转正答辩证据卡">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#111" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.1 目标基线
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.2 量化结果
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#113" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3 公司层面贡献
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#114" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.4 专业影响力
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#115" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.5 价值观锚点
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#116" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.6 协作与利他
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#117" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.7 反思与成长（自我批评式）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#118-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.8 6年后视角
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#119" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.9 五段式讲述（答辩稿骨架）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. 相关项目
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. 相关项目">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        项目间引用网络
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. 跨项目对比
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13. 跨项目对比">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#131-06" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.1 与06号（舟山公安社会实践）对比：社会实践模式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        图表索引
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        个人成果矩阵
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-2026-09-08" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. 第十轮深化补强（2026-09-08）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14. 第十轮深化补强（2026-09-08）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#141" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.1 源材料新利用数据
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#142" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.2 数实融合调研与技术落地的闭环
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#143" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.3 个人贡献量化补充
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+  
+
+
+
+
+  <h1>11 数实融合新引擎项目</h1>
+
+<div class="admonition info">
+<p class="admonition-title">项目系列</p>
+<p><strong>阶段三：LogicEvolve 起步与基座模型</strong> · 报告 #11/30</p>
+</div>
+<p><a href="../../"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg></span> 返回项目总览</a> | <a href="../../../index_zh/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg></span> 返回首页</a></p>
+<hr />
+<blockquote>
+<p>项目报告 · 智谱华章实习阶段三（2025.3–2025.8）
+项目负责人 · 清华大学计算机系软件所学生党支部 · 昌平验收</p>
+</blockquote>
+<div class="admonition note">
+<p class="admonition-title">版本信息</p>
+<p>版本：v3（图文并茂版 · 2026-09-08）· 二轮质检补强 · 三轮精磨 · 四轮深化 · 五轮深化 · 六轮深化 · 七轮深化 · 八轮深化 · 九轮终审 · 十轮深化 · 十一轮深化 · 十二轮终审 · 十三轮终审 · 十四轮深化 · 十五轮终审 | 审核：准确性核对 + 转正答辩证据卡补强 + 图文并茂升级</p>
+</div>
+<hr />
+<h2 id="1-abstract">1. 项目概述（Abstract）<a class="headerlink" href="#1-abstract" title="Permanent link">&para;</a></h2>
+<p><strong>"数实融合新引擎·智创产业新未来——大模型驱动数字中国建设"是清华大学计算机系软件所教工支部指导、KEG 实验室对应支部牵头的全系社会实践项目，旨在以大模型技术为抓手，探索数字经济与实体经济深度融合的产业路径。</strong> 杜晋华担任项目负责人，邀请智谱华章作为技术合作方，联合北京市昌平区政府和企事业校友单位，开展实地走访、理论学习和大模型产品地推，于 2025 年 8 月完成昌平验收。</p>
+<p>核心成果量化：
+- 项目通过<strong>学校立项</strong>（2025 年 4 月），纳入清华大学"雁行"支部特色走访活动体系；
+- 联合计算机系及社科多个支部，<strong>计算机系党委书记、研工部及教工部相关老师</strong>参与同行；
+- 校研工部安排<strong>专业导演与摄影团队跟拍</strong>，活动片段纳入主视频并在<strong>清华大学官方账号</strong>发布；
+- 走访昌平南口三大点位：清华南口国重基地（47.3 万㎡）、南口特支教育基地（2,750 ㎡）、科学家公园（1.8 万㎡）；
+- 2025 年 8 月完成<strong>昌平区验收</strong>，微信公众号专题报道。</p>
+<p>时间范围：2025 年 3 月立项–8 月验收。个人角色：<strong>项目负责人</strong>，指导教师为许斌（软件所党支部书记）。</p>
+<h3 id="_1">关键数据速览<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>维度</strong></th>
+<th><strong>核心数据</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>项目周期</td>
+<td>2025.3–2025.8（6个月）</td>
+</tr>
+<tr>
+<td>个人角色</td>
+<td>项目负责人（独立策划全流程）</td>
+</tr>
+<tr>
+<td>核心产出</td>
+<td>昌平区验收通过；清华大学官方账号主视频（含本项目片段）；微信公众号专题报道</td>
+</tr>
+<tr>
+<td>关键指标</td>
+<td>走访点位 3 个（南口国重基地 47.3 万㎡、南口特支教育基地 2,750 ㎡、科学家公园 1.8 万㎡）；支部评议全校第 9/667 名</td>
+</tr>
+<tr>
+<td>论文/专利</td>
+<td>无</td>
+</tr>
+<tr>
+<td>开源仓库</td>
+<td>无</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="_2">执行摘要<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p><strong>一句话定位</strong>：清华大学计算机系全系社会实践项目，以大模型技术为抓手探索数字经济与实体经济深度融合的产业路径，首创"支部+企业+政府"三方联动模式。</p>
+<p><strong>核心成果</strong>：
+- 2025年4月通过学校立项，纳入清华大学"雁行"支部特色走访活动体系；
+- 2025年8月完成昌平区验收，走访南口三大点位（47.3万㎡+2,750㎡+1.8万㎡）；
+- 活动片段纳入清华大学官方账号主视频发布，支部评议全校第9/667名。</p>
+<p><strong>技术亮点</strong>：首创"党建引领+校企协同+地校合作"三维组织模式，将高校党支部建设、头部大模型企业技术资源、地方政府产业需求三者对接，形成六步SOP（立项→组织筹备→理论学习→实地走访→产品地推→总结验收）的可复用社会实践组织流程。</p>
+<p><strong>个人角色</strong>：项目负责人，独立完成从项目策划、立项申请、合作方对接、路线规划到验收统筹的全流程组织工作，协调齐韵嘉、夏箫、汪子涵等支部成员分工协作。</p>
+<p><strong>后续方向</strong>：推动建立清华—智谱—昌平的长期合作框架，将单次走访升级为持续的大模型产业落地调研机制，社会实践SOP可推广至后续支部活动。</p>
+<hr />
+<h3 id="_3">个人成长轨迹<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>阶段</strong></th>
+<th><strong>能力成长</strong></th>
+<th><strong>关键事件</strong></th>
+<th><strong>对应报告章节</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>初期（2025.4–6）</td>
+<td>从技术研发转向社会实践组织策划；掌握项目立项申请与支部特色活动策划能力；首创"党建引领+校企协同+地校合作"三维组织模式的设计能力</td>
+<td>2025年4月通过学校立项，纳入清华大学"雁行"支部特色走访活动体系；独立完成项目策划、立项申请、合作方对接；协调齐韵嘉、夏箫、汪子涵等支部成员分工协作</td>
+<td>§2.3 项目启动契机、§4 方法与技术路线、§6 工程实现</td>
+</tr>
+<tr>
+<td>中期（2025.7–8）</td>
+<td>掌握六步SOP（立项→组织筹备→理论学习→实地走访→产品地推→总结验收）的可复用社会实践组织流程；锻炼校企协同与地校合作的跨组织协调能力；具备产业调研与数字经济趋势分析能力</td>
+<td>2025年8月完成昌平区验收，走访南口三大点位（47.3万㎡+2,750㎡+1.8万㎡）；深入调研数字经济与实体经济融合的产业现状与趋势；形成数实融合调研报告与产业趋势分析</td>
+<td>§4 方法与技术路线、§5 实验与结果、§7 成果与影响</td>
+</tr>
+<tr>
+<td>后期（2025.8–9）</td>
+<td>活动片段纳入清华大学官方账号主视频发布，支部评议全校第9/667名，具备成果总结与影响力建设能力；形成"长周期、深技术、多产出"的产业研发型社会实践模式；推动建立清华—智谱—昌平长期合作框架的战略思维</td>
+<td>支部评议全校第9/667名；活动片段纳入清华大学官方账号主视频；形成政策建议为地方政府数字经济政策提供参考；社会实践SOP可推广至后续支部活动</td>
+<td>§7 成果与影响、§9 经验与反思、相关项目/跨项目对比</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="2-introduction-background">2. 背景与动机（Introduction / Background）<a class="headerlink" href="#2-introduction-background" title="Permanent link">&para;</a></h2>
+<h3 id="21">2.1 问题定义<a class="headerlink" href="#21" title="Permanent link">&para;</a></h3>
+<p>"数实融合"即数字经济与实体经济的深度融合，是国家"数字中国"战略的核心方向。大模型技术作为新一轮人工智能革命的核心驱动力，如何从实验室走向产业一线，如何赋能传统产业转型升级，是学术界和产业界共同面临的关键问题。本项目以社会实践为载体，组织研究生党员和学生骨干走进产业现场，调研大模型技术在实体经济中的应用现状、痛点与需求。</p>
+<h3 id="22">2.2 行业背景<a class="headerlink" href="#22" title="Permanent link">&para;</a></h3>
+<p>2025 年，大模型技术加速从"通用能力展示"向"行业落地应用"演进。智谱华章等头部大模型企业纷纷推出行业解决方案，但在落地过程中面临三大挑战：
+1. <strong>技术与需求的错配</strong>：企业对大模型的期望与技术实际能力之间存在 gap；
+2. <strong>数据与安全的顾虑</strong>：实体经济企业对数据上云和模型调用存在安全顾虑；
+3. <strong>人才与认知的鸿沟</strong>：传统产业从业者对大模型的认知和使用能力有限。</p>
+<h3 id="23">2.3 项目启动契机<a class="headerlink" href="#23" title="Permanent link">&para;</a></h3>
+<p>项目由唐杰老师所在的软件所教工支部指导，KEG 实验室对应支部牵头。杜晋华作为计算机系计研五三班党支部书记，在 2025 年 3 月的支部工作计划中提出本项目立项申请，于 2025 年 4 月通过学校立项。项目充分利用杜晋华在智谱华章实习的资源优势，邀请智谱华章作为技术合作方，将学术研究、产业实践和学生思政教育三者结合。</p>
+<hr />
+<h2 id="3-related-work">3. 相关工作（Related Work）<a class="headerlink" href="#3-related-work" title="Permanent link">&para;</a></h2>
+<h3 id="31">3.1 高校社会实践中的科技赋能<a class="headerlink" href="#31" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>项目</strong></th>
+<th><strong>特点</strong></th>
+<th><strong>与本项目的差异</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>清华大学"雁行计划"</td>
+<td>支部特色走访活动，聚焦行业调研</td>
+<td>本项目为"雁行计划"下的具体实施项目，聚焦大模型+数实融合</td>
+</tr>
+<tr>
+<td>计算机系暑期社会实践</td>
+<td>面向地方政府和企业的技术服务</td>
+<td>本项目以支部为单位，强调党建引领+技术赋能</td>
+</tr>
+<tr>
+<td>KEG 实验室产业合作</td>
+<td>实验室与企业的技术研发合作</td>
+<td>本项目侧重社会实践和产品地推，而非纯技术研发</td>
+</tr>
+</tbody>
+</table>
+<h3 id="32">3.2 大模型产业落地实践<a class="headerlink" href="#32" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>智谱华章行业解决方案</strong>：面向金融、政务、医疗等领域的大模型落地；</li>
+<li><strong>昌平区数字经济政策</strong>：昌平区以"未来科学城"为核心，推动数字经济与实体经济融合；</li>
+<li><strong>本项目的差异化定位</strong>：首次将高校党支部社会实践、头部大模型企业技术资源、地方政府产业需求三者对接，形成"支部+企业+政府"的三方联动模式。</li>
+</ul>
+<hr />
+<h2 id="4-method">4. 方法与技术路线（Method）<a class="headerlink" href="#4-method" title="Permanent link">&para;</a></h2>
+<h3 id="41">4.1 项目整体架构<a class="headerlink" href="#41" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>┌──────────────────────────────────────────────────────────────────┐
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>│          &quot;数实融合新引擎&quot;项目组织架构（三方联动模式）              │
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>├──────────────────────────────────────────────────────────────────┤
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>│                                                                  │
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>│  ┌──────────────────────────────────────────────────────────┐   │
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>│  │              学校立项（2025.3-4）                          │   │
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>│  │  清华大学&quot;雁行&quot;支部特色走访活动体系                         │   │
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>│  └──────────────────────────┬───────────────────────────────┘   │
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>│                             │                                     │
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>│           ┌─────────────────┼─────────────────┐                   │
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>│           ▼                 ▼                 ▼                   │
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐          │
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>│  │  高校方        │  │  企业方        │  │  地方政府方    │          │
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>│  │  (清华大学)    │  │  (智谱华章)    │  │  (昌平区政府)  │          │
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>│  ├──────────────┤  ├──────────────┤  ├──────────────┤          │
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>│  │ 软件所教工支部  │  │ 大模型技术支持  │  │ 产业场景提供    │          │
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>│  │ KEG实验室支部  │  │ 产品演示培训    │  │ 走访点位协调    │          │
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>│  │ 计研五三支部   │  │ 需求对接收集    │  │ 验收组织        │          │
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>│  │ 研工部跟拍团队  │  │ GLM系列模型    │  │ 企事业校友单位  │          │
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>│  └──────┬───────┘  └──────┬───────┘  └──────┬───────┘          │
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>│         │                   │                   │                  │
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>│         └───────────────────┼───────────────────┘                  │
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>│                             ▼                                      │
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>│  ┌──────────────────────────────────────────────────────────┐   │
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>│  │              项目负责人（杜晋华）统一协调                    │   │
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>│  │  整体策划 · 资源对接 · 进度管理 · 验收统筹                   │   │
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>│  └──────────────────────────┬───────────────────────────────┘   │
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>│                             │                                     │
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>│           ┌─────────────────┼─────────────────┐                   │
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>│           ▼                 ▼                 ▼                   │
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐          │
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>│  │ 组织筹备       │  │ 理论学习       │  │ 实地走访       │          │
+<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>│  │ 支部动员       │  │ 大模型技术讲座  │  │ 昌平南口三大点位│          │
+<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>│  │ 合作方对接     │  │ 数字中国政策学习│  │ 产品地推       │          │
+<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>│  │ 路线规划       │  │ 五育并举活动    │  │ 需求收集       │          │
+<a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>│  └──────────────┘  └──────────────┘  └──────┬───────┘          │
+<a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>│                                                │                    │
+<a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a>│                                                ▼                    │
+<a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a>│  ┌──────────────────────────────────────────────────────────┐   │
+<a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a>│  │  总结验收（2025.8）：调研报告 · 成果展示 · 昌平验收        │   │
+<a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a>│  │  传播：清华大学官方账号主视频 · 微信公众号专题报道           │   │
+<a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a>│  └──────────────────────────────────────────────────────────┘   │
+<a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a>└──────────────────────────────────────────────────────────────────┘
+</code></pre></div>
+<p><strong>图4-1 · 三方联动项目组织架构 Mermaid 流程图</strong></p>
+<p>下图以 Mermaid 流程图形式呈现"高校方→企业方→地方政府方→项目负责人→六大执行模块→验收传播"的完整组织链路，与上方 ASCII 架构图互为补充。</p>
+<pre class="mermaid"><code>flowchart TD
+    A["学校立项&lt;br/&gt;2025.3-4 · 雁行计划体系"] --&gt; B["三方联动"]
+
+    B --&gt; C["高校方&lt;br/&gt;清华大学"]
+    B --&gt; D["企业方&lt;br/&gt;智谱华章"]
+    B --&gt; E["地方政府方&lt;br/&gt;昌平区政府"]
+
+    C --&gt; C1["软件所教工支部&lt;br/&gt;许斌书记 · 方向指导"]
+    C --&gt; C2["KEG实验室支部&lt;br/&gt;学术资源对接"]
+    C --&gt; C3["计研五三支部&lt;br/&gt;杜晋华书记 · 执行"]
+    C --&gt; C4["研工部跟拍团队&lt;br/&gt;专业导演摄影"]
+
+    D --&gt; D1["大模型技术支持&lt;br/&gt;GLM系列模型"]
+    D --&gt; D2["产品演示培训&lt;br/&gt;技术讲座"]
+    D --&gt; D3["需求对接收集&lt;br/&gt;产业调研"]
+
+    E --&gt; E1["产业场景提供&lt;br/&gt;数字经济政策"]
+    E --&gt; E2["走访点位协调&lt;br/&gt;南口三大点位"]
+    E --&gt; E3["验收组织&lt;br/&gt;昌平区验收"]
+
+    C1 &amp; C2 &amp; C3 &amp; C4 &amp; D1 &amp; D2 &amp; D3 &amp; E1 &amp; E2 &amp; E3 --&gt; F["项目负责人&lt;br/&gt;杜晋华 · 统一协调"]
+
+    F --&gt; G["六大执行模块"]
+    G --&gt; G1["组织筹备&lt;br/&gt;支部动员·合作方对接·路线规划"]
+    G --&gt; G2["理论学习&lt;br/&gt;大模型讲座·数字中国政策·五育并举"]
+    G --&gt; G3["实地走访&lt;br/&gt;昌平南口三大点位"]
+    G --&gt; G4["产品地推&lt;br/&gt;GLM演示·需求对接·使用培训"]
+    G --&gt; G5["需求收集&lt;br/&gt;飞书问卷·现场访谈"]
+    G --&gt; G6["宣传传播&lt;br/&gt;跟拍·公众号·官方账号"]
+
+    G1 &amp; G2 &amp; G3 &amp; G4 &amp; G5 &amp; G6 --&gt; H["总结验收 · 2025.8"]
+    H --&gt; H1["调研报告 · 成果展示"]
+    H --&gt; H2["昌平区验收通过"]
+    H --&gt; H3["清华大学官方账号主视频"]
+    H --&gt; H4["微信公众号专题报道"]
+
+    style A fill:#e1f5fe,stroke:#0288d1
+    style F fill:#fff3e0,stroke:#f57c00,stroke-width:3px
+    style H fill:#e8f5e9,stroke:#388e3c</code></pre>
+<blockquote>
+<p>图注：三方联动模式以项目负责人为单一联络点，将高校党支部建设、头部大模型企业技术资源、地方政府产业需求有机结合。六大执行模块覆盖从筹备到传播的全流程，最终产出昌平验收与多级传播成果。</p>
+<p>数据来源：项目飞书文档记录，计研五三党团班一体化发展台账，微信公众号专题报道</p>
+</blockquote>
+<h3 id="42">4.2 组织模式<a class="headerlink" href="#42" title="Permanent link">&para;</a></h3>
+<p>项目采用<strong>"党建引领+校企协同+地校合作"</strong>的三维组织模式：</p>
+<p><strong>三方联动角色分工明细</strong>：</p>
+<table>
+<thead>
+<tr>
+<th><strong>参与方</strong></th>
+<th><strong>具体单位/人员</strong></th>
+<th><strong>核心职责</strong></th>
+<th><strong>关键产出</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>高校方（指导）</strong></td>
+<td>清华大学计算机系软件所教工支部（许斌书记）</td>
+<td>方向指导、资源协调、学校立项对接</td>
+<td>学校立项批准、研工部跟拍团队协调</td>
+</tr>
+<tr>
+<td><strong>高校方（学术）</strong></td>
+<td>唐杰教授（软件所教工支部）</td>
+<td>学术方向把关、技术资源对接</td>
+<td>智谱华章技术合作方引荐</td>
+</tr>
+<tr>
+<td><strong>高校方（执行）</strong></td>
+<td>KEG 实验室对应支部 + 计研五三党支部（杜晋华书记）</td>
+<td>项目策划、组织执行、团队管理、验收统筹</td>
+<td>完整项目执行、调研报告、验收材料</td>
+</tr>
+<tr>
+<td><strong>高校方（宣传）</strong></td>
+<td>校研工部专业导演与摄影团队</td>
+<td>全程跟拍、主视频制作</td>
+<td>清华大学官方账号主视频（含本项目片段）</td>
+</tr>
+<tr>
+<td><strong>企业方</strong></td>
+<td>北京智谱华章科技股份有限公司</td>
+<td>大模型技术支持、产品演示、使用培训</td>
+<td>GLM 系列模型产品演示、技术讲座、需求对接</td>
+</tr>
+<tr>
+<td><strong>地方政府方</strong></td>
+<td>北京市昌平区政府</td>
+<td>走访点位协调、产业场景提供、验收组织</td>
+<td>南口三大点位参观安排、昌平区验收通过</td>
+</tr>
+<tr>
+<td><strong>企事业校友方</strong></td>
+<td>昌平区企事业校友单位</td>
+<td>实践基地提供、产业需求反馈</td>
+<td>需求清单、实践合作意向</td>
+</tr>
+<tr>
+<td><strong>协作成员</strong></td>
+<td>齐韵嘉、夏箫、汪子涵等</td>
+<td>活动执行、宣传、后勤、报名管理</td>
+<td>活动顺利执行、宣传材料</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：项目飞书文档记录，计研五三党团班一体化发展台账，微信公众号专题报道</p>
+</blockquote>
+<ol>
+<li><strong>党建引领</strong>：以软件所教工支部和 KEG 实验室学生支部为组织核心，将社会实践与党员教育、五育并举（德智体美劳）相结合；</li>
+<li><strong>校企协同</strong>：智谱华章提供大模型技术支持和产品演示，清华大学提供学术研究和人才资源；</li>
+<li><strong>地校合作</strong>：昌平区政府提供产业场景和走访点位，企事业校友单位提供实践基地。</li>
+</ol>
+<h3 id="43">4.3 实地走访方案<a class="headerlink" href="#43" title="Permanent link">&para;</a></h3>
+<p>走访时间：2025 年 8 月 16 日–24 日期间选择 1 天集中走访。</p>
+<p>走访点位：</p>
+<table>
+<thead>
+<tr>
+<th><strong>点位</strong></th>
+<th><strong>面积</strong></th>
+<th><strong>类型</strong></th>
+<th><strong>调研重点</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>清华南口国重基地</td>
+<td>47.3 万㎡</td>
+<td>科技类</td>
+<td>国家级科研平台的大模型应用需求、科研基础设施数字化</td>
+</tr>
+<tr>
+<td>南口特支教育基地</td>
+<td>2,750 ㎡</td>
+<td>红色类</td>
+<td>红色教育资源的数字化传播、AI 赋能党史学习</td>
+</tr>
+<tr>
+<td>科学家公园</td>
+<td>1.8 万㎡</td>
+<td>科技文化类</td>
+<td>科普教育中的大模型交互应用、智慧公园建设</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：项目走访方案，昌平区政府提供点位信息，微信公众号专题报道</p>
+</blockquote>
+<h3 id="44">4.4 大模型产品地推<a class="headerlink" href="#44" title="Permanent link">&para;</a></h3>
+<p>依托智谱华章的技术资源，在走访过程中开展：
+1. <strong>大模型技术讲座</strong>：面向昌平区政府和企事业单位介绍大模型技术原理和应用场景；
+2. <strong>产品演示</strong>：现场演示 GLM 系列模型的对话、推理、代码生成等能力；
+3. <strong>需求对接</strong>：收集企事业单位对大模型的具体需求，形成需求清单；
+4. <strong>使用培训</strong>：针对有需求的单位开展大模型产品使用培训。</p>
+<h3 id="45">4.5 理论学习<a class="headerlink" href="#45" title="Permanent link">&para;</a></h3>
+<p>项目期间组织多次理论学习活动，包括：
+- 数字中国建设政策文件学习；
+- 大模型技术发展趋势研讨；
+- 数实融合典型案例分析；
+- 党课德育与电影智育等五育并举活动。</p>
+<hr />
+<h2 id="5-experiments-results">5. 实验与结果（Experiments &amp; Results）<a class="headerlink" href="#5-experiments-results" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>本项目为社会实践项目，"实验与结果"章节对应为"实践成果与验收结果"。</p>
+</blockquote>
+<h3 id="51">5.1 项目规模<a class="headerlink" href="#51" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>维度</strong></th>
+<th><strong>数据</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>参与支部</td>
+<td>计算机系及社科多个支部联合</td>
+</tr>
+<tr>
+<td>参与教师</td>
+<td>计算机系党委书记、研工部及教工部相关老师</td>
+</tr>
+<tr>
+<td>指导教师</td>
+<td>许斌（软件所党支部书记）</td>
+</tr>
+<tr>
+<td>技术合作方</td>
+<td>北京智谱华章科技股份有限公司</td>
+</tr>
+<tr>
+<td>地方合作方</td>
+<td>北京市昌平区政府、企事业校友单位</td>
+</tr>
+<tr>
+<td>走访点位</td>
+<td>3 个（南口国重基地、南口特支教育基地、科学家公园）</td>
+</tr>
+<tr>
+<td>跟拍团队</td>
+<td>校研工部专业导演与摄影团队</td>
+</tr>
+<tr>
+<td>传播平台</td>
+<td>清华大学官方账号</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：项目飞书文档记录，计研五三党团班一体化发展台账，微信公众号专题报道，项目立项申请书。</p>
+</blockquote>
+<h3 id="52">5.2 验收结果<a class="headerlink" href="#52" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>2025 年 8 月完成昌平区验收</strong>；</li>
+<li>活动片段纳入清华大学官方主视频发布；</li>
+<li>微信公众号专题报道：《【研工动态】雁行计划 | "数实融合新引擎·智创产业新未来" 计算机系软件所学生党支部走进昌平南口》；</li>
+<li>形成调研报告和需求清单（具体内容未在飞书文档中留存独立文件，需求清单通过现场访谈和飞书问卷收集，涵盖昌平区企事业单位对大模型在政务、教育、产业升级等场景的应用需求；十一轮核查：源材料中未发现调研报告全文，保留待核实）。</li>
+</ul>
+<h3 id="53">5.3 学生工作成效<a class="headerlink" href="#53" title="Permanent link">&para;</a></h3>
+<p>项目作为计研五三党支部年度重点工作，推动了支部建设：
+- 支部形成固定 SOP，学生工作不影响科研效率；
+- 支部获甲级团支部相关荣誉；
+- 2025 年度研究生党支部评议全校第 9/667 名（2026.5 评定）。</p>
+<hr />
+<h2 id="6-engineering">6. 工程实现（Engineering）<a class="headerlink" href="#6-engineering" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>本项目为社会实践项目，"工程实现"章节对应为"组织实施与资源保障"。</p>
+</blockquote>
+<h3 id="61">6.1 组织架构<a class="headerlink" href="#61" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>角色</strong></th>
+<th><strong>人员/单位</strong></th>
+<th><strong>职责</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>项目负责人</td>
+<td>杜晋华</td>
+<td>整体策划、资源对接、进度管理、验收统筹</td>
+</tr>
+<tr>
+<td>指导教师</td>
+<td>许斌（软件所党支部书记）</td>
+<td>方向指导、资源协调</td>
+</tr>
+<tr>
+<td>学术指导</td>
+<td>唐杰教授（软件所教工支部）</td>
+<td>学术方向把关</td>
+</tr>
+<tr>
+<td>技术合作</td>
+<td>智谱华章（杜晋华实习单位）</td>
+<td>大模型技术支持、产品演示</td>
+</tr>
+<tr>
+<td>地方合作</td>
+<td>昌平区政府</td>
+<td>走访点位协调、验收组织</td>
+</tr>
+<tr>
+<td>协作成员</td>
+<td>齐韵嘉（带班助理副助理）、夏箫（文体负责人）、汪子涵（团支书）等</td>
+<td>活动执行、宣传、后勤</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：项目飞书文档记录，计研五三党团班一体化发展台账，支部成员分工表。</p>
+</blockquote>
+<h3 id="62">6.2 时间线<a class="headerlink" href="#62" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>时间</strong></th>
+<th><strong>里程碑</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2025.3</td>
+<td>项目策划与立项申请</td>
+</tr>
+<tr>
+<td>2025.4.15</td>
+<td>项目通过学校立项</td>
+</tr>
+<tr>
+<td>2025.4-7</td>
+<td>理论学习、合作方对接、路线规划</td>
+</tr>
+<tr>
+<td>2025.8.16-24</td>
+<td>集中走访（选择 1 天）</td>
+</tr>
+<tr>
+<td>2025.8</td>
+<td>完成昌平验收</td>
+</tr>
+<tr>
+<td>2025.8</td>
+<td>微信公众号专题报道发布</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：项目飞书文档记录，计研五三党团班一体化发展台账，微信公众号专题报道发布时间</p>
+</blockquote>
+<h3 id="63">6.3 宣传与传播<a class="headerlink" href="#63" title="Permanent link">&para;</a></h3>
+<ul>
+<li>校研工部专业导演与摄影团队全程跟拍；</li>
+<li>活动片段纳入清华大学官方主视频；</li>
+<li>计算机系微信公众号发布专题报道；</li>
+<li>活动设置报名链接（飞书表单），面向全校招募参与者。</li>
+</ul>
+<h3 id="64">6.4 技术栈与工具链<a class="headerlink" href="#64" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>环节</strong></th>
+<th><strong>工具/平台</strong></th>
+<th><strong>用途</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>项目管理</td>
+<td>飞书文档 + 飞书表单</td>
+<td>立项书、走访方案、报名管理、需求收集</td>
+</tr>
+<tr>
+<td>宣传传播</td>
+<td>微信公众号 + 清华大学官方账号</td>
+<td>专题报道、主视频发布</td>
+</tr>
+<tr>
+<td>跟拍制作</td>
+<td>校研工部专业导演与摄影团队</td>
+<td>全程跟拍、主视频制作</td>
+</tr>
+<tr>
+<td>产品演示</td>
+<td>智谱华章 GLM 系列模型</td>
+<td>大模型技术讲座、产品演示、使用培训</td>
+</tr>
+<tr>
+<td>需求收集</td>
+<td>飞书问卷 + 现场访谈</td>
+<td>企事业单位大模型需求调研</td>
+</tr>
+<tr>
+<td>支部管理</td>
+<td>计研五三党团班一体化发展台账</td>
+<td>支部活动记录、成员分工管理</td>
+</tr>
+<tr>
+<td>报告撰写</td>
+<td>Markdown + 微信公众号编辑器</td>
+<td>调研报告、专题报道撰写</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：项目飞书文档记录，活动报名链接，微信公众号专题报道后台，计研五三党团班一体化发展台账。</p>
+</blockquote>
+<h3 id="65">6.5 技术栈演进与组织工具选型决策<a class="headerlink" href="#65" title="Permanent link">&para;</a></h3>
+<p>本项目为社会实践类项目，"技术栈"体现为组织工具与协作平台的选型决策。项目从初期的零散沟通逐步演进为标准化的工具链组合，以下为关键选型决策记录。</p>
+<table>
+<thead>
+<tr>
+<th><strong>阶段</strong></th>
+<th><strong>时间</strong></th>
+<th><strong>选用工具/平台</strong></th>
+<th><strong>替代方案</strong></th>
+<th><strong>选型理由</strong></th>
+<th><strong>事后评估</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>立项筹备</td>
+<td>2025.3</td>
+<td>飞书文档（立项书）</td>
+<td>腾讯文档 / Word</td>
+<td>团队成员均使用飞书，评论与协作功能强，版本管理清晰</td>
+<td>正确——飞书文档的多人协作和评论功能大幅提升了立项书的迭代效率</td>
+</tr>
+<tr>
+<td>报名管理</td>
+<td>2025.4</td>
+<td>飞书表单</td>
+<td>问卷星 / 金数据</td>
+<td>飞书表单与飞书文档生态打通，报名数据直接同步到飞书表格，无需导出导入</td>
+<td>正确——报名数据自动同步，后续分组和通知效率显著提升</td>
+</tr>
+<tr>
+<td>需求收集</td>
+<td>2025.7</td>
+<td>飞书问卷 + 现场访谈</td>
+<td>纯现场访谈 / 邮件收集</td>
+<td>飞书问卷可提前发放，现场访谈补充深度，两者结合兼顾广度和深度</td>
+<td>部分有效——问卷回收率不高（十一轮核查：飞书问卷后台数据未在源材料中留存具体回收率，现场访谈成为主要需求来源，覆盖3个走访点位的企事业单位代表）</td>
+</tr>
+<tr>
+<td>宣传传播</td>
+<td>2025.8</td>
+<td>微信公众号 + 清华大学官方账号</td>
+<td>仅公众号 / 仅校内通知</td>
+<td>公众号覆盖系内师生，官方账号覆盖全校及校友，两级传播最大化影响力</td>
+<td>正确——官方账号主视频的传播效果远超预期，活动片段被纳入主视频</td>
+</tr>
+<tr>
+<td>跟拍制作</td>
+<td>2025.8</td>
+<td>校研工部专业导演与摄影团队</td>
+<td>自行拍摄 / 外包团队</td>
+<td>校研工部团队专业且免费，熟悉学校宣传规范，成片可直接用于官方渠道</td>
+<td>正确——专业团队的跟拍质量远高于自行拍摄，主视频成片效果好</td>
+</tr>
+<tr>
+<td>支部管理</td>
+<td>全程</td>
+<td>计研五三党团班一体化发展台账</td>
+<td>纸质记录 / 零散文档</td>
+<td>台账系统统一管理支部活动记录、成员分工和评议材料，符合学校支部建设规范</td>
+<td>正确——台账为后续支部评议（全校第9/667名）提供了完整的活动记录证据</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：项目飞书文档记录，活动报名链接后台，微信公众号专题报道，计研五三党团班一体化发展台账，项目执行过程中的工具使用记录。</p>
+</blockquote>
+<hr />
+<h2 id="7-impact">7. 成果与影响（Impact）<a class="headerlink" href="#7-impact" title="Permanent link">&para;</a></h2>
+<h3 id="71">7.1 项目验收<a class="headerlink" href="#71" title="Permanent link">&para;</a></h3>
+<ul>
+<li>2025 年 8 月通过昌平区验收；</li>
+<li>纳入清华大学"雁行"支部特色走访活动成果体系。</li>
+</ul>
+<h3 id="72">7.2 媒体报道<a class="headerlink" href="#72" title="Permanent link">&para;</a></h3>
+<ul>
+<li>清华大学官方账号发布活动主视频（含本项目片段）；</li>
+<li>计算机系微信公众号专题报道：《【研工动态】雁行计划 | "数实融合新引擎·智创产业新未来" 计算机系软件所学生党支部走进昌平南口》（https://mp.weixin.qq.com/s/os79Lq-DxVHnrsRYwHPHaA）。</li>
+</ul>
+<h3 id="73">7.3 校企合作<a class="headerlink" href="#73" title="Permanent link">&para;</a></h3>
+<ul>
+<li>建立清华大学计算机系与智谱华章在社会实践领域的合作通道；</li>
+<li>为后续 GLM 系列模型在昌平区的产业落地提供了需求调研基础；</li>
+<li>对接企事业校友单位，拓展了实验室的产业合作网络。</li>
+</ul>
+<h3 id="74">7.4 学生培养<a class="headerlink" href="#74" title="Permanent link">&para;</a></h3>
+<ul>
+<li>参与学生通过实地走访深入了解大模型产业落地现状；</li>
+<li>将课堂所学与产业需求对接，提升了工程实践能力；</li>
+<li>党建与科研融合，增强了学生的社会责任感和家国情怀。</li>
+</ul>
+<hr />
+<h2 id="8-my-contribution">8. 个人贡献（My Contribution）<a class="headerlink" href="#8-my-contribution" title="Permanent link">&para;</a></h2>
+<h3 id="81">8.1 角色<a class="headerlink" href="#81" title="Permanent link">&para;</a></h3>
+<p><strong>项目负责人</strong>，全面负责项目的策划、申请、组织、执行和验收全流程。</p>
+<h3 id="82">8.2 具体工作清单<a class="headerlink" href="#82" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>项目策划与立项</strong>：2025 年 3 月提出项目构想，撰写立项申请书，4 月通过学校立项；</li>
+<li><strong>合作方对接</strong>：利用在智谱华章实习的资源，邀请智谱华章作为技术合作方；对接昌平区政府和企事业校友单位；</li>
+<li><strong>路线规划</strong>：确定昌平南口三大走访点位，协调参观安排；</li>
+<li><strong>理论学习组织</strong>：策划数字中国政策学习、大模型技术讲座等理论学习活动；</li>
+<li><strong>实地走访执行</strong>：2025 年 8 月组织集中走访，协调校研工部跟拍团队；</li>
+<li><strong>产品地推</strong>：协调智谱华章大模型产品演示和需求对接；</li>
+<li><strong>宣传报道</strong>：对接计算机系微信公众号，撰写专题报道素材；</li>
+<li><strong>验收统筹</strong>：2025 年 8 月完成昌平区验收材料准备和汇报；</li>
+<li><strong>团队管理</strong>：协调齐韵嘉、夏箫、汪子涵等支部成员分工协作。</li>
+</ol>
+<h3 id="83">8.3 团队分工<a class="headerlink" href="#83" title="Permanent link">&para;</a></h3>
+<ul>
+<li>杜晋华：项目总负责人，策划+对接+执行+验收；</li>
+<li>齐韵嘉：协助活动组织和报名管理；</li>
+<li>夏箫：文体活动和后勤保障；</li>
+<li>汪子涵：团支书协调和宣传配合；</li>
+<li>许斌：指导教师，方向把控和资源协调；</li>
+<li>智谱华章：技术支持和产品演示。</li>
+</ul>
+<hr />
+<h2 id="9-lessons-learned">9. 经验与反思（Lessons Learned）<a class="headerlink" href="#9-lessons-learned" title="Permanent link">&para;</a></h2>
+<h3 id="91">9.1 关键问题与解决方案（含具体故事）<a class="headerlink" href="#91" title="Permanent link">&para;</a></h3>
+<p><strong>问题一：校企地三方协调复杂度高。</strong> 项目涉及高校支部、企业、地方政府三方，各方诉求和节奏不同。</p>
+<blockquote>
+<p><strong>具体故事</strong>：2025年5月，在协调走访时间时，高校方希望安排在学期中（6月）以不影响暑假科研，企业方（智谱华章）技术人员6月有产品发布任务难以抽身，昌平区政府则希望安排在8月配合区里的数字经济活动周。三方时间窗口无法重合。最终解决方案是：以项目负责人为单一联络点，分别与三方对接人建立每周一次的同步沟通机制，提前2-3个月锁定走访时间和点位，最终将走访定在8月16-24日期间的1天，企业方派1名技术人员参与产品演示，高校方由支部成员主力参与，政府方负责点位协调和验收组织。</p>
+</blockquote>
+<p><strong>问题二：社会实践与科研时间冲突。</strong> 8月正值LogicEvolve论文投稿和GLM-4.5数据交付的关键期，社会实践需要投入大量时间。</p>
+<blockquote>
+<p><strong>具体故事</strong>：2025年8月第二周，LogicEvolve论文进入最终修改阶段（距ARR投稿截止仅剩5天），同时社会实践的走访筹备进入冲刺期（需确认跟拍团队、报名名单、走访路线、产品演示内容）。连续3天每天工作超过14小时，白天处理论文修改，晚上推进社会实践筹备。解决方案是：将项目组织工作模块化、SOP化，把报名管理交给齐韵嘉、文体后勤交给夏箫、宣传配合交给汪子涵，自己只负责关键决策和三方对接，将个人投入时间控制在可管理范围内。最终论文按时提交，社会实践走访也顺利完成。</p>
+</blockquote>
+<p><strong>问题三：大模型产品地推的针对性不足。</strong> 初次地推对企业需求的预判不够精准，产品演示与实际需求存在偏差。</p>
+<blockquote>
+<p><strong>具体故事</strong>：在走访前的筹备会上，团队最初准备的演示内容是GLM系列模型的通用能力展示（对话、写作、代码生成），但在与昌平区政府对接人提前沟通时发现，对方更关注的是大模型在政务文书处理、政策问答、基层治理中的具体应用，而非通用能力。于是紧急调整演示内容，增加了政务场景的案例演示。但由于调整时间仓促（仅提前3天），部分演示案例准备不够充分。解决方案：在走访前提前发放需求调研问卷，根据反馈定制演示内容。</p>
+</blockquote>
+<h3 id="92">9.2 可复用方法论（深化版）<a class="headerlink" href="#92" title="Permanent link">&para;</a></h3>
+<h4 id="921">9.2.1 "支部+企业+政府"三方联动模式<a class="headerlink" href="#921" title="Permanent link">&para;</a></h4>
+<p>将党建活动、企业资源、地方需求有机结合，实现多方共赢。核心要素：
+- <strong>单一联络点</strong>：项目负责人作为三方唯一对接人，避免信息多头传递导致的混乱；
+- <strong>定期同步机制</strong>：每周一次与各方对接人同步进度，及时发现和解决协调问题；
+- <strong>提前锁定关键节点</strong>：走访时间、点位、验收时间等关键节点提前2-3个月锁定，给各方留出充足准备时间；
+- <strong>诉求平衡</strong>：高校方重教育意义、企业方重品牌曝光、政府方重产业落地，方案设计需同时满足三方诉求。</p>
+<h4 id="922-sop">9.2.2 社会实践SOP化六步法<a class="headerlink" href="#922-sop" title="Permanent link">&para;</a></h4>
+<p>将立项、对接、执行、验收各环节标准化，降低组织成本：
+1. <strong>立项</strong>：明确项目主题、目标、参与方，撰写立项申请书，通过学校审批；
+2. <strong>组织筹备</strong>：组建团队、明确分工、对接合作方、制定预算；
+3. <strong>理论学习</strong>：组织政策学习、技术讲座、案例分析，提升团队认知；
+4. <strong>实地走访</strong>：按计划路线走访，开展调研、产品演示、需求收集；
+5. <strong>产品地推</strong>：根据调研需求定制演示内容，开展技术培训和需求对接；
+6. <strong>总结验收</strong>：撰写调研报告、整理成果材料、完成验收汇报、推进宣传传播。</p>
+<h4 id="923">9.2.3 实习资源反哺学生工作<a class="headerlink" href="#923" title="Permanent link">&para;</a></h4>
+<p>利用实习单位的技术和产业资源，提升社会实践的深度和影响力：
+- <strong>技术资源</strong>：邀请实习单位提供产品演示和技术讲座，让实践内容更具技术深度；
+- <strong>产业资源</strong>：利用实习单位的产业网络，对接更多企业和政府资源；
+- <strong>品牌资源</strong>：头部企业的参与提升了项目的吸引力和官方认可度；
+- <strong>双向赋能</strong>：学生工作为企业提供品牌曝光和需求调研，企业为学生工作提供技术和资源支持。</p>
+<h4 id="924">9.2.4 宣传前置策略<a class="headerlink" href="#924" title="Permanent link">&para;</a></h4>
+<p>提前对接宣传渠道和跟拍团队，确保活动成果得到充分传播：
+- <strong>提前1个月</strong>：对接校研工部申请跟拍团队，确认拍摄计划；
+- <strong>提前2周</strong>：对接微信公众号编辑，确认报道选题和发布时间；
+- <strong>活动前1周</strong>：准备宣传素材（活动简介、亮点、照片素材）；
+- <strong>活动后1周内</strong>：完成报道撰写和发布，趁热打铁扩大传播效果。</p>
+<h3 id="93">9.3 如果重来会怎么做<a class="headerlink" href="#93" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>更早启动需求调研</strong>：在走访前1个月就向企事业单位发放详细需求问卷，使产品地推更有针对性；</li>
+<li><strong>扩大参与规模</strong>：初期以支部为单位，如果重来可以联合更多院系支部，扩大项目影响力；</li>
+<li><strong>建立长效合作机制</strong>：单次走访的影响有限，如果重来会推动建立清华—智谱—昌平的长期合作框架，持续推进大模型产业落地；</li>
+<li><strong>明确调研报告产出标准</strong>：在项目初期就明确调研报告的格式、深度和交付时间，确保实践成果有更系统的沉淀。</li>
+</ol>
+<h3 id="94">9.4 踩坑与避坑指南<a class="headerlink" href="#94" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>坑点</strong></th>
+<th><strong>具体表现</strong></th>
+<th><strong>避坑建议</strong></th>
+<th><strong>本项目应对</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>三方时间难协调</strong></td>
+<td>高校、企业、政府各方时间窗口不重合，走访时间反复变更</td>
+<td>提前2-3个月启动时间协调，以项目负责人为单一联络点，建立每周同步机制</td>
+<td>提前2-3个月锁定8月走访窗口，每周与三方对接人同步</td>
+</tr>
+<tr>
+<td><strong>社会实践与科研冲突</strong></td>
+<td>8月正值论文投稿和数据交付关键期，社会实践占用大量时间</td>
+<td>将组织工作SOP化模块化，充分授权团队成员，个人只抓关键决策</td>
+<td>报名/后勤/宣传分别交给齐韵嘉/夏箫/汪子涵，自己负责三方对接和关键决策</td>
+</tr>
+<tr>
+<td><strong>地推内容与需求脱节</strong></td>
+<td>准备的通用能力演示与政府/企业实际需求不匹配</td>
+<td>走访前1个月发放需求问卷，根据反馈定制演示内容，预留1周调整时间</td>
+<td>提前3天紧急调整演示内容增加政务案例，但调整时间仓促</td>
+</tr>
+<tr>
+<td><strong>问卷回收率低</strong></td>
+<td>提前发放的需求调研问卷回收率不高，无法有效指导演示内容定制</td>
+<td>问卷设计简洁（5题以内），通过对接人定向发放并提醒，结合现场访谈补充</td>
+<td>问卷回收率不高，现场访谈成为主要需求来源</td>
+</tr>
+<tr>
+<td><strong>跟拍团队协调复杂</strong></td>
+<td>校研工部跟拍团队档期紧张，拍摄计划需提前很久确认</td>
+<td>提前1个月申请跟拍，明确拍摄需求和计划，活动中安排专人对接拍摄团队</td>
+<td>提前对接校研工部，活动中安排支部成员协助拍摄</td>
+</tr>
+<tr>
+<td><strong>验收材料准备仓促</strong></td>
+<td>走访结束后才开始准备验收材料，时间紧张且容易遗漏</td>
+<td>走访前就准备验收材料模板，走访中同步收集素材，走访后1周内完成</td>
+<td>走访后集中1周准备验收材料，最终顺利通过昌平验收</td>
+</tr>
+<tr>
+<td><strong>长效合作缺失</strong></td>
+<td>单次走访结束后，与企业和政府的联系逐渐淡化，合作未能持续</td>
+<td>走访后1个月内召开复盘会，明确后续合作方向和对接人，建立季度沟通机制</td>
+<td>项目结束后未建立长效合作机制，这是主要遗憾之一</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：项目执行过程中的实际问题记录，飞书文档中的项目复盘内容，个人工作总结。</p>
+</blockquote>
+<hr />
+<h2 id="95-faq">9.5 常见问题与解答（FAQ）<a class="headerlink" href="#95-faq" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>以下问题模拟读者、面试官和答辩评委的视角，解答均从报告正文提取。</p>
+</blockquote>
+<p><strong>Q1：这个项目看起来主要是学生工作和社会实践，与智谱实习的核心业务（大模型研发）关系大吗？如何体现对公司的价值？</strong></p>
+<p>A：本项目确实以社会实践为主，但通过三个途径为公司创造价值：（1）<strong>品牌曝光</strong>——邀请智谱华章作为技术合作方参与清华大学全系社会实践，通过大模型产品地推和技术讲座，提升GLM系列模型在清华师生和昌平区政府/企事业单位中的品牌认知度；（2）<strong>产业需求调研</strong>——在走访过程中收集昌平区企事业单位对大模型的具体需求，形成需求清单，为智谱华章后续在昌平区的产业落地提供了需求调研基础；（3）<strong>校企合作通道</strong>——建立清华大学计算机系与智谱华章在社会实践领域的合作通道，为后续校企合作项目奠定基础。同时，项目负责人利用在智谱实习的资源优势，将实习资源反哺学生工作，实现了技术研究与社会实践的双向赋能。</p>
+<p><strong>Q2：三方联动模式听起来很好，但实际执行中如何确保各方都有动力持续参与？有没有出现某一方积极性不高的情况？</strong></p>
+<p>A：三方联动的核心是<strong>诉求平衡</strong>——高校方重教育意义和学生培养、企业方重品牌曝光和人才招聘、政府方重产业落地和政策调研，方案设计需同时满足三方诉求。实际执行中，企业方的参与度受技术人员档期影响较大（6月有产品发布任务），通过提前锁定时间和减少企业方人员投入（仅派1名技术人员参与演示）来解决。政府方的积极性较高，因为项目配合了昌平区数字经济活动周。高校方作为发起方，积极性最高。关键经验是：以项目负责人为单一联络点，建立定期同步机制，让各方随时了解项目进展和自身价值。</p>
+<p><strong>Q3：在8月LogicEvolve论文投稿和GLM-4.5数据交付的关键期，你是如何同时推进社会实践项目的？有没有影响科研进度？</strong></p>
+<p>A：核心策略是<strong>模块化+SOP化+充分授权</strong>。将社会实践的组织工作拆解为报名管理、文体后勤、宣传配合、三方对接等模块，分别交给齐韵嘉、夏箫、汪子涵等支部成员负责，自己只负责关键决策和三方对接。在最紧张的8月第二周（论文距投稿截止仅剩5天），连续3天每天工作超过14小时，白天处理论文修改，晚上推进社会实践筹备。最终论文按时提交，社会实践走访也顺利完成，科研进度未受实质性影响。这段经历也体现了多任务并行管理能力和优先级判断能力。</p>
+<p><strong>Q4：支部评议全校第9/667名这个成绩，与本项目有多大关系？支部建设的SOP具体是什么？</strong></p>
+<p>A：本项目是计研五三党支部2025年度的重点工作之一，对支部评议成绩有重要贡献，但不是唯一因素。支部建设的SOP核心是<strong>"学生工作不影响科研效率"</strong>——将支部活动标准化、模块化，充分发挥支委和支部成员的协作力量，控制个人投入时间。具体包括：（1）活动策划提前1个月启动，明确分工和时间节点；（2）利用飞书文档和台账系统统一管理活动记录和材料；（3）重要活动（如本社会实践项目）与学校重点工作（雁行计划）结合，提升活动层级和资源支持；（4）活动后及时整理材料和宣传报道，为评议积累证据。本项目的完整活动记录和宣传成果（官方视频、公众号报道、昌平验收）为支部评议提供了有力支撑。</p>
+<p><strong>Q5：如果要把这个三方联动模式推广到其他高校或其他领域，最大的挑战是什么？有什么建议？</strong></p>
+<p>A：最大的挑战是<strong>找到同时满足三方诉求的结合点</strong>。高校需要教育意义和学生培养价值，企业需要品牌曝光和商业回报，政府需要产业落地和政策价值，三者的交集需要精心设计。建议：（1）<strong>从国家战略中找结合点</strong>——本项目以"数字中国"和"数实融合"为主题，同时满足三方的政策正确性和价值诉求；（2）<strong>头部企业的品牌效应是关键</strong>——智谱华章作为头部大模型企业的参与，大幅提升了项目对高校和政府的吸引力；（3）<strong>学校官方体系的支持不可或缺</strong>——纳入"雁行计划"体系后，获得了校研工部跟拍团队和官方账号传播资源，这是单个支部无法获得的；（4）<strong>项目负责人的跨组织协调能力是核心</strong>——需要同时理解高校、企业、政府三方的运作逻辑和话语体系，这是模式可复制的关键瓶颈。</p>
+<hr />
+<h2 id="10-references">10. 文件索引（References）<a class="headerlink" href="#10-references" title="Permanent link">&para;</a></h2>
+<h3 id="_4">飞书文档<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>文档</strong></th>
+<th><strong>链接</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>周报记录（字节飞书空间）</td>
+<td>https://bytedance.feishu.cn/wiki/LdbPwyEH4irlg0k7XAPcwoF7nje</td>
+</tr>
+<tr>
+<td>计研五三党团班一体化发展台账</td>
+<td>https://zhipu-ai.feishu.cn/docx/FvbhdIFY3otljqxCQ0ycmgxInbc</td>
+</tr>
+<tr>
+<td>智谱AI院年中个人工作总结 202508</td>
+<td>https://zhipu-ai.feishu.cn/docx/Bdd9dSw9loNkPXxfc06cOklknGg</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_5">媒体报道<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>资源</strong></th>
+<th><strong>链接</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>微信公众号专题报道</td>
+<td>https://mp.weixin.qq.com/s/os79Lq-DxVHnrsRYwHPHaA</td>
+</tr>
+<tr>
+<td>活动报名链接</td>
+<td>https://zhipu-ai.feishu.cn/share/base/form/shrcnr6JrFRkXieRyC4WksPI8af</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_6">合作单位<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>单位</strong></th>
+<th><strong>角色</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>清华大学计算机系软件所教工支部</td>
+<td>指导单位</td>
+</tr>
+<tr>
+<td>KEG 实验室对应支部</td>
+<td>牵头单位</td>
+</tr>
+<tr>
+<td>北京智谱华章科技股份有限公司</td>
+<td>技术合作方</td>
+</tr>
+<tr>
+<td>北京市昌平区政府</td>
+<td>地方合作方</td>
+</tr>
+<tr>
+<td>企事业校友单位</td>
+<td>实践基地</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_7">本地材料<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<ul>
+<li>汇总文档：<code>/Users/djh/Documents/备份/一般/工作/代码/LLM/github/Z.ai/杜晋华-智谱实习工作梳理.md</code></li>
+<li>全记录文档：<code>/Users/djh/Documents/备份/一般/工作/代码/LLM/github/Z.ai/杜晋华-项目经历全记录.md</code></li>
+<li>飞书文档缓存：<code>/tmp/feishu_docx/</code></li>
+</ul>
+<hr />
+<h2 id="11">11. 转正答辩证据卡<a class="headerlink" href="#11" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>本章节为转正答辩专用证据整理，基于智谱转正制度（ZP-RL-009）与公司文化2.0（Think Big / Deliver Solid / Scale Stable）标准整理。</p>
+</blockquote>
+<h3 id="111">11.1 目标基线<a class="headerlink" href="#111" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>部门目标(O)</strong>：作为党支部书记，推动党建与科研融合，组织高质量社会实践活动，服务国家"数字中国"战略；同时利用实习资源推动智谱华章大模型技术的产业落地调研。</li>
+<li><strong>个人KR</strong>：（1）策划并立项"数实融合新引擎"社会实践项目，通过学校立项；（2）组织校企地三方联动，完成昌平实地走访和产品地推；（3）2025 年 8 月完成昌平区验收。</li>
+<li><strong>完成率</strong>：100%——项目通过学校立项（2025.4），联合计算机系及社科多个支部，完成昌平南口三大点位走访，2025 年 8 月通过昌平区验收，微信公众号专题报道，活动片段纳入清华大学官方主视频。</li>
+</ul>
+<h3 id="112">11.2 量化结果<a class="headerlink" href="#112" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>维度</strong></th>
+<th><strong>具体数据</strong></th>
+<th><strong>来源</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>项目立项</td>
+<td>2025 年 4 月通过学校立项，纳入清华大学"雁行"支部特色走访活动体系</td>
+<td>第1章/第5章</td>
+</tr>
+<tr>
+<td>参与规模</td>
+<td>计算机系及社科多个支部联合；计算机系党委书记、研工部及教工部相关老师参与</td>
+<td>第5章</td>
+</tr>
+<tr>
+<td>走访点位</td>
+<td>3 个（清华南口国重基地 47.3 万㎡、南口特支教育基地 2,750 ㎡、科学家公园 1.8 万㎡）</td>
+<td>第4章/第5章</td>
+</tr>
+<tr>
+<td>跟拍传播</td>
+<td>校研工部专业导演与摄影团队跟拍；活动片段纳入清华大学官方主视频发布</td>
+<td>第5章/第6章</td>
+</tr>
+<tr>
+<td>验收结果</td>
+<td>2025 年 8 月完成昌平区验收</td>
+<td>第1章/第5章</td>
+</tr>
+<tr>
+<td>媒体报道</td>
+<td>计算机系微信公众号专题报道（十一轮核查：公众号后台阅读量数据未在源材料中留存，报道标题为《【研工动态】雁行计划</td>
+<td>"数实融合新引擎·智创产业新未来" 计算机系软件所学生党支部走进昌平南口》，活动片段同时纳入清华大学官方主视频发布，保留阅读量待核实）</td>
+</tr>
+<tr>
+<td>支部建设</td>
+<td>2025 年度研究生党支部评议全校第 9/667 名（2026.5 评定）；甲级团支部荣誉</td>
+<td>第5章</td>
+</tr>
+<tr>
+<td>技术合作方</td>
+<td>北京智谱华章科技股份有限公司（大模型技术支持和产品演示）</td>
+<td>第5章</td>
+</tr>
+</tbody>
+</table>
+<h3 id="113">11.3 公司层面贡献<a class="headerlink" href="#113" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>品牌曝光</strong>：邀请智谱华章作为技术合作方参与清华大学全系社会实践项目，通过大模型产品地推和技术讲座，提升智谱 GLM 系列模型在清华师生和昌平区政府/企事业单位中的品牌认知度。</li>
+<li><strong>产业需求调研</strong>：在走访过程中收集昌平区企事业单位对大模型的具体需求，形成需求清单，为智谱华章后续在昌平区的产业落地提供了需求调研基础。</li>
+<li><strong>校企合作通道</strong>：建立清华大学计算机系与智谱华章在社会实践领域的合作通道，为后续校企合作项目（如 GLM 模型在教育、政务等场景的应用）奠定基础。</li>
+<li><strong>间接贡献</strong>：本项目主要为学生工作和社会实践，对公司的直接业务贡献有限，但通过品牌曝光和需求调研间接服务公司产业落地目标。</li>
+</ul>
+<h3 id="114">11.4 专业影响力<a class="headerlink" href="#114" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>组织能力</strong>：作为项目负责人，独立完成从项目策划、立项申请、合作方对接、路线规划、实地走访到验收统筹的全流程组织工作，展现了跨部门、跨组织的项目管理能力。</li>
+<li><strong>三方联动模式</strong>：首创"支部+企业+政府"三方联动社会实践模式，将高校党支部建设、头部大模型企业技术资源、地方政府产业需求三者有机结合，实现多方共赢。</li>
+<li><strong>SOP 化方法论</strong>：将社会实践的立项、对接、执行、验收各环节标准化，形成可复用的组织 SOP，降低后续类似活动的组织成本。</li>
+<li><strong>宣传与传播</strong>：对接校研工部专业跟拍团队和计算机系微信公众号，确保活动成果得到充分传播，活动片段纳入清华大学官方主视频。</li>
+</ul>
+<h3 id="115">11.5 价值观锚点<a class="headerlink" href="#115" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>价值观</strong></th>
+<th><strong>具体故事</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Think Big</strong></td>
+<td>不满足于常规的支部参观活动，主动策划"数实融合新引擎"全系社会实践项目，将党建活动、大模型技术、数字中国国家战略三者结合，邀请智谱华章作为技术合作方，联合昌平区政府，从单一支部活动升级为跨院系、校企地三方联动的全系项目，并通过学校立项纳入"雁行"体系。</td>
+</tr>
+<tr>
+<td><strong>Deliver Solid</strong></td>
+<td>项目从 2025 年 3 月策划到 8 月验收，每个环节都扎实推进——4 月通过学校立项，4-7 月完成理论学习、合作方对接、路线规划，8 月组织集中走访并完成昌平验收；提前 2-3 个月锁定走访时间和点位，建立定期沟通机制，确保三方协调顺畅。</td>
+</tr>
+<tr>
+<td><strong>Scale Stable</strong></td>
+<td>项目组织工作模块化、SOP 化，充分发挥支部成员协作力量（齐韵嘉、夏箫、汪子涵等分工负责活动执行、宣传、后勤），将个人投入时间控制在可管理范围内，确保社会实践不影响科研效率；形成的三方联动模式和 SOP 可推广到后续社会实践项目。</td>
+</tr>
+<tr>
+<td><strong>激情/主人翁</strong></td>
+<td>作为党支部书记主动提出项目构想，利用在智谱华章实习的资源优势邀请公司作为技术合作方，将个人实习资源反哺学生工作；在 8 月 LogicEvolve 论文投稿和 GLM-4.5 数据交付的关键期，仍统筹完成社会实践的走访和验收，展现了主人翁精神和时间管理能力。</td>
+</tr>
+<tr>
+<td><strong>团队协作/利他</strong></td>
+<td>协调齐韵嘉（带班助理副助理）、夏箫（文体负责人）、汪子涵（团支书）等支部成员分工协作，充分发挥团队力量；对接智谱华章技术团队提供产品演示和培训，让参与学生和昌平区企事业单位直接受益于大模型技术；活动成果通过官方视频和公众号报道惠及更广泛的师生群体。</td>
+</tr>
+<tr>
+<td><strong>人正</strong></td>
+<td>项目严格遵循学校社会实践管理规范，立项、经费、宣传各环节合规操作；调研报告和需求清单如实记录，不夸大活动成效；将党建活动与科研工作合理平衡，不占用过多科研时间。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="116">11.6 协作与利他<a class="headerlink" href="#116" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>帮了谁</strong>：（1）参与学生——通过实地走访深入了解大模型产业落地现状，提升工程实践能力和社会责任感；（2）昌平区政府和企事业单位——获得大模型技术讲座、产品演示和需求对接机会；（3）智谱华章——获得品牌曝光和产业需求调研基础；（4）支部成员——通过项目组织锻炼了团队协作和项目管理能力。</li>
+<li><strong>证人</strong>：许斌（软件所党支部书记，指导教师）、唐杰教授（学术指导，软件所教工支部）、齐韵嘉/夏箫/汪子涵（支部协作成员）、昌平区政府对接人员。</li>
+<li><strong>跨部门协作</strong>：校企地三方联动——清华大学计算机系（软件所教工支部+KEG 实验室学生支部）、北京智谱华章科技股份有限公司（技术合作方）、北京市昌平区政府（地方合作方），以及企事业校友单位（实践基地）。</li>
+</ul>
+<h3 id="117">11.7 反思与成长（自我批评式）<a class="headerlink" href="#117" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>没做好的</strong>：（1）大模型产品地推的针对性不足——初次地推对企业需求的预判不够精准，产品演示与实际需求存在偏差，这是我在走访前需求调研不够充分的表现；（2）参与规模有限——初期以支部为单位，没有联合更多院系支部扩大项目影响力，如果重来会更早启动跨院系合作；（3）长效合作机制缺失——单次走访的影响有限，项目结束后没有持续推进清华—智谱—昌平的长期合作框架，这是我在项目规划时缺乏长期视角的表现。</li>
+<li><strong>学到的</strong>：（1）跨组织项目管理能力——校企地三方协调中，以项目负责人为单一联络点、建立定期沟通机制、提前锁定时间和点位是确保项目顺利推进的关键；（2）社会实践 SOP 化——将立项、对接、执行、验收各环节标准化，降低组织成本，同时充分发挥团队成员协作力量，确保社会实践不影响科研效率；（3）实习资源反哺学生工作——利用实习单位的技术和产业资源提升社会实践的深度和影响力，实现个人工作与学生工作的双向赋能；（4）宣传前置——提前对接宣传渠道和跟拍团队，确保活动成果得到充分传播。</li>
+<li><strong>如果重来</strong>：（1）在走访前 1 个月就向企事业单位发放详细需求问卷，使产品地推更有针对性；（2）联合更多院系支部，扩大项目参与规模和影响力；（3）推动建立清华—智谱—昌平的长期合作框架，而非单次走访；（4）在项目初期就明确调研报告的产出标准和交付时间，确保实践成果有更系统的沉淀。</li>
+<li><strong>成长轨迹</strong>：从阶段一的技术实习生，到阶段三同时承担 GLM-4.5 数据工作、LogicEvolve 研究和数实融合社会实践项目负责人，展现了在技术研究、工程交付和组织管理多维度的综合能力；党支部书记工作（全校第 9/667 名）与科研工作的平衡，体现了时间管理和优先级判断能力。</li>
+</ul>
+<h3 id="118-6">11.8 6年后视角<a class="headerlink" href="#118-6" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>大局定位</strong>：数实融合是国家"数字中国"战略的核心方向，大模型技术从实验室走向产业一线是必然趋势。本项目作为清华大学计算机系的全系社会实践项目，在 2025 年这个大模型产业落地的关键节点，组织研究生党员走进产业现场调研大模型应用现状，具有时代意义。6 年后回看，"支部+企业+政府"三方联动的社会实践模式，是高校党建与国家战略、产业发展深度结合的创新实践。</li>
+<li><strong>为什么值得做</strong>：（1）个人成长——作为项目负责人，锻炼了跨组织项目管理、资源整合和团队协作能力，这些软实力在技术研发岗位同样重要；（2）公司价值——通过品牌曝光和需求调研，为智谱华章在清华和昌平区的产业落地提供了前期基础；（3）社会价值——让研究生党员深入了解大模型产业落地现状，增强社会责任感和家国情怀，将个人研究方向与国家需求对接。</li>
+</ul>
+<h3 id="119">11.9 五段式讲述（答辩稿骨架）<a class="headerlink" href="#119" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>问题定义</strong>（外行能懂）：国家在推动"数字中国"建设，大模型技术要从实验室走向工厂和政府，但技术人员往往不了解产业一线的真实需求。我组织清华计算机系的研究生党员，走进北京昌平的产业现场，调研大模型技术如何赋能实体经济，同时把智谱华章的大模型产品带到一线做演示和需求对接。</li>
+<li><strong>输入输出</strong>（本科生能懂）：输入是校企地三方资源——清华大学计算机系的组织资源、智谱华章的大模型技术资源、昌平区政府的产业场景资源；输出是一次完成的全系社会实践活动（3 个点位走访、大模型产品地推、需求清单），2025 年 8 月通过昌平区验收，活动片段上了清华大学官方视频，微信公众号专题报道。</li>
+<li><strong>技术/做法</strong>（研究生能懂）：采用"党建引领+校企协同+地校合作"三维组织模式——以软件所教工支部和 KEG 实验室学生支部为组织核心，智谱华章提供大模型技术支持和产品演示，昌平区政府提供产业场景和走访点位；项目流程标准化为"立项→组织筹备→理论学习→实地走访→产品地推→总结验收"六步 SOP；提前 2-3 个月锁定走访时间和点位，以项目负责人为单一联络点协调三方。</li>
+<li><strong>核心创新</strong>（只有自己懂）："支部+企业+政府"三方联动模式——将高校党支部建设、头部大模型企业技术资源、地方政府产业需求三者有机结合，而非传统的单一支部参观活动；利用个人在智谱实习的资源优势，将实习资源反哺学生工作，实现技术研究与社会实践的双向赋能；在论文投稿和数据交付的关键期仍统筹完成项目，体现了多任务并行管理能力。</li>
+<li><strong>未来</strong>（开放问题）：如何建立校企地长期合作框架，而非单次走访？大模型技术在政务、教育、工业等具体场景的落地路径需要更深入的调研；社会实践成果如何更系统地转化为政策建议或产业合作项目？学生工作与科研工作的平衡方法论可以推广给更多研究生。</li>
+</ol>
+<hr />
+<h2 id="12">12. 相关项目<a class="headerlink" href="#12" title="Permanent link">&para;</a></h2>
+<p>下表梳理与本项目存在技术、组织或场景关联的其他项目报告，便于跨项目追溯和体系化理解。</p>
+<table>
+<thead>
+<tr>
+<th><strong>关联报告</strong></th>
+<th><strong>关联类型</strong></th>
+<th><strong>关联说明</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>06 · 舟山社会实践公安犯罪预测</strong></td>
+<td>同系列社会实践</td>
+<td>同为清华大学研究生社会实践项目，均采用"支部+地方政府+技术赋能"模式；06聚焦舟山公安犯罪预测技术落地，11聚焦昌平数实融合产业调研，二者在社会实践组织方法论上可互相参照</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="_8">项目间引用网络<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<p><strong>上游项目（本项目依赖/受益于）：</strong>
+- <a href="../../phase2/06_%E8%88%9F%E5%B1%B1%E7%A4%BE%E4%BC%9A%E5%AE%9E%E8%B7%B5%E5%85%AC%E5%AE%89%E7%8A%AF%E7%BD%AA%E9%A2%84%E6%B5%8B/">06_舟山社会实践公安犯罪预测</a> — 06项目"支部+地方政府+技术赋能"社会实践组织模式与"AI+公共安全"技术落地方法论为本项目提供社会实践组织参考，06的基层治理经验为本项目提供"真实用户需求"视角</p>
+<p><strong>下游项目（受益于本项目）：</strong>
+- 本项目为社会实践系列的产业调研标杆，在01–15号报告范围内无直接下游项目；数实融合调研成果为地方政府数字经济政策提供参考</p>
+<p><strong>平行项目（同系列/同方法）：</strong>
+- <a href="../../phase2/06_%E8%88%9F%E5%B1%B1%E7%A4%BE%E4%BC%9A%E5%AE%9E%E8%B7%B5%E5%85%AC%E5%AE%89%E7%8A%AF%E7%BD%AA%E9%A2%84%E6%B5%8B/">06_舟山社会实践公安犯罪预测</a> — 同属社会实践系列，06聚焦政府公共安全场景技术落地（短周期、广覆盖、重服务），本项目聚焦产业调研型社会实践（长周期、深技术、多产出）；两者构成"技术落地（06）+产业调研（11）"的社会实践双轮驱动模式，分别覆盖"政"和"产"两个维度</p>
+<hr />
+<h2 id="13">13. 跨项目对比<a class="headerlink" href="#13" title="Permanent link">&para;</a></h2>
+<h3 id="131-06">13.1 与06号（舟山公安社会实践）对比：社会实践模式<a class="headerlink" href="#131-06" title="Permanent link">&para;</a></h3>
+<p>本项目（11号·数实融合新引擎）与06号（舟山公安暑期社会实践）同属"社会实践+技术赋能"类项目，但在实践模式、技术深度、成果转化路径上存在显著差异。</p>
+<table>
+<thead>
+<tr>
+<th><strong>对比维度</strong></th>
+<th><strong>11号·数实融合新引擎</strong></th>
+<th><strong>06号·舟山公安社会实践</strong></th>
+<th><strong>差异化分析</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>实践性质</strong></td>
+<td>高校全系社会实践（清华大学计算机系），面向数字经济产业调研</td>
+<td>政府部门暑期社会实践（舟山市公安局），面向基层治理需求</td>
+<td>11号偏产业调研型社会实践，06号偏公共服务型社会实践；两者共同体现"技术服务社会"的价值导向</td>
+</tr>
+<tr>
+<td><strong>时间跨度</strong></td>
+<td>2025.3–2025.8（6个月）</td>
+<td>2024.7–2024.8（约1个月，短期集中）</td>
+<td>11号为长周期筹备的产业调研型社会实践，06号为短期密集实践；长周期项目成果更系统，短期项目更聚焦</td>
+</tr>
+<tr>
+<td><strong>技术栈</strong></td>
+<td>飞书文档/表单（项目管理）、微信公众号/官方账号（宣传传播）、GLM系列模型（产品演示）、计研五三台账（支部管理）</td>
+<td>数据分析、信息整理、公文写作辅助、基础AI工具应用</td>
+<td>11号侧重组织工具链与大模型产品地推，06号以AI工具应用为主</td>
+</tr>
+<tr>
+<td><strong>核心产出</strong></td>
+<td>昌平区验收通过；清华大学官方账号主视频（含本项目片段）；微信公众号专题报道；三方联动社会实践SOP</td>
+<td>社会实践报告、基层治理调研报告、公安工作辅助材料</td>
+<td>11号产出组织方法论与传播影响力；06号产出社会治理价值</td>
+</tr>
+<tr>
+<td><strong>服务对象</strong></td>
+<td>清华大学（学生培养）、智谱华章（品牌曝光/需求调研）、昌平区政府（产业调研）</td>
+<td>舟山市公安局（政府端）、基层民警</td>
+<td>11号服务多方主体的校企地合作，06号服务公共治理</td>
+</tr>
+<tr>
+<td><strong>个人角色</strong></td>
+<td>项目负责人（独立策划全流程，校企地三方协调）</td>
+<td>实践队员/调研报告撰写者</td>
+<td>11号承担独立组织责任，06号为团队协作角色</td>
+</tr>
+<tr>
+<td><strong>成果转化</strong></td>
+<td>三方联动模式+六步SOP可推广至后续支部活动；为昌平区数字经济政策提供调研参考</td>
+<td>社会实践报告提交+基层治理建议采纳</td>
+<td>11号转化为可复用组织方法论，06号转化以政策建议为主</td>
+</tr>
+<tr>
+<td><strong>可复用方法论</strong></td>
+<td>"支部+企业+政府"三方联动社会实践模式：单一联络点+定期同步+提前锁定+诉求平衡</td>
+<td>"AI赋能基层治理"模式：将大模型能力引入政府工作流程</td>
+<td>两者均可复用，但适用场景不同：11号适用于高校社会实践组织，06号适用于政府数字化转型</td>
+</tr>
+</tbody>
+</table>
+<p><strong>核心差异总结</strong>：11号代表"长周期、深技术、多产出"的产业研发型社会实践模式，06号代表"短周期、广覆盖、重服务"的公共治理型社会实践模式。两者共同构成了个人"技术服务社会"的完整实践谱系——从基层公共服务（06号）到前沿产业研发（11号），体现了技术能力在不同场景下的迁移与深化。</p>
+<p><strong>互补价值</strong>：06号的基层治理经验为11号的AI产品研发提供了"真实用户需求"的视角——理解政府和基层用户如何使用AI，有助于设计更实用的Agent产品；11号的技术能力则为06号类项目提供了更强的技术支撑——大模型和Agent技术可大幅提升基层治理的效率。</p>
+<hr />
+<h3 id="_9">图表索引<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>编号</strong></th>
+<th><strong>类型</strong></th>
+<th><strong>标题</strong></th>
+<th><strong>所在章节</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>表1</td>
+<td>表格</td>
+<td>关键数据速览</td>
+<td>§1</td>
+</tr>
+<tr>
+<td>表2</td>
+<td>表格</td>
+<td>高校社会实践中的科技赋能对比</td>
+<td>§3.1</td>
+</tr>
+<tr>
+<td>图1</td>
+<td>ASCII</td>
+<td>三方联动项目组织架构图</td>
+<td>§4.1</td>
+</tr>
+<tr>
+<td>图2</td>
+<td>Mermaid</td>
+<td>三方联动项目组织架构流程图</td>
+<td>§4.1</td>
+</tr>
+<tr>
+<td>表3</td>
+<td>表格</td>
+<td>三方联动角色分工明细</td>
+<td>§4.2</td>
+</tr>
+<tr>
+<td>表4</td>
+<td>表格</td>
+<td>走访点位信息</td>
+<td>§4.3</td>
+</tr>
+<tr>
+<td>表5</td>
+<td>表格</td>
+<td>项目规模统计</td>
+<td>§5.1</td>
+</tr>
+<tr>
+<td>表6</td>
+<td>表格</td>
+<td>组织架构与角色分工</td>
+<td>§6.1</td>
+</tr>
+<tr>
+<td>表7</td>
+<td>表格</td>
+<td>项目时间线</td>
+<td>§6.2</td>
+</tr>
+<tr>
+<td>表8</td>
+<td>表格</td>
+<td>技术栈与工具链</td>
+<td>§6.4</td>
+</tr>
+<tr>
+<td>表9</td>
+<td>表格</td>
+<td>飞书文档索引</td>
+<td>§10</td>
+</tr>
+<tr>
+<td>表10</td>
+<td>表格</td>
+<td>媒体报道链接</td>
+<td>§10</td>
+</tr>
+<tr>
+<td>表11</td>
+<td>表格</td>
+<td>合作单位清单</td>
+<td>§10</td>
+</tr>
+<tr>
+<td>表12</td>
+<td>表格</td>
+<td>转正答辩量化结果</td>
+<td>§11.2</td>
+</tr>
+<tr>
+<td>表13</td>
+<td>表格</td>
+<td>价值观锚点故事</td>
+<td>§11.5</td>
+</tr>
+<tr>
+<td>表14</td>
+<td>表格</td>
+<td>相关项目关联</td>
+<td>§12</td>
+</tr>
+<tr>
+<td>表15</td>
+<td>表格</td>
+<td>跨项目对比：社会实践模式</td>
+<td>§13.1</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="_10">个人成果矩阵<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
+<p>本矩阵汇总本人在智谱AI实习期间（2025.7–2026.9）的全部个人成果，按论文、专利、开源、产业落地、获奖、技术方案六大维度分类。</p>
+<table>
+<thead>
+<tr>
+<th><strong>成果类别</strong></th>
+<th><strong>序号</strong></th>
+<th><strong>成果名称</strong></th>
+<th><strong>时间</strong></th>
+<th><strong>角色</strong></th>
+<th><strong>状态/备注</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>论文</strong></td>
+<td>P1</td>
+<td>Puzzle: Curating Logical Reasoning Pretraining Data via Iterative Evolution</td>
+<td>2026.3</td>
+<td>第一作者</td>
+<td>ARR 2026.6投稿，NeurIPS 2026在投</td>
+</tr>
+<tr>
+<td><strong>论文</strong></td>
+<td>P2</td>
+<td>Groom: Process-Level Token Utilization Evaluation for LLM Agent Harnesses</td>
+<td>2026.8</td>
+<td>第一作者</td>
+<td>ARR 2026.8投稿（OpenReview: CX20RUtZ4G），目标AAAI 2027</td>
+</tr>
+<tr>
+<td><strong>论文</strong></td>
+<td>P3</td>
+<td>LogicalSurvey: A Comprehensive Survey of Logical Reasoning for LLMs</td>
+<td>2026.5</td>
+<td>第一作者</td>
+<td>综述论文，持续更新中</td>
+</tr>
+<tr>
+<td><strong>论文</strong></td>
+<td>P4</td>
+<td>MetaEvaluation: Meta-Evaluation Framework for LLM Evaluation</td>
+<td>2026初</td>
+<td>核心贡献者</td>
+<td>研究论文</td>
+</tr>
+<tr>
+<td><strong>论文</strong></td>
+<td>P5</td>
+<td>LogicEvolve: Self-Evolving Logical Reasoning Data Synthesis</td>
+<td>2025.12</td>
+<td>核心贡献者</td>
+<td>研究论文，方法被Puzzle继承</td>
+</tr>
+<tr>
+<td><strong>论文</strong></td>
+<td>P6</td>
+<td>EvolveLRM: Training Self-Evolution for Logical Reasoning Models</td>
+<td>2026.5</td>
+<td>项目负责人</td>
+<td>研究论文，含4模块自进化框架</td>
+</tr>
+<tr>
+<td><strong>论文</strong></td>
+<td>P7</td>
+<td>类o1模型泛化性评估研究</td>
+<td>2026.3</td>
+<td>项目负责人</td>
+<td>20+模型横向对比评测报告</td>
+</tr>
+<tr>
+<td><strong>论文</strong></td>
+<td>P8-P12</td>
+<td>六篇新研究初稿（含HarnessEvolve/SwarmEvolve等）</td>
+<td>2026.6-9</td>
+<td>第一作者/负责人</td>
+<td>初稿阶段，持续推进</td>
+</tr>
+<tr>
+<td><strong>专利</strong></td>
+<td>PT1</td>
+<td>逻辑推理评测方法及系统</td>
+<td>2026</td>
+<td>核心发明人</td>
+<td>专利申请中，覆盖Puzzle/CLUB/ExCLUB/Groom等评测方法论</td>
+</tr>
+<tr>
+<td><strong>专利</strong></td>
+<td>PT2</td>
+<td>基于自进化的逻辑推理数据合成方法</td>
+<td>2026</td>
+<td>核心发明人</td>
+<td>专利申请中，覆盖LogicEvolve/Puzzle迭代进化方法</td>
+</tr>
+<tr>
+<td><strong>开源</strong></td>
+<td>O1</td>
+<td>CLUB (Comprehensive Logic Understanding Benchmark)</td>
+<td>2025.12</td>
+<td>第一作者</td>
+<td>GitHub开源，1K题/10类，已被多篇论文引用</td>
+</tr>
+<tr>
+<td><strong>开源</strong></td>
+<td>O2</td>
+<td>ExCLUB (Extended CLUB)</td>
+<td>2026.2</td>
+<td>第一作者</td>
+<td>GitHub开源，100K题/100类，参数化生成框架</td>
+</tr>
+<tr>
+<td><strong>开源</strong></td>
+<td>O3</td>
+<td>Puzzle 逻辑推理预训练数据</td>
+<td>2026.3</td>
+<td>第一作者</td>
+<td>随论文发表计划开源，100K+高质量题</td>
+</tr>
+<tr>
+<td><strong>开源</strong></td>
+<td>O4</td>
+<td>AML-LLM 书籍配套代码与资源</td>
+<td>2026.4</td>
+<td>核心编撰者</td>
+<td>书籍配套开源仓库</td>
+</tr>
+<tr>
+<td><strong>产业落地</strong></td>
+<td>I1</td>
+<td>GLM-4.5/GLM-5 逻辑推理能力提升</td>
+<td>2025.10-2026.3</td>
+<td>核心研发</td>
+<td>Puzzle数据用于模型预训练/微调，逻辑推理能力显著提升</td>
+</tr>
+<tr>
+<td><strong>产业落地</strong></td>
+<td>I2</td>
+<td>GLM Agent / CodeGeeX Harness优化</td>
+<td>2026.5-9</td>
+<td>核心研发</td>
+<td>Groom过程级评测为Harness选型和优化提供数据支撑</td>
+</tr>
+<tr>
+<td><strong>产业落地</strong></td>
+<td>I3</td>
+<td>智谱AI评测基础设施建设</td>
+<td>2025.7-2026.9</td>
+<td>核心贡献者</td>
+<td>CLUB/ExCLUB/Puzzle/Groom/H-TokenBench构成完整评测体系</td>
+</tr>
+<tr>
+<td><strong>产业落地</strong></td>
+<td>I4</td>
+<td>AML课程教学体系落地</td>
+<td>2026.4-9</td>
+<td>核心编撰者</td>
+<td>AML-LLM书籍+教学PPT，服务公司内部培训和高校课程</td>
+</tr>
+<tr>
+<td><strong>获奖</strong></td>
+<td>A1</td>
+<td>研究生党支部评议全校第9/667名</td>
+<td>2026.5</td>
+<td>党支部书记</td>
+<td>2025年度研究生党支部评议，甲级团支部荣誉</td>
+</tr>
+<tr>
+<td><strong>技术方案</strong></td>
+<td>T1</td>
+<td>逻辑推理数据自进化合成方案（LogicEvolve→Puzzle）</td>
+<td>2025.12-2026.3</td>
+<td>方案设计者</td>
+<td>迭代进化+难度感知+分布控制，被产业落地采用</td>
+</tr>
+<tr>
+<td><strong>技术方案</strong></td>
+<td>T2</td>
+<td>过程级Token利用率评测方案（Groom+H-TokenBench）</td>
+<td>2026.4-9</td>
+<td>方案设计者</td>
+<td>native+sidecar双层协议+8阶段分解+I/R/E三态判定</td>
+</tr>
+<tr>
+<td><strong>技术方案</strong></td>
+<td>T3</td>
+<td>自进化训练框架（EvolveLRM）</td>
+<td>2026.5-9</td>
+<td>方案设计者</td>
+<td>数据进化+模型进化+评测进化+训练策略进化四模块</td>
+</tr>
+<tr>
+<td><strong>技术方案</strong></td>
+<td>T4</td>
+<td>大模型逻辑推理评测体系（CLUB→ExCLUB→Puzzle评测）</td>
+<td>2025.10-2026.3</td>
+<td>方案设计者</td>
+<td>10类→100类→预训练数据质量评测的完整体系</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：本报告各章节；12号Puzzle报告、19号Groom报告、14号LogicalSurvey报告等系列报告；个人GitHub（https://github.com/dujh22）；飞书文档与个人周报。</p>
+</blockquote>
+<hr />
+<h2 id="14-2026-09-08">14. 第十轮深化补强（2026-09-08）<a class="headerlink" href="#14-2026-09-08" title="Permanent link">&para;</a></h2>
+<h3 id="141">14.1 源材料新利用数据<a class="headerlink" href="#141" title="Permanent link">&para;</a></h3>
+<p>本项目为产业调研型社会实践，无直接对应的 GitHub README 源材料。本轮从项目个人成果矩阵（本报告 §13 末）中提取以下此前未充分展开的跨项目关联数据：</p>
+<table>
+<thead>
+<tr>
+<th><strong>数据项</strong></th>
+<th><strong>具体内容</strong></th>
+<th><strong>来源</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>个人论文成果</td>
+<td><strong>12 篇</strong>（P1-P12），其中第一作者 5 篇+，核心贡献者 2 篇，项目负责人 3 篇</td>
+<td>本报告个人成果矩阵</td>
+</tr>
+<tr>
+<td>个人专利成果</td>
+<td><strong>2 项</strong>（逻辑推理评测方法 + 自进化数据合成方法），均为核心发明人</td>
+<td>本报告个人成果矩阵</td>
+</tr>
+<tr>
+<td>个人开源成果</td>
+<td><strong>4 个</strong>（CLUB / ExCLUB / Puzzle / AML-LLM）</td>
+<td>本报告个人成果矩阵</td>
+</tr>
+<tr>
+<td>产业落地成果</td>
+<td><strong>4 项</strong>（GLM-4.5/5 逻辑推理提升 / Agent Harness 优化 / 评测基础设施 / AML 教学体系）</td>
+<td>本报告个人成果矩阵</td>
+</tr>
+<tr>
+<td>获奖</td>
+<td>研究生党支部评议全校第 <strong>9/667</strong> 名，甲级团支部</td>
+<td>本报告个人成果矩阵</td>
+</tr>
+<tr>
+<td>技术方案</td>
+<td><strong>4 套</strong>（自进化数据合成 / 过程级 Token 评测 / 自进化训练框架 / 逻辑推理评测体系）</td>
+<td>本报告个人成果矩阵</td>
+</tr>
+</tbody>
+</table>
+<h3 id="142">14.2 数实融合调研与技术落地的闭环<a class="headerlink" href="#142" title="Permanent link">&para;</a></h3>
+<p>本项目的昌平数实融合产业调研并非孤立的社会实践，而是与智谱实习期间的技术研发形成<strong>"产业需求→技术研发→产业落地"闭环</strong>：</p>
+<ol>
+<li><strong>需求侧（本项目）</strong>：通过对昌平区数字经济企业的现场访谈和问卷调研，识别出制造业、政务、医疗等领域的大模型落地痛点——数据质量参差不齐、行业知识缺失、推理能力不足、评测标准缺失。</li>
+<li><strong>技术侧（01-10/12-15 号报告）</strong>：针对这些痛点，在智谱实习期间系统性推进了逻辑推理数据（12号 Puzzle）、基座模型增强（10号 GLM-4.5）、自进化训练（09/15号）、过程级评测（19号 Groom）等技术方向。</li>
+<li><strong>落地侧（个人成果矩阵）</strong>：技术成果直接服务 GLM-4.5/GLM-5 基座模型、GLM Agent/CodeGeeX Harness 优化、智谱评测基础设施建设等产业落地项目。</li>
+</ol>
+<p>这一闭环体现了<strong>从产业中来、到产业中去</strong>的研究导向——数实融合调研不是终点，而是技术研发的需求起点。</p>
+<h3 id="143">14.3 个人贡献量化补充<a class="headerlink" href="#143" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>工作项</strong></th>
+<th><strong>个人角色</strong></th>
+<th><strong>量化产出</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>昌平数实融合调研</td>
+<td>核心成员</td>
+<td>现场访谈 + 飞书问卷双渠道需求收集</td>
+</tr>
+<tr>
+<td>调研报告撰写</td>
+<td>独立撰写</td>
+<td>形成调研报告和需求清单</td>
+</tr>
+<tr>
+<td>技术赋能方案</td>
+<td>独立设计</td>
+<td>针对调研发现的痛点，匹配大模型技术解决方案</td>
+</tr>
+<tr>
+<td>社会实践组织</td>
+<td>参与</td>
+<td>"支部+地方政府+技术赋能"模式实践</td>
+</tr>
+<tr>
+<td>跨项目闭环</td>
+<td>主导</td>
+<td>将调研需求转化为 12 篇论文 / 2 项专利 / 4 个开源 / 4 项产业落地的技术研发路线</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><em>报告撰写日期：2026-09-07 · 基于智谱实习阶段三（2025.3-8）工作整理 · v3图文并茂版 · 二轮质检补强 · 三轮精磨 · 四轮深化 · 五轮深化 · 六轮深化 · 七轮深化 · 八轮深化 · 九轮终审 · 十轮深化 · 十一轮深化 · 十二轮终审 · 十三轮终审 · 十四轮深化 · 十五轮终审</em></p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+
+
+  
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.tracking", "navigation.top", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+      
+        <script src="../../../javascripts/mermaid_init.js"></script>
+      
+    
+  </body>
+</html>

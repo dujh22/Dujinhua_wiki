@@ -1,5 +1,7 @@
 ---
 title: "LLM-DailyDigest（每日AI追新）项目报告"
+description: "智谱AI工程工具项目报告#25：LLM-DailyDigest每日AI追新工具，自动聚合大模型领域最新论文、开源项目与技术动态，通过大模型摘要生成每日AI资讯简报。"
+keywords: "LLM-DailyDigest, 每日AI追新, 资讯聚合, 论文追踪, 大模型摘要, 自动化工具, 开源项目, 智谱AI"
 hide:
   - navigation
 ---

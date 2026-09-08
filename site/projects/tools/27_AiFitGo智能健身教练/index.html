@@ -1,0 +1,6268 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="智谱AI研究实习项目报告集，涵盖大模型预训练、逻辑推理、数学推理、评测方法论等30个项目；同时包含个人学术主页（研究、教育、发表、荣誉）。">
+      
+      
+        <meta name="author" content="Jinhua Du (杜晋华)">
+      
+      
+        <link rel="canonical" href="https://dujh22.github.io/Dujinhua_wiki/projects/tools/27_AiFitGo%E6%99%BA%E8%83%BD%E5%81%A5%E8%BA%AB%E6%95%99%E7%BB%83/">
+      
+      
+        <link rel="prev" href="../26_AutoLLM%E5%A4%9AAgent%E4%BF%A1%E6%81%AF%E8%87%AA%E5%8A%A8%E5%8C%96/">
+      
+      
+        <link rel="next" href="../28_csv2app%E9%A2%98%E5%BA%93%E8%BD%ACPWA/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>AiFitGo-Interactive-Unit（智能健身教练）项目报告 - Jinhua Du | 杜晋华</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css?v=448b8bea4ef3">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-XXXXXXXXXX"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-XXXXXXXXXX",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+  
+    <meta name="keywords" content="大语言模型, 逻辑推理, 数学推理, 预训练, RLHF, 评测, 智谱AI, 研究实习, LLM, Large Language Models, Reasoning, Evaluation">
+    <meta property="og:title" content="Jinhua Du | 杜晋华 — 智谱AI研究实习项目报告集">
+    <meta property="og:description" content="智谱AI研究实习项目报告集，涵盖大模型预训练、逻辑推理、数学推理、评测方法论等30个项目；个人学术主页（研究、教育、发表、荣誉）。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dujh22.github.io/Dujinhua_wiki/">
+    <meta property="og:site_name" content="Jinhua Du | 杜晋华">
+    <meta property="og:locale" content="zh_CN">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Jinhua Du | 杜晋华 — 智谱AI研究实习项目报告集">
+    <meta name="twitter:description" content="智谱AI研究实习项目报告集，涵盖大模型预训练、逻辑推理、数学推理、评测方法论等30个项目。">
+    <meta name="robots" content="index, follow">
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1-abstract" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Jinhua Du | 杜晋华" class="md-header__button md-logo" aria-label="Jinhua Du | 杜晋华" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 10.5V6l-2.11 1.06A3.999 3.999 0 0 1 12 12a4 4 0 0 1-3.89-4.94L5 5.5 12 2l7 3.5v5zM12 9l-2-1c0 1.1.9 2 2 2s2-.9 2-2zm2.75-3.58L12.16 4.1 9.47 5.47l2.6 1.32zM12 13c2.67 0 8 1.33 8 4v3H4v-3c0-2.67 5.33-4 8-4m0 1.9c-3 0-6.1 1.46-6.1 2.1v1.1h12.2V17c0-.64-3.13-2.1-6.1-2.1"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Jinhua Du | 杜晋华
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              AiFitGo-Interactive-Unit（智能健身教练）项目报告
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="light-blue"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/dujh22/Dujinhua_wiki" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    dujh22/Dujinhua_wiki
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../.." class="md-tabs__link">
+          
+  
+  
+  English
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../index_zh/" class="md-tabs__link">
+          
+  
+  
+  中文
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../" class="md-tabs__link">
+          
+  
+  
+  智谱实习项目
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Jinhua Du | 杜晋华" class="md-nav__button md-logo" aria-label="Jinhua Du | 杜晋华" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 10.5V6l-2.11 1.06A3.999 3.999 0 0 1 12 12a4 4 0 0 1-3.89-4.94L5 5.5 12 2l7 3.5v5zM12 9l-2-1c0 1.1.9 2 2 2s2-.9 2-2zm2.75-3.58L12.16 4.1 9.47 5.47l2.6 1.32zM12 13c2.67 0 8 1.33 8 4v3H4v-3c0-2.67 5.33-4 8-4m0 1.9c-3 0-6.1 1.46-6.1 2.1v1.1h12.2V17c0-.64-3.13-2.1-6.1-2.1"/></svg>
+
+    </a>
+    Jinhua Du | 杜晋华
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/dujh22/Dujinhua_wiki" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    dujh22/Dujinhua_wiki
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    English
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    English
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Profile
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../postgraduate_experience_en/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Postgraduate Experience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../undergraduate_experience_en/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Undergraduate Experience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../history_en/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Research History
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    中文
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    中文
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../index_zh/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人简介
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../postgraduate_experience_zh/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博士经历
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../undergraduate_experience_zh/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    本科经历
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../history_zh/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    研究历史
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    智谱实习项目
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    智谱实习项目
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    项目总览
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阶段一·数学推理与国际化
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    阶段一·数学推理与国际化
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase1/01_ChatGLM%E6%95%B0%E5%AD%A6%E6%8E%A8%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 ChatGLM数学推理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase1/02_ChatGLM%E5%9B%BD%E9%99%85%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02 ChatGLM国际化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阶段二·多模态与社会实践
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    阶段二·多模态与社会实践
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/03_%E5%A4%9A%E6%A8%A1%E6%80%81%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%95%B0%E5%AD%A6%E6%8E%A8%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 多模态大模型数学推理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/04_MetaEvaluation%E5%85%83%E8%AF%84%E4%BC%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04 MetaEvaluation元评估
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/05_AML2024%E5%8A%A9%E6%95%99/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 AML2024助教
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/06_%E8%88%9F%E5%B1%B1%E7%A4%BE%E4%BC%9A%E5%AE%9E%E8%B7%B5%E5%85%AC%E5%AE%89%E7%8A%AF%E7%BD%AA%E9%A2%84%E6%B5%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06 舟山社会实践公安犯罪预测
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/07_MalayGLM%E9%A9%AC%E6%9D%A5%E8%AF%AD%E5%A4%A7%E6%A8%A1%E5%9E%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07 MalayGLM马来语大模型
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/08_o1%E5%A4%8D%E7%8E%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 o1复现
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阶段三·LogicEvolve与基座模型
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    阶段三·LogicEvolve与基座模型
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase3/09_LogicEvolve%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E8%87%AA%E8%BF%9B%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 LogicEvolve逻辑推理自进化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase3/10_GLM-4.5%E5%9F%BA%E5%BA%A7%E6%A8%A1%E5%9E%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 GLM-4.5基座模型
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase3/11_%E6%95%B0%E5%AE%9E%E8%9E%8D%E5%90%88%E6%96%B0%E5%BC%95%E6%93%8E%E9%A1%B9%E7%9B%AE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11 数实融合新引擎项目
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase3/12_Puzzle%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E9%A2%84%E8%AE%AD%E7%BB%83%E6%95%B0%E6%8D%AE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12 Puzzle逻辑推理预训练数据
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase3/13_%E7%B1%BBo1%E6%A8%A1%E5%9E%8B%E6%B3%9B%E5%8C%96%E6%80%A7%E8%AF%84%E4%BC%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13 类o1模型泛化性评估
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5" id="__nav_3_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阶段四·论文冲刺与博士开题
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    阶段四·论文冲刺与博士开题
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase4/14_LogicalSurvey%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%BB%BC%E8%BF%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14 LogicalSurvey逻辑推理综述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase4/15_EvolveLRM%E8%AE%AD%E7%BB%83%E8%87%AA%E8%BF%9B%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15 EvolveLRM训练自进化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase4/16_AML-LLM%E4%B9%A6%E7%B1%8D%E7%BC%96%E6%92%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16 AML-LLM书籍编撰
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase4/17_VirtualCoach%E4%BA%BA%E6%9C%BA%E4%BA%A4%E4%BA%92/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17 VirtualCoach人机交互
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase4/18_%E5%8D%9A%E5%A3%AB%E5%BC%80%E9%A2%98/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    18 博士开题
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_6" id="__nav_3_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阶段五·自进化研究全面展开
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    阶段五·自进化研究全面展开
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase5/19_Groom_Harness%E8%BF%87%E7%A8%8B%E7%BA%A7%E8%AF%84%E6%B5%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    19 Groom过程级评测
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase5/20_H-TokenBench/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20 H-TokenBench
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase5/21_GLM-5%E5%9F%BA%E5%BA%A7%E6%A8%A1%E5%9E%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    21 GLM-5基座模型
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase5/22_%E5%85%AD%E7%AF%87%E6%96%B0%E7%A0%94%E7%A9%B6%E5%88%9D%E7%A8%BF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    22 六篇新研究初稿
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase5/23_Awesome-RSI%E8%87%AA%E8%BF%9B%E5%8C%96%E7%BB%BC%E8%BF%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    23 Awesome-RSI自进化综述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase5/24_%E4%B8%93%E5%88%A9_%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E8%AF%84%E6%B5%8B%E6%96%B9%E6%B3%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    24 专利逻辑推理评测方法
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_7" id="__nav_3_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    工程与工具系列
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    工程与工具系列
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../25_LLM-DailyDigest%E6%AF%8F%E6%97%A5AI%E8%BF%BD%E6%96%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    25 LLM-DailyDigest
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../26_AutoLLM%E5%A4%9AAgent%E4%BF%A1%E6%81%AF%E8%87%AA%E5%8A%A8%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    26 AutoLLM多Agent
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    27 AiFitGo智能健身
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    27 AiFitGo智能健身
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-abstract" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 项目概述（Abstract）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 项目概述（Abstract）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关键数据速览
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        执行摘要
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        个人成长轨迹
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-introduction-background" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 背景与动机（Introduction / Background）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 背景与动机（Introduction / Background）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 问题定义
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 行业背景与痛点
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 项目启动契机
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-related-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 相关工作（Related Work）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 相关工作（Related Work）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 同期/前人工作对比
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 差异化定位
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-virtual-coach" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 与 Virtual Coach 关联对比
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 方法与技术路线（Method）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 方法与技术路线（Method）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 系统架构
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.1 系统架构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#411" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1.1 目录结构
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#412" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1.2 五决策模块串联流程图
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 核心数据结构
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.2 核心数据结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inputspace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        InputSpace（用户历史表现空间）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interactionunitspace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        InteractionUnitSpace（当前交互单元状态）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mountingscheme" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MountingScheme（挂载方案）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 五大决策模块详细设计
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.3 五大决策模块详细设计">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dm01-c5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DM01 — C5 语料类型决策
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dm02" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DM02 — 用户级服务决策
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dm03" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DM03 — 动作调整决策
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dm04" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DM04 — 上下文感知语料生成
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dm05" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DM05 — 综合交互单元配置决策
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C5 语料与挂载位置规则汇总
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 服务类型体系（9 种）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-llm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 LLM 接口层
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-experiments-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 功能与效果（Experiments &amp; Results）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 功能与效果（Experiments &amp; Results）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 核心功能清单
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 决策流程效果
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 测试方式
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-engineering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 工程实现（Engineering）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. 工程实现（Engineering）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 代码仓库
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 技术栈
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 环境要求
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#631" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3.1 技术栈演进与选型决策
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4 关键工程挑战与解决方案
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#65" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5 项目时间线与里程碑
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-impact" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 成果与影响（Impact）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. 成果与影响（Impact）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 论文与研究
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 开源与工程
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 产业应用前景
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-my-contribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 个人贡献（My Contribution）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. 个人贡献（My Contribution）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 角色
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 具体工作清单
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-lessons-learned" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 经验与反思（Lessons Learned）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. 经验与反思（Lessons Learned）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1 关键问题与解决方案（含具体故事）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2 可复用的方法论
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#93" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.3 踩坑与避坑指南
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#94" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.4 如果重来会怎么做
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#95-faq" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.5 常见问题与解答（FAQ）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. 文件索引（References）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. 文件索引（References）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#101-github" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.1 GitHub 仓库
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#102" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.2 飞书文档
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#103" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.3 相关研究
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#104" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.4 在线资源
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. 转正答辩证据卡
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. 转正答辩证据卡">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#111" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.1 目标基线
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.2 量化结果
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#113" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3 公司层面贡献
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#114" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.4 专业影响力
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#115" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.5 价值观锚点
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#116" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.6 协作与利他
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#117" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.7 反思与成长（自我批评式）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#118-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.8 6年后视角
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#119" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.9 五段式讲述（答辩稿骨架）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1110" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.10 对比证据（跨项目量化参照）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. 相关项目
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. 相关项目">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        项目间引用网络
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. 跨项目对比
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13. 跨项目对比">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#131-17virtualcoach" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.1 与17号（VirtualCoach）对比：人机交互研究与工程落地
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#132-25262829" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.2 与25/26/28/29号对比：工程工具链中的人机交互决策定位
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. 关键技术决策与复盘
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14. 关键技术决策与复盘">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#15llm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        决策1：选择"5模块决策流水线"而非"端到端LLM调用"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2llm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        决策2：设计"确定性规则与LLM决策分层"架构
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3llm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        决策3：封装"多厂商LLM接口层"避免厂商锁定
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        决策4：将"运动生理学原理转化为动态挂载规则"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        图表索引
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        个人成果矩阵
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../28_csv2app%E9%A2%98%E5%BA%93%E8%BD%ACPWA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    28 csv2app题库转PWA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../29_THU_Sports%E6%B8%85%E5%8D%8E%E4%BD%93%E8%82%B2%E8%87%AA%E5%8A%A8%E9%A2%84%E7%BA%A6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    29 THU_Sports自动预约
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../30_AiMeder%E5%8C%BB%E5%AD%A6%E6%96%87%E7%8C%AE%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    30 AiMeder医学搜索
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-abstract" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 项目概述（Abstract）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 项目概述（Abstract）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关键数据速览
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        执行摘要
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        个人成长轨迹
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-introduction-background" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 背景与动机（Introduction / Background）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 背景与动机（Introduction / Background）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 问题定义
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 行业背景与痛点
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 项目启动契机
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-related-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 相关工作（Related Work）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 相关工作（Related Work）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 同期/前人工作对比
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 差异化定位
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-virtual-coach" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 与 Virtual Coach 关联对比
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 方法与技术路线（Method）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 方法与技术路线（Method）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 系统架构
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.1 系统架构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#411" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1.1 目录结构
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#412" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1.2 五决策模块串联流程图
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 核心数据结构
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.2 核心数据结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inputspace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        InputSpace（用户历史表现空间）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interactionunitspace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        InteractionUnitSpace（当前交互单元状态）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mountingscheme" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MountingScheme（挂载方案）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 五大决策模块详细设计
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.3 五大决策模块详细设计">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dm01-c5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DM01 — C5 语料类型决策
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dm02" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DM02 — 用户级服务决策
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dm03" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DM03 — 动作调整决策
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dm04" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DM04 — 上下文感知语料生成
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dm05" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DM05 — 综合交互单元配置决策
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C5 语料与挂载位置规则汇总
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 服务类型体系（9 种）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-llm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 LLM 接口层
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-experiments-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 功能与效果（Experiments &amp; Results）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 功能与效果（Experiments &amp; Results）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 核心功能清单
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 决策流程效果
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 测试方式
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-engineering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 工程实现（Engineering）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. 工程实现（Engineering）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 代码仓库
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 技术栈
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 环境要求
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#631" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3.1 技术栈演进与选型决策
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4 关键工程挑战与解决方案
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#65" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5 项目时间线与里程碑
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-impact" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 成果与影响（Impact）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. 成果与影响（Impact）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 论文与研究
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 开源与工程
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 产业应用前景
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-my-contribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 个人贡献（My Contribution）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. 个人贡献（My Contribution）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 角色
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 具体工作清单
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-lessons-learned" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 经验与反思（Lessons Learned）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. 经验与反思（Lessons Learned）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1 关键问题与解决方案（含具体故事）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2 可复用的方法论
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#93" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.3 踩坑与避坑指南
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#94" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.4 如果重来会怎么做
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#95-faq" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.5 常见问题与解答（FAQ）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. 文件索引（References）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. 文件索引（References）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#101-github" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.1 GitHub 仓库
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#102" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.2 飞书文档
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#103" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.3 相关研究
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#104" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.4 在线资源
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. 转正答辩证据卡
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. 转正答辩证据卡">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#111" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.1 目标基线
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.2 量化结果
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#113" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3 公司层面贡献
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#114" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.4 专业影响力
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#115" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.5 价值观锚点
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#116" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.6 协作与利他
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#117" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.7 反思与成长（自我批评式）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#118-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.8 6年后视角
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#119" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.9 五段式讲述（答辩稿骨架）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1110" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.10 对比证据（跨项目量化参照）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. 相关项目
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. 相关项目">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        项目间引用网络
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. 跨项目对比
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13. 跨项目对比">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#131-17virtualcoach" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.1 与17号（VirtualCoach）对比：人机交互研究与工程落地
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#132-25262829" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.2 与25/26/28/29号对比：工程工具链中的人机交互决策定位
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. 关键技术决策与复盘
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14. 关键技术决策与复盘">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#15llm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        决策1：选择"5模块决策流水线"而非"端到端LLM调用"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2llm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        决策2：设计"确定性规则与LLM决策分层"架构
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3llm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        决策3：封装"多厂商LLM接口层"避免厂商锁定
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        决策4：将"运动生理学原理转化为动态挂载规则"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        图表索引
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        个人成果矩阵
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+  
+
+
+
+
+  <h1>27 AiFitGo智能健身</h1>
+
+<div class="admonition info">
+<p class="admonition-title">项目系列</p>
+<p><strong>工程与工具系列</strong> · 报告 #27/30</p>
+</div>
+<p><a href="../../"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg></span> 返回项目总览</a> | <a href="../../../index_zh/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg></span> 返回首页</a></p>
+<hr />
+<blockquote>
+<p>作者：杜晋华 | 时间：2026.5–2026.8 | 角色：核心开发者
+GitHub：https://github.com/dujh22/AiFitGo-Interactive-Unit（私有）
+关联方向：Virtual Coach（CHI 2026 论文，CHI#3474）</p>
+</blockquote>
+<div class="admonition note">
+<p class="admonition-title">版本信息</p>
+<p>版本：v3（图文并茂版 · 2026-09-08）· 二轮质检补强 · 三轮精磨 · 四轮深化 · 五轮深化 · 六轮深化 · 七轮深化 · 八轮深化 · 九轮终审 · 十轮深化 · 十一轮深化 · 十二轮终审 · 十三轮终审 · 十四轮深化 · 十五轮终审 | 审核：准确性核对 + 转正答辩证据卡补强 + 图文表格升级</p>
+</div>
+<hr />
+<h2 id="1-abstract">1. 项目概述（Abstract）<a class="headerlink" href="#1-abstract" title="Permanent link">&para;</a></h2>
+<p>AiFitGo Interactive Unit 是一个基于大语言模型的<strong>智能健身教练交互决策系统</strong>，通过 5 个决策模块（DM01–DM05）实现对用户下一次交互单元（Interaction Unit）的智能配置。系统基于用户当前运动表现、历史累计评估数据、已提供服务记录等多维输入，动态决策下一步应挂载的 C5 语料类型、用户级服务（Service）、动作调整方案和上下文感知语料，最终通过 DM05 综合生成完整的交互单元挂载方案。系统支持 9 种服务类型、2 类 C5 语料，兼容讯飞、百川、智谱三家 LLM API，默认使用智谱 GLM-4-Air。该项目是 Virtual Coach（LLM 虚拟教练，CHI 论文）方向的工程落地核心组件。</p>
+<hr />
+<h3 id="_1">关键数据速览<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>维度</strong></th>
+<th><strong>核心数据</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>项目周期</strong></td>
+<td>2026.5–2026.8（关联 Virtual Coach CHI 2026 论文，CHI#3474）</td>
+</tr>
+<tr>
+<td><strong>个人角色</strong></td>
+<td>核心开发者（负责架构设计和全部 5 个决策模块的实现）</td>
+</tr>
+<tr>
+<td><strong>核心产出</strong></td>
+<td>5 决策模块流水线（DM01–DM05）；9 种服务类型框架；2 类 C5 语料决策；多厂商 LLM 接口层（讯飞/百川/智谱）</td>
+</tr>
+<tr>
+<td><strong>关键指标</strong></td>
+<td>5 个决策模块（可独立测试）；9 种服务类型（service01–service09）；2 类 C5 语料（肌肉紧张感/疲劳感）；3 家 LLM 厂商兼容（默认 GLM-4-Air）；3 个核心数据结构；5 个测试函数；4 个核心代码文件</td>
+</tr>
+<tr>
+<td><strong>论文/专利</strong></td>
+<td>Virtual Coach CHI 2026 论文（CHI#3474，关联研究方向）</td>
+</tr>
+<tr>
+<td><strong>开源仓库</strong></td>
+<td>AiFitGo-Interactive-Unit（私有）；Virtual-Coach（公开，CHI 论文配套）</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<hr />
+<h3 id="_2">执行摘要<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p><strong>一句话定位</strong>：基于大语言模型的智能健身教练交互决策系统，通过 5 个决策模块（DM01–DM05）实现对用户下一次交互单元的智能配置，是 Virtual Coach（CHI 2026 论文）方向的工程落地核心组件。</p>
+<p><strong>核心成果</strong>：
+- 构建 <strong>5 决策模块流水线</strong>（DM01–DM05），每个模块职责单一、可独立测试，DM05 综合生成结构化挂载方案
+- 实现 <strong>9 种服务类型框架</strong>（service01–service09）+ 2 类 C5 语料决策（肌肉紧张感/疲劳感），覆盖鼓励、指导、倒计时等交互服务
+- 封装<strong>多厂商 LLM 接口层</strong>（讯飞/百川/智谱三家 API，默认 GLM-4-Air），兼容 3 个核心数据结构与 5 个测试函数</p>
+<p><strong>技术亮点</strong>：决策模块化架构（将交互决策拆解为 DM01–DM05 五模块而非单一 LLM 调用）；历史数据驱动的个性化决策（累计低分/高分评估点、已命中服务记录）；结构化挂载方案输出（rep_service_dict/rep_audio_dict 可直接被交互引擎执行）；确定性规则与 LLM 决策分层。</p>
+<p><strong>个人角色</strong>：核心开发者，负责架构设计和全部 5 个决策模块的实现，以及多厂商 LLM 接口层封装和测试体系搭建。</p>
+<p><strong>后续方向</strong>：更多服务类型与 C5 语料扩展；实时运动数据接入与动态决策优化；与 Virtual Coach Prompt 自动化调试系统深度整合；决策模块的自进化优化（与 HarnessEvolve 研究联动）。</p>
+<hr />
+<h3 id="_3">个人成长轨迹<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>阶段</strong></th>
+<th><strong>能力成长</strong></th>
+<th><strong>关键事件</strong></th>
+<th><strong>对应报告章节</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>初期</td>
+<td>从CHI研究到工程需求发现者：参与Virtual Coach方向的CHI论文（CHI#3474），研究LLM虚拟教练的人机交互，论文工作揭示了智能健身教练在交互决策层面的工程需求——需要根据用户运动表现实时决策下一步交互策略</td>
+<td>2026.1-3参与Virtual Coach CHI论文研究，揭示交互决策层面的工程需求，2026.5阶段五启动后作为工程落地项目正式开发</td>
+<td>§2.3 项目启动契机 / §1 项目概述</td>
+</tr>
+<tr>
+<td>中期</td>
+<td>从研究理念到5模块系统设计者：将论文中的交互决策理念转化为可运行的5模块决策系统（DM01-DM05），实现9种服务类型框架、2类C5语料决策、多厂商LLM接口层封装，掌握将研究理念转化为工程系统的能力</td>
+<td>5决策模块流水线开发完成（DM01 C5语料/DM02 Service/DM03动作调整/DM04上下文语料/DM05综合挂载），9种服务类型，多厂商LLM接口（讯飞/百川/智谱），3个核心数据结构+5个测试函数</td>
+<td>§4 方法与技术路线 / §5 实验与结果</td>
+</tr>
+<tr>
+<td>后期</td>
+<td>从功能实现到工程范式总结者：总结出决策模块化模式、结构化数据驱动LLM决策、确定性规则与LLM决策分层设计等可复用工程范式，完成从"研究者"到"工程系统设计者"的角色拓展</td>
+<td>确定性规则（挂载位置/长度限制）与LLM决策（语料选择/服务选择）分层设计，运动生理学原理转化为动态挂载规则，决策模块化架构成为可复用工程范式</td>
+<td>§9.2 可复用方法论 / §11.7 成长轨迹</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<hr />
+<h2 id="2-introduction-background">2. 背景与动机（Introduction / Background）<a class="headerlink" href="#2-introduction-background" title="Permanent link">&para;</a></h2>
+<h3 id="21">2.1 问题定义<a class="headerlink" href="#21" title="Permanent link">&para;</a></h3>
+<p>传统健身 App 和在线课程采用<strong>预录制、固定流程</strong>的模式，无法根据用户的实时运动表现和疲劳状态动态调整交互策略。一个理想的智能健身教练应该像真人私教一样，在用户做动作的过程中实时判断：用户是否疲劳？哪个动作环节得分低？是否需要调整动作难度？下一步应该给予鼓励、指导还是询问感受？这些决策需要综合用户的历史数据和当前状态，且必须在组间休息的短暂窗口内完成。</p>
+<h3 id="22">2.2 行业背景与痛点<a class="headerlink" href="#22" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>健身内容同质化</strong>：主流健身 App 提供预录制课程，千人一面，无法个性化；</li>
+<li><strong>缺乏实时反馈闭环</strong>：即使有 AI 动作识别，也大多停留在"打分"层面，未将评分转化为下一步的交互策略决策；</li>
+<li><strong>交互策略人工编排</strong>：现有系统的语音提示、倒计时、指导等交互元素由产品经理预先编排，无法根据用户表现动态组合；</li>
+<li><strong>LLM 在健身领域的应用尚浅</strong>：大语言模型已在客服、教育等领域证明了对话能力，但在健身交互决策这种需要结构化输出、实时响应、多模块协作的场景中，缺乏成熟的工程框架。</li>
+</ul>
+<h3 id="23">2.3 项目启动契机<a class="headerlink" href="#23" title="Permanent link">&para;</a></h3>
+<p>2026 年 1–3 月，杜晋华参与 Virtual Coach 方向的 CHI 论文（CHI#3474），研究 LLM 虚拟教练的人机交互。论文工作揭示了智能健身教练在交互决策层面的工程需求：需要一个能够根据用户运动表现实时决策下一步交互策略的系统。2026 年 5 月阶段五启动后，AiFitGo-Interactive-Unit 作为 Virtual Coach 方向的工程落地项目正式开发，目标是将论文中的交互决策理念转化为可运行的 5 模块决策系统。</p>
+<hr />
+<h2 id="3-related-work">3. 相关工作（Related Work）<a class="headerlink" href="#3-related-work" title="Permanent link">&para;</a></h2>
+<h3 id="31">3.1 同期/前人工作对比<a class="headerlink" href="#31" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>系统/方向</strong></th>
+<th><strong>定位</strong></th>
+<th><strong>局限性</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Keep / FitTime</strong></td>
+<td>预录制健身课程</td>
+<td>固定流程，无个性化交互决策</td>
+</tr>
+<tr>
+<td><strong>Mirror / Tonal</strong></td>
+<td>智能健身硬件</td>
+<td>偏硬件和力量训练，交互策略预编排</td>
+</tr>
+<tr>
+<td><strong>AI 动作识别（OpenPose等）</strong></td>
+<td>动作质量评估</td>
+<td>仅打分，不转化为交互决策</td>
+</tr>
+<tr>
+<td><strong>Virtual Coach（CHI论文）</strong></td>
+<td>LLM虚拟教练交互研究</td>
+<td>偏论文研究，缺乏工程化的决策模块实现</td>
+</tr>
+<tr>
+<td><strong>AiFitGo-Interactive-Unit</strong></td>
+<td>5模块LLM驱动的实时交互决策系统</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<h3 id="32">3.2 差异化定位<a class="headerlink" href="#32" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>决策模块化</strong>：将交互决策拆解为 DM01–DM05 五个职责清晰的模块，而非单一 LLM 调用输出全部决策，提升可控性和可维护性；</li>
+<li><strong>历史数据驱动</strong>：每个决策模块都输入用户的累计低分/高分评估点、已命中服务记录等历史数据，实现真正的个性化；</li>
+<li><strong>结构化挂载方案</strong>：DM05 输出的不是自然语言建议，而是包含 rep_service_dict、rep_audio_dict 的结构化挂载方案，可直接被交互引擎执行；</li>
+<li><strong>多 LLM 厂商兼容</strong>：抽象 LLM 接口层，支持讯飞、百川、智谱三家 API，避免厂商锁定；</li>
+<li><strong>与 CHI 研究联动</strong>：作为 Virtual Coach CHI 论文的工程落地，决策模块的设计源于人机交互研究洞察。</li>
+</ol>
+<h3 id="33-virtual-coach">3.3 与 Virtual Coach 关联对比<a class="headerlink" href="#33-virtual-coach" title="Permanent link">&para;</a></h3>
+<p>AiFitGo-Interactive-Unit 是 Virtual Coach（CHI 2026 论文，CHI#3474）方向的工程落地核心组件，两者的定位和能力对比如下：</p>
+<table>
+<thead>
+<tr>
+<th><strong>维度</strong></th>
+<th><strong>Virtual Coach（CHI 论文方向）</strong></th>
+<th><strong>AiFitGo-Interactive-Unit（工程落地）</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>项目定位</strong></td>
+<td>LLM 虚拟教练交互式课程生成系统（研究+工程）</td>
+<td>智能健身教练交互决策系统（工程落地核心组件）</td>
+</tr>
+<tr>
+<td><strong>核心能力</strong></td>
+<td>Prompt 自动化调试与评测、工作流生成系统、多模型支持、评估系统</td>
+<td>5 决策模块（DM01–DM05）实时交互决策、C5 语料挂载、9 种服务类型</td>
+</tr>
+<tr>
+<td><strong>技术重点</strong></td>
+<td>Prompt 工程自动化（生成→评测→优化→版本管理）、工作流节点编排</td>
+<td>决策模块化架构、结构化数据驱动 LLM 决策、确定性规则与 LLM 决策分层</td>
+</tr>
+<tr>
+<td><strong>LLM 支持</strong></td>
+<td>多种大语言模型（GLM-4-Air、科大讯飞X1等），自动发现和加载</td>
+<td>讯飞/百川/智谱三家 API，默认 GLM-4-Air</td>
+</tr>
+<tr>
+<td><strong>评估体系</strong></td>
+<td>决策场景 Prompt 和工作流的评估与性能分析（4 个决策场景评估脚本）</td>
+<td>5 个决策模块独立测试函数（test_DM_01 至 test_DM_05）</td>
+</tr>
+<tr>
+<td><strong>输出产物</strong></td>
+<td>可执行的工作流配置、Prompt 版本化管理、评估报告</td>
+<td>结构化挂载方案（MountingScheme），可直接被交互引擎执行</td>
+</tr>
+<tr>
+<td><strong>代码仓库</strong></td>
+<td>https://github.com/dujh22/Virtual-Coach（公开）</td>
+<td>https://github.com/dujh22/AiFitGo-Interactive-Unit（私有）</td>
+</tr>
+<tr>
+<td><strong>关系</strong></td>
+<td>研究方向+上层系统，提供 Prompt 工程和工作流基础设施</td>
+<td>工程落地核心组件，将 CHI 论文中的交互决策理念转化为可运行的 5 模块决策系统</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：Virtual-Coach GitHub README + AiFitGo-Interactive-Unit GitHub README</p>
+</blockquote>
+<hr />
+<h2 id="4-method">4. 方法与技术路线（Method）<a class="headerlink" href="#4-method" title="Permanent link">&para;</a></h2>
+<h3 id="41">4.1 系统架构<a class="headerlink" href="#41" title="Permanent link">&para;</a></h3>
+<h4 id="411">4.1.1 目录结构<a class="headerlink" href="#411" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>AiFitGo-Interactive-Unit/
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>├── README_ZH.md          # 中文文档
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>├── README.md             # 英文文档
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>└── V2/                   # 核心代码目录
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    ├── main.py           # 主程序，包含全部5个决策模块
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    ├── define.py         # 数据结构定义
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    ├── llm_response.py   # LLM接口封装（讯飞/百川/智谱）
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    └── service.py        # 服务实现模块
+</code></pre></div>
+<h4 id="412">4.1.2 五决策模块串联流程图<a class="headerlink" href="#412" title="Permanent link">&para;</a></h4>
+<p>系统的核心决策流程由 DM01–DM05 五个模块串联完成，从用户状态输入到最终挂载方案输出的完整流程如下：</p>
+<p><strong>五决策模块 Mermaid 流程图（DM03/DM04 并行结构）：</strong></p>
+<pre class="mermaid"><code>flowchart TD
+    Input([输入：用户状态空间&lt;br/&gt;InputSpace + InteractionUnitSpace&lt;br/&gt;低分评估点/已命中服务/动作/组数/难度]) --&gt; DM01
+
+    subgraph DM01_block["DM01 — C5 语料类型决策"]
+        DM01["根据低分评估点分布和疲劳趋势&lt;br/&gt;判断询问肌肉紧张感(C5_1)还是疲劳感(C5_2)&lt;br/&gt;输出：C5语料类型 + 语料内容"]
+    end
+
+    DM01 --&gt; DM02
+
+    subgraph DM02_block["DM02 — 用户级服务决策"]
+        DM02["根据用户表现趋势选择 Service&lt;br/&gt;持续低分→详细指导(service04)&lt;br/&gt;表现稳定→引导练习(service01)&lt;br/&gt;组间过渡→倒计时(service02)&lt;br/&gt;关键节点→检查确认(service03)&lt;br/&gt;输出：Service名称 + 对应Service"]
+    end
+
+    DM02 --&gt; Parallel
+
+    subgraph Parallel_block["DM03 / DM04 并行执行"]
+        direction LR
+        subgraph DM03_block["DM03 — 动作调整决策"]
+            DM03["唯一直接修改训练计划的模块&lt;br/&gt;持续高分→降低难度/减少次数&lt;br/&gt;持续低分→增加难度/调整次数&lt;br/&gt;输出：action_level_adjustment&lt;br/&gt;+ action_rep_adjustment"]
+        end
+        subgraph DM04_block["DM04 — 上下文感知语料生成"]
+            DM04["结合当前动作/历史评估点/服务记录&lt;br/&gt;生成个性化语料&lt;br/&gt;每条限制20字符&lt;br/&gt;输出：评估点对应个性化语料"]
+        end
+    end
+
+    Parallel --&gt; DM05
+
+    subgraph DM05_block["DM05 — 综合交互单元配置决策（决策流水线出口）"]
+        DM05["整合 DM01/DM02/DM03/DM04 结果&lt;br/&gt;基于运动生理学计算挂载位置：&lt;br/&gt;C5-1(肌肉紧张感)：第3次→0.5×组次数(前期)&lt;br/&gt;C5-2(疲劳感)：0.5×组次数→倒数第3次(后期)&lt;br/&gt;Service02(倒计时)：倒数第5次→倒数第3次(组末)&lt;br/&gt;校验并解决模块间冲突&lt;br/&gt;输出：MountingScheme"]
+    end
+
+    DM05 --&gt; Output([输出：可执行挂载方案&lt;br/&gt;MountingScheme&lt;br/&gt;rep_count + rep_service_dict + rep_audio_dict&lt;br/&gt;→ 交互引擎执行 → 用户获得个性化交互体验])
+
+    style DM01 fill:#e3f2fd,stroke:#1565c0
+    style DM02 fill:#e3f2fd,stroke:#1565c0
+    style DM03 fill:#fff3e0,stroke:#e65100
+    style DM04 fill:#fff3e0,stroke:#e65100
+    style DM05 fill:#e8f5e9,stroke:#2e7d32
+    style Input fill:#f3e5f5,stroke:#6a1b9a
+    style Output fill:#fce4ec,stroke:#880e4f</code></pre>
+<p>上图清晰展示了五决策模块的串联与并行结构：DM01（C5 语料类型决策）和 DM02（用户级服务决策）串行执行，为后续模块提供基础决策；DM03（动作调整决策）与 DM04（上下文感知语料生成）并行执行，两者互不依赖，可同时调用 LLM 以降低延迟；DM05 作为决策流水线出口，整合所有前置模块的结果，基于运动生理学规则计算精确挂载位置并校验冲突，最终输出可执行的 MountingScheme。</p>
+<p>系统的核心决策流程由 DM01–DM05 五个模块串联完成，从用户状态输入到最终挂载方案输出的完整流程如下：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>┌─────────────────────────────────────────────────────────────────────────┐
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>│                        输入：用户状态空间                                   │
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>│  InputSpace（历史数据）+ InteractionUnitSpace（当前状态）                  │
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>│  ┌─────────────────────────────────────────────────────────────────┐    │
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>│  │ 最低分评估点列表 │ 出现次数 │ 已命中服务列表 │ 服务结果摘要 │     │    │
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>│  │ 最高分评估点计数 │ 动作名称 │ 组数/当前组索引 │ 总次数 │ 难度等级 │    │
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>│  └─────────────────────────────────────────────────────────────────┘    │
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>└──────────────────────────────┬──────────────────────────────────────────┘
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>                               │
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>                               ▼
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>┌─────────────────────────────────────────────────────────────────────────┐
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>│  DM01 — C5 语料类型决策                                                    │
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>│  输入：当前动作 + 累计低分评估点 + 已提供服务 + 组数/组索引                │
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>│  输出：C5 语料类型（C5_1 肌肉紧张感 / C5_2 疲劳感）+ 对应语料内容        │
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>│  逻辑：根据低分评估点分布和疲劳趋势，判断询问肌肉紧张感还是疲劳程度         │
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>└──────────────────────────────┬──────────────────────────────────────────┘
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>                               │
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>                               ▼
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>┌─────────────────────────────────────────────────────────────────────────┐
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>│  DM02 — 用户级服务决策                                                      │
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>│  输入：当前动作 + 累计低分/高分评估点 + 已提供服务 + 可用Service列表       │
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>│  输出：Service 名称（service01引导练习 / service02倒计时 /                │
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>│        service03检查确认 / service04详细指导）+ 对应 Service              │
+<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>│  逻辑：持续低分→详细指导；表现稳定→引导练习；组间过渡→倒计时；            │
+<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a>│        关键节点→检查确认                                                    │
+<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>└──────────────────────────────┬──────────────────────────────────────────┘
+<a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a>                               │
+<a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a>                               ▼
+<a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a>┌─────────────────────────────────────────────────────────────────────────┐
+<a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a>│  DM03 — 动作调整决策（并行分支）                                            │
+<a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a>│  输入：当前动作 + 累计评估点 + 已提供服务                                   │
+<a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a>│  输出：动作调整方案 {action_level_adjustment, action_rep_adjustment}     │
+<a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a>│  逻辑：持续高分→降低难度/减少次数；持续低分→增加难度/调整次数              │
+<a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a>│  （唯一直接修改训练计划的模块）                                             │
+<a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a>└──────────────────────────────┬──────────────────────────────────────────┘
+<a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a>                               │
+<a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a>                               ▼
+<a id="__codelineno-1-38" name="__codelineno-1-38" href="#__codelineno-1-38"></a>┌─────────────────────────────────────────────────────────────────────────┐
+<a id="__codelineno-1-39" name="__codelineno-1-39" href="#__codelineno-1-39"></a>│  DM04 — 上下文感知语料生成（并行分支）                                      │
+<a id="__codelineno-1-40" name="__codelineno-1-40" href="#__codelineno-1-40"></a>│  输入：当前动作 + 累计评估点 + 已提供服务 + 组数/组索引                    │
+<a id="__codelineno-1-41" name="__codelineno-1-41" href="#__codelineno-1-41"></a>│  输出：评估点对应个性化语料（每条限制 20 字符）                             │
+<a id="__codelineno-1-42" name="__codelineno-1-42" href="#__codelineno-1-42"></a>│  逻辑：结合当前动作、历史评估点和服务记录生成个性化语料，20字符限制确保     │
+<a id="__codelineno-1-43" name="__codelineno-1-43" href="#__codelineno-1-43"></a>│        语音播报简洁，适合动作间隙快速播放                                    │
+<a id="__codelineno-1-44" name="__codelineno-1-44" href="#__codelineno-1-44"></a>└──────────────────────────────┬──────────────────────────────────────────┘
+<a id="__codelineno-1-45" name="__codelineno-1-45" href="#__codelineno-1-45"></a>                               │
+<a id="__codelineno-1-46" name="__codelineno-1-46" href="#__codelineno-1-46"></a>                               ▼
+<a id="__codelineno-1-47" name="__codelineno-1-47" href="#__codelineno-1-47"></a>┌─────────────────────────────────────────────────────────────────────────┐
+<a id="__codelineno-1-48" name="__codelineno-1-48" href="#__codelineno-1-48"></a>│  DM05 — 综合交互单元配置决策（决策流水线出口）                               │
+<a id="__codelineno-1-49" name="__codelineno-1-49" href="#__codelineno-1-49"></a>│  输入：DM01 语料决策结果 + DM02 Service 决策结果 + 下一组动作次数          │
+<a id="__codelineno-1-50" name="__codelineno-1-50" href="#__codelineno-1-50"></a>│  输出：完整挂载方案 MountingScheme {rep_count, rep_service_dict,          │
+<a id="__codelineno-1-51" name="__codelineno-1-51" href="#__codelineno-1-51"></a>│        rep_audio_dict}                                                     │
+<a id="__codelineno-1-52" name="__codelineno-1-52" href="#__codelineno-1-52"></a>│  挂载规则（基于运动生理学）：                                                │
+<a id="__codelineno-1-53" name="__codelineno-1-53" href="#__codelineno-1-53"></a>│    C5-1（肌肉紧张感）：第3次 → 0.5×组次数（动作前期）                      │
+<a id="__codelineno-1-54" name="__codelineno-1-54" href="#__codelineno-1-54"></a>│    C5-2（疲劳感）：0.5×组次数 → 倒数第3次（动作后期）                      │
+<a id="__codelineno-1-55" name="__codelineno-1-55" href="#__codelineno-1-55"></a>│    Service02（倒计时）：倒数第5次 → 倒数第3次（组末）                      │
+<a id="__codelineno-1-56" name="__codelineno-1-56" href="#__codelineno-1-56"></a>└──────────────────────────────┬──────────────────────────────────────────┘
+<a id="__codelineno-1-57" name="__codelineno-1-57" href="#__codelineno-1-57"></a>                               │
+<a id="__codelineno-1-58" name="__codelineno-1-58" href="#__codelineno-1-58"></a>                               ▼
+<a id="__codelineno-1-59" name="__codelineno-1-59" href="#__codelineno-1-59"></a>┌─────────────────────────────────────────────────────────────────────────┐
+<a id="__codelineno-1-60" name="__codelineno-1-60" href="#__codelineno-1-60"></a>│                        输出：可执行挂载方案                                   │
+<a id="__codelineno-1-61" name="__codelineno-1-61" href="#__codelineno-1-61"></a>│  MountingScheme → 交互引擎执行 → 用户获得个性化交互体验                     │
+<a id="__codelineno-1-62" name="__codelineno-1-62" href="#__codelineno-1-62"></a>└─────────────────────────────────────────────────────────────────────────┘
+</code></pre></div>
+<h3 id="42">4.2 核心数据结构<a class="headerlink" href="#42" title="Permanent link">&para;</a></h3>
+<h4 id="inputspace">InputSpace（用户历史表现空间）<a class="headerlink" href="#inputspace" title="Permanent link">&para;</a></h4>
+<p>存储用户的历史运动数据，作为所有决策模块的输入：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">InputSpace</span><span class="p">:</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    <span class="n">lowest_score_evaluation_point_list</span> <span class="o">=</span> <span class="p">[]</span>       <span class="c1"># 最低分评估点列表</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    <span class="n">lowest_score_evaluation_point_count_list</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># 对应出现次数</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    <span class="n">hit_service_list</span> <span class="o">=</span> <span class="p">[]</span>                         <span class="c1"># 已命中服务列表</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    <span class="n">hit_service_result_summary_list</span> <span class="o">=</span> <span class="p">[]</span>          <span class="c1"># 服务结果摘要列表</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>    <span class="n">highest_score_evaluation_point_count</span> <span class="o">=</span> <span class="mi">0</span>      <span class="c1"># 最高分评估点计数</span>
+</code></pre></div>
+<h4 id="interactionunitspace">InteractionUnitSpace（当前交互单元状态）<a class="headerlink" href="#interactionunitspace" title="Permanent link">&para;</a></h4>
+<p>存储当前交互单元的实时状态：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">InteractionUnitSpace</span><span class="p">:</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    <span class="n">action</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>              <span class="c1"># 动作名称</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    <span class="n">group_count</span> <span class="o">=</span> <span class="mi">0</span>          <span class="c1"># 总组数</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    <span class="n">current_group_index</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># 当前组索引</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>    <span class="n">rep_count</span> <span class="o">=</span> <span class="mi">0</span>            <span class="c1"># 总次数</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>    <span class="n">rep_audio_dict</span> <span class="o">=</span> <span class="p">{}</span>      <span class="c1"># 每次对应的音频文件</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>    <span class="n">rep_service_dict</span> <span class="o">=</span> <span class="p">{}</span>    <span class="c1"># 每次对应的服务</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>    <span class="n">action_level</span> <span class="o">=</span> <span class="mi">0</span>         <span class="c1"># 动作难度等级</span>
+</code></pre></div>
+<h4 id="mountingscheme">MountingScheme（挂载方案）<a class="headerlink" href="#mountingscheme" title="Permanent link">&para;</a></h4>
+<p>DM05 的输出，定义交互单元的完整配置：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">MountingScheme</span><span class="p">:</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    <span class="n">rep_count</span> <span class="o">=</span> <span class="mi">0</span>          <span class="c1"># 次数</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    <span class="n">rep_service_dict</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># 每次对应的服务</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    <span class="n">rep_audio_dict</span> <span class="o">=</span> <span class="p">{}</span>    <span class="c1"># 每次对应的音频</span>
+</code></pre></div>
+<h3 id="43">4.3 五大决策模块详细设计<a class="headerlink" href="#43" title="Permanent link">&para;</a></h3>
+<p>五个决策模块的职责、输入输出和设计逻辑总览如下：</p>
+<table>
+<thead>
+<tr>
+<th><strong>模块</strong></th>
+<th><strong>名称</strong></th>
+<th><strong>核心功能</strong></th>
+<th><strong>关键输入</strong></th>
+<th><strong>输出格式</strong></th>
+<th><strong>设计逻辑/决策依据</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>DM01</strong></td>
+<td>C5 语料类型决策</td>
+<td>决定下一步挂载的 C5 语料类型</td>
+<td>当前动作、累计低分评估点及次数、已提供服务、组数/组索引</td>
+<td>JSON：语料类型 + 语料内容</td>
+<td>根据低分评估点分布和疲劳趋势，判断询问肌肉紧张感（C5_1）还是疲劳程度（C5_2）</td>
+</tr>
+<tr>
+<td><strong>DM02</strong></td>
+<td>用户级服务决策</td>
+<td>决定下一步挂载的用户级 Service</td>
+<td>当前动作、累计低分/高分评估点、已提供服务、可用Service列表</td>
+<td>JSON：Service 名称 + 对应 Service</td>
+<td>持续低分→详细指导（service04）；表现稳定→引导练习（service01）；组间过渡→倒计时（service02）；关键节点→检查确认（service03）</td>
+</tr>
+<tr>
+<td><strong>DM03</strong></td>
+<td>动作调整决策</td>
+<td>决定是否调整动作参数</td>
+<td>当前动作、累计评估点、已提供服务</td>
+<td>JSON：{action_level_adjustment, action_rep_adjustment}</td>
+<td>持续高分→降低难度/减少次数；持续低分→增加难度/调整次数；唯一直接修改训练计划的模块</td>
+</tr>
+<tr>
+<td><strong>DM04</strong></td>
+<td>上下文感知语料生成</td>
+<td>为特定评估点生成个性化语料</td>
+<td>当前动作、累计评估点、已提供服务、组数/组索引</td>
+<td>JSON：评估点对应语料（每条≤20字符）</td>
+<td>结合当前动作、历史评估点和服务记录生成个性化内容；20字符限制确保语音播报简洁</td>
+</tr>
+<tr>
+<td><strong>DM05</strong></td>
+<td>综合交互单元配置决策</td>
+<td>整合 DM01/DM02 结果，生成完整挂载方案</td>
+<td>DM01 语料决策结果、DM02 Service 决策结果、下一组动作次数</td>
+<td>JSON：MountingScheme（rep_count + rep_service_dict + rep_audio_dict）</td>
+<td>基于运动生理学计算挂载位置：C5-1前期、C5-2后期、倒计时组末；校验并解决模块间冲突</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：AiFitGo-Interactive-Unit GitHub README（Core Function Modules 章节）</p>
+</blockquote>
+<h4 id="dm01-c5">DM01 — C5 语料类型决策<a class="headerlink" href="#dm01-c5" title="Permanent link">&para;</a></h4>
+<p><strong>功能</strong>：根据用户当前状态和历史数据，决定下一步应挂载的 C5 语料类型。</p>
+<p><strong>输入</strong>：
+- 用户当前动作信息
+- 累计低分评估点及出现次数
+- 已提供服务信息
+- 动作组数和当前组索引</p>
+<p><strong>输出</strong>：JSON 格式的语料类型和对应语料内容。</p>
+<p><strong>C5 语料类型</strong>：
+- <code>C5_1_feeling_of_muscle_tension</code>：询问具体肌肉紧张感受
+- <code>C5_2_feeling_of_tiredness</code>：询问疲劳程度</p>
+<p><strong>设计逻辑</strong>：C5 语料用于在动作过程中主动询问用户的主观感受，是连接客观动作评分和主观体验的桥梁。DM01 根据用户的低分评估点分布和疲劳趋势，判断是应该询问肌肉紧张感（C5_1）还是疲劳程度（C5_2）。</p>
+<h4 id="dm02">DM02 — 用户级服务决策<a class="headerlink" href="#dm02" title="Permanent link">&para;</a></h4>
+<p><strong>功能</strong>：决定下一步应挂载的用户级 Service。</p>
+<p><strong>输入</strong>：
+- 用户当前动作信息
+- 累计低分和高分评估点信息
+- 已提供服务信息
+- 可用用户级 Service 列表</p>
+<p><strong>输出</strong>：JSON 格式的 Service 名称和对应 Service。</p>
+<p><strong>用户级服务（4 种核心）</strong>：
+- <code>service01_guided_practice_service</code>：引导练习服务
+- <code>service02_countdown_service</code>：倒计时服务
+- <code>service03_check_confirm_service</code>：检查确认服务
+- <code>service04_detail_guidance_service</code>：详细指导服务</p>
+<p><strong>设计逻辑</strong>：DM02 根据用户的表现趋势决定服务策略——如果用户持续低分，需要详细指导（service04）；如果用户表现稳定，可用引导练习（service01）；在组间过渡时使用倒计时（service02）；关键动作节点使用检查确认（service03）。</p>
+<h4 id="dm03">DM03 — 动作调整决策<a class="headerlink" href="#dm03" title="Permanent link">&para;</a></h4>
+<p><strong>功能</strong>：根据用户表现决定是否调整动作参数。</p>
+<p><strong>输入</strong>：
+- 用户当前动作信息
+- 累计评估点信息
+- 已提供服务信息</p>
+<p><strong>输出</strong>：JSON 格式的动作调整方案：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">{</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span><span class="nt">&quot;action_level_adjustment&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;action level&quot;</span><span class="p">,</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="nt">&quot;action_rep_adjustment&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;action rep&quot;</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="p">}</span>
+</code></pre></div>
+<p><strong>设计逻辑</strong>：DM03 是唯一直接修改训练计划的模块。当用户持续高分（动作过于简单）或持续低分（动作过于困难）时，调整动作难度等级（action_level）或每组次数（action_rep），实现训练负荷的动态适配。</p>
+<h4 id="dm04">DM04 — 上下文感知语料生成<a class="headerlink" href="#dm04" title="Permanent link">&para;</a></h4>
+<p><strong>功能</strong>：为特定评估点生成个性化语料内容。</p>
+<p><strong>输入</strong>：
+- 用户当前动作信息
+- 累计评估点信息
+- 已提供服务信息
+- 动作组数和组索引</p>
+<p><strong>输出</strong>：JSON 格式的评估点对应语料（每条限制 20 字符）。</p>
+<p><strong>设计逻辑</strong>：DM04 生成的语料不是固定模板，而是结合用户当前动作、历史评估点和服务记录的个性化内容。20 字符的限制确保语音播报简洁，适合在动作间隙快速播放。</p>
+<h4 id="dm05">DM05 — 综合交互单元配置决策<a class="headerlink" href="#dm05" title="Permanent link">&para;</a></h4>
+<p><strong>功能</strong>：整合 DM01 和 DM02 的结果，生成完整的挂载方案。</p>
+<p><strong>输入</strong>：
+- DM01 语料决策结果
+- DM02 Service 决策结果
+- 下一组动作次数</p>
+<p><strong>输出</strong>：完整挂载方案 JSON（MountingScheme）。</p>
+<p><strong>挂载规则</strong>：
+- <strong>C5-1 挂载位置</strong>：第 3 次到 0.5×组次数之间（动作前期，询问肌肉紧张感）；
+- <strong>C5-2 挂载位置</strong>：0.5×组次数到倒数第 3 次之间（动作后期，询问疲劳感）；
+- <strong>Service02（倒计时）挂载位置</strong>：倒数第 5 次到倒数第 3 次之间（组末倒计时）。</p>
+<p><strong>设计逻辑</strong>：DM05 是决策流水线的出口，将前面模块的离散决策转化为可执行的挂载方案。挂载规则基于运动生理学——肌肉紧张感在动作前期更明显，疲劳感在后期累积，倒计时在组末最有效。</p>
+<h4 id="c5">C5 语料与挂载位置规则汇总<a class="headerlink" href="#c5" title="Permanent link">&para;</a></h4>
+<p>DM05 整合 DM01/DM02 结果后，按以下规则计算各交互元素的精确挂载位置：</p>
+<table>
+<thead>
+<tr>
+<th><strong>交互元素</strong></th>
+<th><strong>类型</strong></th>
+<th><strong>挂载位置（基于组次数动态计算）</strong></th>
+<th><strong>生理学依据</strong></th>
+<th><strong>决策模块</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>C5-1</strong></td>
+<td>询问肌肉紧张感受</td>
+<td>第 3 次 → 0.5×组次数之间（动作前期）</td>
+<td>肌肉紧张感在动作前期更明显，早期询问有助于及时调整发力方式</td>
+<td>DM01 决策类型，DM05 计算位置</td>
+</tr>
+<tr>
+<td><strong>C5-2</strong></td>
+<td>询问疲劳程度</td>
+<td>0.5×组次数 → 倒数第 3 次之间（动作后期）</td>
+<td>疲劳感在动作后期累积，后期询问有助于判断是否需要降阶或终止</td>
+<td>DM01 决策类型，DM05 计算位置</td>
+</tr>
+<tr>
+<td><strong>Service02</strong></td>
+<td>倒计时服务</td>
+<td>倒数第 5 次 → 倒数第 3 次之间（组末）</td>
+<td>倒计时在组末最有效，帮助用户完成最后几次动作</td>
+<td>DM02 决策服务，DM05 计算位置</td>
+</tr>
+<tr>
+<td><strong>Service01</strong></td>
+<td>引导练习服务</td>
+<td>组间过渡或动作开始阶段</td>
+<td>引导练习在动作开始时帮助用户进入状态</td>
+<td>DM02 决策</td>
+</tr>
+<tr>
+<td><strong>Service03</strong></td>
+<td>检查确认服务</td>
+<td>关键动作节点</td>
+<td>关键节点需要确认用户理解和执行正确</td>
+<td>DM02 决策</td>
+</tr>
+<tr>
+<td><strong>Service04</strong></td>
+<td>详细指导服务</td>
+<td>用户持续低分时</td>
+<td>持续低分需要更详细的动作指导</td>
+<td>DM02 决策</td>
+</tr>
+<tr>
+<td><strong>DM04 语料</strong></td>
+<td>上下文感知个性化语料</td>
+<td>特定评估点对应位置，每条≤20字符</td>
+<td>个性化语料在对应评估点播放，20字符限制确保动作间隙快速播报</td>
+<td>DM04 生成，DM05 整合</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：AiFitGo-Interactive-Unit GitHub README（DM05 Mounting Rules 与 C5 Corpus Types 章节）</p>
+</blockquote>
+<h3 id="44-9">4.4 服务类型体系（9 种）<a class="headerlink" href="#44-9" title="Permanent link">&para;</a></h3>
+<p>系统提供 9 种服务类型，覆盖健身交互的全场景：</p>
+<table>
+<thead>
+<tr>
+<th><strong>编号</strong></th>
+<th><strong>服务名称</strong></th>
+<th><strong>功能</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>service01</td>
+<td>guided_practice_service</td>
+<td>引导练习服务</td>
+</tr>
+<tr>
+<td>service02</td>
+<td>countdown_service</td>
+<td>倒计时服务</td>
+</tr>
+<tr>
+<td>service03</td>
+<td>check_confirm_service</td>
+<td>检查确认服务</td>
+</tr>
+<tr>
+<td>service04</td>
+<td>detail_guidance_service</td>
+<td>详细指导服务</td>
+</tr>
+<tr>
+<td>service05</td>
+<td>perspective_alignment_service</td>
+<td>视角对齐服务</td>
+</tr>
+<tr>
+<td>service06</td>
+<td>assist_in_finding_force_sensation_service</td>
+<td>辅助找发力感服务</td>
+</tr>
+<tr>
+<td>service07</td>
+<td>qna_service</td>
+<td>问答服务</td>
+</tr>
+<tr>
+<td>service08</td>
+<td>action_adjustment_based_on_user_request_service</td>
+<td>基于用户请求的动作调整服务</td>
+</tr>
+<tr>
+<td>service09</td>
+<td>user_fatigue_response_service</td>
+<td>用户疲劳响应服务</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<h3 id="45-llm">4.5 LLM 接口层<a class="headerlink" href="#45-llm" title="Permanent link">&para;</a></h3>
+<p><code>llm_response.py</code> 封装了多家 LLM 厂商的 API，实现统一调用接口。三家厂商的对比信息如下：</p>
+<table>
+<thead>
+<tr>
+<th><strong>厂商</strong></th>
+<th><strong>API 端点</strong></th>
+<th><strong>模型系列</strong></th>
+<th><strong>默认模型</strong></th>
+<th><strong>适用场景</strong></th>
+<th><strong>优势</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>讯飞（iFlytek）</strong></td>
+<td>spark-api-open.xf-yun.com</td>
+<td>星火大模型</td>
+<td>—</td>
+<td>中文语音交互、实时对话</td>
+<td>中文语音技术成熟，实时性好</td>
+</tr>
+<tr>
+<td><strong>百川（Baichuan）</strong></td>
+<td>api.baichuan-ai.com</td>
+<td>Baichuan 系列</td>
+<td>—</td>
+<td>通用文本生成、长文本理解</td>
+<td>开源生态好，中文理解能力强</td>
+</tr>
+<tr>
+<td><strong>智谱（Zhipu）</strong></td>
+<td>open.bigmodel.cn</td>
+<td>GLM 系列</td>
+<td><strong>GLM-4-Air</strong>（默认）</td>
+<td>结构化决策、语料生成、多模块调用</td>
+<td>公司内部 API，成本低，结构化输出稳定</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：AiFitGo-Interactive-Unit GitHub README（LLM Interface 章节）</p>
+</blockquote>
+<p><strong>默认配置</strong>：智谱 GLM-4-Air 模型。</p>
+<p><strong>设计考量</strong>：多厂商兼容确保系统不依赖单一供应商，同时可根据不同决策模块的需求选择性价比最优的模型——简单分类任务可用轻量模型，复杂语料生成可用更强模型。</p>
+<hr />
+<h2 id="5-experiments-results">5. 功能与效果（Experiments &amp; Results）<a class="headerlink" href="#5-experiments-results" title="Permanent link">&para;</a></h2>
+<h3 id="51">5.1 核心功能清单<a class="headerlink" href="#51" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>功能</strong></th>
+<th><strong>对应模块</strong></th>
+<th><strong>状态</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C5 语料类型决策</td>
+<td>DM01</td>
+<td>已实现，2 类语料</td>
+</tr>
+<tr>
+<td>用户级服务决策</td>
+<td>DM02</td>
+<td>已实现，4 种核心服务</td>
+</tr>
+<tr>
+<td>动作调整决策</td>
+<td>DM03</td>
+<td>已实现，难度+次数双维度</td>
+</tr>
+<tr>
+<td>上下文感知语料生成</td>
+<td>DM04</td>
+<td>已实现，20 字符限制</td>
+</tr>
+<tr>
+<td>综合挂载方案生成</td>
+<td>DM05</td>
+<td>已实现，含挂载位置规则</td>
+</tr>
+<tr>
+<td>9 种服务类型</td>
+<td>service.py</td>
+<td>已实现</td>
+</tr>
+<tr>
+<td>多 LLM 厂商兼容</td>
+<td>llm_response.py</td>
+<td>已实现，讯飞/百川/智谱</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<h3 id="52">5.2 决策流程效果<a class="headerlink" href="#52" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>输入维度</strong>：每个决策模块综合 3–5 维输入（当前动作、历史评估点、服务记录、组索引等），避免单一维度决策的片面性；</li>
+<li><strong>输出结构化</strong>：所有模块输出 JSON 格式，DM05 最终输出可直接执行的 MountingScheme，无需额外解析；</li>
+<li><strong>挂载位置精确</strong>：C5 语料和 Service 的挂载位置基于组次数动态计算（如 C5-1 在第 3 次到 0.5×组次数），适配不同训练计划的次数差异。</li>
+</ul>
+<h3 id="53">5.3 测试方式<a class="headerlink" href="#53" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nb">cd</span><span class="w"> </span>V2
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>python<span class="w"> </span>main.py<span class="w">    </span><span class="c1"># 运行测试（默认测试 DM05）</span>
+</code></pre></div>
+<p>可通过取消注释 <code>main.py</code> 中的测试函数单独测试各模块：
+- <code>test_DM_01()</code> — 测试 C5 语料类型决策
+- <code>test_DM_02()</code> — 测试用户级服务决策
+- <code>test_DM_03()</code> — 测试动作调整决策
+- <code>test_DM_04()</code> — 测试上下文感知语料生成
+- <code>test_DM_05()</code> — 测试综合挂载方案决策</p>
+<hr />
+<h2 id="6-engineering">6. 工程实现（Engineering）<a class="headerlink" href="#6-engineering" title="Permanent link">&para;</a></h2>
+<h3 id="61">6.1 代码仓库<a class="headerlink" href="#61" title="Permanent link">&para;</a></h3>
+<ul>
+<li>AiFitGo-Interactive-Unit：https://github.com/dujh22/AiFitGo-Interactive-Unit（私有）</li>
+<li>关联项目 Virtual-Coach：https://github.com/dujh22/Virtual-Coach（公开，CHI 论文配套）</li>
+</ul>
+<h3 id="62">6.2 技术栈<a class="headerlink" href="#62" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>层级</strong></th>
+<th><strong>技术</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>核心语言</td>
+<td>Python 3</td>
+</tr>
+<tr>
+<td>LLM 接口</td>
+<td>讯飞星火 / 百川 / 智谱 GLM-4-Air</td>
+</tr>
+<tr>
+<td>数据结构</td>
+<td>Python dataclass（InputSpace / InteractionUnitSpace / MountingScheme）</td>
+</tr>
+<tr>
+<td>服务实现</td>
+<td>模块化 service.py</td>
+</tr>
+<tr>
+<td>配置管理</td>
+<td>define.py 集中定义</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<h3 id="63">6.3 环境要求<a class="headerlink" href="#63" title="Permanent link">&para;</a></h3>
+<p>无特殊环境要求，即插即用，按需安装缺失包即可。核心依赖为各 LLM 厂商的 Python SDK。</p>
+<h3 id="631">6.3.1 技术栈演进与选型决策<a class="headerlink" href="#631" title="Permanent link">&para;</a></h3>
+<p>AiFitGo-Interactive-Unit 从 CHI 论文研究理念到工程化实现，技术栈经历了从"研究原型"到"工程系统"的演进。下表梳理关键技术选型的变化背景、决策理由与最终方案。</p>
+<table>
+<thead>
+<tr>
+<th><strong>技术领域</strong></th>
+<th><strong>研究原型阶段（Virtual Coach CHI 论文）</strong></th>
+<th><strong>工程化阶段（AiFitGo-Interactive-Unit）</strong></th>
+<th><strong>演进背景与决策理由</strong></th>
+<th><strong>最终方案</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>决策架构</strong></td>
+<td>单一 LLM 调用输出全部决策（端到端）</td>
+<td>5 模块决策流水线（DM01–DM05）+ DM05 综合层</td>
+<td>单一 LLM 调用输出不可控、难以调试，输出格式不稳定；拆分为专用模块后每个模块职责单一、可独立测试和优化</td>
+<td>DM01（C5语料类型）→DM02（用户级服务）→DM03（动作调整）→DM04（上下文语料）→DM05（综合挂载），DM05 做最终整合与冲突校验</td>
+</tr>
+<tr>
+<td><strong>LLM 厂商选择</strong></td>
+<td>单一 LLM 厂商（研究阶段使用特定模型）</td>
+<td>多厂商 LLM 接口层封装（讯飞星火/百川/智谱 GLM-4-Air）</td>
+<td>单一厂商存在 API 不稳定、价格变动、模型更新等风险；多厂商封装可以灵活切换、降低依赖、对比效果</td>
+<td>llm_response.py 抽象层统一封装讯飞/百川/智谱三家 API，默认 GLM-4-Air，可通过配置切换</td>
+</tr>
+<tr>
+<td><strong>规则与 LLM 分层</strong></td>
+<td>LLM 处理所有决策（包括挂载位置、长度限制等确定性规则）</td>
+<td>确定性规则（挂载位置、长度限制）与 LLM 决策（语料选择、服务选择）分层</td>
+<td>LLM 处理确定性规则不稳定——比如挂载位置计算、20 字符长度限制，LLM 偶尔会违反；规则层做硬约束更可靠</td>
+<td>挂载规则作为硬约束（C5-1/C5-2/Service02 基于组次数动态计算挂载位置），LLM 层做灵活判断（语料选择、服务选择），DM05 整合时校验规则约束</td>
+</tr>
+<tr>
+<td><strong>数据结构</strong></td>
+<td>自由格式的字典/列表传递数据</td>
+<td>Python dataclass 结构化数据（InputSpace/InteractionUnitSpace/MountingScheme）</td>
+<td>自由格式数据传递容易出现字段缺失、类型错误；dataclass 可以明确字段定义、类型检查、自动文档化</td>
+<td>InputSpace（输入空间，跨组跨会话累积数据）、InteractionUnitSpace（交互单元空间）、MountingScheme（挂载方案）三大核心 dataclass</td>
+</tr>
+<tr>
+<td><strong>LLM 输出稳定性</strong></td>
+<td>直接使用 LLM 原始输出，无校验</td>
+<td>每个模块加入输出校验 + 默认值 fallback + 重试机制</td>
+<td>LLM 偶尔会输出非标准 JSON 或字段缺失，直接使用会导致系统崩溃；校验和 fallback 保证系统鲁棒性</td>
+<td>每个模块中加入输出校验（JSON 格式检查、字段完整性检查）、默认值 fallback（校验失败时使用合理默认值）、重试机制（关键模块重试 1-2 次）</td>
+</tr>
+<tr>
+<td><strong>语料长度控制</strong></td>
+<td>LLM 生成语料后不做长度校验</td>
+<td>输出后做长度截断和校验（20 字符限制）</td>
+<td>DM04 生成的语料需要在动作间隙快速播报，20 字符限制必须严格执行；LLM 偶尔会生成超长语料</td>
+<td>输出后做长度截断（超过 20 字符自动截断）和校验（截断后检查语义完整性），确保语料在动作间隙可快速播报</td>
+</tr>
+<tr>
+<td><strong>历史数据管理</strong></td>
+<td>决策模块内部维护历史状态（有状态）</td>
+<td>决策模块无状态，由上层系统负责持久化和传入</td>
+<td>有状态的决策模块难以测试和复用，状态管理复杂；无状态模块输入输出明确，可独立测试</td>
+<td>InputSpace 需要跨组、跨训练会话累积数据，由上层系统负责持久化和传入，决策模块本身无状态</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告 §4 方法与技术路线、§6.2 技术栈、§6.4 关键工程挑战与解决方案、§9.1 关键问题与解决方案；AiFitGo-Interactive-Unit 仓库；Virtual Coach CHI 论文（CHI#3474）</p>
+</blockquote>
+<h3 id="64">6.4 关键工程挑战与解决方案<a class="headerlink" href="#64" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>多模块决策的一致性</strong>：5 个模块独立决策可能产生冲突（如 DM01 选 C5-1 但 DM02 选的 Service 不兼容）。解决方案是 DM05 作为综合层，在整合时校验并解决冲突，挂载规则作为硬约束；</li>
+<li><strong>LLM 输出的结构化保证</strong>：LLM 可能输出非标准 JSON 或字段缺失。解决方案是在每个模块中加入输出校验和 fallback 逻辑，确保即使 LLM 输出异常也能生成合理的默认决策；</li>
+<li><strong>实时性要求</strong>：交互决策必须在组间休息的短暂窗口内完成。解决方案是模块化设计使得各模块可并行调用 LLM，DM05 仅做轻量整合；</li>
+<li><strong>历史数据的累积与管理</strong>：InputSpace 需要跨组、跨训练会话累积数据。解决方案是定义清晰的数据结构，由上层系统负责持久化和传入，决策模块本身无状态；</li>
+<li><strong>语料长度控制</strong>：DM04 生成的语料需要在动作间隙快速播报，20 字符限制需要严格执行。解决方案是在输出后做长度截断和校验。</li>
+</ol>
+<h3 id="65">6.5 项目时间线与里程碑<a class="headerlink" href="#65" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>时间</strong></th>
+<th><strong>里程碑</strong></th>
+<th><strong>关键产出</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2024</td>
+<td>Virtual Coach CHI 论文（CHI#3474）发表</td>
+<td>人机交互研究基础，交互决策理念确立</td>
+</tr>
+<tr>
+<td>2025–2026</td>
+<td>AiFitGo-Interactive-Unit 工程化启动</td>
+<td>将 CHI 论文交互决策理念转化为可运行系统</td>
+</tr>
+<tr>
+<td>2026.Q1–Q2</td>
+<td>5 模块决策流水线（DM01–DM05）设计与实现</td>
+<td>每个模块职责单一、可独立测试，DM05 最终整合</td>
+</tr>
+<tr>
+<td>2026.Q2</td>
+<td>运动生理学挂载规则工程化</td>
+<td>C5-1/C5-2/Service02 基于组次数动态计算挂载位置</td>
+</tr>
+<tr>
+<td>2026.Q2–Q3</td>
+<td>多厂商 LLM 接口层封装</td>
+<td>讯飞/百川/智谱三家 API 统一调用，llm_response.py 抽象层</td>
+</tr>
+<tr>
+<td>2026.Q3</td>
+<td>9 种服务类型框架实现</td>
+<td>涵盖鼓励、指导、倒计时等交互服务类型</td>
+</tr>
+<tr>
+<td>2026.Q3</td>
+<td>单模块测试与端到端测试</td>
+<td>test_DM_01 至 test_DM_05，LLM 输出校验与 fallback 逻辑</td>
+</tr>
+<tr>
+<td>2026.Q3</td>
+<td>中英文文档编写</td>
+<td>系统架构、使用说明、API 文档</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告 §1 项目概述、§4 方法与技术路线、§6 工程实现、§7.1 论文与研究；AiFitGo-Interactive-Unit 仓库；Virtual Coach CHI 论文（CHI#3474）</p>
+</blockquote>
+<p><strong>决策模块开发甘特图：</strong></p>
+<pre class="mermaid"><code>gantt
+    title AiFitGo 决策模块开发时间线
+    dateFormat YYYY-MM-DD
+    section 研究基础
+    Virtual Coach CHI 论文研究         :a1, 2024-01-01, 365d
+    CHI 论文发表                       :milestone, m1, 2024-12-01, 0d
+    section 架构设计
+    交互决策理念转化与系统架构设计     :a2, 2026-01-01, 60d
+    section 核心模块
+    DM01-DM05 五模块设计与实现         :a3, 2026-03-01, 90d
+    五模块流水线集成                    :milestone, m2, 2026-06-01, 0d
+    section 规则与接口
+    C5 语料挂载规则工程化              :a4, 2026-04-01, 60d
+    多厂商 LLM 接口层封装              :a5, 2026-05-01, 60d
+    section 服务与测试
+    9 种服务类型框架实现               :a6, 2026-06-01, 60d
+    单模块测试与端到端测试             :a7, 2026-07-01, 60d
+    系统集成完成                       :milestone, m3, 2026-08-31, 0d</code></pre>
+<blockquote>
+<p>图注：项目基于 2024 年 Virtual Coach CHI 论文研究基础，2026 年 Q1 启动工程化，Q1–Q2 完成 DM01–DM05 五模块设计与实现，Q2 完成 C5 挂载规则和多厂商 LLM 接口层，Q3 完成 9 种服务类型和测试体系。关键节点以 milestone 标记。</p>
+</blockquote>
+<hr />
+<h2 id="7-impact">7. 成果与影响（Impact）<a class="headerlink" href="#7-impact" title="Permanent link">&para;</a></h2>
+<h3 id="71">7.1 论文与研究<a class="headerlink" href="#71" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Virtual Coach CHI 论文</strong>（CHI#3474）：AiFitGo-Interactive-Unit 是该论文方向的工程落地核心，5 决策模块的设计源于人机交互研究洞察；</li>
+<li>飞书文档：https://zhipu-ai.feishu.cn/docx/RL5LdLAIboYEO8xg7FdcQgmCnJc</li>
+</ul>
+<h3 id="72">7.2 开源与工程<a class="headerlink" href="#72" title="Permanent link">&para;</a></h3>
+<ul>
+<li>AiFitGo-Interactive-Unit 仓库（私有）包含完整的 5 模块决策系统实现；</li>
+<li>Virtual-Coach 仓库（公开）包含 Prompt 自动化调试与评测、工作流生成系统等配套工具，与 AiFitGo 形成研究+工程的完整生态。</li>
+</ul>
+<p><strong>补充：Virtual-Coach Prompt 自动化调试流水线技术细节（源：Virtual-Coach 仓库 README）</strong></p>
+<p>Virtual-Coach 的 Prompt 自动化调试与评测流水线包含 9 个核心模块：</p>
+<table>
+<thead>
+<tr>
+<th><strong>模块</strong></th>
+<th><strong>文件</strong></th>
+<th><strong>功能</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CLI 交互工具</td>
+<td>cli_utils.py</td>
+<td>命令行交互入口</td>
+</tr>
+<tr>
+<td>模型发现与动态加载</td>
+<td>model_resolver.py</td>
+<td>自动发现和加载多种 LLM（GLM-4-Air、科大讯飞 X1 等）</td>
+</tr>
+<tr>
+<td>LLM 驱动 Prompt 生成</td>
+<td>prompt_generator.py</td>
+<td>从需求描述自动生成 Prompt</td>
+</tr>
+<tr>
+<td>评测数据自动生成</td>
+<td>eval_data_generator.py</td>
+<td>自动合成评测数据</td>
+</tr>
+<tr>
+<td>评测脚本模板化生成</td>
+<td>eval_code_generator.py</td>
+<td>生成评测代码</td>
+</tr>
+<tr>
+<td>并行评测执行引擎</td>
+<td>eval_runner.py</td>
+<td>并行运行评测</td>
+</tr>
+<tr>
+<td>错误分析与优化建议</td>
+<td>optimizer.py</td>
+<td>分析错误并提供 Prompt 优化建议</td>
+</tr>
+<tr>
+<td>Prompt 版本管理</td>
+<td>version_manager.py</td>
+<td>版本化迭代管理</td>
+</tr>
+<tr>
+<td>JSON 提取工具</td>
+<td>json_utils.py</td>
+<td>结构化输出解析</td>
+</tr>
+</tbody>
+</table>
+<p>工作流生成系统（<code>code/workflow/</code>）包含节点实现（nodes/）、工作流定义文档（define/）、工作流提示词（prompt/）和分析工具（analysis/），支持通过自然语言描述自动生成可执行的工作流配置。项目采用 Python 3.8+、pyproject.toml 构建配置，支持 <code>pip install -e .</code> 开发模式安装。</p>
+<h3 id="73">7.3 产业应用前景<a class="headerlink" href="#73" title="Permanent link">&para;</a></h3>
+<ul>
+<li>智能健身教练系统可应用于家庭健身 App、智能健身镜、健身房私教辅助等场景；</li>
+<li>5 模块决策架构可迁移到其他需要实时交互决策的领域（如康复训练、体育教学、人机协作）。</li>
+</ul>
+<hr />
+<h2 id="8-my-contribution">8. 个人贡献（My Contribution）<a class="headerlink" href="#8-my-contribution" title="Permanent link">&para;</a></h2>
+<h3 id="81">8.1 角色<a class="headerlink" href="#81" title="Permanent link">&para;</a></h3>
+<p><strong>核心开发者</strong>，负责 AiFitGo-Interactive-Unit 系统的架构设计和全部 5 个决策模块的实现。</p>
+<h3 id="82">8.2 具体工作清单<a class="headerlink" href="#82" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>系统架构设计</strong>：设计 DM01–DM05 五模块决策流水线，定义 InputSpace、InteractionUnitSpace、MountingScheme 三大核心数据结构；</li>
+<li><strong>DM01 实现</strong>：C5 语料类型决策，基于用户低分评估点和疲劳趋势选择 C5_1/C5_2；</li>
+<li><strong>DM02 实现</strong>：用户级服务决策，基于用户表现趋势选择 4 种核心 Service；</li>
+<li><strong>DM03 实现</strong>：动作调整决策，输出动作难度和次数的调整方案；</li>
+<li><strong>DM04 实现</strong>：上下文感知语料生成，为特定评估点生成 20 字符以内的个性化语料；</li>
+<li><strong>DM05 实现</strong>：综合挂载方案生成，整合 DM01/DM02 结果，按挂载规则计算 C5 语料和 Service 的精确挂载位置；</li>
+<li><strong>LLM 接口层</strong>：封装讯飞、百川、智谱三家 API，实现统一调用接口，默认 GLM-4-Air；</li>
+<li><strong>服务模块</strong>：实现 9 种服务类型的基础框架；</li>
+<li><strong>测试体系</strong>：为每个决策模块编写独立测试函数，支持单模块调试和端到端测试；</li>
+<li><strong>文档编写</strong>：撰写中英文 README，详细说明系统架构、模块设计、数据结构和使用方法。</li>
+</ol>
+<hr />
+<h2 id="9-lessons-learned">9. 经验与反思（Lessons Learned）<a class="headerlink" href="#9-lessons-learned" title="Permanent link">&para;</a></h2>
+<h3 id="91">9.1 关键问题与解决方案（含具体故事）<a class="headerlink" href="#91" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>决策模块的粒度选择——从"端到端 LLM"到"5 模块流水线"的架构演进</strong>：</li>
+<li><strong>故事</strong>：最初实现交互决策系统时，想用单一 LLM 调用输出全部决策——输入用户的训练数据和当前动作状态，让 LLM 一次性输出 C5 语料类型、用户级服务、动作调整方案、上下文语料、挂载位置等所有决策。但实际测试中发现，端到端 LLM 输出不可控——有时候输出格式不符合预期，有时候漏掉某个决策维度，有时候不同决策之间存在冲突（如 DM01 选了 C5-1 但挂载位置不兼容）。更严重的是，端到端输出难以调试——不知道是哪个决策维度出了问题，只能整体重试。后来将决策拆分为 5 个专用模块（DM01–DM05），每个模块职责单一、输入输出明确、可独立测试，DM05 作为综合层在整合时校验并解决冲突。拆分后，系统的可控性和可调试性大幅提升——某个模块出问题可以单独定位和修复，不需要整体重试。这个经历让我深刻认识到：<strong>对于需要多维度输入、多步骤推理的决策场景，专用模块流水线比端到端 LLM 调用更可控、可调试、可维护</strong>。</li>
+<li>
+<p><strong>解决方案</strong>：拆分为 5 个模块后，每个模块职责单一，可独立测试和优化，DM05 做最终整合，大幅提升了系统的可控性。</p>
+</li>
+<li>
+<p><strong>挂载位置的规则设计——从"固定位置"到"运动生理学驱动的动态挂载"</strong>：</p>
+</li>
+<li><strong>故事</strong>：最初设计 C5 语料和 Service 的播放时机时，想简单地固定在某些位置播放——比如每组开始前播放鼓励语，每组结束后播放指导语。但在实际测试中发现，固定位置的效果很差——比如在第一组（用户精力充沛、肌肉紧张感明显）播放"加油坚持"的鼓励语，用户觉得多余；而在最后一组（用户疲劳累积、需要意志力支撑）播放技术指导语，用户已经没有精力关注技术细节。后来深入分析运动生理学——肌肉紧张感在训练前期明显（适合播放技术指导和动作纠正），疲劳在训练后期累积（适合播放鼓励和倒计时），倒计时在组末最有效（给用户明确的结束预期）。基于这些洞察，设计了基于组次数动态计算的挂载规则——C5-1（技术指导类）在前期组挂载，C5-2（鼓励类）在后期组挂载，Service02（倒计时）在组末挂载，而不是固定位置。改完之后，用户反馈语料的时机更合适，交互体验显著提升。</li>
+<li>
+<p><strong>解决方案</strong>：通过分析运动生理学（肌肉紧张感前期明显、疲劳后期累积、倒计时组末有效），设计了基于组次数动态计算的挂载规则，而非固定位置。</p>
+</li>
+<li>
+<p><strong>LLM 输出稳定性——从"直接使用原始输出"到"校验+fallback+重试"的鲁棒性保障</strong>：</p>
+</li>
+<li><strong>故事</strong>：最初实现决策模块时，直接使用 LLM 的原始输出——LLM 返回 JSON 后直接解析使用。但在实际运行中发现，LLM 偶尔会输出格式错误的内容——比如返回的不是标准 JSON（多了 markdown 代码块标记）、或者缺少某个字段（如没有返回 confidence 分数）、或者字段值不符合约束（如语料长度超过 20 字符）。这些异常输出如果直接使用，会导致系统崩溃或决策错误。有一次在演示中，LLM 返回了一个缺少 service_type 字段的输出，导致 DM02 模块抛出 KeyError 异常，整个系统中断。后来在每个模块中加入了三层保障：①输出校验（JSON 格式检查、字段完整性检查、值约束检查）；②默认值 fallback（校验失败时使用合理的默认值，如 service_type 缺失时使用默认服务）；③重试机制（关键模块校验失败时重试 1-2 次）。加完之后，系统的鲁棒性大幅提升——LLM 输出异常时不再崩溃，而是自动降级到默认决策。</li>
+<li><strong>解决方案</strong>：在每个模块加入输出校验、默认值 fallback 和重试机制，保证了系统的鲁棒性。</li>
+</ol>
+<h3 id="92">9.2 可复用的方法论<a class="headerlink" href="#92" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>决策模块化模式</strong>：对于需要多维度输入、多步骤推理的决策场景，将决策拆解为专用模块串联+综合层整合的模式，比端到端 LLM 调用更可控、可调试、可维护。核心原则是<strong>职责单一、接口明确、独立可测、综合校验</strong>。</li>
+<li><strong>结构化数据驱动 LLM 决策</strong>：通过定义良好的输入输出数据结构（dataclass/JSON schema），可以让 LLM 在结构化框架内做决策，而非自由生成，大幅提升输出的可靠性。关键是<strong>用数据结构约束 LLM 的输出空间</strong>。</li>
+<li><strong>挂载规则与 LLM 决策的分层</strong>：将确定性规则（挂载位置、长度限制）与 LLM 决策（语料选择、服务选择）分层，规则层做硬约束，LLM 层做灵活判断，兼顾确定性和智能性。这一模式可推广到任何需要"规则+智能"混合决策的场景。</li>
+<li><strong>LLM 输出的三层鲁棒性保障</strong>：输出校验（格式/字段/约束检查）+ 默认值 fallback（校验失败时使用合理默认值）+ 重试机制（关键模块重试），是保证 LLM 驱动系统稳定性的通用模式。</li>
+</ol>
+<h3 id="93">9.3 踩坑与避坑指南<a class="headerlink" href="#93" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>坑点</strong></th>
+<th><strong>具体表现</strong></th>
+<th><strong>避坑方法</strong></th>
+<th><strong>教训</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>端到端 LLM 不可控</strong></td>
+<td>单一 LLM 调用输出全部决策，格式不稳定、难以调试、冲突无法定位</td>
+<td>拆分为专用模块流水线，每个模块职责单一、可独立测试，综合层做冲突校验</td>
+<td>复杂决策要模块化，不能端到端</td>
+</tr>
+<tr>
+<td><strong>固定挂载位置效果差</strong></td>
+<td>鼓励语在前期播放显得多余，技术指导在后期播放用户无精力关注</td>
+<td>基于运动生理学设计动态挂载规则（前期技术指导、后期鼓励、组末倒计时）</td>
+<td>交互时机要基于领域知识，不能固定</td>
+</tr>
+<tr>
+<td><strong>LLM 输出格式错误</strong></td>
+<td>LLM 返回非标准 JSON、缺少字段、值不符合约束，导致系统崩溃</td>
+<td>输出校验 + 默认值 fallback + 重试机制，三层保障鲁棒性</td>
+<td>LLM 输出必须校验，不能直接使用</td>
+</tr>
+<tr>
+<td><strong>语料超长无法播报</strong></td>
+<td>DM04 生成的语料超过 20 字符，在动作间隙无法快速播报</td>
+<td>输出后做长度截断和校验，确保 20 字符限制严格执行</td>
+<td>实时交互场景必须有硬约束</td>
+</tr>
+<tr>
+<td><strong>多模块决策冲突</strong></td>
+<td>DM01 选 C5-1 但 DM02 选的 Service 不兼容，决策矛盾</td>
+<td>DM05 综合层在整合时校验并解决冲突，挂载规则作为硬约束</td>
+<td>多模块决策必须有综合校验层</td>
+</tr>
+<tr>
+<td><strong>历史数据冷启动</strong></td>
+<td>新用户无历史数据，InputSpace 为空，决策模块无法工作</td>
+<td>基于当前动作信息的兜底逻辑，确保无历史数据也能生成合理决策</td>
+<td>决策系统要有冷启动兜底</td>
+</tr>
+<tr>
+<td><strong>单一 LLM 厂商依赖</strong></td>
+<td>单一厂商 API 不稳定、价格变动、模型更新，影响系统可用性</td>
+<td>多厂商 LLM 接口层封装（讯飞/百川/智谱），可灵活切换</td>
+<td>LLM 调用要多厂商封装，不能单点依赖</td>
+</tr>
+<tr>
+<td><strong>有状态模块难测试</strong></td>
+<td>决策模块内部维护历史状态，状态管理复杂，难以独立测试</td>
+<td>决策模块无状态，由上层系统负责持久化和传入 InputSpace</td>
+<td>决策模块要无状态，状态管理上移</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<h3 id="94">9.4 如果重来会怎么做<a class="headerlink" href="#94" title="Permanent link">&para;</a></h3>
+<ul>
+<li>增加决策模块的可解释性输出，让用户知道"为什么选择这个 Service"，提升信任度；</li>
+<li>引入强化学习，根据用户对决策的反馈（如是否遵循指导、是否表达不满）持续优化决策策略；</li>
+<li>将 5 个模块的 LLM 调用合并为一次批量调用，降低延迟和 API 成本；</li>
+<li>增加 A/B 测试框架，对比不同决策策略的用户留存和训练效果；</li>
+<li>开发可视化的决策调试工具，实时展示每个模块的输入输出和决策依据。</li>
+</ul>
+<hr />
+<h3 id="95-faq">9.5 常见问题与解答（FAQ）<a class="headerlink" href="#95-faq" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>以下问题模拟读者、面试官与答辩评委视角，解答均从报告正文提取。</p>
+</blockquote>
+<p><strong>Q1：5 个决策模块（DM01–DM05）各自的职责是什么？为什么需要 5 个而不是 1 个？</strong></p>
+<p>A：5 个决策模块的职责分别为：①<strong>DM01（C5 语料类型决策）</strong>——基于用户低分评估点和疲劳趋势，选择 C5_1（技术指导类）或 C5_2（鼓励类）语料；②<strong>DM02（用户级服务决策）</strong>——基于用户表现趋势，选择 4 种核心 Service（鼓励、指导、倒计时等）；③<strong>DM03（动作调整决策）</strong>——输出动作难度和次数的调整方案；④<strong>DM04（上下文感知语料生成）</strong>——为特定评估点生成 20 字符以内的个性化语料；⑤<strong>DM05（综合挂载方案生成）</strong>——整合 DM01/DM02 结果，按挂载规则计算 C5 语料和 Service 的精确挂载位置，校验并解决模块间冲突。需要 5 个而不是 1 个的原因是：端到端 LLM 调用输出不可控、难以调试、冲突无法定位——单一 LLM 输出全部决策时，不知道是哪个维度出了问题，只能整体重试。拆分为 5 个专用模块后，每个模块职责单一、输入输出明确、可独立测试和优化，DM05 综合层做冲突校验，系统的可控性和可调试性大幅提升。</p>
+<p><strong>Q2："挂载规则"具体是怎么工作的？为什么需要运动生理学知识？</strong></p>
+<p>A：挂载规则决定 C5 语料和 Service 在训练过程中的<strong>精确播放时机</strong>，基于运动生理学知识设计：①<strong>C5-1（技术指导类）</strong>在训练前期组挂载——因为肌肉紧张感在训练前期明显，用户对技术细节和动作纠正的接受度高；②<strong>C5-2（鼓励类）</strong>在训练后期组挂载——因为疲劳在训练后期累积，用户需要意志力支撑，鼓励和正向反馈更有效；③<strong>Service02（倒计时）</strong>在组末挂载——因为倒计时给用户明确的结束预期，在组末最能激发坚持的动力；④挂载位置基于<strong>组次数动态计算</strong>，而不是固定位置——比如 C5-1 在总组数的前 1/3 挂载，C5-2 在后 1/3 挂载，具体位置随总组数变化。需要运动生理学知识的原因是：交互时机直接影响用户体验——固定位置播放（如每组开始前都播放鼓励语）会导致在用户精力充沛时显得多余、在用户疲劳时又缺乏针对性。基于运动生理学的动态挂载规则，让语料和服务在最合适的时机出现，显著提升交互效果。</p>
+<p><strong>Q3：系统如何保证 LLM 输出的稳定性？如果 LLM 返回格式错误怎么办？</strong></p>
+<p>A：系统通过<strong>三层鲁棒性保障</strong>保证 LLM 输出的稳定性：①<strong>输出校验</strong>——每个模块对 LLM 返回的内容进行 JSON 格式检查、字段完整性检查（如必须包含 service_type、confidence 等字段）、值约束检查（如语料长度不超过 20 字符）；②<strong>默认值 fallback</strong>——校验失败时使用合理的默认值，如 service_type 缺失时使用默认服务类型，语料超长时自动截断，确保即使 LLM 输出异常也能生成合理的默认决策；③<strong>重试机制</strong>——关键模块（如 DM01 语料类型决策、DM02 服务决策）校验失败时重试 1-2 次，提高 LLM 输出符合约束的概率。此外，系统还通过<strong>结构化数据驱动 LLM 决策</strong>——用 dataclass/JSON schema 明确定义输入输出格式，让 LLM 在结构化框架内做决策而非自由生成，从源头降低输出异常的概率。通过这些机制，LLM 输出异常时系统不再崩溃，而是自动降级到默认决策，保证系统的连续运行。</p>
+<p><strong>Q4：这个项目与 Virtual Coach CHI 论文（17号报告）是什么关系？两者的区别是什么？</strong></p>
+<p>A：AiFitGo-Interactive-Unit 是 Virtual Coach CHI 论文（CHI#3474，2024 年发表）方向的<strong>工程落地核心</strong>。两者的关系是：Virtual Coach 是<strong>研究型项目</strong>——聚焦人机交互研究，探索智能健身教练的交互决策理念，通过用户研究验证交互效果，产出 CHI 论文；AiFitGo-Interactive-Unit 是<strong>工程型项目</strong>——将 CHI 论文中的交互决策理念转化为可运行的工程系统，实现 5 模块决策流水线、运动生理学挂载规则、多厂商 LLM 接口层、9 种服务类型框架等完整的工程实现。两者的区别：①<strong>目标不同</strong>——Virtual Coach 的目标是学术研究（验证交互理念、发表论文），AiFitGo 的目标是工程落地（构建可运行系统、支持实际使用）；②<strong>方法不同</strong>——Virtual Coach 侧重用户研究和交互设计，AiFitGo 侧重系统架构和工程实现；③<strong>产出不同</strong>——Virtual Coach 产出 CHI 论文和研究原型，AiFitGo 产出完整的 5 模块决策系统代码和工程文档。两者形成"研究→工程"的完整链路：Virtual Coach 的研究洞察（交互决策理念）为 AiFitGo 的工程实现提供了理论基础，AiFitGo 的工程实现将研究成果转化为可运行的系统。</p>
+<p><strong>Q5：系统的实时性如何保证？5 个模块的 LLM 调用会不会导致延迟过高？</strong></p>
+<p>A：系统的实时性通过<strong>模块化设计和并行调用</strong>保证：①<strong>模块化设计</strong>——5 个决策模块职责单一，每个模块的 LLM 调用只处理一个决策维度（如 DM01 只决策 C5 语料类型），prompt 简洁、输出简短，单次 LLM 调用延迟较低；②<strong>并行调用</strong>——各模块可并行调用 LLM（DM01、DM02、DM03 之间没有依赖关系，可以同时发起 LLM 请求），DM05 仅做轻量整合（规则计算和冲突校验，不需要 LLM 调用），整体延迟由最慢的单个模块决定，而不是 5 个模块的延迟之和；③<strong>无状态设计</strong>——决策模块本身无状态，InputSpace 由上层系统预先准备好传入，不需要在决策过程中查询数据库或加载历史数据，减少了 I/O 延迟；④<strong>语料长度控制</strong>——DM04 生成的语料严格限制在 20 字符以内，LLM 输出短，生成速度快。通过这些设计，交互决策可以在组间休息的短暂窗口内完成，满足实时性要求。如果未来需要进一步降低延迟，可以将 5 个模块的 LLM 调用合并为一次批量调用（batch API），进一步降低 API 调用次数和延迟。</p>
+<hr />
+<h2 id="10-references">10. 文件索引（References）<a class="headerlink" href="#10-references" title="Permanent link">&para;</a></h2>
+<h3 id="101-github">10.1 GitHub 仓库<a class="headerlink" href="#101-github" title="Permanent link">&para;</a></h3>
+<ul>
+<li>AiFitGo-Interactive-Unit（私有）：https://github.com/dujh22/AiFitGo-Interactive-Unit</li>
+<li>Virtual-Coach（公开，CHI 论文配套）：https://github.com/dujh22/Virtual-Coach</li>
+</ul>
+<h3 id="102">10.2 飞书文档<a class="headerlink" href="#102" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Virtual Coach CHI 论文：https://zhipu-ai.feishu.cn/docx/RL5LdLAIboYEO8xg7FdcQgmCnJc</li>
+<li>已完成工作：https://zhipu-ai.feishu.cn/docx/FjMWd75Mcoq4FgxngjxcRby8nWd</li>
+</ul>
+<h3 id="103">10.3 相关研究<a class="headerlink" href="#103" title="Permanent link">&para;</a></h3>
+<ul>
+<li>AiMed（IJCAI 2024 CCF-A，医学LLM）：https://github.com/dujh22/AiMed</li>
+<li>MedRad（临床决策框架，投 ICML）：https://github.com/dujh22/MedRad</li>
+<li>LogicEvolve（NeurIPS 2026，逻辑推理自进化）：https://github.com/dujh22/LogicEvolve</li>
+</ul>
+<h3 id="104">10.4 在线资源<a class="headerlink" href="#104" title="Permanent link">&para;</a></h3>
+<ul>
+<li>个人主页：https://dujh22.github.io/Dujinhua_wiki/</li>
+<li>公开日报：https://github.com/dujh22/Daily-Work-Log-Public/tree/main/logs/2026</li>
+</ul>
+<hr />
+<h2 id="11">11. 转正答辩证据卡<a class="headerlink" href="#11" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>本章节为转正答辩专用证据整理，基于智谱转正制度（ZP-RL-009）与公司文化2.0（Think Big / Deliver Solid / Scale Stable）标准整理。</p>
+</blockquote>
+<h3 id="111">11.1 目标基线<a class="headerlink" href="#111" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>部门目标(O)</strong>：将 Virtual Coach（CHI 2026 论文）方向的人机交互研究成果工程落地，构建可运行的智能健身教练交互决策系统，验证 LLM 在实时交互决策场景中的工程可行性。</li>
+<li><strong>个人KR</strong>：（1）设计并实现 5 决策模块（DM01–DM05）的交互决策系统；（2）封装多厂商 LLM 接口层，支持讯飞/百川/智谱三家 API；（3）实现 9 种服务类型框架和 2 类 C5 语料决策；（4）完成中英文文档和测试体系。</li>
+<li><strong>完成率</strong>：100%——5 模块全部实现并可独立测试，9 种服务类型框架完成，3 家 LLM API 封装完成，中英文 README 齐备。</li>
+</ul>
+<h3 id="112">11.2 量化结果<a class="headerlink" href="#112" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>维度</strong></th>
+<th><strong>具体数据</strong></th>
+<th><strong>来源</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>决策模块</td>
+<td>5 个（DM01–DM05），职责清晰、可独立测试</td>
+<td>第4章/第6章</td>
+</tr>
+<tr>
+<td>服务类型</td>
+<td>9 种（service01–service09），覆盖健身交互全场景</td>
+<td>第4.4节</td>
+</tr>
+<tr>
+<td>C5 语料类型</td>
+<td>2 类（肌肉紧张感/疲劳感），挂载位置基于组次数动态计算</td>
+<td>第4.3节</td>
+</tr>
+<tr>
+<td>LLM 厂商兼容</td>
+<td>3 家（讯飞/百川/智谱），默认 GLM-4-Air</td>
+<td>第4.5节</td>
+</tr>
+<tr>
+<td>核心数据结构</td>
+<td>3 个（InputSpace / InteractionUnitSpace / MountingScheme）</td>
+<td>第4.2节</td>
+</tr>
+<tr>
+<td>测试函数</td>
+<td>5 个（test_DM_01 至 test_DM_05），支持单模块调试和端到端测试</td>
+<td>第5.3节</td>
+</tr>
+<tr>
+<td>代码文件</td>
+<td>4 个核心文件（main.py / define.py / llm_response.py / service.py）</td>
+<td>第4.1节</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<h3 id="113">11.3 公司层面贡献<a class="headerlink" href="#113" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>研究成果工程落地</strong>：将 Virtual Coach CHI 2026 论文（CHI#3474）中的人机交互研究洞察转化为可运行的 5 模块决策系统，是论文方向的工程落地核心组件。</li>
+<li><strong>多厂商 LLM 接口层可复用</strong>：<code>llm_response.py</code> 封装的讯飞/百川/智谱三家 API 统一调用接口，可被其他需要多厂商 LLM 兼容的项目复用。</li>
+<li><strong>决策模块化方法论可迁移</strong>：将交互决策拆解为专用模块串联+综合层整合的模式，可迁移到其他需要实时交互决策的领域（康复训练、体育教学、人机协作）。</li>
+<li><strong>说明</strong>：本项目为个人主导的工程开发项目，主要服务于 Virtual Coach 研究方向的工程验证，间接为团队的人机交互研究提供可运行的系统支撑。</li>
+</ul>
+<h3 id="114">11.4 专业影响力<a class="headerlink" href="#114" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>技术方案</strong>：提出"决策模块化 + 结构化数据驱动 LLM 决策 + 确定性规则与 LLM 决策分层"的三层架构——5 个决策模块职责单一可独立测试，dataclass/JSON schema 约束 LLM 输出结构，挂载位置规则做硬约束、LLM 做灵活判断。</li>
+<li><strong>文档沉淀</strong>：撰写中英文双语 README（README.md + README_ZH.md），详细说明系统架构、模块设计、数据结构、使用方法和扩展指南。</li>
+<li><strong>被依赖情况</strong>：作为 Virtual Coach CHI 论文方向的工程落地核心组件，与 Virtual-Coach 公开仓库（Prompt 自动化调试与评测、工作流生成系统）形成研究+工程的完整生态。</li>
+<li><strong>分享/培训</strong>：暂无正式组内分享记录（现有源材料中未找到正式分享安排）；项目以中英文双语 README 和可运行代码作为主要知识传递载体。</li>
+</ul>
+<h3 id="115">11.5 价值观锚点<a class="headerlink" href="#115" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>价值观</strong></th>
+<th><strong>具体故事</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Think Big</strong></td>
+<td>不满足于用单一 LLM 调用输出全部交互决策（输出不可控、难以调试），主动设计 5 模块决策流水线（DM01–DM05），每个模块职责单一、可独立测试，DM05 做最终整合，比"端到端 LLM 调用"多走一步，大幅提升系统可控性和可维护性。</td>
+</tr>
+<tr>
+<td><strong>Deliver Solid</strong></td>
+<td>为每个决策模块编写独立测试函数（test_DM_01 至 test_DM_05），支持单模块调试和端到端测试；在每个模块中加入 LLM 输出校验和 fallback 逻辑，确保即使 LLM 输出格式异常也能生成合理默认决策；DM04 语料生成严格执行 20 字符长度限制并做截断校验，把工程细节做到位。</td>
+</tr>
+<tr>
+<td><strong>Scale Stable</strong></td>
+<td>抽象 LLM 接口层（llm_response.py），支持讯飞/百川/智谱三家 API 统一调用，避免厂商锁定，系统可根据不同决策模块需求选择性价比最优的模型；决策模块设计为无状态（InputSpace 由上层系统持久化传入），可跨组、跨训练会话累积数据，支持规模化部署。</td>
+</tr>
+<tr>
+<td><strong>创新</strong></td>
+<td>将运动生理学原理转化为工程挂载规则——C5-1（肌肉紧张感）挂载在动作前期（第 3 次到 0.5×组次数），C5-2（疲劳感）挂载在后期（0.5×组次数到倒数第 3 次），Service02（倒计时）挂载在组末（倒数第 5 到倒数第 3 次），基于组次数动态计算而非固定位置，适配不同训练计划的次数差异。</td>
+</tr>
+<tr>
+<td><strong>激情/主人翁</strong></td>
+<td>主动将 CHI 论文中的交互决策理念转化为可运行的工程系统，不限于实习生职责；从系统架构设计到 5 个模块全部实现、9 种服务类型框架、多厂商 LLM 接口封装、中英文文档，全程独立完成，体现对项目的主人翁意识。</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<h3 id="116">11.6 协作与利他<a class="headerlink" href="#116" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>帮了谁</strong>：（1）为 Virtual Coach CHI 论文方向提供可运行的工程落地系统，验证人机交互研究的工程可行性；（2）通过开源 Virtual-Coach 仓库为社区提供 LLM 虚拟教练相关工具；（3）多厂商 LLM 接口层可被其他项目复用。</li>
+<li><strong>证人</strong>：Virtual Coach CHI 2026 论文合作者（CHI#3474，具体合作者姓名源材料未列出，待论文正式发表后确认）、唐杰教授（学术指导）。</li>
+<li><strong>跨部门协作</strong>：主要为个人主导的工程开发项目，与 Virtual Coach 研究方向有紧密关联，暂无跨部门协作记录。</li>
+</ul>
+<h3 id="117">11.7 反思与成长（自我批评式）<a class="headerlink" href="#117" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>没做好的</strong>：（1）系统目前仅有单元测试框架，缺乏真实用户场景下的端到端验证和 A/B 测试，决策策略的有效性未经过实际用户数据验证，这是我在工程开发中偏重功能实现、忽视用户验证的表现；（2）5 个模块的 LLM 调用是串行的，未做批量调用优化，在实时交互场景中可能存在延迟问题，我在设计时未充分考虑性能优化；（3）缺乏决策可解释性输出，用户无法知道"为什么选择这个 Service"，影响信任度。</li>
+<li><strong>学到的</strong>：（1）决策模块化模式——对于需要多维度输入、多步骤推理的决策场景，拆解为专用模块串联+综合层整合比端到端 LLM 调用更可控、可调试、可维护；（2）结构化数据驱动 LLM 决策——通过定义良好的输入输出数据结构（dataclass/JSON schema），让 LLM 在结构化框架内做决策而非自由生成，大幅提升输出可靠性；（3）确定性规则与 LLM 决策的分层设计——规则层做硬约束（挂载位置、长度限制），LLM 层做灵活判断（语料选择、服务选择），兼顾确定性和智能性。</li>
+<li><strong>如果重来</strong>：（1）在开发初期就设计 A/B 测试框架，用真实用户数据验证决策策略的有效性，而非仅凭架构分析判断；（2）将 5 个模块的 LLM 调用合并为批量调用，降低延迟和 API 成本；（3）增加决策可解释性输出，让用户知道每个决策的依据；（4）开发可视化的决策调试工具，实时展示每个模块的输入输出和决策依据。</li>
+<li><strong>成长轨迹</strong>：从 CHI 论文的人机交互研究，到独立设计并实现 5 模块工程系统，完成了从"研究者"到"工程系统设计者"的角色拓展，掌握了将研究理念转化为可运行系统的工程能力。</li>
+</ul>
+<h3 id="118-6">11.8 6年后视角<a class="headerlink" href="#118-6" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>大局定位</strong>：LLM 驱动的实时交互决策是人机交互领域的重要方向。AiFitGo 的 5 模块决策架构是"将 LLM 从对话工具升级为实时决策引擎"的早期工程实践。6 年后回看，决策模块化、结构化数据驱动 LLM 决策、确定性规则与 LLM 分层等设计思想，可能成为智能健身教练、康复训练系统、人机协作机器人等领域的标准工程范式之一。</li>
+<li><strong>为什么值得做</strong>：解决了"LLM 如何在实时交互场景中做结构化、可控、可维护的决策"这一工程问题——传统端到端 LLM 调用输出不可控、难以调试，而 5 模块决策流水线将决策拆解为可独立测试的单元，DM05 做最终整合，为 LLM 在实时交互决策场景的工程应用提供了可复用的架构参考。</li>
+</ul>
+<h3 id="119">11.9 五段式讲述（答辩稿骨架）<a class="headerlink" href="#119" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>问题定义</strong>（外行能懂）：传统健身 App 都是预录制课程，千人一面，无法根据用户的实时运动表现动态调整交互策略。一个理想的智能健身教练应该像真人私教一样，实时判断用户是否疲劳、哪个动作得分低、下一步该给鼓励还是指导，但这些决策需要综合用户历史数据和当前状态，且必须在组间休息的短暂窗口内完成。</li>
+<li><strong>输入输出</strong>（本科生能懂）：输入是用户的当前运动表现（动作、组数、当前组索引）和历史累计数据（低分评估点、已命中服务记录），输出是完整的交互单元挂载方案（MountingScheme），包含每次动作对应的服务类型和音频文件，可直接被交互引擎执行。</li>
+<li><strong>技术/做法</strong>（研究生能懂）：设计 5 决策模块流水线——DM01 决定 C5 语料类型（询问肌肉紧张感还是疲劳感），DM02 决定用户级服务（引导练习/倒计时/检查确认/详细指导），DM03 决定动作调整（难度+次数），DM04 生成上下文感知语料（20 字符以内），DM05 整合 DM01/DM02 结果并按运动生理学规则计算精确挂载位置；封装讯飞/百川/智谱三家 LLM API，默认 GLM-4-Air。</li>
+<li><strong>核心创新</strong>（只有自己懂）：决策模块化架构解决了端到端 LLM 调用输出不可控的难题；将运动生理学原理转化为基于组次数动态计算的挂载规则（C5-1 前期、C5-2 后期、倒计时组末），而非固定位置；确定性规则（挂载位置、长度限制）与 LLM 决策（语料选择、服务选择）分层，兼顾确定性和智能性。</li>
+<li><strong>未来</strong>（开放问题）：决策策略的有效性需要真实用户 A/B 测试验证；5 模块 LLM 调用可优化为批量调用降低延迟；增加决策可解释性输出和可视化调试工具；5 模块架构可迁移到康复训练、体育教学、人机协作等其他实时交互决策领域。</li>
+</ol>
+<h3 id="1110">11.10 对比证据（跨项目量化参照）<a class="headerlink" href="#1110" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>对比项</strong></th>
+<th><strong>本项目（27号 AiFitGo）</strong></th>
+<th><strong>参照项目</strong></th>
+<th><strong>对比结论</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>人机交互研究</td>
+<td>CHI 2026论文（CHI#3474）工程落地，5模块决策系统</td>
+<td>17号 VirtualCoach（CHI 2026论文，Prompt自动化调试与评测）</td>
+<td>本项目为工程落地核心组件，17号为研究论文主体，研究+工程完整生态</td>
+</tr>
+<tr>
+<td>决策模块数</td>
+<td>5个决策模块（DM01-DM05），DM03/DM04并行</td>
+<td>26号 AutoLLM（6-Agent串行流水线）</td>
+<td>本项目为决策模块流水线（含并行），AutoLLM为信息Agent流水线，领域不同</td>
+</tr>
+<tr>
+<td>LLM应用</td>
+<td>结构化数据驱动LLM决策（dataclass/JSON schema约束），默认GLM-4-Air</td>
+<td>25号 DailyDigest（LLM内容工程中间件）</td>
+<td>本项目LLM用于交互决策，DailyDigest LLM用于内容工程，应用场景互补</td>
+</tr>
+<tr>
+<td>多厂商LLM接口</td>
+<td>讯飞/百川/智谱三家API统一封装（llm_response.py）</td>
+<td>25/26号（主要使用GLM网关）</td>
+<td>本项目多厂商兼容更系统，避免厂商锁定</td>
+</tr>
+<tr>
+<td>规则与LLM分层</td>
+<td>确定性规则（挂载位置/长度限制）+ LLM决策（语料/服务选择）分层</td>
+<td>28号 csv2app（纯规则引擎，无LLM）</td>
+<td>本项目为规则+LLM混合，csv2app为纯规则，复杂度不同</td>
+</tr>
+<tr>
+<td>语料长度限制</td>
+<td>每条语料严格20字符以内，截断校验</td>
+<td>25号 DailyDigest（摘要无严格长度限制）</td>
+<td>本项目对输出格式约束更严格（实时交互场景需求）</td>
+</tr>
+<tr>
+<td>挂载位置计算</td>
+<td>基于运动生理学的动态计算（C5-1前期/C5-2后期/倒计时组末）</td>
+<td>29号 THU_Sports（基于优先级的场地调度）</td>
+<td>两者都有基于领域知识的规则引擎，领域不同</td>
+</tr>
+<tr>
+<td>个人角色</td>
+<td>核心开发者</td>
+<td>25/26/28/29号均为独立开发者</td>
+<td>本项目为核心开发者（与Virtual Coach研究团队协作），其余为独立开发</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<hr />
+<h2 id="12">12. 相关项目<a class="headerlink" href="#12" title="Permanent link">&para;</a></h2>
+<p>AiFitGo 作为人机交互类工程工具项目，与杜晋华的 Virtual Coach 研究方向和其他工程工具项目存在技术关联。下表梳理了核心关联项目及其关联类型。</p>
+<table>
+<thead>
+<tr>
+<th><strong>关联报告</strong></th>
+<th><strong>关联类型</strong></th>
+<th><strong>关联说明</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>17. VirtualCoach 人机交互</strong></td>
+<td>人机交互（研究→工程落地）</td>
+<td>Virtual Coach 是 CHI 2026 论文（CHI#3474），研究 LLM 虚拟教练的人机交互；AiFitGo Interactive Unit 是该方向的工程落地核心组件，将论文中的交互决策理念转化为可运行的 5 模块决策系统</td>
+</tr>
+<tr>
+<td><strong>25. LLM-DailyDigest 每日AI追新</strong></td>
+<td>工程工具（同属阶段五工具链）</td>
+<td>LLM-DailyDigest 与 AiFitGo 同为 2026 年阶段五启动的工程工具项目，共享 LLM API 接口层和工程化方法论</td>
+</tr>
+<tr>
+<td><strong>26. AutoLLM 多Agent信息自动化</strong></td>
+<td>工程工具（同属阶段五工具链）</td>
+<td>AutoLLM 与 AiFitGo 同为多模块/多 Agent 架构的工程工具项目，共享模块化设计、LLM 驱动决策、自动化执行的工程方法论</td>
+</tr>
+<tr>
+<td><strong>28. csv2app 题库转PWA</strong></td>
+<td>工程工具（同属阶段五工具链）</td>
+<td>csv2app 与 AiFitGo 同为个人痛点驱动的工程工具项目，共享开源仓库管理、单文件交付、CI/CD 的工程实践</td>
+</tr>
+<tr>
+<td><strong>29. THU_Sports 清华体育自动预约</strong></td>
+<td>工程工具（同属阶段五工具链）</td>
+<td>THU_Sports 与 AiFitGo 同为体育相关的工程工具项目，THU_Sports 解决体育场地预约痛点，AiFitGo 解决健身交互决策痛点，两者可形成"预约+训练"闭环</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：各关联报告项目概述与方法章节；报告 §1 项目概述、§2.3 项目启动契机</p>
+</blockquote>
+<h3 id="_4">项目间引用网络<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p><strong>上游项目（本项目依赖/受益于）：</strong>
+- <a href="../../phase4/17_VirtualCoach%E4%BA%BA%E6%9C%BA%E4%BA%A4%E4%BA%92/">17 · VirtualCoach人机交互</a> — Virtual Coach是CHI 2026论文（CHI#3474），研究LLM虚拟教练的人机交互；AiFitGo Interactive Unit是该方向的工程落地核心组件，将论文中的交互决策理念转化为可运行的5模块决策系统</p>
+<p><strong>下游项目（受益于本项目）：</strong>
+- 暂无直接下游项目（工程落地组件，为Virtual Coach研究提供应用验证）</p>
+<p><strong>平行项目（同系列/同方法）：</strong>
+- <a href="../25_LLM-DailyDigest%E6%AF%8F%E6%97%A5AI%E8%BF%BD%E6%96%B0/">25 · LLM-DailyDigest每日AI追新</a> — 同属2026年阶段五启动的工程工具项目，共享LLM API接口层和工程化方法论；DailyDigest的LLM用于内容工程，AiFitGo的LLM用于交互决策，应用场景互补
+- <a href="../26_AutoLLM%E5%A4%9AAgent%E4%BF%A1%E6%81%AF%E8%87%AA%E5%8A%A8%E5%8C%96/">26 · AutoLLM多Agent信息自动化</a> — 同属多模块/多Agent架构的工程工具项目，共享模块化设计、LLM驱动决策、自动化执行的工程方法论
+- <a href="../28_csv2app%E9%A2%98%E5%BA%93%E8%BD%ACPWA/">28 · csv2app题库转PWA</a> — 同属个人痛点驱动的工程工具项目，共享开源仓库管理、单文件交付、CI/CD的工程实践
+- <a href="../29_THU_Sports%E6%B8%85%E5%8D%8E%E4%BD%93%E8%82%B2%E8%87%AA%E5%8A%A8%E9%A2%84%E7%BA%A6/">29 · THU_Sports清华体育自动预约</a> — 同属体育相关的工程工具项目，THU_Sports解决体育场地预约痛点，AiFitGo解决健身交互决策痛点，两者可形成"预约+训练"闭环</p>
+<hr />
+<h2 id="13">13. 跨项目对比<a class="headerlink" href="#13" title="Permanent link">&para;</a></h2>
+<h3 id="131-17virtualcoach">13.1 与17号（VirtualCoach）对比：人机交互研究与工程落地<a class="headerlink" href="#131-17virtualcoach" title="Permanent link">&para;</a></h3>
+<p>Virtual Coach 与 AiFitGo 是杜晋华在人机交互方向的"研究论文+工程落地"组合，两者形成完整的研究-工程生态。</p>
+<table>
+<thead>
+<tr>
+<th><strong>对比维度</strong></th>
+<th><strong>17号 VirtualCoach</strong></th>
+<th><strong>27号 AiFitGo Interactive Unit</strong></th>
+<th><strong>研究与工程关系</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>性质</strong></td>
+<td>CHI 2026学术论文（CHI#3474）</td>
+<td>工程落地核心组件（5模块决策系统）</td>
+<td>研究论文vs工程实现</td>
+</tr>
+<tr>
+<td><strong>核心关注</strong></td>
+<td>LLM虚拟教练的人机交互研究、Prompt自动化调试与评测、工作流生成</td>
+<td>实时交互决策的工程实现（5模块决策流水线+挂载规则）</td>
+<td>研究关注交互范式，工程关注决策实现</td>
+</tr>
+<tr>
+<td><strong>技术重点</strong></td>
+<td>Prompt工程自动化（生成→评测→优化→版本管理）、工作流节点编排</td>
+<td>决策模块化架构、结构化数据驱动LLM决策、确定性规则与LLM决策分层</td>
+<td>Prompt自动化vs决策模块化</td>
+</tr>
+<tr>
+<td><strong>LLM角色</strong></td>
+<td>Prompt生成与评测的自动化工具</td>
+<td>实时交互决策引擎（DM01-DM05）</td>
+<td>LLM作为Prompt工具vs LLM作为决策引擎</td>
+</tr>
+<tr>
+<td><strong>输出产物</strong></td>
+<td>可执行的工作流配置、Prompt版本化管理、评估报告</td>
+<td>结构化挂载方案（MountingScheme），可直接被交互引擎执行</td>
+<td>工作流配置vs可执行挂载方案</td>
+</tr>
+<tr>
+<td><strong>评测方式</strong></td>
+<td>Prompt自动化评测（生成→评测→优化闭环）</td>
+<td>单模块测试（test_DM_01至test_DM_05）+端到端测试</td>
+<td>Prompt评测vs模块测试</td>
+</tr>
+<tr>
+<td><strong>个人角色</strong></td>
+<td>核心研究者（CHI论文合作者）</td>
+<td>核心开发者（5模块系统独立实现）</td>
+<td>研究者vs工程开发者</td>
+</tr>
+<tr>
+<td><strong>双向支撑</strong></td>
+<td>提供交互决策理念和研究方向</td>
+<td>将研究理念转化为可运行系统，验证工程可行性</td>
+<td>研究指导工程，工程验证研究</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<p><strong>研究-工程结论</strong>：17号 Virtual Coach 从学术研究层面探索了LLM虚拟教练的人机交互范式（Prompt自动化调试与评测、工作流生成），27号 AiFitGo 将这些研究理念转化为可运行的5模块决策工程系统（DM01-DM05决策流水线+运动生理学挂载规则+多厂商LLM接口层）。两者形成"研究提出交互范式→工程实现决策系统→工程实践反哺研究优化"的完整研究-工程闭环，AiFitGo的5模块决策架构同时为其他实时交互决策场景（康复训练、体育教学、人机协作）提供了可复用的工程参考。</p>
+<h3 id="132-25262829">13.2 与25/26/28/29号对比：工程工具链中的人机交互决策定位<a class="headerlink" href="#132-25262829" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>对比维度</strong></th>
+<th><strong>25 DailyDigest</strong></th>
+<th><strong>26 AutoLLM</strong></th>
+<th><strong>27 AiFitGo（本项目）</strong></th>
+<th><strong>28 csv2app</strong></th>
+<th><strong>29 THU_Sports</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>工具链定位</strong></td>
+<td>信息获取与聚合</td>
+<td>信息自动化处理</td>
+<td>人机交互决策</td>
+<td>数据转应用</td>
+<td>API自动化</td>
+</tr>
+<tr>
+<td><strong>LLM应用</strong></td>
+<td>内容工程中间件</td>
+<td>Agent驱动（6角色）</td>
+<td>决策引擎（DM01-DM05）</td>
+<td>无LLM（纯规则）</td>
+<td>无LLM（纯API）</td>
+</tr>
+<tr>
+<td><strong>核心架构</strong></td>
+<td>五层分层</td>
+<td>6-Agent流水线</td>
+<td>5模块决策流水线（含并行）</td>
+<td>四层Pipeline</td>
+<td>五阶段自动化</td>
+</tr>
+<tr>
+<td><strong>领域知识</strong></td>
+<td>无（通用信息）</td>
+<td>无（通用信息）</td>
+<td>运动生理学（挂载规则）</td>
+<td>题库格式（解析规则）</td>
+<td>场馆预约（优先级调度）</td>
+</tr>
+<tr>
+<td><strong>实时性要求</strong></td>
+<td>低（每日构建）</td>
+<td>低（定时调度）</td>
+<td>高（组间休息窗口内）</td>
+<td>低（离线生成）</td>
+<td>高（毫秒级触发）</td>
+</tr>
+<tr>
+<td><strong>输出形式</strong></td>
+<td>静态网站</td>
+<td>文本/语音/视频</td>
+<td>可执行挂载方案</td>
+<td>单文件HTML PWA</td>
+<td>预约成功/失败</td>
+</tr>
+<tr>
+<td><strong>测试方式</strong></td>
+<td>功能验证</td>
+<td>Agent容错测试</td>
+<td>单模块+端到端测试</td>
+<td>单元测试+冒烟测试</td>
+<td>抢场成功率测试</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<p><strong>工具链定位结论</strong>：在25-29号工程工具链系列中，27号 AiFitGo 占据"人机交互决策"的独特定位——它是五项目中唯一将LLM用作实时决策引擎（而非内容工程或Agent驱动）、唯一融入领域知识（运动生理学挂载规则）、唯一有高实时性要求（组间休息窗口内完成决策）的项目。25/26解决信息获取与处理，28解决数据转应用，29解决API自动化，27解决人机交互决策，五者共同构成"信息获取→信息处理→人机交互→数据转应用→API自动化"的全栈工程能力矩阵。</p>
+<hr />
+<h2 id="14">14. 关键技术决策与复盘<a class="headerlink" href="#14" title="Permanent link">&para;</a></h2>
+<h3 id="15llm">决策1：选择"5模块决策流水线"而非"端到端LLM调用"<a class="headerlink" href="#15llm" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>项目</strong></th>
+<th><strong>内容</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>决策背景</strong></td>
+<td>智能健身教练的交互决策需要综合用户历史数据（低分评估点、已命中服务记录）和当前状态（动作、组数、当前组索引），输出完整的挂载方案。有两条路线：（A）端到端LLM调用——将所有输入拼接为prompt，让LLM一次性输出完整挂载方案；（B）决策模块化——将决策拆解为专用模块串联（DM01语料类型→DM02服务选择→DM03动作调整→DM04语料生成→DM05综合整合），每个模块职责单一。</td>
+</tr>
+<tr>
+<td><strong>决策选择</strong></td>
+<td>选择路线B——5模块决策流水线，DM03/DM04并行执行，DM05做最终整合。</td>
+</tr>
+<tr>
+<td><strong>决策理由</strong></td>
+<td>（1）端到端LLM调用输出不可控——挂载位置、服务类型、语料内容混在一起，难以调试和验证；（2）模块化让每个决策维度可独立测试（test_DM_01至test_DM_05），问题定位精确；（3）不同模块可选择不同的LLM模型或甚至纯规则实现（如DM05的挂载位置计算用确定性规则），优化成本和延迟；（4）DM03/DM04并行可降低总延迟。</td>
+</tr>
+<tr>
+<td><strong>结果验证</strong></td>
+<td>5模块系统成功实现，每个模块有独立测试函数；DM05综合层有效解决了模块间冲突（如DM02选择的Service与DM01选择的C5语料挂载位置重叠）；单模块测试可快速定位问题。</td>
+</tr>
+<tr>
+<td><strong>复盘反思</strong></td>
+<td>这是本项目最关键的架构决策。端到端LLM调用虽然开发简单，但输出不可控、难以调试，在实时交互场景中风险极高。5模块决策流水线虽然开发复杂度更高，但带来了可控性、可测试性、可维护性的显著提升。代价是5个模块的LLM调用是串行的（除DM03/DM04并行），总延迟较高——未来可优化为批量调用或异步预计算。</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<h3 id="2llm">决策2：设计"确定性规则与LLM决策分层"架构<a class="headerlink" href="#2llm" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>项目</strong></th>
+<th><strong>内容</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>决策背景</strong></td>
+<td>交互决策中有两类任务：（A）确定性任务——挂载位置计算（基于运动生理学的固定规则）、语料长度限制（20字符硬约束）、服务类型的合法性校验；（B）灵活性任务——语料内容选择（根据用户状态生成个性化语料）、服务类型选择（根据用户表现趋势选择引导/倒计时/检查/指导）。如果全部用LLM，确定性任务的输出不稳定（LLM可能违反20字符限制或挂载位置规则）；如果全部用规则，灵活性任务无法实现个性化。</td>
+</tr>
+<tr>
+<td><strong>决策选择</strong></td>
+<td>设计分层架构——规则层做硬约束（挂载位置计算、长度限制、合法性校验），LLM层做灵活判断（语料选择、服务选择），DM05综合层将两者整合并校验。</td>
+</tr>
+<tr>
+<td><strong>决策理由</strong></td>
+<td>（1）运动生理学的挂载位置规则是确定性知识（C5-1前期、C5-2后期、倒计时组末），用规则计算比LLM更准确、更高效；（2）20字符语料长度限制是硬约束，用规则截断校验比依赖LLM自我约束更可靠；（3）语料内容和服务选择需要理解用户状态和个性化，LLM比规则更灵活；（4）分层设计让系统在确定性和智能性之间取得平衡。</td>
+</tr>
+<tr>
+<td><strong>结果验证</strong></td>
+<td>挂载位置计算100%符合运动生理学规则（基于组次数动态计算）；语料长度严格控制在20字符以内（截断校验）；LLM生成的语料和服务选择具有个性化特征；DM05综合层有效校验了规则与LLM输出的一致性。</td>
+</tr>
+<tr>
+<td><strong>复盘反思</strong></td>
+<td>确定性规则与LLM决策分层是本项目的核心设计理念之一。这一架构避免了"全部LLM化"的不稳定性和"全部规则化"的不灵活性，是LLM工程应用的最佳实践之一。未来可进一步细化分层——将更多可形式化的决策从LLM迁移到规则层，降低LLM调用成本和延迟。</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<h3 id="3llm">决策3：封装"多厂商LLM接口层"避免厂商锁定<a class="headerlink" href="#3llm" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>项目</strong></th>
+<th><strong>内容</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>决策背景</strong></td>
+<td>5个决策模块都需要调用LLM，如果直接硬编码某一家API（如智谱GLM），存在厂商锁定风险——API变更、价格调整、服务不稳定都会影响系统。同时，不同决策模块对LLM的能力要求不同（DM04语料生成需要创造性，DM01类型判断只需要分类能力），用同一模型可能造成成本浪费。</td>
+</tr>
+<tr>
+<td><strong>决策选择</strong></td>
+<td>封装llm_response.py多厂商LLM接口层，支持讯飞/百川/智谱三家API统一调用，默认GLM-4-Air，每个模块可独立选择模型。</td>
+</tr>
+<tr>
+<td><strong>决策理由</strong></td>
+<td>（1）多厂商兼容避免厂商锁定，系统可根据API稳定性和价格动态切换；（2）不同模块可选择性价比最优的模型——简单分类用轻量模型，语料生成用能力更强的模型；（3）统一接口层让模块代码不依赖具体厂商API，提升可维护性；（4）接口层可统一处理重试、超时、错误处理等通用逻辑。</td>
+</tr>
+<tr>
+<td><strong>结果验证</strong></td>
+<td>llm_response.py成功封装三家API，统一调用接口；默认GLM-4-Air在所有模块中表现稳定；接口层统一处理了重试和错误处理，模块代码简洁。</td>
+</tr>
+<tr>
+<td><strong>复盘反思</strong></td>
+<td>多厂商LLM接口层是工程最佳实践，虽然初期开发成本较高（需要适配三家API的不同格式和认证方式），但长期来看避免了厂商锁定风险，提升了系统的可维护性和可扩展性。未来可增加更多厂商（如OpenAI、Anthropic）和本地模型支持，进一步提升灵活性。</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<h3 id="4">决策4：将"运动生理学原理转化为动态挂载规则"<a class="headerlink" href="#4" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>项目</strong></th>
+<th><strong>内容</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>决策背景</strong></td>
+<td>交互单元（C5询问、Service服务）需要挂载到训练组的具体动作次数上。简单方案是固定位置（如C5总是在第5次），但不同训练计划的组次数不同（8次/组、12次/组、15次/组），固定位置无法适配。同时，运动生理学原理要求不同类型的交互在不同时机出现——肌肉紧张感询问应在动作前期（疲劳尚未累积时），疲劳感应在后期（疲劳累积后），倒计时应在组末（激励完成最后几次）。</td>
+</tr>
+<tr>
+<td><strong>决策选择</strong></td>
+<td>将运动生理学原理转化为基于组次数的动态计算规则——C5-1（肌肉紧张感）：第3次→0.5×组次数（前期）；C5-2（疲劳感）：0.5×组次数→倒数第3次（后期）；Service02（倒计时）：倒数第5次→倒数第3次（组末）。</td>
+</tr>
+<tr>
+<td><strong>决策理由</strong></td>
+<td>（1）基于组次数的比例计算可适配任意组次数的训练计划，无需为每个计划单独配置；（2）运动生理学原理保证交互在最有效的时机出现——前期询问肌肉紧张感可预防损伤，后期询问疲劳感可防止过度训练，组末倒计时可激励完成；（3）动态计算比固定位置更智能、更个性化。</td>
+</tr>
+<tr>
+<td><strong>结果验证</strong></td>
+<td>动态挂载规则成功适配8/12/15次/组等不同训练计划；C5-1/C5-2/Service02的挂载位置符合运动生理学原理；DM05综合层有效解决了不同交互类型挂载位置的重叠冲突。</td>
+</tr>
+<tr>
+<td><strong>复盘反思</strong></td>
+<td>将领域知识（运动生理学）转化为工程规则是本项目的特色创新。这一决策让系统不仅仅是"LLM驱动的聊天机器人"，而是"融入领域知识的智能决策系统"。未来可进一步扩展领域知识——引入更多运动生理学参数（心率、RPE自评劳累等级）来动态调整交互策略，提升个性化程度。</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<hr />
+<h3 id="_5">图表索引<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>编号</strong></th>
+<th><strong>类型</strong></th>
+<th><strong>标题</strong></th>
+<th><strong>所在章节</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>表1</td>
+<td>表格</td>
+<td>关键数据速览</td>
+<td>§关键数据速览</td>
+</tr>
+<tr>
+<td>表2</td>
+<td>表格</td>
+<td>同期/前人工作对比</td>
+<td>§3.1</td>
+</tr>
+<tr>
+<td>表3</td>
+<td>表格</td>
+<td>与 Virtual Coach 关联对比</td>
+<td>§3.3</td>
+</tr>
+<tr>
+<td>图1</td>
+<td>ASCII</td>
+<td>目录结构</td>
+<td>§4.1.1</td>
+</tr>
+<tr>
+<td>图2</td>
+<td>ASCII</td>
+<td>五决策模块串联流程图</td>
+<td>§4.1.2</td>
+</tr>
+<tr>
+<td>图3</td>
+<td>Mermaid</td>
+<td>五决策模块流程图（DM03/DM04 并行结构）</td>
+<td>§4.1.2</td>
+</tr>
+<tr>
+<td>表4</td>
+<td>表格</td>
+<td>五大决策模块详细设计</td>
+<td>§4.3</td>
+</tr>
+<tr>
+<td>表5</td>
+<td>表格</td>
+<td>C5 语料与挂载位置规则汇总</td>
+<td>§4.3</td>
+</tr>
+<tr>
+<td>表6</td>
+<td>表格</td>
+<td>服务类型体系（9 种）</td>
+<td>§4.4</td>
+</tr>
+<tr>
+<td>表7</td>
+<td>表格</td>
+<td>LLM 接口层（多厂商兼容）</td>
+<td>§4.5</td>
+</tr>
+<tr>
+<td>表8</td>
+<td>表格</td>
+<td>核心功能清单</td>
+<td>§5.1</td>
+</tr>
+<tr>
+<td>表9</td>
+<td>表格</td>
+<td>技术栈</td>
+<td>§6.2</td>
+</tr>
+<tr>
+<td>表10</td>
+<td>表格</td>
+<td>项目时间线与里程碑</td>
+<td>§6.5</td>
+</tr>
+<tr>
+<td>图4</td>
+<td>Mermaid</td>
+<td>决策模块开发甘特图</td>
+<td>§6.5</td>
+</tr>
+<tr>
+<td>表11</td>
+<td>表格</td>
+<td>量化结果</td>
+<td>§11.2</td>
+</tr>
+<tr>
+<td>表12</td>
+<td>表格</td>
+<td>价值观锚点</td>
+<td>§11.5</td>
+</tr>
+<tr>
+<td>表13</td>
+<td>表格</td>
+<td>相关项目</td>
+<td>§12</td>
+</tr>
+<tr>
+<td>表14</td>
+<td>表格</td>
+<td>人机交互研究与工程落地对比（17 vs 27）</td>
+<td>§13.1</td>
+</tr>
+<tr>
+<td>表15</td>
+<td>表格</td>
+<td>工程工具链五项目对比（25/26/27/28/29）</td>
+<td>§13.2</td>
+</tr>
+<tr>
+<td>表16</td>
+<td>表格</td>
+<td>决策1：5模块流水线 vs 端到端LLM</td>
+<td>§14</td>
+</tr>
+<tr>
+<td>表17</td>
+<td>表格</td>
+<td>决策2：确定性规则与LLM决策分层</td>
+<td>§14</td>
+</tr>
+<tr>
+<td>表18</td>
+<td>表格</td>
+<td>决策3：多厂商LLM接口层</td>
+<td>§14</td>
+</tr>
+<tr>
+<td>表19</td>
+<td>表格</td>
+<td>决策4：运动生理学动态挂载规则</td>
+<td>§14</td>
+</tr>
+<tr>
+<td>表20</td>
+<td>表格</td>
+<td>对比证据（跨项目量化参照）</td>
+<td>§11.10</td>
+</tr>
+<tr>
+<td>表21</td>
+<td>表格</td>
+<td>个人成果矩阵</td>
+<td>§个人成果矩阵</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<hr />
+<h3 id="_6">个人成果矩阵<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>类别</strong></th>
+<th><strong>成果名称</strong></th>
+<th><strong>具体内容</strong></th>
+<th><strong>时间</strong></th>
+<th><strong>角色</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>论文</strong></td>
+<td>Virtual Coach: LLM虚拟教练人机交互</td>
+<td>CHI 2026论文（CHI#3474），AiFitGo为该方向工程落地核心组件</td>
+<td>2024-2026</td>
+<td>核心研究者/工程开发者</td>
+</tr>
+<tr>
+<td><strong>开源</strong></td>
+<td>AiFitGo-Interactive-Unit GitHub仓库</td>
+<td>https://github.com/dujh22/AiFitGo-Interactive-Unit（私有），5模块决策系统，中英文双语README</td>
+<td>2026.1-</td>
+<td>核心开发者</td>
+</tr>
+<tr>
+<td><strong>技术方案</strong></td>
+<td>5模块决策流水线架构（DM01-DM05）</td>
+<td>DM01语料类型→DM02服务选择→DM03动作调整→DM04语料生成→DM05综合整合，DM03/DM04并行</td>
+<td>2026</td>
+<td>独立设计</td>
+</tr>
+<tr>
+<td><strong>技术方案</strong></td>
+<td>确定性规则与LLM决策分层架构</td>
+<td>规则层硬约束（挂载位置/长度限制）+ LLM层灵活判断（语料/服务选择）+ DM05综合校验</td>
+<td>2026</td>
+<td>独立设计</td>
+</tr>
+<tr>
+<td><strong>技术方案</strong></td>
+<td>运动生理学动态挂载规则</td>
+<td>C5-1前期（第3次→0.5×组次数）、C5-2后期（0.5×→倒数第3次）、倒计时组末（倒数第5→倒数第3次）</td>
+<td>2026</td>
+<td>独立设计</td>
+</tr>
+<tr>
+<td><strong>工具开发</strong></td>
+<td>多厂商LLM接口层（llm_response.py）</td>
+<td>讯飞/百川/智谱三家API统一封装，默认GLM-4-Air，统一重试/超时/错误处理</td>
+<td>2026</td>
+<td>独立开发</td>
+</tr>
+<tr>
+<td><strong>工具开发</strong></td>
+<td>9种服务类型框架</td>
+<td>service01引导练习/service02倒计时/service03检查确认/service04详细指导等9种服务，结构化配置</td>
+<td>2026</td>
+<td>独立开发</td>
+</tr>
+<tr>
+<td><strong>工具开发</strong></td>
+<td>单模块测试框架</td>
+<td>test_DM_01至test_DM_05独立测试函数，支持单模块调试和端到端测试</td>
+<td>2026</td>
+<td>独立开发</td>
+</tr>
+<tr>
+<td><strong>产业落地</strong></td>
+<td>Virtual Coach研究方向工程验证</td>
+<td>5模块决策系统为CHI论文方向提供可运行的工程落地验证，与Virtual-Coach公开仓库形成研究+工程完整生态</td>
+<td>2026-</td>
+<td>核心开发者</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<hr />
+<p><em>报告撰写日期：2026-09-07 | 基于 GitHub 仓库 README、飞书文档及项目汇总材料整理 · v2审核补强 2026-09-07 · v3图文并茂升级 2026-09-08 · 四轮深化 · 五轮深化 · 六轮深化 · 七轮深化 · 八轮深化 · 九轮终审 · 十轮深化 · 十一轮深化 · 十二轮终审 · 十三轮终审 · 十四轮深化 · 十五轮终审</em></p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+
+
+  
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.tracking", "navigation.top", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+      
+        <script src="../../../javascripts/mermaid_init.js"></script>
+      
+    
+  </body>
+</html>

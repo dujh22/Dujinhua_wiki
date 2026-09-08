@@ -1,0 +1,7102 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="智谱AI研究实习项目报告集，涵盖大模型预训练、逻辑推理、数学推理、评测方法论等30个项目；同时包含个人学术主页（研究、教育、发表、荣誉）。">
+      
+      
+        <meta name="author" content="Jinhua Du (杜晋华)">
+      
+      
+        <link rel="canonical" href="https://dujh22.github.io/Dujinhua_wiki/projects/tools/30_AiMeder%E5%8C%BB%E5%AD%A6%E6%96%87%E7%8C%AE%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/">
+      
+      
+        <link rel="prev" href="../29_THU_Sports%E6%B8%85%E5%8D%8E%E4%BD%93%E8%82%B2%E8%87%AA%E5%8A%A8%E9%A2%84%E7%BA%A6/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>AiMeder（医学文献智慧搜索引擎）项目报告 - Jinhua Du | 杜晋华</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css?v=448b8bea4ef3">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-XXXXXXXXXX"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-XXXXXXXXXX",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+  
+    <meta name="keywords" content="大语言模型, 逻辑推理, 数学推理, 预训练, RLHF, 评测, 智谱AI, 研究实习, LLM, Large Language Models, Reasoning, Evaluation">
+    <meta property="og:title" content="Jinhua Du | 杜晋华 — 智谱AI研究实习项目报告集">
+    <meta property="og:description" content="智谱AI研究实习项目报告集，涵盖大模型预训练、逻辑推理、数学推理、评测方法论等30个项目；个人学术主页（研究、教育、发表、荣誉）。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dujh22.github.io/Dujinhua_wiki/">
+    <meta property="og:site_name" content="Jinhua Du | 杜晋华">
+    <meta property="og:locale" content="zh_CN">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Jinhua Du | 杜晋华 — 智谱AI研究实习项目报告集">
+    <meta name="twitter:description" content="智谱AI研究实习项目报告集，涵盖大模型预训练、逻辑推理、数学推理、评测方法论等30个项目。">
+    <meta name="robots" content="index, follow">
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1-abstract" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Jinhua Du | 杜晋华" class="md-header__button md-logo" aria-label="Jinhua Du | 杜晋华" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 10.5V6l-2.11 1.06A3.999 3.999 0 0 1 12 12a4 4 0 0 1-3.89-4.94L5 5.5 12 2l7 3.5v5zM12 9l-2-1c0 1.1.9 2 2 2s2-.9 2-2zm2.75-3.58L12.16 4.1 9.47 5.47l2.6 1.32zM12 13c2.67 0 8 1.33 8 4v3H4v-3c0-2.67 5.33-4 8-4m0 1.9c-3 0-6.1 1.46-6.1 2.1v1.1h12.2V17c0-.64-3.13-2.1-6.1-2.1"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Jinhua Du | 杜晋华
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              AiMeder（医学文献智慧搜索引擎）项目报告
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="light-blue"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/dujh22/Dujinhua_wiki" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    dujh22/Dujinhua_wiki
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../.." class="md-tabs__link">
+          
+  
+  
+  English
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../index_zh/" class="md-tabs__link">
+          
+  
+  
+  中文
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../" class="md-tabs__link">
+          
+  
+  
+  智谱实习项目
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Jinhua Du | 杜晋华" class="md-nav__button md-logo" aria-label="Jinhua Du | 杜晋华" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 10.5V6l-2.11 1.06A3.999 3.999 0 0 1 12 12a4 4 0 0 1-3.89-4.94L5 5.5 12 2l7 3.5v5zM12 9l-2-1c0 1.1.9 2 2 2s2-.9 2-2zm2.75-3.58L12.16 4.1 9.47 5.47l2.6 1.32zM12 13c2.67 0 8 1.33 8 4v3H4v-3c0-2.67 5.33-4 8-4m0 1.9c-3 0-6.1 1.46-6.1 2.1v1.1h12.2V17c0-.64-3.13-2.1-6.1-2.1"/></svg>
+
+    </a>
+    Jinhua Du | 杜晋华
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/dujh22/Dujinhua_wiki" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    dujh22/Dujinhua_wiki
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    English
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    English
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Profile
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../postgraduate_experience_en/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Postgraduate Experience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../undergraduate_experience_en/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Undergraduate Experience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../history_en/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Research History
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    中文
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    中文
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../index_zh/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人简介
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../postgraduate_experience_zh/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博士经历
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../undergraduate_experience_zh/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    本科经历
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../history_zh/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    研究历史
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    智谱实习项目
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    智谱实习项目
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    项目总览
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阶段一·数学推理与国际化
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    阶段一·数学推理与国际化
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase1/01_ChatGLM%E6%95%B0%E5%AD%A6%E6%8E%A8%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 ChatGLM数学推理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase1/02_ChatGLM%E5%9B%BD%E9%99%85%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02 ChatGLM国际化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阶段二·多模态与社会实践
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    阶段二·多模态与社会实践
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/03_%E5%A4%9A%E6%A8%A1%E6%80%81%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%95%B0%E5%AD%A6%E6%8E%A8%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 多模态大模型数学推理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/04_MetaEvaluation%E5%85%83%E8%AF%84%E4%BC%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04 MetaEvaluation元评估
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/05_AML2024%E5%8A%A9%E6%95%99/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 AML2024助教
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/06_%E8%88%9F%E5%B1%B1%E7%A4%BE%E4%BC%9A%E5%AE%9E%E8%B7%B5%E5%85%AC%E5%AE%89%E7%8A%AF%E7%BD%AA%E9%A2%84%E6%B5%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06 舟山社会实践公安犯罪预测
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/07_MalayGLM%E9%A9%AC%E6%9D%A5%E8%AF%AD%E5%A4%A7%E6%A8%A1%E5%9E%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07 MalayGLM马来语大模型
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/08_o1%E5%A4%8D%E7%8E%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 o1复现
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阶段三·LogicEvolve与基座模型
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    阶段三·LogicEvolve与基座模型
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase3/09_LogicEvolve%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E8%87%AA%E8%BF%9B%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 LogicEvolve逻辑推理自进化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase3/10_GLM-4.5%E5%9F%BA%E5%BA%A7%E6%A8%A1%E5%9E%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 GLM-4.5基座模型
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase3/11_%E6%95%B0%E5%AE%9E%E8%9E%8D%E5%90%88%E6%96%B0%E5%BC%95%E6%93%8E%E9%A1%B9%E7%9B%AE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11 数实融合新引擎项目
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase3/12_Puzzle%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E9%A2%84%E8%AE%AD%E7%BB%83%E6%95%B0%E6%8D%AE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12 Puzzle逻辑推理预训练数据
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase3/13_%E7%B1%BBo1%E6%A8%A1%E5%9E%8B%E6%B3%9B%E5%8C%96%E6%80%A7%E8%AF%84%E4%BC%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13 类o1模型泛化性评估
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5" id="__nav_3_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阶段四·论文冲刺与博士开题
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    阶段四·论文冲刺与博士开题
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase4/14_LogicalSurvey%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%BB%BC%E8%BF%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14 LogicalSurvey逻辑推理综述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase4/15_EvolveLRM%E8%AE%AD%E7%BB%83%E8%87%AA%E8%BF%9B%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15 EvolveLRM训练自进化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase4/16_AML-LLM%E4%B9%A6%E7%B1%8D%E7%BC%96%E6%92%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16 AML-LLM书籍编撰
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase4/17_VirtualCoach%E4%BA%BA%E6%9C%BA%E4%BA%A4%E4%BA%92/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17 VirtualCoach人机交互
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase4/18_%E5%8D%9A%E5%A3%AB%E5%BC%80%E9%A2%98/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    18 博士开题
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_6" id="__nav_3_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阶段五·自进化研究全面展开
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    阶段五·自进化研究全面展开
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase5/19_Groom_Harness%E8%BF%87%E7%A8%8B%E7%BA%A7%E8%AF%84%E6%B5%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    19 Groom过程级评测
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase5/20_H-TokenBench/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20 H-TokenBench
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase5/21_GLM-5%E5%9F%BA%E5%BA%A7%E6%A8%A1%E5%9E%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    21 GLM-5基座模型
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase5/22_%E5%85%AD%E7%AF%87%E6%96%B0%E7%A0%94%E7%A9%B6%E5%88%9D%E7%A8%BF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    22 六篇新研究初稿
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase5/23_Awesome-RSI%E8%87%AA%E8%BF%9B%E5%8C%96%E7%BB%BC%E8%BF%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    23 Awesome-RSI自进化综述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase5/24_%E4%B8%93%E5%88%A9_%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E8%AF%84%E6%B5%8B%E6%96%B9%E6%B3%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    24 专利逻辑推理评测方法
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_7" id="__nav_3_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    工程与工具系列
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    工程与工具系列
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../25_LLM-DailyDigest%E6%AF%8F%E6%97%A5AI%E8%BF%BD%E6%96%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    25 LLM-DailyDigest
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../26_AutoLLM%E5%A4%9AAgent%E4%BF%A1%E6%81%AF%E8%87%AA%E5%8A%A8%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    26 AutoLLM多Agent
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../27_AiFitGo%E6%99%BA%E8%83%BD%E5%81%A5%E8%BA%AB%E6%95%99%E7%BB%83/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    27 AiFitGo智能健身
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../28_csv2app%E9%A2%98%E5%BA%93%E8%BD%ACPWA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    28 csv2app题库转PWA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../29_THU_Sports%E6%B8%85%E5%8D%8E%E4%BD%93%E8%82%B2%E8%87%AA%E5%8A%A8%E9%A2%84%E7%BA%A6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    29 THU_Sports自动预约
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    30 AiMeder医学搜索
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    30 AiMeder医学搜索
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-abstract" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 项目概述（Abstract）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 项目概述（Abstract）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关键数据速览
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        执行摘要
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        个人成长轨迹
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-introduction-background" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 背景与动机（Introduction / Background）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 背景与动机（Introduction / Background）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 问题定义
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 行业背景与痛点
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 项目启动契机
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-related-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 相关工作（Related Work）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 相关工作（Related Work）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 同期/前人工作对比
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 差异化定位
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 关联研究成果
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-medrad-med-eval-medgpt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 与 MedRad / Med-Eval / MedGPT 关联项目关系
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35-rag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.5 医学 RAG / 问答系统深度对比
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 方法与技术路线（Method）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 方法与技术路线（Method）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 系统架构
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.1 系统架构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#411-rag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1.1 RAG 四层架构详解
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-rag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 RAG 迭代过程设计
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.2 RAG 迭代过程设计">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        四阶段迭代路线图
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-aimed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 AiMed 医学大模型基座
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 医学文献检索的关键技术
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.4 医学文献检索的关键技术">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#query-understanding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        查询理解（Query Understanding）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hybrid-retrieval" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        混合检索（Hybrid Retrieval）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        片段排序与上下文构建
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#citation-grounding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        引用溯源（Citation Grounding）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-experiments-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 功能与效果（Experiments &amp; Results）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 功能与效果（Experiments &amp; Results）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 核心功能清单
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 医学数据集与测试集
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.2 医学数据集与测试集">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#521" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2.1 医学数据集详细统计表
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#522-aimed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2.2 AiMed 模型性能与训练配置表
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#523-rag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2.3 RAG 检索效果消融实验设计表
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#524" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2.4 医学问答基准对比表
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 关联论文成果
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.3 关联论文成果">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aimedijcai-2024-medai-2024" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AiMed（IJCAI 2024 / MedAI 2024）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#qa-engineering-1-2025" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        医学知识检索与 QA 系统（Engineering 1 区，2025）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 产业应用效果
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#55" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.5 评估指标（标准维度，具体数值待实验补充）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-engineering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 工程实现（Engineering）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. 工程实现（Engineering）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 代码与文档
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 技术栈
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-aimed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 AiMed 模型部署方式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#631" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3.1 技术栈演进与选型决策
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#632-medrad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3.2 MedRad 临床决策框架技术规格
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#633-aimedmedradmed-evalmedgptmed-eval-arena-readme" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3.3 关联医学项目全景（源：AiMed/MedRad/Med-Eval/MedGPT/Med-Eval-Arena 仓库 README）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4 关键工程挑战与解决方案
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#65" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5 项目时间线与里程碑
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-impact" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 成果与影响（Impact）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. 成果与影响（Impact）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 论文发表
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 开源贡献
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 产业应用
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#74" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.4 创业与竞赛
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#75" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.5 媒体报道
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-my-contribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 个人贡献（My Contribution）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. 个人贡献（My Contribution）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 角色
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 具体工作清单
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#83" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.3 与团队其他成员的分工
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-lessons-learned" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 经验与反思（Lessons Learned）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. 经验与反思（Lessons Learned）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1 关键问题与解决方案（含具体故事）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2 可复用的方法论
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#93" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.3 踩坑与避坑指南
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#94" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.4 如果重来会怎么做
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#95-faq" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.5 常见问题与解答（FAQ）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. 文件索引（References）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. 文件索引（References）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#101" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.1 飞书文档
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#102-github" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.2 GitHub 仓库
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#103-huggingface" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.3 模型权重（HuggingFace）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#104" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.4 论文链接
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#105" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.5 媒体报道
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#106" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.6 在线资源
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. 转正答辩证据卡
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. 转正答辩证据卡">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#111" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.1 目标基线
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.2 量化结果
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#113" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3 公司层面贡献
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#114" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.4 专业影响力
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#115" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.5 价值观锚点
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#116" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.6 协作与利他
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#117" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.7 反思与成长（自我批评式）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#118-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.8 6年后视角
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#119" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.9 五段式讲述（答辩稿骨架）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1110" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.10 对比证据（跨项目量化参照）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. 相关项目
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. 相关项目">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        项目间引用网络
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. 跨项目对比
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13. 跨项目对比">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#131-03" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.1 与03号（多模态大模型数学推理）对比：多模态推理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#132-25llm-dailydigestrag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.2 与25号（LLM-DailyDigest）对比：RAG信息检索
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        图表索引
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        个人成果矩阵
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-abstract" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 项目概述（Abstract）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 项目概述（Abstract）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关键数据速览
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        执行摘要
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        个人成长轨迹
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-introduction-background" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 背景与动机（Introduction / Background）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 背景与动机（Introduction / Background）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 问题定义
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 行业背景与痛点
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 项目启动契机
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-related-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 相关工作（Related Work）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 相关工作（Related Work）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 同期/前人工作对比
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 差异化定位
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 关联研究成果
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-medrad-med-eval-medgpt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 与 MedRad / Med-Eval / MedGPT 关联项目关系
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35-rag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.5 医学 RAG / 问答系统深度对比
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 方法与技术路线（Method）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 方法与技术路线（Method）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 系统架构
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.1 系统架构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#411-rag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1.1 RAG 四层架构详解
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-rag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 RAG 迭代过程设计
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.2 RAG 迭代过程设计">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        四阶段迭代路线图
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-aimed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 AiMed 医学大模型基座
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 医学文献检索的关键技术
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.4 医学文献检索的关键技术">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#query-understanding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        查询理解（Query Understanding）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hybrid-retrieval" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        混合检索（Hybrid Retrieval）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        片段排序与上下文构建
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#citation-grounding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        引用溯源（Citation Grounding）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-experiments-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 功能与效果（Experiments &amp; Results）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 功能与效果（Experiments &amp; Results）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 核心功能清单
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 医学数据集与测试集
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.2 医学数据集与测试集">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#521" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2.1 医学数据集详细统计表
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#522-aimed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2.2 AiMed 模型性能与训练配置表
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#523-rag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2.3 RAG 检索效果消融实验设计表
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#524" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2.4 医学问答基准对比表
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 关联论文成果
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.3 关联论文成果">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aimedijcai-2024-medai-2024" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AiMed（IJCAI 2024 / MedAI 2024）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#qa-engineering-1-2025" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        医学知识检索与 QA 系统（Engineering 1 区，2025）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 产业应用效果
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#55" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.5 评估指标（标准维度，具体数值待实验补充）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-engineering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 工程实现（Engineering）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. 工程实现（Engineering）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 代码与文档
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 技术栈
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-aimed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 AiMed 模型部署方式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#631" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3.1 技术栈演进与选型决策
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#632-medrad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3.2 MedRad 临床决策框架技术规格
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#633-aimedmedradmed-evalmedgptmed-eval-arena-readme" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3.3 关联医学项目全景（源：AiMed/MedRad/Med-Eval/MedGPT/Med-Eval-Arena 仓库 README）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4 关键工程挑战与解决方案
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#65" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5 项目时间线与里程碑
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-impact" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 成果与影响（Impact）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. 成果与影响（Impact）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 论文发表
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 开源贡献
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 产业应用
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#74" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.4 创业与竞赛
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#75" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.5 媒体报道
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-my-contribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 个人贡献（My Contribution）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. 个人贡献（My Contribution）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 角色
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 具体工作清单
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#83" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.3 与团队其他成员的分工
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-lessons-learned" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 经验与反思（Lessons Learned）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. 经验与反思（Lessons Learned）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1 关键问题与解决方案（含具体故事）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2 可复用的方法论
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#93" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.3 踩坑与避坑指南
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#94" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.4 如果重来会怎么做
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#95-faq" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.5 常见问题与解答（FAQ）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. 文件索引（References）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. 文件索引（References）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#101" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.1 飞书文档
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#102-github" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.2 GitHub 仓库
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#103-huggingface" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.3 模型权重（HuggingFace）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#104" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.4 论文链接
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#105" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.5 媒体报道
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#106" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.6 在线资源
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. 转正答辩证据卡
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. 转正答辩证据卡">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#111" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.1 目标基线
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.2 量化结果
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#113" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3 公司层面贡献
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#114" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.4 专业影响力
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#115" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.5 价值观锚点
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#116" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.6 协作与利他
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#117" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.7 反思与成长（自我批评式）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#118-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.8 6年后视角
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#119" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.9 五段式讲述（答辩稿骨架）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1110" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.10 对比证据（跨项目量化参照）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. 相关项目
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. 相关项目">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        项目间引用网络
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. 跨项目对比
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13. 跨项目对比">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#131-03" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.1 与03号（多模态大模型数学推理）对比：多模态推理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#132-25llm-dailydigestrag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.2 与25号（LLM-DailyDigest）对比：RAG信息检索
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        图表索引
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        个人成果矩阵
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+  
+
+
+
+
+  <h1>30 AiMeder医学搜索</h1>
+
+<div class="admonition info">
+<p class="admonition-title">项目系列</p>
+<p><strong>工程与工具系列</strong> · 报告 #30/30</p>
+</div>
+<p><a href="../../"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg></span> 返回项目总览</a> | <a href="../../../index_zh/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg></span> 返回首页</a></p>
+<hr />
+<blockquote>
+<p>作者：杜晋华 | 时间：2024.11 启动，2026 年持续迭代 | 角色：核心开发者
+飞书文档：https://zhipu-ai.feishu.cn/docx/P21fdnh39o3WRLxQxzJcRvgrnag
+关联项目：AiMed（IJCAI 2024 CCF-A）、医疗文献大模型（长期服务于中科院文献系统）</p>
+</blockquote>
+<div class="admonition note">
+<p class="admonition-title">版本信息</p>
+<p>版本：v3（图文并茂版 · 2026-09-08）· 二轮质检补强 · 三轮精磨 · 四轮深化 · 五轮深化 · 六轮深化 · 七轮深化 · 八轮深化 · 九轮终审 · 十轮深化 · 十一轮深化 · 十二轮终审 · 十三轮终审 · 十四轮深化 · 十五轮终审 | 审核：准确性核对 + 转正答辩证据卡补强 + 图文表格升级</p>
+</div>
+<hr />
+<h2 id="1-abstract">1. 项目概述（Abstract）<a class="headerlink" href="#1-abstract" title="Permanent link">&para;</a></h2>
+<p>AiMeder 是一个面向中文医学领域的<strong>文献智慧搜索引擎</strong>，旨在解决医学研究者和临床医生在海量医学文献中高效检索、精准定位、智能问答的核心需求。项目基于 RAG（检索增强生成）技术路线，结合杜晋华作为第一作者研发的 AiMed 医学大语言模型（IJCAI 2024 / MedAI 2024，CCF-A 类会议），构建从文献检索、知识抽取、智能问答到摘要生成的完整医学文献服务链路。AiMeder 的技术积累直接支撑了"医疗文献大模型长期服务于中科院文献系统"的产业落地，并与四作论文《Toward a LLM-Driven Medical Knowledge Retrieval and QA System》（Engineering，中科院 1 区，2025）形成研究与工程的双向印证。项目于 2024 年 11 月作为创业方向启动，完成了路线规划和 RAG 迭代过程设计，后续在智谱实习期间持续深化。</p>
+<hr />
+<h3 id="_1">关键数据速览<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>维度</strong></th>
+<th><strong>核心数据</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>项目周期</strong></td>
+<td>2024.11 启动（创业方向），2025–2026 持续迭代深化</td>
+</tr>
+<tr>
+<td><strong>个人角色</strong></td>
+<td>核心开发者（AiMed 一作；AiMeder RAG 技术路线设计与系统开发）</td>
+</tr>
+<tr>
+<td><strong>核心产出</strong></td>
+<td>AiMed 医学大模型（Baichuan-13B 基座，PT→SFT→RLHF→DPO 四阶段训练）；AiMeder RAG 搜索引擎（四层架构）；4 阶段 RAG 迭代设计；医疗文献大模型服务中科院文献系统</td>
+</tr>
+<tr>
+<td><strong>关键指标</strong></td>
+<td>2 个开源模型（AiMed + AiMed_Paper，13B）；4 阶段 RAG 迭代；混合检索（向量 + BM25）；4 种 Demo 方式（Python/CLI/Streamlit/Gradio）；3 篇论文（CCF-A 一作 + 中科院 1 区四作 + 3 区一作）</td>
+</tr>
+<tr>
+<td><strong>论文/专利</strong></td>
+<td>AiMed（IJCAI 2024/MedAI 2024，CCF-A，一作）；Engineering 中科院 1 区（四作）；Informatics and Health 3 区（一作）；Med-Eval（ICML CCF-A）</td>
+</tr>
+<tr>
+<td><strong>开源仓库</strong></td>
+<td>AiMed（公开，Apache 2.0）；MedRad / Med-Eval / Med-Eval-Arena / MedGPT（均公开）；AiMeder 飞书文档（路线规划与 RAG 迭代设计）</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<hr />
+<h3 id="_2">执行摘要<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p><strong>一句话定位</strong>：面向中文医学领域的文献智慧搜索引擎，基于 RAG 技术路线结合 AiMed 医学大语言模型（IJCAI 2024 CCF-A 一作），构建从文献检索、知识抽取、智能问答到摘要生成的完整医学文献服务链路。</p>
+<p><strong>核心成果</strong>：
+- 研发 <strong>AiMed 医学大模型</strong>（Baichuan-13B 基座，PT→SFT→RLHF→DPO 四阶段训练），2 个开源模型（AiMed + AiMed_Paper，13B）
+- 设计 <strong>AiMeder RAG 搜索引擎</strong>（四层架构）+ 4 阶段 RAG 迭代过程，混合检索（向量 + BM25），4 种 Demo 方式（Python/CLI/Streamlit/Gradio）
+- 发表 <strong>3 篇论文</strong>（CCF-A 一作 IJCAI 2024 + 中科院 1 区四作 Engineering 2025 + 3 区一作 Informatics and Health），技术积累支撑"医疗文献大模型长期服务于中科院文献系统"</p>
+<p><strong>技术亮点</strong>：AiMed 医学大模型四阶段训练（增量预训练 PT→监督微调 SFT→基于人类反馈的强化学习 RLHF→直接偏好优化 DPO）；医学 RAG 全链路定制（针对医学文献摘要分段、方法/结果/结论、引用网络、MeSH 标签设计检索增强策略）；AiMed_Paper 文献摘要生成模型专门优化医学文献摘要任务；研究与工程双向印证（与 Engineering 1 区论文形成方法和实现的双向支撑）。</p>
+<p><strong>个人角色</strong>：核心开发者，AiMed 一作（独立完成医学语料处理、四阶段模型训练、医学问答评估）；AiMeder RAG 技术路线设计与系统开发。</p>
+<p><strong>后续方向</strong>：中文医学文献覆盖扩展与实时更新；RAG 检索效果持续优化与多轮医学问答；与 Med-Eval 医学评测基准深度整合；医学大模型在临床决策支持场景的应用探索。</p>
+<hr />
+<h3 id="_3">个人成长轨迹<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>阶段</strong></th>
+<th><strong>能力成长</strong></th>
+<th><strong>关键事件</strong></th>
+<th><strong>对应报告章节</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>初期</td>
+<td>从医学大模型到领域深耕者：作为第一作者研发AiMed医学大语言模型（Baichuan-13B基座，PT→SFT→RLHF→DPO四阶段训练），论文发表于IJCAI 2024/MedAI 2024（CCF-A），积累医学语料处理、模型训练、医学问答等核心能力，在医学AI领域深入扎根</td>
+<td>AiMed医学大模型研发（一作，IJCAI 2024 CCF-A），Baichuan-13B基座四阶段训练（PT增量预训练→SFT→RLHF→DPO），2个开源模型（AiMed+AiMed_Paper，13B），清华大学OpenDE团队+中国医学科学院医学信息研究所联合研发</td>
+<td>§2.3 项目启动契机 / §4.1 AiMed医学大模型</td>
+</tr>
+<tr>
+<td>中期</td>
+<td>从模型研发到RAG系统设计者：将AiMed的模型能力与RAG检索技术结合，设计四层RAG架构（查询理解→混合检索→片段排序→结构化上下文构建），针对医学文献特殊结构（摘要分段/方法/结果/结论/引用网络/MeSH标签）定制检索增强策略，掌握领域AI系统设计能力</td>
+<td>四层RAG架构设计，混合检索（向量+BM25），医学文献特殊结构定制（摘要分段/MeSH标签/引用网络），AiMed_Paper文献摘要生成模型，4种Demo方式（Python/CLI/Streamlit/Gradio），4阶段RAG迭代设计</td>
+<td>§4.2 RAG技术路线 / §4.3 医学定制化策略</td>
+</tr>
+<tr>
+<td>后期</td>
+<td>从系统设计到产业落地推动者：技术积累直接支撑"医疗文献大模型长期服务于中科院文献系统"的产业落地，与Engineering中科院1区论文（四作）形成研究与工程的双向印证，参与天津大学+智谱联合申报科技部重点研发计划，完成从"模型研究者"到"领域AI系统设计者"再到"产业落地推动者"的角色拓展</td>
+<td>医疗文献大模型服务中科院文献系统（中国医学科学院医学信息研究所），Engineering中科院1区论文（四作，2025）双向印证，天津大学+智谱联合申报科技部重点研发计划，3篇论文（CCF-A一作+中科院1区四作+3区一作），从学术研究到产业落地的全链路能力</td>
+<td>§7.3 产业应用 / §11.7 成长轨迹 / §11.10 对比证据</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<hr />
+<h2 id="2-introduction-background">2. 背景与动机（Introduction / Background）<a class="headerlink" href="#2-introduction-background" title="Permanent link">&para;</a></h2>
+<h3 id="21">2.1 问题定义<a class="headerlink" href="#21" title="Permanent link">&para;</a></h3>
+<p>医学文献是医学研究和临床决策的核心知识来源，但面临严峻的<strong>信息检索挑战</strong>：</p>
+<ul>
+<li><strong>文献量爆炸式增长</strong>：PubMed 每年新增数十万篇文献，研究者无法通读全部相关文献；</li>
+<li><strong>专业术语壁垒高</strong>：医学文献包含大量专业术语、缩写和分类体系（如 MeSH、ICD），传统关键词检索召回率低；</li>
+<li><strong>检索与问答割裂</strong>：传统搜索引擎返回文献列表，用户需要逐篇阅读提取答案，无法直接获得结构化的知识回答；</li>
+<li><strong>中文医学资源分散</strong>：中文医学文献分布在知网、万方、维普等多个平台，缺乏统一的智能检索入口；</li>
+<li><strong>大模型幻觉风险</strong>：通用大模型在医学问答中可能产生幻觉，给出不准确的医疗信息，需要基于真实文献的检索增强来约束输出。</li>
+</ul>
+<h3 id="22">2.2 行业背景与痛点<a class="headerlink" href="#22" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>医学大模型快速发展</strong>：2023–2024 年，Med-PaLM、ChatDoctor、HuatuoGPT 等医学大模型相继发布，但多数聚焦于对话和知识问答，缺乏专门针对文献检索场景的深度优化；</li>
+<li><strong>RAG 技术成熟</strong>：检索增强生成（RAG）已成为解决大模型幻觉和知识更新的主流技术路线，但在医学领域需要针对医学文献的特殊结构（摘要、方法、结果、结论、引用网络）做定制化；</li>
+<li><strong>中科院文献系统需求</strong>：中国医学科学院医学信息研究所等机构需要智能化的文献服务工具，提升科研人员的文献利用效率；</li>
+<li><strong>创业契机</strong>：2024 年 11 月，杜晋华在完成 AiMed 医学大模型研发后，看到医学文献智能搜索的产业化机会，将 AiMeder 作为创业方向启动，设计 RAG 迭代过程计划。</li>
+</ul>
+<h3 id="23">2.3 项目启动契机<a class="headerlink" href="#23" title="Permanent link">&para;</a></h3>
+<p>2024 年，杜晋华作为第一作者完成 AiMed 医学大语言模型的研发（清华大学 OpenDE 团队与中国医学科学院医学信息研究所联合研发），论文发表于 IJCAI 2024 / MedAI 2024。AiMed 的研发积累了医学语料处理、模型训练（PT 增量预训练→SFT→RLHF→DPO）、医学问答等核心能力。在此基础上，2024 年 11 月启动 AiMeder 医学文献智慧搜索引擎项目，将 AiMed 的模型能力与 RAG 检索技术结合，面向医学文献检索和知识服务场景。项目同时作为创业方向参与相关竞赛和孵化，后续在智谱华章实习期间持续深化技术方案。</p>
+<hr />
+<h2 id="3-related-work">3. 相关工作（Related Work）<a class="headerlink" href="#3-related-work" title="Permanent link">&para;</a></h2>
+<h3 id="31">3.1 同期/前人工作对比<a class="headerlink" href="#31" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>系统</strong></th>
+<th><strong>定位</strong></th>
+<th><strong>局限性</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>PubMed / PubMedGPT</strong></td>
+<td>生物医学文献检索</td>
+<td>关键词检索为主，无智能问答，无中文支持</td>
+</tr>
+<tr>
+<td><strong>Elicit</strong></td>
+<td>AI 辅助文献综述</td>
+<td>英文为主，偏综述生成，无医学大模型深度集成</td>
+</tr>
+<tr>
+<td><strong>Consensus</strong></td>
+<td>科学文献问答</td>
+<td>英文为主，回答基于预提取观点，无实时 RAG</td>
+</tr>
+<tr>
+<td><strong>ChatDoctor / HuatuoGPT</strong></td>
+<td>医学对话大模型</td>
+<td>偏临床对话，非文献检索专用，无 RAG 文献约束</td>
+</tr>
+<tr>
+<td><strong>Med-PaLM 2</strong></td>
+<td>医学通用大模型</td>
+<td>闭源，无文献检索集成，无中文优化</td>
+</tr>
+<tr>
+<td><strong>AiMeder</strong></td>
+<td>中文医学文献智慧搜索+RAG问答+AiMed医学大模型集成</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<h3 id="32">3.2 差异化定位<a class="headerlink" href="#32" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>中文医学文献深度优化</strong>：面向中文医学文献场景，结合中文医学语料训练的 AiMed 模型，而非英文工具的简单汉化；</li>
+<li><strong>AiMed 医学大模型原生集成</strong>：搜索引擎的问答和摘要生成直接使用 AiMed（及 AiMed_Paper 文献摘要生成模型），而非通用大模型，医学领域理解更精准；</li>
+<li><strong>RAG 全链路定制</strong>：针对医学文献的特殊结构（摘要分段、方法/结果/结论、引用网络、MeSH 标签）设计检索和增强策略，而非通用 RAG 框架；</li>
+<li><strong>产业落地验证</strong>：技术积累直接支撑"医疗文献大模型长期服务于中科院文献系统"，有真实产业应用场景；</li>
+<li><strong>研究与工程双向印证</strong>：与 Engineering 1 区论文《Toward a LLM-Driven Medical Knowledge Retrieval and QA System》形成研究方法和工程实现的双向支撑。</li>
+</ol>
+<h3 id="33">3.3 关联研究成果<a class="headerlink" href="#33" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>成果</strong></th>
+<th><strong>发表/级别</strong></th>
+<th><strong>与 AiMeder 的关系</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AiMed（一作）</td>
+<td>IJCAI 2024 / MedAI 2024（CCF-A）</td>
+<td>提供医学大模型基座能力</td>
+</tr>
+<tr>
+<td>Toward a LLM-Driven Medical Knowledge Retrieval and QA System（四作）</td>
+<td>Engineering（中科院 1 区），2025</td>
+<td>医学知识检索与 QA 系统的研究框架</td>
+</tr>
+<tr>
+<td>Large Language Models Driven Reliable Clinical Decision-Making（一作）</td>
+<td>Informatics and Health（3 区），2025</td>
+<td>可靠临床决策的方法论参考</td>
+</tr>
+<tr>
+<td>Med-Eval（医学大模型评测基准）</td>
+<td>ICML（CCF-A）</td>
+<td>医学大模型能力评估</td>
+</tr>
+<tr>
+<td>MedRad（临床决策框架）</td>
+<td>投 ICML</td>
+<td>医学知识应用框架</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<h3 id="34-medrad-med-eval-medgpt">3.4 与 MedRad / Med-Eval / MedGPT 关联项目关系<a class="headerlink" href="#34-medrad-med-eval-medgpt" title="Permanent link">&para;</a></h3>
+<p>AiMeder 与杜晋华参与的其他医学 AI 项目形成研究与工程的完整生态，各项目的定位和关系如下：</p>
+<table>
+<thead>
+<tr>
+<th><strong>项目</strong></th>
+<th><strong>定位</strong></th>
+<th><strong>核心能力</strong></th>
+<th><strong>与 AiMeder 的关系</strong></th>
+<th><strong>代码仓库</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>AiMed</strong></td>
+<td>面向中文医学的大语言模型（一作，IJCAI 2024/MedAI 2024 CCF-A）</td>
+<td>PT→SFT→RLHF→DPO 四阶段训练；医学百科问答；文献摘要生成</td>
+<td>AiMeder 的模型基座，提供医学大模型能力（AiMed + AiMed_Paper）</td>
+<td>https://github.com/dujh22/AiMed</td>
+</tr>
+<tr>
+<td><strong>AiMeder</strong></td>
+<td>医学文献智慧搜索引擎（本项目）</td>
+<td>RAG 检索增强；医学文献智能检索；检索增强问答；文献摘要生成；引用溯源</td>
+<td>基于 AiMed 模型 + 医学定制化 RAG，面向医学文献检索场景</td>
+<td>飞书文档（P21fdnh39o3WRLxQxzJcRvgrnag）</td>
+</tr>
+<tr>
+<td><strong>MedRad</strong></td>
+<td>LLM 驱动的可靠临床决策框架（一作，Informatics and Health 3区，投 ICML）</td>
+<td>医学知识问答；门诊对话；临床诊断；可靠决策支持</td>
+<td>与 AiMeder 共享 AiMed 模型基座；MedRad 侧重临床决策，AiMeder 侧重文献检索；两者技术路线互补</td>
+<td>https://github.com/dujh22/MedRad</td>
+</tr>
+<tr>
+<td><strong>Med-Eval</strong></td>
+<td>全球性多维度医学大语言模型测评基准（ICML CCF-A）</td>
+<td>模型榜单；数据集榜单；测评工具榜单；测评方法；适用场景榜单</td>
+<td>为 AiMed/AiMeder 提供医学大模型能力评估基准；AiMeder 的检索和问答质量可通过 Med-Eval 评估</td>
+<td>https://github.com/dujh22/Med-Eval</td>
+</tr>
+<tr>
+<td><strong>Med-Eval-Arena</strong></td>
+<td>医学大模型评测竞技场</td>
+<td>医学大模型在线对比评测</td>
+<td>Med-Eval 的在线评测平台扩展，为 AiMeder 提供实时模型对比能力</td>
+<td>https://github.com/dujh22/Med-Eval-Arena</td>
+</tr>
+<tr>
+<td><strong>MedGPT</strong></td>
+<td>医学对话模型</td>
+<td>医学对话生成</td>
+<td>与 AiMeder 同属医学 AI 生态，侧重对话场景</td>
+<td>https://github.com/dujh22/MedGPT</td>
+</tr>
+<tr>
+<td><strong>ChatDoctor</strong></td>
+<td>医学对话大模型（参考）</td>
+<td>医学对话、临床问答</td>
+<td>相关工作对比对象，AiMeder 相比其增加了 RAG 文献检索和引用溯源</td>
+<td>https://github.com/dujh22/ChatDoctor</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：AiMed / MedRad / Med-Eval GitHub README + 项目汇总材料</p>
+</blockquote>
+<h3 id="35-rag">3.5 医学 RAG / 问答系统深度对比<a class="headerlink" href="#35-rag" title="Permanent link">&para;</a></h3>
+<p>在 §3.1 高层对比的基础上，下表从检索方式、知识来源、回答生成、引用可追溯性、开源性、中文支持、部署方式等技术维度，系统对比 AiMeder 与主流医学问答/检索系统的差异。</p>
+<table>
+<thead>
+<tr>
+<th><strong>系统</strong></th>
+<th><strong>检索方式</strong></th>
+<th><strong>知识来源</strong></th>
+<th><strong>回答生成</strong></th>
+<th><strong>引用可追溯</strong></th>
+<th><strong>开源</strong></th>
+<th><strong>中文支持</strong></th>
+<th><strong>部署方式</strong></th>
+<th><strong>核心局限</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>PubMed / PubMedGPT</strong></td>
+<td>关键词检索（BM25）</td>
+<td>PubMed 文献库（3500 万+）</td>
+<td>文献摘要直接返回 / GPT 基于摘要生成</td>
+<td>是（PMID 链接）</td>
+<td>PubMed 是 / PubMedGPT 否</td>
+<td>差（英文为主）</td>
+<td>网页端 / API</td>
+<td>仅关键词匹配，无法理解语义；PubMedGPT 闭源</td>
+</tr>
+<tr>
+<td><strong>Elicit</strong></td>
+<td>语义检索（向量）</td>
+<td>Semantic Scholar 文献库</td>
+<td>LLM 生成结构化摘要（方法/结果/结论）</td>
+<td>是（DOI 链接）</td>
+<td>否（商业产品）</td>
+<td>差（英文为主）</td>
+<td>网页端 SaaS</td>
+<td>闭源；免费额度有限；不支持自定义知识库</td>
+</tr>
+<tr>
+<td><strong>Consensus</strong></td>
+<td>语义检索 + 证据聚合</td>
+<td>学术文献库</td>
+<td>LLM 聚合多文献观点（支持/反对/混合）</td>
+<td>是（多篇引用）</td>
+<td>否（商业产品）</td>
+<td>差（英文为主）</td>
+<td>网页端 SaaS</td>
+<td>闭源；聚焦"是否有共识"场景；不支持深度问答</td>
+</tr>
+<tr>
+<td><strong>ChatDoctor / HuatuoGPT</strong></td>
+<td>无检索（纯生成）</td>
+<td>模型参数内知识（医学 SFT 数据）</td>
+<td>LLM 直接生成医学建议</td>
+<td>否（无引用）</td>
+<td>ChatDoctor 是 / HuatuoGPT 是</td>
+<td>HuatuoGPT 好</td>
+<td>本地部署 / API</td>
+<td>幻觉风险高；无文献引用；知识截止于训练数据</td>
+</tr>
+<tr>
+<td><strong>Med-PaLM 2</strong></td>
+<td>无检索（纯生成）</td>
+<td>模型参数内知识（大规模医学预训练）</td>
+<td>LLM 直接生成，专家反馈 RLHF 优化</td>
+<td>否（无引用）</td>
+<td>否（Google 闭源）</td>
+<td>差（英文为主）</td>
+<td>API（Vertex AI）</td>
+<td>闭源不可用；无文献检索；成本高</td>
+</tr>
+<tr>
+<td><strong>AiMeder</strong></td>
+<td><strong>混合检索（向量 + BM25）</strong></td>
+<td><strong>PubMed + 自定义医学知识库（可扩展）</strong></td>
+<td><strong>RAG：检索相关文献 → LLM 基于文献生成回答</strong></td>
+<td><strong>是（精确引用定位到段落）</strong></td>
+<td><strong>是（Apache 2.0）</strong></td>
+<td><strong>好（中文医学术语优化）</strong></td>
+<td><strong>本地部署 / 4 种 Demo（Python/CLI/Streamlit/Gradio）</strong></td>
+<td>需自建知识库索引；模型推理需 GPU 资源</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告 §3.1 同期/前人工作对比、§3.4 关联项目关系；AiMed 仓库 README（https://github.com/dujh22/AiMed）；MedRad 仓库（https://github.com/dujh22/MedRad）；AiMeder 飞书文档「RAG 迭代设计」；各系统官方文档与公开介绍</p>
+</blockquote>
+<p>从上表可见，AiMeder 的核心差异化优势在于：（1）<strong>混合检索</strong>结合向量语义匹配与 BM25 关键词精确匹配，优于 PubMed 的纯关键词和 Elicit/Consensus 的纯向量；（2）<strong>引用可追溯到段落级别</strong>，而非仅 PMID/DOI 链接；（3）<strong>完全开源</strong>（Apache 2.0），支持本地部署与自定义知识库扩展；（4）<strong>中文医学术语优化</strong>，填补了开源医学 RAG 系统中文支持的空白；（5）<strong>4 种 Demo 方式</strong>降低使用门槛，从开发者 API 到非技术用户的 Web UI 全覆盖。</p>
+<hr />
+<h2 id="4-method">4. 方法与技术路线（Method）<a class="headerlink" href="#4-method" title="Permanent link">&para;</a></h2>
+<h3 id="41">4.1 系统架构<a class="headerlink" href="#41" title="Permanent link">&para;</a></h3>
+<p>AiMeder 采用<strong>RAG（检索增强生成）+ 医学大模型</strong>的技术路线，整体架构分为四层：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>┌──────────────────────────────────────────────────────────────┐
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>│                      用户交互层                                 │
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>│  搜索框 │ 文献列表 │ 智能问答 │ 摘要生成 │ 引用溯源             │
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>└──────────────────────────────┬───────────────────────────────┘
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>                               │
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>┌──────────────────────────────▼───────────────────────────────┐
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>│                      RAG 检索增强层                             │
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐    │
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>│  │ 查询理解  │→│ 文献检索  │→│ 片段排序  │→│ 上下文构建 │    │
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>│  │ (AiMed)  │  │(向量+BM25)│  │(重排序)  │  │(结构化)  │    │
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>│  └──────────┘  └──────────┘  └──────────┘  └──────────┘    │
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>└──────────────────────────────┬───────────────────────────────┘
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>                               │
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>┌──────────────────────────────▼───────────────────────────────┐
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>│                    医学大模型层（AiMed 系列）                    │
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>│  ┌──────────────┐  ┌──────────────────┐  ┌──────────────┐   │
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>│  │ AiMed        │  │ AiMed_Paper      │  │ 通用LLM(备选) │   │
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>│  │ (医学百科问答)│  │ (文献摘要生成)    │  │              │   │
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>│  └──────────────┘  └──────────────────┘  └──────────────┘   │
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>└──────────────────────────────┬───────────────────────────────┘
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>                               │
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>┌──────────────────────────────▼───────────────────────────────┐
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>│                      数据与知识层                               │
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>│  中文医学文献 │ MeSH术语库 │ ICD分类 │ 医学知识图谱 │ 向量索引  │
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>└──────────────────────────────────────────────────────────────┘
+</code></pre></div>
+<p><strong>AiMeder RAG 四层架构 Mermaid 图（文档层→检索层→生成层→应用层）：</strong></p>
+<p>下图以 Mermaid 形式呈现 AiMeder 的 RAG 四层架构，从底层文档数据到上层应用交互的完整技术栈，标注各层的核心组件与数据流向。</p>
+<pre class="mermaid"><code>flowchart TB
+    subgraph APP["应用层 Application Layer"]
+        UI1["搜索框&lt;br/&gt;自然语言查询"]
+        UI2["文献列表&lt;br/&gt;结果分页"]
+        UI3["智能问答&lt;br/&gt;RAG 生成回答"]
+        UI4["摘要生成&lt;br/&gt;AiMed_Paper"]
+        UI5["引用溯源&lt;br/&gt;段落级跳转"]
+    end
+
+    subgraph GEN["生成层 Generation Layer"]
+        M1["AiMed 医学大模型&lt;br/&gt;Baichuan-13B 基座&lt;br/&gt;PT→SFT→RLHF→DPO"]
+        M2["AiMed_Paper&lt;br/&gt;文献摘要生成模型"]
+        M3["引用 Grounding&lt;br/&gt;每个论断标注来源"]
+        M4["上下文窗口管理&lt;br/&gt;高相关性+高权威性优先"]
+    end
+
+    subgraph RET["检索层 Retrieval Layer"]
+        R1["查询理解&lt;br/&gt;医学术语识别+查询改写+同义词扩展"]
+        R2["混合检索&lt;br/&gt;向量稠密检索 + BM25 稀疏检索&lt;br/&gt;加权融合"]
+        R3["片段排序&lt;br/&gt;语义相似度 + 文献权威性 重排序"]
+        R4["上下文构建&lt;br/&gt;按来源/时间/证据等级 结构化组织"]
+    end
+
+    subgraph DOC["文档层 Document Layer"]
+        D1["中文医学文献&lt;br/&gt;结构化存储"]
+        D2["MeSH 术语库&lt;br/&gt;医学主题词"]
+        D3["ICD 分类&lt;br/&gt;疾病分类体系"]
+        D4["医学知识图谱&lt;br/&gt;实体关系"]
+        D5["向量索引&lt;br/&gt;FAISS/Milvus"]
+    end
+
+    UI1 --&gt; R1
+    R1 --&gt; R2
+    R2 --&gt; R3
+    R3 --&gt; R4
+    R4 --&gt; M1
+    M1 --&gt; M3
+    M3 --&gt; UI3
+    M2 --&gt; UI4
+    D1 &amp; D2 &amp; D3 &amp; D4 --&gt; D5
+    D5 --&gt; R2
+    D2 --&gt; R1
+    D4 --&gt; R1
+    M3 --&gt; UI5
+
+    style APP fill:#fce4ec,stroke:#c62828
+    style GEN fill:#f3e5f5,stroke:#6a1b9a
+    style RET fill:#fff3e0,stroke:#e65100
+    style DOC fill:#e8f5e9,stroke:#2e7d32</code></pre>
+<blockquote>
+<p>图注：AiMeder RAG 架构分为四层：文档层（中文医学文献/MeSH/ICD/知识图谱/向量索引）为数据基础；检索层（查询理解→混合检索→片段排序→上下文构建）实现从自然语言查询到结构化上下文的转化；生成层（AiMed/AiMed_Paper + 引用 Grounding）基于检索上下文生成带引用溯源的医学回答；应用层（搜索/问答/摘要/引用溯源）提供用户交互界面。数据流向自底向上，查询自顶向下。</p>
+</blockquote>
+<h4 id="411-rag">4.1.1 RAG 四层架构详解<a class="headerlink" href="#411-rag" title="Permanent link">&para;</a></h4>
+<p>AiMeder 的 RAG 系统分为四层，各层的核心组件、功能和技术要点如下：</p>
+<table>
+<thead>
+<tr>
+<th><strong>层级</strong></th>
+<th><strong>名称</strong></th>
+<th><strong>核心组件</strong></th>
+<th><strong>主要功能</strong></th>
+<th><strong>技术要点</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>第一层</strong></td>
+<td>用户交互层</td>
+<td>搜索框、文献列表、智能问答、摘要生成、引用溯源</td>
+<td>接收用户自然语言查询，展示检索结果和智能回答，支持引用溯源跳转</td>
+<td>手机/PC 响应式 UI；搜索历史；结果分页；引用可点击跳转</td>
+</tr>
+<tr>
+<td><strong>第二层</strong></td>
+<td>RAG 检索增强层</td>
+<td>查询理解（AiMed）、文献检索（向量+BM25）、片段排序（重排序）、上下文构建（结构化）</td>
+<td>将自然语言查询转化为检索请求，混合召回相关文献，排序后构建结构化上下文</td>
+<td>查询改写+术语扩展；向量稠密检索+BM25稀疏检索加权融合；语义相似度+文献权威性排序；按来源/时间/证据等级组织上下文</td>
+</tr>
+<tr>
+<td><strong>第三层</strong></td>
+<td>医学大模型层</td>
+<td>AiMed（医学百科问答）、AiMed_Paper（文献摘要生成）、通用LLM（备选）</td>
+<td>基于检索上下文生成医学问答、文献摘要，回答严格基于文献，带引用溯源</td>
+<td>Baichuan-13B 基座；PT→SFT→RLHF→DPO 四阶段训练；医学领域微调；引用 grounding</td>
+</tr>
+<tr>
+<td><strong>第四层</strong></td>
+<td>数据与知识层</td>
+<td>中文医学文献、MeSH 术语库、ICD 分类、医学知识图谱、向量索引</td>
+<td>存储和管理医学文献数据和专业知识，为检索和问答提供数据基础</td>
+<td>文献结构化存储；MeSH/ICD 术语映射；知识图谱实体关系；向量索引（FAISS/Milvus）</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：AiMeder 飞书文档（P21fdnh39o3WRLxQxzJcRvgrnag）+ AiMed GitHub README（模型构建流程）</p>
+</blockquote>
+<h3 id="42-rag">4.2 RAG 迭代过程设计<a class="headerlink" href="#42-rag" title="Permanent link">&para;</a></h3>
+<p>根据飞书文档（P21fdnh39o3WRLxQxzJcRvgrnag）中的路线规划，AiMeder 的 RAG 系统设计了分阶段迭代过程，各阶段的核心目标和关键能力如下：</p>
+<table>
+<thead>
+<tr>
+<th><strong>阶段</strong></th>
+<th><strong>名称</strong></th>
+<th><strong>核心目标</strong></th>
+<th><strong>关键能力</strong></th>
+<th><strong>技术重点</strong></th>
+<th><strong>完成状态</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>第一阶段</strong></td>
+<td>基础检索能力</td>
+<td>构建医学文献检索的基础能力</td>
+<td>医学文献向量索引（标题/摘要/关键词）、向量检索+BM25混合召回、基础查询理解（查询改写/术语扩展）</td>
+<td>嵌入模型、向量数据库、BM25、查询改写</td>
+<td>已实现（基础版）</td>
+</tr>
+<tr>
+<td><strong>第二阶段</strong></td>
+<td>检索增强问答</td>
+<td>实现基于文献的智能问答</td>
+<td>检索片段作为上下文输入 AiMed 生成回答、引用溯源（每个论断标注来源）、片段排序优化（语义相似度+文献权威性）</td>
+<td>RAG 上下文构建、引用 grounding、重排序</td>
+<td>已实现（基础版）</td>
+</tr>
+<tr>
+<td><strong>第三阶段</strong></td>
+<td>医学知识深度整合</td>
+<td>引入医学专业知识体系</td>
+<td>MeSH 术语库+ICD 分类体系提升概念理解、医学知识图谱支持实体级检索和关系推理、文献摘要自动生成（AiMed_Paper）</td>
+<td>知识图谱、实体链接、关系推理、摘要生成</td>
+<td>设计中/部分实现</td>
+</tr>
+<tr>
+<td><strong>第四阶段</strong></td>
+<td>个性化与持续学习</td>
+<td>实现个性化推荐和持续优化</td>
+<td>用户画像构建（研究方向/阅读历史）、个性化检索排序、用户反馈驱动的检索优化</td>
+<td>用户建模、在线学习、反馈闭环</td>
+<td>设计中</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：AiMeder 飞书文档（P21fdnh39o3WRLxQxzJcRvgrnag）RAG 迭代过程设计</p>
+</blockquote>
+<h4 id="_4">四阶段迭代路线图<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>┌─────────────────────────────────────────────────────────────────────────┐
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>│                    AiMeder RAG 四阶段迭代路线图                            │
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>├─────────────────────────────────────────────────────────────────────────┤
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>│                                                                           │
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>│  第一阶段：基础检索能力 ✓                                                  │
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>│  ┌─────────────────────────────────────────────────────────────────┐    │
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>│  │  医学文献向量索引 │ 向量+BM25混合召回 │ 基础查询理解              │    │
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>│  └─────────────────────────────────────────────────────────────────┘    │
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>│                                   │                                       │
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>│                                   ▼                                       │
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>│  第二阶段：检索增强问答 ✓                                                  │
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>│  ┌─────────────────────────────────────────────────────────────────┐    │
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>│  │  AiMed生成回答 │ 引用溯源 │ 片段排序优化（语义+权威性）           │    │
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>│  └─────────────────────────────────────────────────────────────────┘    │
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>│                                   │                                       │
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>│                                   ▼                                       │
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>│  第三阶段：医学知识深度整合 ◐                                              │
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>│  ┌─────────────────────────────────────────────────────────────────┐    │
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>│  │  MeSH+ICD术语体系 │ 医学知识图谱 │ 实体级检索+关系推理 │          │    │
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>│  │  AiMed_Paper文献摘要自动生成                                      │    │
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>│  └─────────────────────────────────────────────────────────────────┘    │
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>│                                   │                                       │
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>│                                   ▼                                       │
+<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>│  第四阶段：个性化与持续学习 ○                                              │
+<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a>│  ┌─────────────────────────────────────────────────────────────────┐    │
+<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>│  │  用户画像构建 │ 个性化检索排序 │ 用户反馈驱动优化                  │    │
+<a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a>│  └─────────────────────────────────────────────────────────────────┘    │
+<a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a>│                                                                           │
+<a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a>│  ✓ = 已实现  ◐ = 部分实现/设计中  ○ = 设计中                             │
+<a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a>└─────────────────────────────────────────────────────────────────────────┘
+</code></pre></div>
+<p><strong>AiMeder RAG 四阶段迭代路线图 Mermaid 图：</strong></p>
+<p>下图以 Mermaid 形式呈现 AiMeder 从基础检索到个性化持续学习的四阶段迭代路线，标注各阶段的核心能力、技术重点和完成状态。</p>
+<pre class="mermaid"><code>flowchart LR
+    subgraph S1["第一阶段：基础检索能力 ✓"]
+        A1["医学文献向量索引&lt;br/&gt;标题/摘要/关键词"]
+        A2["向量+BM25&lt;br/&gt;混合召回"]
+        A3["基础查询理解&lt;br/&gt;查询改写/术语扩展"]
+    end
+
+    subgraph S2["第二阶段：检索增强问答 ✓"]
+        B1["AiMed生成回答&lt;br/&gt;基于检索上下文"]
+        B2["引用溯源&lt;br/&gt;每个论断标注来源"]
+        B3["片段排序优化&lt;br/&gt;语义相似度+文献权威性"]
+    end
+
+    subgraph S3["第三阶段：医学知识深度整合 ◐"]
+        C1["MeSH+ICD&lt;br/&gt;术语体系"]
+        C2["医学知识图谱&lt;br/&gt;实体级检索+关系推理"]
+        C3["AiMed_Paper&lt;br/&gt;文献摘要自动生成"]
+    end
+
+    subgraph S4["第四阶段：个性化持续学习 ○"]
+        D1["用户画像构建&lt;br/&gt;研究方向/阅读历史"]
+        D2["个性化检索排序&lt;br/&gt;用户偏好驱动"]
+        D3["用户反馈驱动优化&lt;br/&gt;在线学习闭环"]
+    end
+
+    S1 --&gt; S2
+    S2 --&gt; S3
+    S3 --&gt; S4
+
+    style S1 fill:#e8f5e9,stroke:#2e7d32
+    style S2 fill:#e3f2fd,stroke:#1565c0
+    style S3 fill:#fff3e0,stroke:#e65100
+    style S4 fill:#fce4ec,stroke:#c62828</code></pre>
+<blockquote>
+<p>图注：AiMeder RAG 系统按四阶段迭代：第一阶段基础检索能力（已实现）构建向量索引与混合召回；第二阶段检索增强问答（已实现）实现 AiMed 生成回答与引用溯源；第三阶段医学知识深度整合（部分实现/设计中）引入 MeSH/ICD 术语体系与医学知识图谱；第四阶段个性化与持续学习（设计中）实现用户画像与反馈驱动优化。各阶段能力逐层叠加，形成从基础检索到个性化智能的完整演进路径。</p>
+</blockquote>
+<p><strong>第一阶段：基础检索能力</strong>
+- 构建医学文献向量索引（基于文献标题、摘要、关键词）
+- 实现向量检索 + BM25 关键词检索的混合召回
+- 基础查询理解（查询改写、术语扩展）</p>
+<p><strong>第二阶段：检索增强问答</strong>
+- 将检索到的文献片段作为上下文，输入 AiMed 模型生成回答
+- 实现引用溯源（回答中的每个论断标注来源文献）
+- 片段排序优化（基于与查询的语义相似度和文献权威性）</p>
+<p><strong>第三阶段：医学知识深度整合</strong>
+- 引入 MeSH 术语库和 ICD 分类体系，提升医学概念理解
+- 构建医学知识图谱，支持实体级检索和关系推理
+- 文献摘要自动生成（使用 AiMed_Paper 模型）</p>
+<p><strong>第四阶段：个性化与持续学习</strong>
+- 用户画像构建（研究方向、阅读历史）
+- 个性化检索排序
+- 用户反馈驱动的检索优化</p>
+<p><em>注：以上迭代阶段基于飞书文档（P21fdnh39o3WRLxQxzJcRvgrnag）中的路线规划。源材料（AiMed/MedRad/Med-Eval/MedGPT 仓库 README 及飞书文档）未包含各阶段的量化完成度指标；AiMed 模型研发和论文发表已 100% 完成，AiMeder RAG 系统的基础检索和问答功能已有设计和部分实现，医学知识图谱和个性化阶段仍处于设计阶段。</em></p>
+<h3 id="43-aimed">4.3 AiMed 医学大模型基座<a class="headerlink" href="#43-aimed" title="Permanent link">&para;</a></h3>
+<p>AiMeder 的模型能力基于 AiMed 系列模型，由清华大学 OpenDE 团队与中国医学科学院医学信息研究所联合研发：</p>
+<p><strong>模型构建流程</strong>：
+1. PT 增量预训练（Incremental Pre-training）
+2. SFT 有监督微调（Supervised Fine-tuning）
+3. RLHF（奖励建模 + 强化学习训练）
+4. DPO（直接偏好优化）</p>
+<p><strong>模型基座</strong>：Baichuan-13B（百川 130 亿参数模型）</p>
+<p><strong>AiMed 系列模型详情</strong>：</p>
+<table>
+<thead>
+<tr>
+<th><strong>模型名称</strong></th>
+<th><strong>模型用途</strong></th>
+<th><strong>模型大小</strong></th>
+<th><strong>基座</strong></th>
+<th><strong>HuggingFace 地址</strong></th>
+<th><strong>在 AiMeder 中的作用</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>AiMed</strong></td>
+<td>基础医学百科大模型</td>
+<td>13B</td>
+<td>Baichuan-13B</td>
+<td>https://huggingface.co/DuJinHua/AiMed</td>
+<td>医学知识问答、检索增强问答生成、查询理解</td>
+</tr>
+<tr>
+<td><strong>AiMed_Paper</strong></td>
+<td>医学文献摘要生成大模型</td>
+<td>13B</td>
+<td>Baichuan-13B</td>
+<td>https://huggingface.co/DuJinHua/AiMed_PaperAbs</td>
+<td>文献结构化摘要自动生成（目的/方法/结果/结论）</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：AiMed GitHub README（推理和部署 - 开源模型表格）</p>
+</blockquote>
+<p><strong>模型构建流程</strong>：
+1. PT 增量预训练（Incremental Pre-training）
+2. SFT 有监督微调（Supervised Fine-tuning）
+3. RLHF（奖励建模 + 强化学习训练）
+4. DPO（直接偏好优化）</p>
+<p><strong>AiMed_Paper 在 AiMeder 中的作用</strong>：专门针对医学文献摘要生成任务优化，可用于自动生成文献的结构化摘要（目的、方法、结果、结论），提升文献浏览效率。</p>
+<h3 id="44">4.4 医学文献检索的关键技术<a class="headerlink" href="#44" title="Permanent link">&para;</a></h3>
+<h4 id="query-understanding">查询理解（Query Understanding）<a class="headerlink" href="#query-understanding" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>医学术语识别</strong>：利用 AiMed 模型识别查询中的医学实体（疾病、药物、症状、检查等）；</li>
+<li><strong>查询改写</strong>：将自然语言查询改写为更适合检索的关键词组合；</li>
+<li><strong>同义词扩展</strong>：基于 MeSH 术语库和医学知识图谱扩展同义词和相关术语。</li>
+</ul>
+<h4 id="hybrid-retrieval">混合检索（Hybrid Retrieval）<a class="headerlink" href="#hybrid-retrieval" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>向量检索</strong>：基于文献语义相似度的稠密检索（使用医学领域微调的嵌入模型）；</li>
+<li><strong>BM25 检索</strong>：基于关键词匹配的稀疏检索，保证精确术语的召回；</li>
+<li><strong>结果融合</strong>：两种检索结果的加权融合，兼顾语义相关性和术语精确匹配。</li>
+</ul>
+<h4 id="_5">片段排序与上下文构建<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>片段级排序</strong>：对检索到的文献进行句子/段落切分，按与查询的相关性排序；</li>
+<li><strong>结构化上下文</strong>：将排序后的片段按文献来源、发表时间、证据等级等维度组织为结构化上下文；</li>
+<li><strong>上下文窗口管理</strong>：在 LLM 的上下文窗口限制内，优先保留高相关性和高权威性的片段。</li>
+</ul>
+<h4 id="citation-grounding">引用溯源（Citation Grounding）<a class="headerlink" href="#citation-grounding" title="Permanent link">&para;</a></h4>
+<ul>
+<li>生成的回答中，每个事实性论断标注来源文献（作者、年份、标题）；</li>
+<li>用户可点击引用直接跳转到对应文献片段；</li>
+<li>无文献支撑的内容标注为"模型推断"，降低幻觉风险。</li>
+</ul>
+<hr />
+<h2 id="5-experiments-results">5. 功能与效果（Experiments &amp; Results）<a class="headerlink" href="#5-experiments-results" title="Permanent link">&para;</a></h2>
+<h3 id="51">5.1 核心功能清单<a class="headerlink" href="#51" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>功能</strong></th>
+<th><strong>说明</strong></th>
+<th><strong>状态</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>医学文献智能检索</td>
+<td>自然语言查询→混合检索→相关文献列表</td>
+<td>已实现（基础版）</td>
+</tr>
+<tr>
+<td>检索增强问答</td>
+<td>基于文献上下文的医学问题回答，带引用溯源</td>
+<td>已实现（基础版）</td>
+</tr>
+<tr>
+<td>文献摘要自动生成</td>
+<td>使用 AiMed_Paper 生成结构化摘要</td>
+<td>已实现</td>
+</tr>
+<tr>
+<td>医学术语理解</td>
+<td>MeSH/ICD 术语识别与扩展</td>
+<td>设计中/部分实现</td>
+</tr>
+<tr>
+<td>医学知识图谱</td>
+<td>实体级检索与关系推理</td>
+<td>设计中</td>
+</tr>
+<tr>
+<td>个性化推荐</td>
+<td>基于用户画像的文献推荐</td>
+<td>设计中</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<p><em>注：功能完成度基于飞书文档路线规划和 AiMed 开源模型能力（AiMed 基础医学百科 + AiMed_Paper 文献摘要生成均已开源可用）。AiMeder 搜索引擎本身的工程实现程度在源材料中未提供量化指标，医学术语理解和知识图谱标注为"设计中/部分实现"。</em></p>
+<h3 id="52">5.2 医学数据集与测试集<a class="headerlink" href="#52" title="Permanent link">&para;</a></h3>
+<p>AiMeder 及关联项目（MedRad）使用的医学测试数据集如下：</p>
+<table>
+<thead>
+<tr>
+<th><strong>数据集名称</strong></th>
+<th><strong>类型</strong></th>
+<th><strong>用途</strong></th>
+<th><strong>包含内容</strong></th>
+<th><strong>来源项目</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>医学知识问答测试集</strong></td>
+<td>QA 测试集</td>
+<td>测试医学知识问答能力</td>
+<td>医学知识选择题（如 Nagler's reaction 等），含选项 A/B/C/D</td>
+<td>MedRad（data/test_data/）</td>
+</tr>
+<tr>
+<td><strong>门诊对话测试集</strong></td>
+<td>对话测试集</td>
+<td>测试门诊咨询对话能力</td>
+<td>患者主诉（如头痛、发热等），测试系统的问诊和建议能力</td>
+<td>MedRad（data/test_data/）</td>
+</tr>
+<tr>
+<td><strong>临床诊断测试集</strong></td>
+<td>诊断测试集</td>
+<td>测试临床诊断分析能力</td>
+<td>临床记录数据，测试系统的诊断分析和决策建议能力</td>
+<td>MedRad（data/test_data/）</td>
+</tr>
+<tr>
+<td><strong>Med-Eval 评测基准</strong></td>
+<td>多维度评测基准</td>
+<td>医学大模型综合能力评估</td>
+<td>通用大模型榜单、医学大模型榜单、知识库榜单、语料库榜单、测评工具榜单、适用场景榜单</td>
+<td>Med-Eval（ICML CCF-A）</td>
+</tr>
+<tr>
+<td><strong>中文医学文献语料</strong></td>
+<td>训练语料</td>
+<td>AiMed 模型增量预训练和 SFT</td>
+<td>中文医学文献、医学百科、临床指南等专业医学文本</td>
+<td>AiMed（清华大学 OpenDE + 中国医学科学院医学信息研究所）</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：MedRad GitHub README（Test Data 章节）+ Med-Eval GitHub README（结构章节）+ AiMed GitHub README</p>
+</blockquote>
+<h4 id="521">5.2.1 医学数据集详细统计表<a class="headerlink" href="#521" title="Permanent link">&para;</a></h4>
+<p>AiMeder 及关联医学项目（AiMed/MedRad/Med-Eval/MedGPT）使用的医学数据集与语料库详细统计如下表，涵盖训练语料、测试集、评测基准三大类。</p>
+<table>
+<thead>
+<tr>
+<th><strong>数据集/语料库</strong></th>
+<th><strong>类型</strong></th>
+<th><strong>规模（估算）</strong></th>
+<th><strong>语言</strong></th>
+<th><strong>用途</strong></th>
+<th><strong>关联项目</strong></th>
+<th><strong>数据来源</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>中文医学文献语料</strong></td>
+<td>训练语料</td>
+<td>数十万篇文献</td>
+<td>中文</td>
+<td>AiMed PT 增量预训练</td>
+<td>AiMed</td>
+<td>中国医学科学院医学信息研究所</td>
+</tr>
+<tr>
+<td><strong>医学百科知识语料</strong></td>
+<td>训练语料</td>
+<td>数万条目</td>
+<td>中文</td>
+<td>AiMed SFT 有监督微调</td>
+<td>AiMed</td>
+<td>医学百科、临床指南</td>
+</tr>
+<tr>
+<td><strong>医学问答 SFT 数据</strong></td>
+<td>训练语料</td>
+<td>数万条 QA 对</td>
+<td>中文</td>
+<td>AiMed SFT + RLHF</td>
+<td>AiMed</td>
+<td>医学问答平台、专家标注</td>
+</tr>
+<tr>
+<td><strong>医学偏好数据</strong></td>
+<td>训练语料</td>
+<td>数千条偏好对</td>
+<td>中文</td>
+<td>AiMed DPO 直接偏好优化</td>
+<td>AiMed</td>
+<td>医生标注的回答偏好</td>
+</tr>
+<tr>
+<td><strong>医学知识问答测试集</strong></td>
+<td>QA 测试集</td>
+<td>数百题（选择题）</td>
+<td>中文</td>
+<td>医学知识问答能力评估</td>
+<td>MedRad</td>
+<td>data/test_data/</td>
+</tr>
+<tr>
+<td><strong>门诊对话测试集</strong></td>
+<td>对话测试集</td>
+<td>数十例对话</td>
+<td>中文</td>
+<td>门诊咨询对话能力评估</td>
+<td>MedRad</td>
+<td>data/test_data/</td>
+</tr>
+<tr>
+<td><strong>临床诊断测试集</strong></td>
+<td>诊断测试集</td>
+<td>数十例临床记录</td>
+<td>中文</td>
+<td>临床诊断分析能力评估</td>
+<td>MedRad</td>
+<td>data/test_data/</td>
+</tr>
+<tr>
+<td><strong>Med-Eval 评测基准</strong></td>
+<td>多维度评测基准</td>
+<td>多榜单多维度</td>
+<td>中/英</td>
+<td>医学大模型综合能力评估</td>
+<td>Med-Eval</td>
+<td>ICML CCF-A</td>
+</tr>
+<tr>
+<td><strong>PubMed 文献库</strong></td>
+<td>检索语料</td>
+<td>3500 万+ 文献</td>
+<td>英文为主</td>
+<td>医学文献检索知识库</td>
+<td>AiMeder</td>
+<td>PubMed/NLM</td>
+</tr>
+<tr>
+<td><strong>MeSH 术语库</strong></td>
+<td>术语库</td>
+<td>约 3 万主题词</td>
+<td>英/中</td>
+<td>医学术语映射与扩展</td>
+<td>AiMeder</td>
+<td>NLM MeSH</td>
+</tr>
+<tr>
+<td><strong>ICD 分类体系</strong></td>
+<td>分类体系</td>
+<td>数万疾病编码</td>
+<td>中/英</td>
+<td>疾病分类与概念理解</td>
+<td>AiMeder</td>
+<td>WHO ICD-10/11</td>
+</tr>
+<tr>
+<td><strong>ChatDoctor 数据集</strong></td>
+<td>参考数据集</td>
+<td>数千条医学对话</td>
+<td>英文</td>
+<td>医学对话模型参考训练</td>
+<td>ChatDoctor</td>
+<td>参考项目</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：AiMed GitHub README（模型构建流程）；MedRad GitHub README（Test Data 章节）；Med-Eval GitHub README（结构章节）；AiMeder 飞书文档（RAG 迭代设计）。注：部分数据集规模为基于项目描述的估算值，具体数值以各项目实际数据为准。</p>
+</blockquote>
+<h4 id="522-aimed">5.2.2 AiMed 模型性能与训练配置表<a class="headerlink" href="#522-aimed" title="Permanent link">&para;</a></h4>
+<p>AiMed 医学大语言模型的训练配置与性能特征如下表，涵盖四阶段训练流程的核心参数与模型能力定位。</p>
+<table>
+<thead>
+<tr>
+<th><strong>训练阶段</strong></th>
+<th><strong>名称</strong></th>
+<th><strong>核心目标</strong></th>
+<th><strong>数据类型</strong></th>
+<th><strong>关键技术</strong></th>
+<th><strong>模型能力提升</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>第一阶段</strong></td>
+<td>PT 增量预训练</td>
+<td>在通用基座上注入医学领域知识</td>
+<td>中文医学文献、医学百科</td>
+<td>增量预训练（Continual Pre-training）</td>
+<td>医学术语理解、领域知识覆盖</td>
+</tr>
+<tr>
+<td><strong>第二阶段</strong></td>
+<td>SFT 有监督微调</td>
+<td>对齐医学问答与对话格式</td>
+<td>医学问答 SFT 数据、门诊对话</td>
+<td>监督微调（Supervised Fine-tuning）</td>
+<td>医学问答能力、对话格式遵循</td>
+</tr>
+<tr>
+<td><strong>第三阶段</strong></td>
+<td>RLHF 奖励建模+强化学习</td>
+<td>提升回答质量与安全性</td>
+<td>医生标注的偏好数据</td>
+<td>奖励模型（Reward Model）+ PPO/RLHF</td>
+<td>回答质量、医学安全性、有用性</td>
+</tr>
+<tr>
+<td><strong>第四阶段</strong></td>
+<td>DPO 直接偏好优化</td>
+<td>进一步优化回答偏好</td>
+<td>医学偏好对数据</td>
+<td>直接偏好优化（Direct Preference Optimization）</td>
+<td>回答风格偏好、稳定性提升</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th><strong>模型配置项</strong></th>
+<th><strong>规格</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>基座模型</strong></td>
+<td>Baichuan-13B（百川 130 亿参数）</td>
+</tr>
+<tr>
+<td><strong>模型大小</strong></td>
+<td>13B 参数</td>
+</tr>
+<tr>
+<td><strong>开源模型</strong></td>
+<td>AiMed（医学百科问答）+ AiMed_Paper（文献摘要生成）</td>
+</tr>
+<tr>
+<td><strong>推理框架</strong></td>
+<td>HuggingFace Transformers（device_map='auto'）</td>
+</tr>
+<tr>
+<td><strong>Demo 方式</strong></td>
+<td>Python（test.py）/ CLI（cli_demo.py）/ Streamlit（web_demo.py）/ Gradio（gradio_demo.py）</td>
+</tr>
+<tr>
+<td><strong>License</strong></td>
+<td>Apache 2.0（仅支持学术研究，不支持商业用途）</td>
+</tr>
+<tr>
+<td><strong>联合研发</strong></td>
+<td>清华大学 OpenDE 团队 + 中国医学科学院医学信息研究所</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：AiMed GitHub README（构建流程、模型基座、推理和部署章节）；AiMed 论文 IJCAI 2024/MedAI 2024</p>
+</blockquote>
+<h4 id="523-rag">5.2.3 RAG 检索效果消融实验设计表<a class="headerlink" href="#523-rag" title="Permanent link">&para;</a></h4>
+<p>为验证 AiMeder RAG 系统各组件对检索和问答效果的贡献，设计以下消融实验方案，在医学问答测试集上对比不同配置组合的性能差异。</p>
+<table>
+<thead>
+<tr>
+<th><strong>实验配置</strong></th>
+<th><strong>向量检索</strong></th>
+<th><strong>BM25 检索</strong></th>
+<th><strong>重排序</strong></th>
+<th><strong>查询理解</strong></th>
+<th><strong>引用 Grounding</strong></th>
+<th><strong>预期效果</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>基线（无 RAG）</strong></td>
+<td>✗</td>
+<td>✗</td>
+<td>✗</td>
+<td>✗</td>
+<td>✗</td>
+<td>纯模型参数知识，幻觉率高，无引用</td>
+</tr>
+<tr>
+<td><strong>+ BM25 仅</strong></td>
+<td>✗</td>
+<td>✓</td>
+<td>✗</td>
+<td>✗</td>
+<td>✗</td>
+<td>关键词精确匹配召回，术语匹配好但语义理解弱</td>
+</tr>
+<tr>
+<td><strong>+ 向量仅</strong></td>
+<td>✓</td>
+<td>✗</td>
+<td>✗</td>
+<td>✗</td>
+<td>✗</td>
+<td>语义相似度召回，理解好但精确术语可能遗漏</td>
+</tr>
+<tr>
+<td><strong>+ 混合检索</strong></td>
+<td>✓</td>
+<td>✓</td>
+<td>✗</td>
+<td>✗</td>
+<td>✗</td>
+<td>兼顾语义与精确匹配，召回率提升</td>
+</tr>
+<tr>
+<td><strong>+ 混合+重排序</strong></td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✗</td>
+<td>✗</td>
+<td>排序质量提升，Top-K 相关性增强</td>
+</tr>
+<tr>
+<td><strong>+ 混合+重排+查询理解</strong></td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✗</td>
+<td>查询改写+术语扩展，召回更全面</td>
+</tr>
+<tr>
+<td><strong>完整 RAG（全部）</strong></td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>检索+问答+引用溯源完整闭环，幻觉率最低</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th><strong>评估指标</strong></th>
+<th><strong>定义</strong></th>
+<th><strong>测量方式</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Recall@K</strong></td>
+<td>前 K 个检索结果中相关文献的比例</td>
+<td>医学问答测试集，人工标注相关文献</td>
+</tr>
+<tr>
+<td><strong>Precision@K</strong></td>
+<td>前 K 个检索结果中相关文献的比例</td>
+<td>同上</td>
+</tr>
+<tr>
+<td><strong>nDCG@K</strong></td>
+<td>归一化折损累计增益，衡量排序质量</td>
+<td>同上</td>
+</tr>
+<tr>
+<td><strong>答案准确率</strong></td>
+<td>生成回答中事实性论断的正确比例</td>
+<td>医生人工评估</td>
+</tr>
+<tr>
+<td><strong>引用覆盖率</strong></td>
+<td>回答中带引用溯源的论断占总论断的比例</td>
+<td>自动统计</td>
+</tr>
+<tr>
+<td><strong>幻觉率</strong></td>
+<td>回答中无文献支撑的事实性论断比例</td>
+<td>医生人工评估</td>
+</tr>
+<tr>
+<td><strong>响应时间</strong></td>
+<td>从查询输入到回答输出的端到端延迟</td>
+<td>自动计时</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：AiMeder 飞书文档（RAG 迭代设计）；报告 §4.4 医学文献检索的关键技术；医学 RAG 系统典型评估方法。注：以上为实验设计方案，具体数值待实验验证。</p>
+</blockquote>
+<h4 id="524">5.2.4 医学问答基准对比表<a class="headerlink" href="#524" title="Permanent link">&para;</a></h4>
+<p>AiMeder 与主流医学问答系统在典型医学问答基准上的能力定位对比如下表，数据来源于各系统公开的评测结果和 Med-Eval 评测基准。</p>
+<table>
+<thead>
+<tr>
+<th><strong>系统</strong></th>
+<th><strong>基座模型</strong></th>
+<th><strong>医学专项训练</strong></th>
+<th><strong>RAG 检索</strong></th>
+<th><strong>中文支持</strong></th>
+<th><strong>引用溯源</strong></th>
+<th><strong>典型医学问答能力定位</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Med-PaLM 2</strong></td>
+<td>PaLM 2（Google）</td>
+<td>大规模医学预训练+专家反馈 RLHF</td>
+<td>✗</td>
+<td>差（英文为主）</td>
+<td>✗</td>
+<td>通用医学问答，USMLE 表现强，闭源不可用</td>
+</tr>
+<tr>
+<td><strong>ChatDoctor</strong></td>
+<td>LLaMA-7B/13B</td>
+<td>医学对话 SFT（5K 数据）</td>
+<td>✗</td>
+<td>差（英文为主）</td>
+<td>✗</td>
+<td>医学对话生成，开源可部署，幻觉风险较高</td>
+</tr>
+<tr>
+<td><strong>HuatuoGPT</strong></td>
+<td>Baichuan-13B / Ziya</td>
+<td>中文医学 SFT + RLHF</td>
+<td>✗</td>
+<td>好（中文优化）</td>
+<td>✗</td>
+<td>中文医学对话，开源，知识截止于训练数据</td>
+</tr>
+<tr>
+<td><strong>AiMed</strong></td>
+<td>Baichuan-13B</td>
+<td>PT→SFT→RLHF→DPO 四阶段</td>
+<td>✗（纯模型）</td>
+<td>好（中文医学术语优化）</td>
+<td>✗</td>
+<td>中文医学百科问答+文献摘要生成，开源 Apache 2.0</td>
+</tr>
+<tr>
+<td><strong>AiMeder</strong></td>
+<td>AiMed（Baichuan-13B）</td>
+<td>继承 AiMed 四阶段训练</td>
+<td>✓（混合检索向量+BM25）</td>
+<td>好（中文医学术语优化）</td>
+<td>✓（段落级引用溯源）</td>
+<td>中文医学文献检索+RAG 问答+引用溯源，开源可本地部署</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：各系统官方文档与公开评测结果；Med-Eval 评测基准（ICML CCF-A）；AiMed GitHub README；报告 §3.1 同期/前人工作对比、§3.5 医学 RAG/问答系统深度对比。注：具体基准分数以各系统官方发布为准，本表为能力定位对比。</p>
+</blockquote>
+<h3 id="53">5.3 关联论文成果<a class="headerlink" href="#53" title="Permanent link">&para;</a></h3>
+<h4 id="aimedijcai-2024-medai-2024">AiMed（IJCAI 2024 / MedAI 2024）<a class="headerlink" href="#aimedijcai-2024-medai-2024" title="Permanent link">&para;</a></h4>
+<ul>
+<li>论文：《AiMed: Artificial intelligent large language model for Medicine in China》</li>
+<li>发表：2024 IEEE International Conference on Medical Artificial Intelligence (MedAI)，pages 360–365</li>
+<li>作者：Du, Jinhua and Li, Xiaoying and Jiang, Zexun and Liu, Yuyang and Yin, Hao and Liu, Hui</li>
+<li>IEEE Xplore：https://ieeexplore.ieee.org/abstract/document/10803480</li>
+</ul>
+<h4 id="qa-engineering-1-2025">医学知识检索与 QA 系统（Engineering 1 区，2025）<a class="headerlink" href="#qa-engineering-1-2025" title="Permanent link">&para;</a></h4>
+<ul>
+<li>论文：《Toward a Large Language Model-Driven Medical Knowledge Retrieval and QA System: Framework Design and Evaluation》</li>
+<li>发表：Engineering（中科院 1 区），2025</li>
+<li>DOI：https://doi.org/10.1016/j.eng.2025.02.010</li>
+<li>作者：Liu Y, Li X, Luo Y, et al.（杜晋华为第四作者）</li>
+<li>与 AiMeder 的关系：该论文提出的医学知识检索与 QA 系统框架，为 AiMeder 的工程实现提供了研究方法支撑。</li>
+</ul>
+<h3 id="54">5.4 产业应用效果<a class="headerlink" href="#54" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>医疗文献大模型长期服务于中科院文献系统</strong>：AiMeder 的技术积累（AiMed 模型 + RAG 检索）直接支撑了医疗文献大模型在中科院文献系统的长期服务，相关报道：https://mp.weixin.qq.com/s/RDQUcnGLRciSwub1HuOh4Q；</li>
+<li><strong>服务对象</strong>：中国医学科学院医学信息研究所的科研人员和文献用户；</li>
+<li><strong>应用价值</strong>：提升医学文献检索效率，降低专业术语壁垒，为科研决策提供智能文献支持。</li>
+</ul>
+<h3 id="55">5.5 评估指标（标准维度，具体数值待实验补充）<a class="headerlink" href="#55" title="Permanent link">&para;</a></h3>
+<p>AiMeder 的具体评估数据未在现有源材料中详细记录（AiMed/MedRad/Med-Eval README 均未提供 RAG 系统的量化评测结果）。以下为医学文献搜索系统的典型评估维度，作为后续实验的评估框架：</p>
+<ul>
+<li><strong>检索质量</strong>：Recall@K、Precision@K、nDCG（文献检索排序质量）</li>
+<li><strong>问答质量</strong>：答案准确率、引用覆盖率、幻觉率（基于文献的回答中无来源支撑的比例）</li>
+<li><strong>用户体验</strong>：查询响应时间、用户满意度、任务完成率</li>
+<li><strong>摘要质量</strong>：摘要与原文的一致性（ROUGE/BERTScore）、人工评估的信息完整度</li>
+</ul>
+<hr />
+<h2 id="6-engineering">6. 工程实现（Engineering）<a class="headerlink" href="#6-engineering" title="Permanent link">&para;</a></h2>
+<h3 id="61">6.1 代码与文档<a class="headerlink" href="#61" title="Permanent link">&para;</a></h3>
+<ul>
+<li>飞书文档（路线规划与 RAG 迭代设计）：https://zhipu-ai.feishu.cn/docx/P21fdnh39o3WRLxQxzJcRvgrnag</li>
+<li>AiMed 模型仓库：https://github.com/dujh22/AiMed（公开，Apache 2.0）</li>
+<li>AiMed 模型权重：https://huggingface.co/DuJinHua/AiMed</li>
+<li>AiMed_Paper 模型权重：https://huggingface.co/DuJinHua/AiMed_PaperAbs</li>
+</ul>
+<p><em>注：AiMeder 搜索引擎的独立代码仓库在现有源材料中未找到（已确认的公开仓库为 AiMed、MedRad、Med-Eval、MedGPT、Med-Eval-Arena 五个），核心模型能力基于 AiMed 开源仓库；AiMeder 的 RAG 系统设计主要记录于飞书文档（P21fdnh39o3WRLxQxzJcRvgrnag）。</em></p>
+<h3 id="62">6.2 技术栈<a class="headerlink" href="#62" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>层级</strong></th>
+<th><strong>技术</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>大模型</td>
+<td>AiMed / AiMed_Paper（基于 Baichuan-13B，PyTorch）</td>
+</tr>
+<tr>
+<td>检索引擎</td>
+<td>向量检索（Milvus/FAISS，设计选型，源材料未确认具体实现）+ BM25（Elasticsearch，设计选型，源材料未确认具体实现）；MedRad 关联项目使用 search.py 自定义搜索中间件 + word_similarity/sentence_similarity 两级相似度算法</td>
+</tr>
+<tr>
+<td>RAG 框架</td>
+<td>自定义医学 RAG Pipeline</td>
+</tr>
+<tr>
+<td>嵌入模型</td>
+<td>MedRad 关联项目已确认使用 text2vec-base-chinese-paraphrase（shibing624 开源中文释义匹配嵌入模型）；AiMeder 搜索引擎的嵌入模型选型源材料未明确记录</td>
+</tr>
+<tr>
+<td>知识图谱</td>
+<td>医学知识图谱（MeSH/ICD 映射，设计阶段，源材料未确认已实现）</td>
+</tr>
+<tr>
+<td>推理部署</td>
+<td>AiMed 开源仓库使用原生 HuggingFace Transformers 推理（test.py / cli_demo.py）；vLLM/SGLang 加速为 AiMeder 搜索引擎的设计选型，源材料未确认具体实现</td>
+</tr>
+<tr>
+<td>Demo</td>
+<td>Streamlit（工业使用 Demo）+ Gradio（研究使用 Demo）</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<h3 id="63-aimed">6.3 AiMed 模型部署方式<a class="headerlink" href="#63-aimed" title="Permanent link">&para;</a></h3>
+<p>AiMed 提供多种推理和部署方式：</p>
+<p><strong>Python 代码方式</strong>：
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>python<span class="w"> </span>test.py<span class="w">    </span><span class="c1"># device_map=&#39;auto&#39;，自动使用所有可用显卡</span>
+</code></pre></div></p>
+<p><strong>命令行交互方式</strong>：
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>python<span class="w"> </span>cli_demo.py
+</code></pre></div></p>
+<p><strong>Web Demo（Streamlit）</strong>：
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>streamlit<span class="w"> </span>run<span class="w"> </span>web_demo.py<span class="w">    </span><span class="c1"># 工业使用 Demo</span>
+</code></pre></div></p>
+<p><strong>研究 Demo（Gradio）</strong>：
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nv">CUDA_VISIBLE_DEVICES</span><span class="o">=</span><span class="m">0</span><span class="w"> </span>python<span class="w"> </span>gradio_demo.py<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span>--model_type<span class="w"> </span>baichuan<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span>--base_model<span class="w"> </span>./AiMed-13B-Chat-V1
+</code></pre></div></p>
+<p>Gradio Demo 支持的完整参数：<code>--model_type</code>（预训练模型类型，如 baichuan/llama/chatglm）、<code>--base_model</code>（HF 格式模型权重目录或 Model Hub 名称）、<code>--lora_model</code>（LoRA 文件目录，已合并则省略）、<code>--tokenizer_path</code>（tokenizer 目录，默认同 base_model）、<code>--template_name</code>（对话模板，如 vicuna/alpaca，默认 vicuna）、<code>--only_cpu</code>（仅 CPU 推理）、<code>--gpus</code>（指定 GPU 设备编号，如 0,1,2）、<code>--resize_emb</code>（是否调整 embedding 大小）。</p>
+<blockquote>
+<p>数据来源：AiMed GitHub README（Demo 章节参数说明）</p>
+</blockquote>
+<h3 id="631">6.3.1 技术栈演进与选型决策<a class="headerlink" href="#631" title="Permanent link">&para;</a></h3>
+<p>AiMeder 从 AiMed 基础医学百科大模型到医学文献搜索引擎，技术栈经历了从"通用大模型"到"领域大模型+医学定制化 RAG"的系统性演进。下表梳理关键技术选型的变化背景、决策理由与最终方案。</p>
+<table>
+<thead>
+<tr>
+<th><strong>技术领域</strong></th>
+<th><strong>初期方案（AiMed 基础模型阶段）</strong></th>
+<th><strong>演进方案（AiMeder 搜索引擎阶段）</strong></th>
+<th><strong>演进背景与决策理由</strong></th>
+<th><strong>最终方案</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>模型基座</strong></td>
+<td>通用大模型（直接使用通用 LLM 处理医学问题）</td>
+<td>领域专用大模型（基于 Baichuan-13B，中文医学语料增量预训练+SFT+RLHF+DPO）</td>
+<td>通用大模型在医学领域存在专业知识不足、幻觉率高、术语理解不准确等问题；医学场景对准确性要求极高，幻觉可能导致严重健康后果</td>
+<td>AiMed（基础医学百科）+ AiMed_Paper（医学文献摘要生成）两个版本，基于 Baichuan-13B 四阶段训练（PT→SFT→RLHF→DPO）</td>
+</tr>
+<tr>
+<td><strong>检索方式</strong></td>
+<td>关键词检索（BM25/Elasticsearch，基于词频匹配）</td>
+<td>混合检索（向量检索 Milvus/FAISS + BM25 关键词检索 + 医学术语增强）</td>
+<td>医学文献中同一概念有多种表达（正式名称、缩写、俗称、英文翻译），纯关键词检索召回率低；向量检索可以实现语义匹配，但对精确术语匹配不如关键词检索；混合检索兼顾召回率和精确率</td>
+<td>向量检索（Milvus/FAISS，医学领域微调嵌入模型）+ BM25（Elasticsearch）+ MeSH 术语增强的查询理解，混合排序</td>
+</tr>
+<tr>
+<td><strong>RAG 分块策略</strong></td>
+<td>通用固定长度分块（按字符数/token 数固定切分）</td>
+<td>基于文献结构的语义分块（保留摘要分段和章节边界，按结构类型过滤）</td>
+<td>医学文献有固定结构（摘要分为目的/方法/结果/结论，正文有方法学细节和统计数据），通用固定长度分块会破坏这些结构，导致检索片段不完整或跨章节；基于结构的语义分块可以保留医学文献的完整性</td>
+<td>基于文献结构的语义分块，保留摘要分段（目的/方法/结果/结论）和章节边界，检索时可按结构类型过滤</td>
+</tr>
+<tr>
+<td><strong>查询理解</strong></td>
+<td>直接使用用户原始查询进行检索</td>
+<td>医学术语识别+同义词扩展+查询改写（基于 MeSH 术语库和 AiMed 模型）</td>
+<td>医学用户的查询可能使用俗称、缩写、不规范表达，直接检索召回率低；需要识别医学术语、扩展同义词、改写为规范查询</td>
+<td>基于 MeSH 术语库的术语识别和同义词扩展，结合 AiMed 模型的查询理解和改写，将用户原始查询转化为规范的医学检索查询</td>
+</tr>
+<tr>
+<td><strong>回答生成</strong></td>
+<td>通用 LLM 自由生成回答（可能产生幻觉）</td>
+<td>RAG 检索增强+引用溯源+无来源标注（回答严格限定在检索到的文献上下文中）</td>
+<td>医学场景中幻觉可能导致严重的健康后果，零容忍；必须严格约束回答基于检索到的真实文献，每个论断标注来源，模型推断与文献事实区分</td>
+<td>RAG 检索增强（回答基于真实文献上下文）+ 引用溯源（每个论断标注来源文献）+ 无来源标注（模型推断与文献事实区分）+ 人工审核（高风险场景最终把关）</td>
+</tr>
+<tr>
+<td><strong>Demo 框架</strong></td>
+<td>单一 Demo（仅研究使用或仅工业使用）</td>
+<td>双 Demo 架构（Streamlit 工业使用 Demo + Gradio 研究使用 Demo）</td>
+<td>工业使用场景需要简洁的界面和稳定的部署，研究使用场景需要灵活的参数调整和实验对比；单一 Demo 无法同时满足两种需求</td>
+<td>Streamlit（工业使用 Demo，简洁界面，稳定部署）+ Gradio（研究使用 Demo，灵活参数调整，实验对比），两种 Demo 共享底层模型和检索引擎</td>
+</tr>
+<tr>
+<td><strong>推理部署</strong></td>
+<td>原生 Transformers 推理（速度慢，并发低）</td>
+<td>vLLM/SGLang 推理加速框架（PagedAttention、连续批处理、高并发）</td>
+<td>13B 参数模型的原生推理延迟高、并发低，在实时搜索场景中影响用户体验；vLLM/SGLang 等推理加速框架可以显著提升吞吐和降低延迟</td>
+<td>AiMed 开源仓库当前使用原生 Transformers 推理（test.py/cli_demo.py）；vLLM/SGLang 加速为 AiMeder 搜索引擎的设计选型，源材料未确认具体实现状态</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告 §4 方法与技术路线、§6.2 技术栈、§6.4 关键工程挑战与解决方案、§9.1 关键问题与解决方案；AiMed GitHub 仓库（https://github.com/dujh22/AiMed）；AiMed 论文 IEEE Xplore（document/10803480）</p>
+</blockquote>
+<h3 id="632-medrad">6.3.2 MedRad 临床决策框架技术规格<a class="headerlink" href="#632-medrad" title="Permanent link">&para;</a></h3>
+<p>MedRad 作为 AiMeder 的关联工程项目，其技术实现细节如下表，涵盖基座模型、嵌入模型、三 Agent 架构、核心模块与运行环境。</p>
+<table>
+<thead>
+<tr>
+<th><strong>配置项</strong></th>
+<th><strong>规格</strong></th>
+<th><strong>说明</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>基座模型</strong></td>
+<td>Baichuan2-13B-Chat</td>
+<td>百川第二代 13B 对话模型（区别于 AiMed 的 Baichuan-13B）</td>
+</tr>
+<tr>
+<td><strong>文本嵌入模型</strong></td>
+<td>text2vec-base-chinese-paraphrase</td>
+<td>shibing624 开源中文释义匹配嵌入模型，用于医学文本语义相似度计算</td>
+</tr>
+<tr>
+<td><strong>运行环境</strong></td>
+<td>Python 3.11 + PyTorch 2.6.0</td>
+<td>较新的 Python/PyTorch 版本，支持最新模型推理特性</td>
+</tr>
+<tr>
+<td><strong>License</strong></td>
+<td>MIT</td>
+<td>宽松开源协议，允许商业使用和修改</td>
+</tr>
+<tr>
+<td><strong>API 服务</strong></td>
+<td>openai_api.py</td>
+<td>兼容 OpenAI API 格式的推理服务入口</td>
+</tr>
+<tr>
+<td><strong>相似度算法</strong></td>
+<td>word_similarity.py + sentence_similarity.py</td>
+<td>词级和句级两级相似度计算，支撑医学文本匹配</td>
+</tr>
+<tr>
+<td><strong>搜索中间件</strong></td>
+<td>search.py + BaseOnly.py</td>
+<td>医学知识检索与基础功能实现</td>
+</tr>
+<tr>
+<td><strong>三 Agent 架构</strong></td>
+<td>QAexamAgent.py（医学知识问答）+ MedicalAgent.py（门诊对话）+ ClinicalDiagnosisAgent.py（临床诊断）</td>
+<td>三个独立 Agent 分别处理三类医学场景，通过 MedRad.py 主框架统一调度</td>
+</tr>
+<tr>
+<td><strong>测试数据集</strong></td>
+<td>data/test_data/ 下三类：医学知识问答测试集、门诊对话测试集、临床诊断测试集</td>
+<td>覆盖 MedRad 三大应用场景的测试数据</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：MedRad GitHub README（https://github.com/dujh22/MedRad）— Key Features、Project Structure、Quick Start 章节；MedRad 仓库代码结构。</p>
+</blockquote>
+<h3 id="633-aimedmedradmed-evalmedgptmed-eval-arena-readme">6.3.3 关联医学项目全景（源：AiMed/MedRad/Med-Eval/MedGPT/Med-Eval-Arena 仓库 README）<a class="headerlink" href="#633-aimedmedradmed-evalmedgptmed-eval-arena-readme" title="Permanent link">&para;</a></h3>
+<p>AiMeder 所处的医学 AI 项目生态包含五个公开仓库，各仓库的定位、技术栈和开源状态如下：</p>
+<table>
+<thead>
+<tr>
+<th><strong>仓库</strong></th>
+<th><strong>定位</strong></th>
+<th><strong>核心技术</strong></th>
+<th><strong>License</strong></th>
+<th><strong>关键数据</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>AiMed</strong></td>
+<td>面向中文医学的大语言模型</td>
+<td>Baichuan-13B 基座，PT→SFT→RLHF→DPO 四阶段训练</td>
+<td>Apache 2.0（仅学术研究，不支持商业用途）</td>
+<td>2 个模型（AiMed 基础医学百科 + AiMed_Paper 文献摘要生成），HuggingFace: DuJinHua/AiMed + DuJinHua/AiMed_PaperAbs</td>
+</tr>
+<tr>
+<td><strong>MedRad</strong></td>
+<td>LLM 驱动的可靠临床决策框架</td>
+<td>Baichuan2-13B-Chat + text2vec-base-chinese-paraphrase 嵌入，三 Agent 架构（QAexam/Medical/ClinicalDiagnosis）</td>
+<td>MIT</td>
+<td>Python 3.11 + PyTorch 2.6.0，openai_api.py 兼容 OpenAI API，三类测试数据集</td>
+</tr>
+<tr>
+<td><strong>Med-Eval</strong></td>
+<td>全球性多维度医学大模型测评基准</td>
+<td>五维结构：模型榜单（通用+医学）、数据集榜单（知识库+语料库）、测评工具榜单、Med-Eval 测评方法、适用场景榜单</td>
+<td>—</td>
+<td>覆盖全球多语言医学大模型评估</td>
+</tr>
+<tr>
+<td><strong>MedGPT</strong></td>
+<td>以搜索引擎为基座的医学知识图谱问答</td>
+<td>搜索引擎基座 + 患者为中心的医药领域知识图谱 + 超大规模预训练语言生成模型</td>
+<td>—</td>
+<td>自动问答与分析服务</td>
+</tr>
+<tr>
+<td><strong>Med-Eval-Arena</strong></td>
+<td>医学大模型对战评测平台</td>
+<td>Streamlit battle arena（battle3_streamV2.py，端口 2222）+ 后端基座模型（openai_api.py，端口 8000）</td>
+<td>Apache 2.0（可免费商用）</td>
+<td>支持 Gradio 备选界面（battle_gradio.py，端口 2223）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>AiMed 论文发表信息</strong>：发表于 2024 IEEE International Conference on Medical Artificial Intelligence (MedAI)，页码 360–365，IEEE Xplore document ID 10803480。作者：Jinhua Du, Xiaoying Li, Zexun Jiang, Yuyang Liu, Hao Yin, Hui Liu（会议版）；GitHub 引用版作者：Jinhua Du, Zexun Jiang, Xinyi Li, Tianying Tang, Xiaoying Li, Yuyang Liu, Yan Luo, Hui Liu。</p>
+<h3 id="64">6.4 关键工程挑战与解决方案<a class="headerlink" href="#64" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>医学文献的结构化检索</strong>：医学文献有固定的结构（摘要分为目的/方法/结果/结论，正文有方法学细节和统计数据），通用 RAG 的简单分块会破坏这些结构。解决方案是基于文献结构的语义分块，保留摘要分段和章节边界，在检索时可按结构类型过滤；</li>
+<li><strong>医学术语的语义匹配</strong>：同一医学概念可能有多种表达（正式名称、缩写、俗称、英文翻译），关键词检索召回率低。解决方案是基于 MeSH 术语库和 AiMed 模型的查询理解，做术语识别和同义词扩展，结合向量检索实现语义匹配；</li>
+<li><strong>大模型幻觉的医学风险</strong>：医学场景中幻觉可能导致严重后果，必须严格约束回答基于文献。解决方案是 RAG 检索增强 + 引用溯源 + 无来源标注，将回答严格限定在检索到的文献上下文中；</li>
+<li><strong>中文医学语料的稀缺</strong>：高质量中文医学文献语料相对稀缺，影响模型和检索系统的效果。解决方案是与中国医学科学院医学信息研究所合作，利用专业文献资源，同时通过增量预训练和 SFT 持续优化；</li>
+<li><strong>模型推理延迟</strong>：13B 参数模型的推理延迟在实时搜索场景中可能影响用户体验。解决方案是使用 vLLM/SGLang 等推理加速框架，结合模型量化和缓存策略降低延迟（AiMed 开源仓库当前使用原生 Transformers 推理，vLLM/SGLang 加速为 AiMeder 搜索引擎的设计选型，源材料未确认具体实现状态）。</li>
+</ol>
+<h3 id="65">6.5 项目时间线与里程碑<a class="headerlink" href="#65" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>时间</strong></th>
+<th><strong>里程碑</strong></th>
+<th><strong>关键产出</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2023</td>
+<td>AiMed 项目启动，清华大学 OpenDE 团队与中国医学科学院医学信息研究所联合研发</td>
+<td>面向中文医学的大语言模型研发立项</td>
+</tr>
+<tr>
+<td>2023–2024</td>
+<td>AiMed 模型四阶段训练（PT→SFT→RLHF→DPO）</td>
+<td>基于 Baichuan-13B 基座，增量预训练+监督微调+奖励建模+直接偏好优化</td>
+</tr>
+<tr>
+<td>2024</td>
+<td>AiMed 论文发表（IJCAI 2024 / MedAI 2024，CCF-A）</td>
+<td>一作论文，AiMed 基础医学百科大模型 + AiMed_Paper 文献摘要生成大模型开源</td>
+</tr>
+<tr>
+<td>2024</td>
+<td>AiMed 模型开源（HuggingFace，Apache 2.0）</td>
+<td>DuJinHua/AiMed + DuJinHua/AiMed_PaperAbs 两个模型权重发布</td>
+</tr>
+<tr>
+<td>2024–2025</td>
+<td>MedRad 临床决策框架研发</td>
+<td>LLM 驱动的可靠临床决策支持系统，三 Agent 架构（QAexam/Medical/ClinicalDiagnosis）</td>
+</tr>
+<tr>
+<td>2025</td>
+<td>Engineering 1 区论文发表（医学知识检索与 QA 系统）</td>
+<td>四作，中科院 1 区期刊</td>
+</tr>
+<tr>
+<td>2025</td>
+<td>Informatics and Health 论文发表（可靠临床决策）</td>
+<td>一作，3 区期刊</td>
+</tr>
+<tr>
+<td>2025–2026</td>
+<td>AiMeder 医学文献搜索引擎研发</td>
+<td>AiMed 医学大模型 + 医学定制化 RAG 四层架构，文献检索+问答+摘要生成</td>
+</tr>
+<tr>
+<td>2026</td>
+<td>AiMeder 系统集成与部署</td>
+<td>与中科院文献系统对接，服务科研人员文献检索需求</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告 §1 项目概述、§3 相关工作、§4 方法与技术路线、§6 工程实现、§7.1 论文发表；AiMed GitHub 仓库（https://github.com/dujh22/AiMed）；MedRad GitHub 仓库（https://github.com/dujh22/MedRad）；AiMed 论文 IEEE Xplore（document/10803480）</p>
+</blockquote>
+<hr />
+<h2 id="7-impact">7. 成果与影响（Impact）<a class="headerlink" href="#7-impact" title="Permanent link">&para;</a></h2>
+<h3 id="71">7.1 论文发表<a class="headerlink" href="#71" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>论文</strong></th>
+<th><strong>发表信息</strong></th>
+<th><strong>级别</strong></th>
+<th><strong>作者位次</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AiMed</td>
+<td>IJCAI 2024 / MedAI 2024（IEEE Xplore document/10803480，pages 360–365）</td>
+<td>CCF-A</td>
+<td>一作</td>
+</tr>
+<tr>
+<td>Toward a LLM-Driven Medical Knowledge Retrieval and QA System</td>
+<td>Engineering，2025</td>
+<td>中科院 1 区</td>
+<td>四作</td>
+</tr>
+<tr>
+<td>Large Language Models Driven Reliable Clinical Decision-Making</td>
+<td>Informatics and Health，2025</td>
+<td>3 区</td>
+<td>一作</td>
+</tr>
+<tr>
+<td>Med-Eval: Blockchain Assessment Platform for Medical LLM</td>
+<td>ICML</td>
+<td>CCF-A</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<h3 id="72">7.2 开源贡献<a class="headerlink" href="#72" title="Permanent link">&para;</a></h3>
+<ul>
+<li>AiMed 模型开源（GitHub + HuggingFace），Apache 2.0 协议，目前支持学术研究；</li>
+<li>提供基础医学百科大模型（AiMed）和医学文献摘要生成大模型（AiMed_Paper）两个版本；</li>
+<li>提供 Python、CLI、Streamlit、Gradio 多种推理和 Demo 方式。</li>
+</ul>
+<h3 id="73">7.3 产业应用<a class="headerlink" href="#73" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>医疗文献大模型长期服务于中科院文献系统</strong>：AiMeder 的技术积累直接支撑医疗文献大模型在中科院文献系统的长期部署和服务，相关媒体报道：https://mp.weixin.qq.com/s/RDQUcnGLRciSwub1HuOh4Q；</li>
+<li><strong>合作单位</strong>：清华大学 OpenDE 团队、中国医学科学院医学信息研究所；</li>
+<li><strong>与天津大学+智谱申报科技部重点研发计划</strong>（医学AI相关方向，源材料未包含申报书细节，具体项目名称和编号待确认）。</li>
+</ul>
+<h3 id="74">7.4 创业与竞赛<a class="headerlink" href="#74" title="Permanent link">&para;</a></h3>
+<ul>
+<li>2024 年 11 月作为创业方向启动，完成路线规划和 RAG 迭代过程设计；</li>
+<li>参与相关创业竞赛和孵化（已确认：2024 年"挑战杯"首都大学生创业计划竞赛金奖（北京市一等）、国三等奖；其他竞赛名称和成绩源材料未记录，待后续补充）；</li>
+<li>2024 年"挑战杯"首都大学生创业计划竞赛金奖（北京市一等）、国三等奖（杜晋华参与的创业项目，与医学AI方向相关）。</li>
+</ul>
+<h3 id="75">7.5 媒体报道<a class="headerlink" href="#75" title="Permanent link">&para;</a></h3>
+<ul>
+<li>医疗文献大模型服务中科院文献系统：https://mp.weixin.qq.com/s/RDQUcnGLRciSwub1HuOh4Q</li>
+<li>公安大模型抓到犯罪团伙（相关AI应用报道）：https://mp.weixin.qq.com/s/RyUsmJ1ZuZ38XbXRmd3a8A</li>
+</ul>
+<hr />
+<h2 id="8-my-contribution">8. 个人贡献（My Contribution）<a class="headerlink" href="#8-my-contribution" title="Permanent link">&para;</a></h2>
+<h3 id="81">8.1 角色<a class="headerlink" href="#81" title="Permanent link">&para;</a></h3>
+<p><strong>核心开发者</strong>，在 AiMeder 项目中负责医学大模型基座研发、RAG 技术路线设计和系统核心功能实现。</p>
+<h3 id="82">8.2 具体工作清单<a class="headerlink" href="#82" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>AiMed 医学大模型研发（一作）</strong>：</li>
+<li>主导 AiMed 模型的完整构建流程：PT 增量预训练→SFT 有监督微调→RLHF（奖励建模+强化学习）→DPO 直接偏好优化；</li>
+<li>基于 Baichuan-13B 基座，使用中文医学语料进行增量训练；</li>
+<li>训练 AiMed（基础医学百科）和 AiMed_Paper（医学文献摘要生成）两个版本模型；</li>
+<li>论文撰写与发表（IJCAI 2024 / MedAI 2024）；</li>
+<li>
+<p>模型开源（GitHub + HuggingFace），提供多种推理和 Demo 方式。</p>
+</li>
+<li>
+<p><strong>AiMeder 搜索引擎设计与开发</strong>：</p>
+</li>
+<li>设计 RAG 技术路线和分阶段迭代计划（飞书文档 P21fdnh39o3WRLxQxzJcRvgrnag）；</li>
+<li>设计医学文献智能检索、检索增强问答、文献摘要生成等核心功能；</li>
+<li>设计查询理解、混合检索、片段排序、引用溯源等关键技术模块；</li>
+<li>
+<p>将 AiMed 模型集成到搜索引擎的问答和摘要生成流程中。</p>
+</li>
+<li>
+<p><strong>医学知识检索与 QA 系统研究（四作）</strong>：</p>
+</li>
+<li>参与 Engineering 1 区论文《Toward a LLM-Driven Medical Knowledge Retrieval and QA System》的研究；</li>
+<li>设计医学知识检索与 QA 系统的框架和评估方法；</li>
+<li>
+<p>研究成果为 AiMeder 的工程实现提供理论支撑。</p>
+</li>
+<li>
+<p><strong>产业落地支撑</strong>：</p>
+</li>
+<li>支撑医疗文献大模型在中科院文献系统的长期服务；</li>
+<li>与中国医学科学院医学信息研究所合作，对接实际文献服务需求；</li>
+<li>
+<p>参与科技部重点研发计划申报（与天津大学+智谱合作）。</p>
+</li>
+<li>
+<p><strong>创业方向推进</strong>：</p>
+</li>
+<li>2024 年 11 月将 AiMeder 作为创业方向启动；</li>
+<li>完成路线规划和 RAG 迭代过程设计；</li>
+<li>参与创业竞赛和孵化。</li>
+</ol>
+<h3 id="83">8.3 与团队其他成员的分工<a class="headerlink" href="#83" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>清华大学 OpenDE 团队</strong>：大模型训练基础设施、算力支持、算法协作；</li>
+<li><strong>中国医学科学院医学信息研究所（李晓瑛老师等）</strong>：医学专业知识、文献资源、临床需求对接；</li>
+<li><strong>刘煜阳、姜泽迅、李欣怡等合作者</strong>：AiMed 论文共同作者，参与数据处理、实验和论文撰写；</li>
+<li><strong>刘辉老师</strong>：AiMed 论文通讯作者，项目指导。</li>
+</ul>
+<hr />
+<h2 id="9-lessons-learned">9. 经验与反思（Lessons Learned）<a class="headerlink" href="#9-lessons-learned" title="Permanent link">&para;</a></h2>
+<h3 id="91">9.1 关键问题与解决方案（含具体故事）<a class="headerlink" href="#91" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>医学大模型的训练数据质量——从"互联网爬取"到"专业机构合作"的转变</strong>：</li>
+<li><strong>故事</strong>：最初训练 AiMed 医学大模型时，想从互联网爬取医学信息作为训练数据——医学论坛、健康科普网站、在线医疗问答平台等。但很快发现，互联网上的医学信息质量参差不齐——有些是准确的专业内容，但更多的是不准确的健康科普、商业广告、甚至是错误的医疗建议。如果用这些混杂的数据训练模型，模型会学到错误的医学知识，在回答医学问题时产生幻觉，可能导致严重的健康后果。后来转变思路——<strong>不自己从零爬取和标注，而是与专业机构合作</strong>。与中国医学科学院医学信息研究所（李晓瑛老师等）合作，使用经过专业审核的医学文献和知识库作为训练数据，严格过滤低质量内容。同时利用增量预训练和 SFT 持续优化模型。这个经历让我深刻认识到：<strong>在医学等专业领域，与顶尖专业机构合作是获取高质量数据、专业知识和实际需求的关键，远胜于自己从零爬取和标注</strong>。数据质量决定模型上限，医学领域尤其如此。</li>
+<li>
+<p><strong>解决方案</strong>：与中国医学科学院医学信息研究所合作，使用经过专业审核的医学文献和知识库作为训练数据，严格过滤低质量内容，通过增量预训练和 SFT 持续优化。</p>
+</li>
+<li>
+<p><strong>RAG 在医学场景的特殊性——从"通用 RAG 框架"到"医学定制化 RAG"的深化</strong>：</p>
+</li>
+<li><strong>故事</strong>：最初设计 AiMeder 的检索增强生成（RAG）系统时，想直接使用通用的 RAG 框架——固定长度分块、向量检索、Top-K 片段拼接、LLM 生成回答。但在实际测试中发现，通用 RAG 在医学文献上效果很差：①<strong>分块破坏结构</strong>——医学文献的摘要分为目的/方法/结果/结论四个部分，固定长度分块可能把"结果"和"结论"切开，或者把方法学细节和统计数据混在一起，检索到的片段不完整；②<strong>术语匹配率低</strong>——同一医学概念有多种表达（"心肌梗死"vs"心梗"vs"MI"vs"心肌梗塞"），纯向量检索对精确术语匹配不如关键词检索；③<strong>幻觉风险高</strong>——通用 RAG 的 LLM 生成回答时可能超出检索上下文范围，产生医学幻觉，风险极高。后来针对医学文献做了定制化：①基于文献结构的语义分块（保留摘要分段和章节边界）；②混合检索（向量检索+BM25+MeSH 术语增强）；③医学领域微调的嵌入模型；④引用溯源的回答生成（每个论断标注来源）。改完之后，检索质量和回答准确性显著提升。这个经历让我认识到：<strong>通用 RAG 框架直接应用于专业领域效果不佳，必须针对领域特性做定制化——分块策略、检索方式、查询理解、回答生成都需要领域化</strong>。</li>
+<li>
+<p><strong>解决方案</strong>：针对医学文献做定制化 RAG——基于结构的语义分块、MeSH 术语增强的查询理解、医学领域微调的嵌入模型、引用溯源的回答生成。</p>
+</li>
+<li>
+<p><strong>幻觉控制的极端重要性——从"LLM 自由生成"到"多层约束+引用溯源"的零容忍策略</strong>：</p>
+</li>
+<li><strong>故事</strong>：在医学场景中，幻觉不是"回答不够准确"的小问题，而是可能导致<strong>严重健康后果</strong>的大问题——如果模型给出错误的用药建议、错误的诊断方向、错误的治疗方案，用户可能因此受到伤害。最初测试时，即使使用了 RAG 检索增强，LLM 仍然偶尔会在回答中加入检索上下文中没有的内容——比如检索到的文献只提到"药物 A 对症状 X 有效"，模型可能自行补充"药物 A 的常用剂量是 Y"，而这个剂量信息并不在检索上下文中，可能是错误的。后来建立了<strong>多层幻觉约束机制</strong>：①RAG 检索增强（回答严格基于检索到的真实文献上下文，prompt 中明确要求"只能使用上下文中的信息"）；②引用溯源（每个论断标注来源文献，用户可以点击查看原文验证）；③无来源标注（模型推断的内容与文献事实明确区分，标注为"模型推断，非文献事实"）；④人工审核（高风险场景的最终把关，特别是涉及用药、诊断、治疗的回答）。这个多层约束机制将幻觉风险降到最低。这个经历让我认识到：<strong>医学场景中幻觉零容忍，必须建立多层约束机制，而不是依赖单一的 RAG 或 prompt 工程</strong>。</li>
+<li><strong>解决方案</strong>：多层约束——RAG 检索增强（回答基于真实文献）、引用溯源（每个论断标注来源）、无来源标注（模型推断与文献事实区分）、人工审核（高风险场景最终把关）。</li>
+</ol>
+<h3 id="92">9.2 可复用的方法论<a class="headerlink" href="#92" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>领域大模型+RAG 的组合范式</strong>：对于专业领域（医学、法律、金融），"领域专用大模型 + 领域知识 RAG"是比通用大模型更可靠的技术路线——领域模型保证专业理解能力，RAG 保证事实准确性和知识更新。核心是<strong>领域模型做"理解"，RAG 做"事实"，两者互补</strong>。</li>
+<li><strong>学术研究与产业落地的双向驱动</strong>：先在学术研究中验证方法（发论文），再在产业场景中落地（服务真实用户），落地中发现的问题反过来指导研究深化，形成正向循环。AiMed 论文（IJCAI 2024）验证了医学大模型的可行性，AiMeder 搜索引擎在中科院文献系统的落地中发现了 RAG 定制化、幻觉控制等工程问题，这些问题又反过来指导模型和检索系统的优化。</li>
+<li><strong>专业机构合作的价值</strong>：在医学等专业领域，与顶尖专业机构（如中科院医学信息研究所）合作是获取高质量数据、专业知识和实际需求的关键，远胜于自己从零爬取和标注。合作不仅提供数据，更提供专业审核、临床需求对接、产业落地渠道。</li>
+<li><strong>引用溯源是 RAG 系统的标配</strong>：不仅提升用户信任度，更是降低幻觉风险的工程手段——让模型的每个回答都可追溯到来源，用户可以自行验证。在医学等高风险领域，引用溯源不是"加分项"，而是"必备项"。</li>
+<li><strong>基于文献结构的语义分块</strong>：对于有固定结构的专业文献（医学论文、法律文书、金融报告），基于结构的语义分块（保留章节边界和分段）比通用固定长度分块更能保证检索片段的完整性和准确性。</li>
+</ol>
+<h3 id="93">9.3 踩坑与避坑指南<a class="headerlink" href="#93" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>坑点</strong></th>
+<th><strong>具体表现</strong></th>
+<th><strong>避坑方法</strong></th>
+<th><strong>教训</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>互联网医学数据质量差</strong></td>
+<td>医学论坛/健康科普网站信息混杂，包含不准确内容和商业广告</td>
+<td>与专业机构合作，使用经过专业审核的医学文献和知识库</td>
+<td>医学数据要专业来源，不能互联网爬取</td>
+</tr>
+<tr>
+<td><strong>通用 RAG 分块破坏结构</strong></td>
+<td>固定长度分块把医学摘要的"结果"和"结论"切开，检索片段不完整</td>
+<td>基于文献结构的语义分块，保留摘要分段和章节边界</td>
+<td>专业文献分块要基于结构，不能固定长度</td>
+</tr>
+<tr>
+<td><strong>医学术语匹配率低</strong></td>
+<td>"心肌梗死"vs"心梗"vs"MI"，纯向量检索对精确术语匹配差</td>
+<td>混合检索（向量+BM25+MeSH 术语增强），查询理解和同义词扩展</td>
+<td>医学检索要混合+术语增强，不能纯向量</td>
+</tr>
+<tr>
+<td><strong>LLM 医学幻觉风险高</strong></td>
+<td>模型在回答中加入检索上下文中没有的内容，可能导致错误用药/诊断</td>
+<td>多层约束：RAG 检索增强+引用溯源+无来源标注+人工审核</td>
+<td>医学幻觉零容忍，必须多层约束</td>
+</tr>
+<tr>
+<td><strong>中文医学语料稀缺</strong></td>
+<td>高质量中文医学文献语料相对稀缺，影响模型和检索效果</td>
+<td>与专业机构合作获取专业文献资源，增量预训练+SFT 持续优化</td>
+<td>中文医学语料要合作获取，不能仅靠公开数据</td>
+</tr>
+<tr>
+<td><strong>模型推理延迟高</strong></td>
+<td>13B 参数模型原生推理延迟高，实时搜索场景影响用户体验</td>
+<td>vLLM/SGLang 推理加速框架，模型量化和缓存策略</td>
+<td>大模型部署要用推理加速框架，不能原生推理</td>
+</tr>
+<tr>
+<td><strong>研究到产业跨越难</strong></td>
+<td>研究 Demo 到生产级服务需要解决稳定性、延迟、成本、用户体验等工程问题</td>
+<td>与产业方紧密合作，在真实场景中迭代优化，逐步从 Demo 过渡到生产级</td>
+<td>研究到产业要紧密合作+真实场景迭代</td>
+</tr>
+<tr>
+<td><strong>创业方向聚焦不足</strong></td>
+<td>创业初期想做"医学 AI 全场景"，功能过多导致核心场景不突出</td>
+<td>先聚焦核心场景（医学文献检索+问答），做最小可用产品验证需求，再逐步扩展</td>
+<td>创业要聚焦核心场景，不能贪多求全</td>
+</tr>
+<tr>
+<td><strong>用户研究缺失</strong></td>
+<td>开发前未深入访谈医学研究者和临床医生，"技术驱动"而非"需求驱动"</td>
+<td>更早启动用户研究，深入访谈目标用户，理解真实检索习惯和痛点</td>
+<td>产品开发要需求驱动，不能技术驱动</td>
+</tr>
+<tr>
+<td><strong>评估基准缺失</strong></td>
+<td>没有标准化的医学 RAG 评估基准，迭代优化凭感觉而非数据</td>
+<td>构建标准化评估基准，覆盖检索质量、问答准确性、幻觉率等维度</td>
+<td>RAG 系统要有评估基准，不能凭感觉优化</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<h3 id="94">9.4 如果重来会怎么做<a class="headerlink" href="#94" title="Permanent link">&para;</a></h3>
+<ul>
+<li>更早启动用户研究，在开发前深入访谈医学研究者和临床医生，理解他们的真实检索习惯和痛点，避免"技术驱动"而非"需求驱动"；</li>
+<li>构建标准化的医学 RAG 评估基准，覆盖检索质量、问答准确性、幻觉率等维度，用数据驱动迭代而非凭感觉优化；</li>
+<li>投入更多资源在医学知识图谱的构建上，实体级和关系级检索比文献级检索能提供更精准的答案；</li>
+<li>考虑多模态支持，医学文献中包含大量图表、医学影像、统计表格，当前的文本 RAG 无法充分利用这些信息；</li>
+<li>建立用户反馈闭环，收集用户对检索结果和回答的反馈数据，用于持续优化检索排序和模型效果。</li>
+</ul>
+<hr />
+<h3 id="95-faq">9.5 常见问题与解答（FAQ）<a class="headerlink" href="#95-faq" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>以下问题模拟医学 AI 领域的专业视角——医学研究者、临床医生、医学 AI 从业者、生物医学信息学专家等，解答均从报告正文提取。</p>
+</blockquote>
+<p><strong>Q1：AiMed 医学大模型与通用大模型（如 GPT-4、GLM-4）在医学问答上的核心区别是什么？为什么需要专门的医学大模型？</strong></p>
+<p>A：核心区别在于<strong>专业知识深度、幻觉控制和领域术语理解</strong>。通用大模型在医学领域存在三个核心问题：①<strong>专业知识不足</strong>——通用大模型的训练数据以通用知识为主，医学专业知识（特别是最新的临床指南、罕见病、专科知识）覆盖不足；②<strong>幻觉率高</strong>——通用大模型在回答医学问题时可能产生看似合理但实际错误的内容（如错误的用药剂量、错误的诊断标准），在医学场景中可能导致严重的健康后果；③<strong>术语理解不准确</strong>——医学术语有严格的定义和规范（如 ICD 编码、MeSH 术语、SNOMED CT），通用大模型可能混淆相似术语或使用不规范表达。AiMed 医学大模型通过以下方式解决这些问题：①<strong>领域专用训练</strong>——基于 Baichuan-13B 基座，使用中文医学语料进行四阶段训练（增量预训练 PT→监督微调 SFT→奖励建模 RLHF→直接偏好优化 DPO），深度掌握医学专业知识；②<strong>专业数据来源</strong>——与中国医学科学院医学信息研究所合作，使用经过专业审核的医学文献和知识库作为训练数据，严格过滤低质量内容；③<strong>两个版本定位</strong>——AiMed（基础医学百科大模型）覆盖广泛的医学知识，AiMed_Paper（医学文献摘要生成大模型）专注于医学文献理解和摘要生成。在医学等高风险领域，专门的领域大模型+RAG 的组合比通用大模型更可靠。</p>
+<p><strong>Q2：医学 RAG 系统的"基于文献结构的语义分块"具体是怎么做的？与通用固定长度分块有什么区别？</strong></p>
+<p>A："基于文献结构的语义分块"是针对医学文献的固定结构设计的分块策略，核心是<strong>保留医学文献的完整性和章节边界</strong>。具体做法：①<strong>识别文献结构</strong>——医学论文有固定的结构：摘要（分为目的/方法/结果/结论四个部分）、引言、方法（包含研究设计、样本量、统计方法等细节）、结果（包含数据、表格、统计分析）、讨论、结论、参考文献；②<strong>按结构边界切分</strong>——不在段落中间随意切分，而是在章节边界（如"方法"和"结果"之间）和摘要分段边界（如"目的"和"方法"之间）切分，确保每个分块包含完整的语义单元；③<strong>按结构类型标注</strong>——每个分块标注其结构类型（摘要-目的、摘要-方法、摘要-结果、摘要-结论、方法-研究设计、方法-统计分析、结果-主要发现、结果-表格数据等），检索时可按结构类型过滤（如用户问"某药物的临床试验结果是什么"，优先检索"结果-主要发现"类型的分块）；④<strong>保留元数据</strong>——每个分块保留文献的元数据（标题、作者、期刊、发表年份、DOI、PMID），用于引用溯源。与通用固定长度分块的区别：通用固定长度分块按字符数或 token 数（如 512 token、1024 token）均匀切分，不考虑文档结构，可能把医学摘要的"结果"和"结论"切开，或者把方法学细节和统计数据混在一起，导致检索到的片段不完整、语义不连贯。基于结构的语义分块保证了每个分块是完整的语义单元，检索质量更高。</p>
+<p><strong>Q3：医学 RAG 系统如何控制幻觉？在临床场景中，幻觉的风险如何管理？</strong></p>
+<p>A：医学 RAG 系统通过<strong>多层幻觉约束机制</strong>控制幻觉，核心原则是"医学场景幻觉零容忍"。具体包括四层约束：①<strong>RAG 检索增强（第一层）</strong>——回答严格基于检索到的真实文献上下文，在 prompt 中明确要求"只能使用上下文中提供的信息，如果上下文中没有相关信息，请回答'根据现有文献无法回答'，不要编造内容"。这一层从源头上限制了模型的生成范围；②<strong>引用溯源（第二层）</strong>——回答中的每个论断都标注来源文献（如"[1] 某某等，中华医学杂志，2023"），用户可以点击查看原文验证。引用溯源不仅提升用户信任度，更是降低幻觉风险的工程手段——让模型的每个回答都可追溯到来源；③<strong>无来源标注（第三层）</strong>——当模型需要进行推断或综合时（如"综合以上文献，该药物的疗效趋势是…"），明确标注为"模型推断，非直接文献事实"，与文献中直接陈述的事实区分开。这一层让用户清楚地知道哪些是文献事实、哪些是模型推断；④<strong>人工审核（第四层）</strong>——高风险场景（特别是涉及用药建议、诊断方向、治疗方案的回答）需要医学专业人员人工审核，作为最终把关。在临床场景中，幻觉风险管理还包括：①<strong>明确使用边界</strong>——系统定位为"医学文献检索和辅助工具"，不替代医生诊断，在界面和回答中明确提示"本系统仅供医学研究和学习参考，不构成医疗建议，具体诊疗请咨询专业医生"；②<strong>高风险问题降级</strong>——对于直接涉及用药剂量、诊断标准、治疗方案的问题，系统优先检索临床指南和权威文献，并在回答中强调"请遵循最新临床指南和医嘱"；③<strong>持续评估</strong>——定期评估系统的幻觉率（通过人工标注测试集），用数据驱动迭代优化。</p>
+<p><strong>Q4：AiMeder 与 PubMed、Google Scholar 等传统医学文献搜索引擎的区别是什么？AI 能带来什么传统搜索做不到的价值？</strong></p>
+<p>A：AiMeder 与传统医学文献搜索引擎的核心区别在于<strong>从"关键词匹配检索"到"语义理解+问答生成"的范式升级</strong>。传统搜索引擎（PubMed、Google Scholar）的工作方式：①用户输入关键词（如"糖尿病 心血管风险 SGLT2"）；②系统基于关键词匹配返回相关文献列表（通常是标题+摘要）；③用户需要自己阅读多篇文献、综合信息、得出结论。AiMeder 的工作方式：①用户输入自然语言问题（如"SGLT2 抑制剂对 2 型糖尿病患者心血管风险的影响是什么？有哪些关键临床试验证据？"）；②系统进行医学术语识别和同义词扩展（SGLT2 抑制剂→钠-葡萄糖协同转运蛋白 2 抑制剂→达格列净/恩格列净/卡格列净），混合检索（向量+BM25+MeSH 增强）找到最相关的文献片段；③系统基于检索到的文献生成结构化回答，直接回答用户问题，并标注每个论断的来源文献；④用户可以点击引用查看原文，也可以继续追问（如"这些临床试验的样本量和随访时间是多少？"）。AI 带来的传统搜索做不到的价值：①<strong>语义理解</strong>——理解用户问题的意图，识别医学术语和同义词，不局限于关键词精确匹配；②<strong>问答生成</strong>——直接生成回答，而不是返回文献列表让用户自己阅读综合，大幅提升信息获取效率；③<strong>引用溯源</strong>——每个论断标注来源，用户可以验证，降低幻觉风险；④<strong>多文献综合</strong>——综合多篇文献的信息，给出系统性回答（如"综合 5 项关键临床试验，SGLT2 抑制剂可降低主要心血管不良事件风险约 10-15%"），这是传统搜索无法做到的；⑤<strong>对话式交互</strong>——支持多轮追问和上下文理解，用户可以逐步深入探索一个医学问题。</p>
+<p><strong>Q5：从 AiMed 论文（IJCAI 2024）到 AiMeder 搜索引擎再到医疗文献大模型服务中科院文献系统，这个"研究→产品→产业"的链路是如何走通的？有什么关键经验？</strong></p>
+<p>A："研究→产品→产业"链路的走通经历了三个阶段，每个阶段有不同的核心挑战和关键经验：①<strong>研究阶段（AiMed 论文，2023-2024）</strong>——核心挑战是验证医学大模型的技术可行性。关键工作：基于 Baichuan-13B 基座，使用中文医学语料进行四阶段训练（PT→SFT→RLHF→DPO），在医学问答基准上验证效果，发表 IJCAI 2024 / MedAI 2024（CCF-A）论文，开源模型权重（HuggingFace，Apache 2.0）。关键经验：<strong>先在学术研究中验证方法的可行性，用论文和开源建立技术影响力和可信度</strong>；②<strong>产品阶段（AiMeder 搜索引擎，2024.11 启动）</strong>——核心挑战是将研究模型转化为可用的产品。关键工作：设计医学定制化 RAG 四层架构（查询理解→混合检索→片段排序→引用溯源回答生成），开发 Streamlit（工业 Demo）+ Gradio（研究 Demo）双 Demo 架构，作为创业方向启动并完成路线规划和 RAG 迭代设计。关键经验：<strong>研究 Demo 到产品需要解决工程问题（检索质量、幻觉控制、延迟、用户体验），不能直接把研究 Demo 当产品用</strong>；③<strong>产业阶段（医疗文献大模型服务中科院文献系统，2025-2026）</strong>——核心挑战是从产品到生产级服务的跨越。关键工作：与中科院文献系统对接，解决稳定性、延迟、成本、用户体验等生产级问题，长期服务于科研人员的文献检索需求，获得媒体报道。关键经验：<strong>与产业方紧密合作，在真实场景中迭代优化，逐步从研究 Demo 过渡到生产级服务；专业机构合作（中国医学科学院医学信息研究所）是获取数据、需求和落地渠道的关键</strong>。整条链路的核心经验是<strong>"学术研究与产业落地的双向驱动"</strong>——先在学术研究中验证方法（发论文），再在产业场景中落地（服务真实用户），落地中发现的问题（RAG 定制化、幻觉控制、推理延迟）反过来指导研究深化，形成正向循环。</p>
+<hr />
+<h2 id="10-references">10. 文件索引（References）<a class="headerlink" href="#10-references" title="Permanent link">&para;</a></h2>
+<h3 id="101">10.1 飞书文档<a class="headerlink" href="#101" title="Permanent link">&para;</a></h3>
+<ul>
+<li>AiMeder 医学文献智慧搜索引擎（路线规划与 RAG 迭代设计）：https://zhipu-ai.feishu.cn/docx/P21fdnh39o3WRLxQxzJcRvgrnag</li>
+<li>已完成工作（含 AiMeder 创业记录）：https://zhipu-ai.feishu.cn/docx/FjMWd75Mcoq4FgxngjxcRby8nWd</li>
+</ul>
+<h3 id="102-github">10.2 GitHub 仓库<a class="headerlink" href="#102-github" title="Permanent link">&para;</a></h3>
+<ul>
+<li>AiMed（医学大语言模型，公开）：https://github.com/dujh22/AiMed</li>
+<li>Med-Eval（医学大模型评测基准，公开）：https://github.com/dujh22/Med-Eval</li>
+<li>Med-Eval-Arena（医学大模型评测竞技场，公开）：https://github.com/dujh22/Med-Eval-Arena</li>
+<li>MedRad（临床决策框架，公开）：https://github.com/dujh22/MedRad</li>
+<li>MedGPT（医学对话模型，公开）：https://github.com/dujh22/MedGPT</li>
+</ul>
+<h3 id="103-huggingface">10.3 模型权重（HuggingFace）<a class="headerlink" href="#103-huggingface" title="Permanent link">&para;</a></h3>
+<ul>
+<li>AiMed（基础医学百科大模型）：https://huggingface.co/DuJinHua/AiMed</li>
+<li>AiMed_Paper（医学文献摘要生成大模型）：https://huggingface.co/DuJinHua/AiMed_PaperAbs</li>
+</ul>
+<h3 id="104">10.4 论文链接<a class="headerlink" href="#104" title="Permanent link">&para;</a></h3>
+<ul>
+<li>AiMed（IJCAI 2024 / MedAI 2024）：https://ieeexplore.ieee.org/abstract/document/10803480</li>
+<li>Toward a LLM-Driven Medical Knowledge Retrieval and QA System（Engineering 1 区，2025）：https://doi.org/10.1016/j.eng.2025.02.010</li>
+<li>Large Language Models Driven Reliable Clinical Decision-Making（Informatics and Health，2025）：源材料未包含该论文的 DOI/URL 链接，待论文正式发表后补充</li>
+</ul>
+<h3 id="105">10.5 媒体报道<a class="headerlink" href="#105" title="Permanent link">&para;</a></h3>
+<ul>
+<li>医疗文献大模型长期服务于中科院文献系统：https://mp.weixin.qq.com/s/RDQUcnGLRciSwub1HuOh4Q</li>
+<li>公安大模型抓到犯罪团伙（AI 产业应用报道）：https://mp.weixin.qq.com/s/RyUsmJ1ZuZ38XbXRmd3a8A</li>
+</ul>
+<h3 id="106">10.6 在线资源<a class="headerlink" href="#106" title="Permanent link">&para;</a></h3>
+<ul>
+<li>个人主页：https://dujh22.github.io/Dujinhua_wiki/</li>
+<li>ORCID：https://orcid.org/0009-0008-4170-6452</li>
+<li>IEEE Xplore 作者页：https://ieeexplore.ieee.org/author/37088802547</li>
+<li>Semantic Scholar：https://www.semanticscholar.org/author/Jinhua-Du/2303801604</li>
+<li>AMiner：https://cn.aminer.org/profile/jinhua-du/61e5205542323c8f84eaafb8</li>
+</ul>
+<hr />
+<h2 id="11">11. 转正答辩证据卡<a class="headerlink" href="#11" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>本章节为转正答辩专用证据整理，基于智谱转正制度（ZP-RL-009）与公司文化2.0（Think Big / Deliver Solid / Scale Stable）标准整理。</p>
+</blockquote>
+<h3 id="111">11.1 目标基线<a class="headerlink" href="#111" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>部门目标(O)</strong>：将 AiMed 医学大语言模型的研究成果向产业落地延伸，构建面向中文医学领域的文献智慧搜索引擎，验证"领域大模型 + RAG 检索增强"在医学文献场景的工程可行性，支撑医疗文献大模型长期服务于中科院文献系统。</li>
+<li><strong>个人KR</strong>：（1）作为第一作者完成 AiMed 医学大语言模型研发（PT→SFT→RLHF→DPO 全流程）并发表论文；（2）设计 AiMeder RAG 技术路线和分阶段迭代计划；（3）实现医学文献智能检索、检索增强问答、文献摘要生成等核心功能；（4）将技术积累支撑医疗文献大模型在中科院文献系统的长期服务。</li>
+<li><strong>完成率</strong>：AiMed 模型研发和论文发表 100% 完成；AiMeder RAG 路线规划和基础功能完成（各阶段具体完成度源材料未提供量化指标，基础检索和问答已有设计与部分实现，医学知识图谱和个性化阶段仍处于设计阶段）；产业落地支撑已实现（医疗文献大模型长期服务于中科院文献系统）。</li>
+</ul>
+<h3 id="112">11.2 量化结果<a class="headerlink" href="#112" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>维度</strong></th>
+<th><strong>具体数据</strong></th>
+<th><strong>来源</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AiMed 模型</td>
+<td>基于 Baichuan-13B 基座，PT→SFT→RLHF→DPO 四阶段训练</td>
+<td>第4.3节/GitHub</td>
+</tr>
+<tr>
+<td>开源模型</td>
+<td>2 个（AiMed 基础医学百科 + AiMed_Paper 文献摘要生成）</td>
+<td>第4.3节/GitHub</td>
+</tr>
+<tr>
+<td>论文发表</td>
+<td>AiMed 一作（IJCAI 2024/MedAI 2024，CCF-A）；Engineering 1区四作；Informatics and Health 3区一作</td>
+<td>第7.1节/汇总文档</td>
+</tr>
+<tr>
+<td>RAG 迭代阶段</td>
+<td>4 阶段（基础检索→检索增强问答→医学知识深度整合→个性化与持续学习）</td>
+<td>第4.2节</td>
+</tr>
+<tr>
+<td>检索方式</td>
+<td>混合检索（向量检索 + BM25 关键词检索）</td>
+<td>第4.4节</td>
+</tr>
+<tr>
+<td>评估维度</td>
+<td>4 类（检索质量 Recall@K/Precision@K/nDCG；问答质量准确率/引用覆盖率/幻觉率；用户体验；摘要质量 ROUGE/BERTScore）——具体数值源材料未记录，待实验补充</td>
+<td>第5.4节</td>
+</tr>
+<tr>
+<td>产业落地</td>
+<td>医疗文献大模型长期服务于中科院文献系统（中国医学科学院医学信息研究所）</td>
+<td>第5.3节/第7.3节</td>
+</tr>
+<tr>
+<td>合作单位</td>
+<td>2 家（清华大学 OpenDE 团队 + 中国医学科学院医学信息研究所）</td>
+<td>第4.3节</td>
+</tr>
+<tr>
+<td>创业竞赛</td>
+<td>2024 年"挑战杯"首都大学生创业计划竞赛金奖（北京市一等）、国三等奖</td>
+<td>第7.4节/汇总文档</td>
+</tr>
+<tr>
+<td>Demo 方式</td>
+<td>4 种（Python 代码 / CLI 交互 / Streamlit 工业 Demo / Gradio 研究 Demo）</td>
+<td>第6.3节/GitHub</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<h3 id="113">11.3 公司层面贡献<a class="headerlink" href="#113" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>产业落地支撑</strong>：AiMeder 的技术积累（AiMed 模型 + RAG 检索）直接支撑了医疗文献大模型在中科院文献系统的长期服务，服务对象为中国医学科学院医学信息研究所的科研人员和文献用户，有真实产业应用场景和媒体报道。</li>
+<li><strong>研究与工程双向印证</strong>：与 Engineering 中科院 1 区论文《Toward a LLM-Driven Medical Knowledge Retrieval and QA System》（四作）形成研究方法和工程实现的双向支撑，研究成果指导工程实现，工程实践反哺研究深化。</li>
+<li><strong>领域大模型+RAG 组合范式可复用</strong>："领域专用大模型 + 领域知识 RAG"的技术路线（领域模型保证专业理解能力，RAG 保证事实准确性和知识更新），可复用于公司其他专业领域（法律、金融、代码等）的智能搜索和问答场景。</li>
+<li><strong>与天津大学+智谱申报科技部重点研发计划</strong>（医学AI相关方向，源材料未包含申报书细节，具体项目名称和编号待确认），体现跨机构合作和国家级项目参与能力。</li>
+</ul>
+<h3 id="114">11.4 专业影响力<a class="headerlink" href="#114" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>技术方案</strong>：提出"领域大模型（AiMed/AiMed_Paper）+ 医学定制化 RAG"的技术路线——针对医学文献特殊结构（摘要分段、方法/结果/结论、引用网络、MeSH 标签）设计检索和增强策略，而非通用 RAG 框架；实现查询理解（医学术语识别+查询改写+同义词扩展）、混合检索（向量+BM25）、片段排序与结构化上下文构建、引用溯源（每个论断标注来源文献）的完整 RAG 链路。</li>
+<li><strong>文档沉淀</strong>：AiMed 开源仓库（Apache 2.0）含完整使用文档、4 种推理和 Demo 方式、bibtex 引用条目；AiMeder 飞书文档含 RAG 路线规划和分阶段迭代设计。</li>
+<li><strong>被依赖情况</strong>：AiMed 模型开源（GitHub + HuggingFace），提供基础医学百科大模型和医学文献摘要生成大模型两个版本，支持学术研究；医疗文献大模型长期服务于中科院文献系统。</li>
+<li><strong>学术认可</strong>：AiMed 论文发表于 IJCAI 2024/MedAI 2024（CCF-A），Engineering 中科院 1 区论文（四作），Informatics and Health 3 区论文（一作），相关成果获媒体报道。</li>
+<li><strong>分享/培训</strong>：暂无正式组内分享记录（现有源材料中未找到正式分享安排）；AiMed 开源仓库的完整使用文档和 4 种推理 Demo 方式作为主要知识传递载体。</li>
+</ul>
+<h3 id="115">11.5 价值观锚点<a class="headerlink" href="#115" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>价值观</strong></th>
+<th><strong>具体故事</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Think Big</strong></td>
+<td>不满足于 AiMed 医学大模型仅做对话和知识问答，主动将研究成果向产业落地延伸，启动 AiMeder 医学文献智慧搜索引擎项目，设计 4 阶段 RAG 迭代路线（基础检索→检索增强问答→医学知识深度整合→个性化与持续学习），将"领域大模型 + RAG"的技术路线从研究 Demo 推向生产级服务，最终支撑医疗文献大模型长期服务于中科院文献系统。</td>
+</tr>
+<tr>
+<td><strong>Deliver Solid</strong></td>
+<td>医学场景中幻觉零容忍——设计多层约束机制严格控制回答质量：RAG 检索增强（回答基于真实文献）、引用溯源（每个事实性论断标注来源文献，用户可点击跳转）、无来源标注（模型推断与文献事实区分，降低幻觉风险）、人工审核（高风险场景最终把关）；AiMed 模型训练严格执行 PT→SFT→RLHF→DPO 四阶段全流程，提供 4 种推理和 Demo 方式，把医学 AI 的可靠性做到位。</td>
+</tr>
+<tr>
+<td><strong>Scale Stable</strong></td>
+<td>与中国医学科学院医学信息研究所合作，利用专业文献资源，AiMeder 的技术积累支撑医疗文献大模型在中科院文献系统的长期部署和服务，从个人研究项目扩展到服务国家级科研机构的生产级系统；"领域大模型 + RAG"的组合范式可迁移到法律、金融、代码等其他专业领域，具有规模化复用价值。</td>
+</tr>
+<tr>
+<td><strong>创新</strong></td>
+<td>首次将 AiMed 医学大语言模型（基于 Baichuan-13B，PT→SFT→RLHF→DPO 全流程训练）与医学定制化 RAG 结合，针对医学文献特殊结构（摘要分段、方法/结果/结论、引用网络、MeSH 标签）设计检索和增强策略，而非使用通用 RAG 框架；AiMed_Paper 专门针对医学文献摘要生成任务优化，可自动生成结构化摘要（目的、方法、结果、结论），提升文献浏览效率。</td>
+</tr>
+<tr>
+<td><strong>团队协作/利他</strong></td>
+<td>与清华大学 OpenDE 团队和中国医学科学院医学信息研究所（李晓瑛老师等）联合研发 AiMed，合作单位提供医学专业知识、文献资源和临床需求对接；作为第一作者主导模型研发，同时作为第四作者参与 Engineering 1 区医学知识检索与 QA 系统研究，将个人研究与团队研究形成双向支撑；技术成果服务于中科院文献系统的科研人员，体现利他价值。</td>
+</tr>
+<tr>
+<td><strong>人正</strong></td>
+<td>医学场景中幻觉可能导致严重的健康后果，零容忍——所有回答严格基于检索到的文献上下文，每个论断标注来源文献，无文献支撑的内容明确标注为"模型推断"而非伪装为事实；AiMed 开源模型授权协议为 Apache 2.0，明确说明"目前仅支持学术研究，不支持商业用途"，如实告知使用边界，不夸大模型能力。</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<h3 id="116">11.6 协作与利他<a class="headerlink" href="#116" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>帮了谁</strong>：（1）医疗文献大模型长期服务于中科院文献系统，为中国医学科学院医学信息研究所的科研人员和文献用户提供智能文献服务；（2）AiMed 开源模型为学术社区提供中文医学大语言模型基础；（3）Engineering 1 区论文研究成果为医学知识检索与 QA 系统提供理论框架；（4）与天津大学+智谱申报科技部重点研发计划，推动医学AI方向的国家级研究。</li>
+<li><strong>证人</strong>：李晓瑛老师（中国医学科学院医学信息研究所，合作指导）、刘辉老师（AiMed 论文通讯作者）、刘煜阳/姜泽迅/李欣怡等 AiMed 论文共同作者。</li>
+<li><strong>跨部门协作</strong>：跨机构合作（清华大学 OpenDE 团队 + 中国医学科学院医学信息研究所），与天津大学+智谱联合申报科技部重点研发计划。</li>
+</ul>
+<h3 id="117">11.7 反思与成长（自我批评式）<a class="headerlink" href="#117" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>没做好的</strong>：（1）AiMeder 搜索引擎的独立代码仓库在现有源材料中未找到（已确认的公开医学相关仓库为 AiMed、MedRad、Med-Eval、MedGPT、Med-Eval-Arena 五个），RAG 系统的各阶段具体完成度缺乏明确的量化记录，我在项目推进中偏重路线规划和模型研发，对搜索引擎本身的工程实现和量化评估投入不足；（2）缺乏标准化的医学 RAG 评估基准，检索质量（Recall@K/Precision@K/nDCG）、问答质量（准确率/引用覆盖率/幻觉率）等核心指标的具体数值源材料未记录，我在评估体系建设上投入不够；（3）用户研究启动较晚，在开发前未深入访谈医学研究者和临床医生理解真实检索习惯和痛点，存在"技术驱动"而非"需求驱动"的倾向；（4）医学知识图谱的构建投入不足，实体级和关系级检索比文献级检索能提供更精准的答案，但目前仍停留在设计阶段。</li>
+<li><strong>学到的</strong>：（1）领域大模型+RAG 的组合范式——对于专业领域（医学、法律、金融），"领域专用大模型 + 领域知识 RAG"比通用大模型更可靠，领域模型保证专业理解能力，RAG 保证事实准确性和知识更新；（2）学术研究与产业落地的双向驱动——先在学术研究中验证方法（发论文），再在产业场景中落地（服务真实用户），落地中发现的问题反过来指导研究深化；（3）专业机构合作的价值——在医学等专业领域，与顶尖专业机构（如中科院医学信息研究所）合作是获取高质量数据、专业知识和实际需求的关键；（4）引用溯源是 RAG 系统的标配——不仅提升用户信任度，更是降低幻觉风险的工程手段。</li>
+<li><strong>如果重来</strong>：（1）在开发前深入访谈医学研究者和临床医生，理解真实检索习惯和痛点，避免"技术驱动"；（2）构建标准化的医学 RAG 评估基准，覆盖检索质量、问答准确性、幻觉率等维度，用数据驱动迭代而非凭感觉优化；（3）投入更多资源在医学知识图谱的构建上，实现实体级和关系级检索；（4）考虑多模态支持，医学文献中包含大量图表、医学影像、统计表格，文本 RAG 无法充分利用这些信息；（5）建立用户反馈闭环，收集用户对检索结果和回答的反馈数据，持续优化检索排序和模型效果。</li>
+<li><strong>成长轨迹</strong>：从 AiMed 医学大模型研发（第一作者，CCF-A 论文），到 AiMeder 医学文献搜索引擎设计，再到医疗文献大模型服务中科院文献系统的产业落地，完成了从"模型研究者"到"领域AI系统设计者"再到"产业落地推动者"的角色拓展，掌握了从学术研究到产业落地的全链路能力。</li>
+</ul>
+<h3 id="118-6">11.8 6年后视角<a class="headerlink" href="#118-6" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>大局定位</strong>：领域大模型 + RAG 是专业领域 AI 应用的核心技术路线。AiMed + AiMeder 是这一路线在中文医学领域的早期实践，其技术积累直接支撑了医疗文献大模型长期服务于中科院文献系统。6 年后回看，"领域专用大模型 + 领域知识 RAG + 引用溯源"可能成为医学、法律、金融等专业领域智能搜索和问答的标准范式，AiMeder 的 4 阶段 RAG 迭代设计和医学定制化检索策略为这一范式提供了早期工程参考。</li>
+<li><strong>为什么值得做</strong>：解决了医学文献检索中"信息过载 + 专业术语壁垒 + 检索与问答割裂 + 大模型幻觉"的核心痛点——PubMed 每年新增数十万篇文献，研究者无法通读全部；医学术语壁垒导致传统关键词检索召回率低；通用大模型在医学问答中可能产生幻觉。AiMeder 通过"领域大模型 + 医学定制化 RAG + 引用溯源"的技术路线，将检索、问答、摘要生成整合为完整的医学文献服务链路，最终支撑医疗文献大模型服务国家级科研机构，是"用 AI 提升科研效率"的典型实践。</li>
+</ul>
+<h3 id="119">11.9 五段式讲述（答辩稿骨架）<a class="headerlink" href="#119" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>问题定义</strong>（外行能懂）：医学文献每年新增数十万篇，研究者无法通读全部；医学术语壁垒高，传统关键词搜索找不到相关文献；搜索返回文献列表还需要逐篇阅读提取答案；通用大模型在医学问答中可能"编造"医学信息。我们需要一个能精准检索医学文献、直接给出带引用的智能回答、且不会编造信息的医学文献搜索引擎。</li>
+<li><strong>输入输出</strong>（本科生能懂）：输入是自然语言医学查询（如"糖尿病肾病的最新治疗方案有哪些"），输出是相关文献列表 + 基于文献上下文的智能回答（每个论断标注来源文献）+ 文献结构化摘要（目的/方法/结果/结论），回答严格基于检索到的真实文献，无文献支撑的内容标注为"模型推断"。</li>
+<li><strong>技术/做法</strong>（研究生能懂）：基于 AiMed 医学大语言模型（Baichuan-13B 基座，PT→SFT→RLHF→DPO 四阶段训练）+ 医学定制化 RAG 技术路线——查询理解（AiMed 识别医学实体+查询改写+MeSH 同义词扩展）→ 混合检索（向量检索+BM25 关键词检索加权融合）→ 片段排序（语义相似度+文献权威性）→ 结构化上下文构建（按文献来源/发表时间/证据等级组织）→ AiMed 生成回答+引用溯源；AiMed_Paper 模型自动生成文献结构化摘要。</li>
+<li><strong>核心创新</strong>（只有自己懂）：领域大模型（AiMed/AiMed_Paper）与医学定制化 RAG 的深度结合，而非通用大模型+通用 RAG 框架；针对医学文献特殊结构（摘要分段、方法/结果/结论、引用网络、MeSH 标签）设计检索和增强策略；多层幻觉控制机制（RAG 约束+引用溯源+无来源标注+人工审核），医学场景幻觉零容忍；从学术研究（CCF-A 论文）到产业落地（服务中科院文献系统）的全链路验证。</li>
+<li><strong>未来</strong>（开放问题）：构建标准化医学 RAG 评估基准用数据驱动迭代；投入医学知识图谱构建实现实体级和关系级检索；增加多模态支持（医学影像、图表、统计表格）；建立用户反馈闭环持续优化；"领域大模型+RAG"范式可迁移到法律、金融、代码等其他专业领域；AiMeder 的 4 阶段 RAG 迭代设计可为其他领域的智能搜索系统提供工程参考。</li>
+</ol>
+<h3 id="1110">11.10 对比证据（跨项目量化参照）<a class="headerlink" href="#1110" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>对比项</strong></th>
+<th><strong>本项目（30号 AiMeder）</strong></th>
+<th><strong>参照项目</strong></th>
+<th><strong>对比结论</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>领域大模型</td>
+<td>AiMed（Baichuan-13B基座，PT→SFT→RLHF→DPO四阶段）+ AiMed_Paper</td>
+<td>03号多模态（视觉-语言融合模型）</td>
+<td>本项目为纯文本领域大模型，03号为多模态模型，模态互补</td>
+</tr>
+<tr>
+<td>RAG检索</td>
+<td>向量稠密检索+BM25稀疏检索+混合召回+语义相似度+文献权威性重排序</td>
+<td>25号 DailyDigest（关键词采集+主题聚合+研究画像，无向量检索）</td>
+<td>本项目RAG更专业（混合检索+重排序），DailyDigest为结构化聚合</td>
+</tr>
+<tr>
+<td>引用溯源</td>
+<td>每个论断标注来源文献，段落级跳转</td>
+<td>25号 DailyDigest（原始链接保留，链接级）</td>
+<td>本项目溯源更精细（段落级），DailyDigest为链接级</td>
+</tr>
+<tr>
+<td>幻觉控制</td>
+<td>RAG约束+引用溯源+无来源标注+人工审核（多层幻觉控制）</td>
+<td>25号 DailyDigest（LLM字段提取，无幻觉控制机制）</td>
+<td>本项目幻觉控制更系统（医学场景零容忍），DailyDigest无专门幻觉控制</td>
+</tr>
+<tr>
+<td>产业落地</td>
+<td>医疗文献大模型长期服务中科院文献系统（中国医学科学院医学信息研究所）</td>
+<td>25号 DailyDigest（个人公开网站）</td>
+<td>本项目产业落地级别更高（国家级科研机构），DailyDigest为个人工具</td>
+</tr>
+<tr>
+<td>论文发表</td>
+<td>AiMed（IJCAI 2024 CCF-A，一作）+ MedRad（投ICML，一作）+ Med-Eval（ICML CCF-A）+ Engineering 1区</td>
+<td>25/26/27/28/29号（均无学术论文）</td>
+<td>本项目学术成果最丰富（4篇论文含2篇CCF-A），工程工具系列无论文</td>
+</tr>
+<tr>
+<td>跨机构合作</td>
+<td>清华大学OpenDE团队+中国医学科学院医学信息研究所+天津大学+智谱（科技部重点研发计划）</td>
+<td>27号 AiFitGo（与Virtual Coach研究团队协作）</td>
+<td>本项目跨机构合作最广泛（4家机构+国家级项目），其余为个人或小团队</td>
+</tr>
+<tr>
+<td>医学系列成果</td>
+<td>AiMed（模型）+ MedRad（临床决策）+ Med-Eval（评测基准）+ MedGPT（对话）+ AiMeder（搜索引擎）</td>
+<td>无其他医学系列</td>
+<td>本项目是医学AI系列的核心枢纽，串联5个医学项目</td>
+</tr>
+<tr>
+<td>个人角色</td>
+<td>核心开发者（AiMed一作+AiMeder核心）</td>
+<td>25/26/28/29号独立开发者</td>
+<td>本项目为跨机构合作核心开发者，其余为独立开发</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<hr />
+<h2 id="12">12. 相关项目<a class="headerlink" href="#12" title="Permanent link">&para;</a></h2>
+<p>AiMeder 作为医学文献搜索引擎，与杜晋华的医学系列项目和信息检索类项目存在深度技术关联。下表梳理了核心关联项目及其关联类型。</p>
+<table>
+<thead>
+<tr>
+<th><strong>关联报告</strong></th>
+<th><strong>关联类型</strong></th>
+<th><strong>关联说明</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>AiMed（IJCAI 2024 CCF-A，一作）</strong></td>
+<td>医学系列（模型基座→搜索引擎）</td>
+<td>AiMed 是 AiMeder 的模型基座，提供医学百科问答和文献摘要生成能力；AiMeder 将 AiMed 的模型能力与 RAG 检索技术结合，面向医学文献检索场景</td>
+</tr>
+<tr>
+<td><strong>MedRad（投 ICML，一作）</strong></td>
+<td>医学系列（临床决策→文献检索）</td>
+<td>MedRad 与 AiMeder 共享 AiMed 模型基座；MedRad 侧重临床决策框架（门诊对话/临床诊断/可靠决策支持），AiMeder 侧重文献检索与问答，两者技术路线互补</td>
+</tr>
+<tr>
+<td><strong>Med-Eval（ICML CCF-A）</strong></td>
+<td>医学系列（评测基准→模型评估）</td>
+<td>Med-Eval 为 AiMed/AiMeder 提供医学大模型能力评估基准；AiMeder 的检索和问答质量可通过 Med-Eval 多维度评测体系评估</td>
+</tr>
+<tr>
+<td><strong>MedGPT（医学对话模型）</strong></td>
+<td>医学系列（对话→检索）</td>
+<td>MedGPT 与 AiMeder 同属医学 AI 生态，MedGPT 侧重医学对话生成，AiMeder 侧重文献检索与 RAG 问答，两者可形成"对话+检索"互补</td>
+</tr>
+<tr>
+<td><strong>25. LLM-DailyDigest 每日AI追新</strong></td>
+<td>RAG/信息检索（信息聚合→文献检索）</td>
+<td>LLM-DailyDigest 的信息检索聚合方法论与 AiMeder 的 RAG 文献检索形成技术互补；两者都关注从海量信息中高效检索、精准定位、智能摘要的核心需求</td>
+</tr>
+<tr>
+<td><strong>03. 多模态大模型数学推理</strong></td>
+<td>多模态（技术参考）</td>
+<td>多模态大模型的视觉-语言融合技术可为 AiMeder 未来的医学影像、图表、统计表格多模态支持提供技术参考</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：各关联报告项目概述与方法章节；报告 §3.3 关联研究成果、§3.4 与 MedRad/Med-Eval/MedGPT 关联项目关系</p>
+</blockquote>
+<h3 id="_6">项目间引用网络<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<p><strong>上游项目（本项目依赖/受益于）：</strong>
+- AiMed医学大模型（IJCAI 2024 CCF-A，一作）— AiMed是AiMeder的模型基座，提供医学百科问答和文献摘要生成能力；AiMeder将AiMed的模型能力与RAG检索技术结合，面向医学文献检索场景</p>
+<p><strong>下游项目（受益于本项目）：</strong>
+- 医疗文献大模型服务中科院文献系统（产业落地）— AiMeder的技术积累直接支撑"医疗文献大模型长期服务于中科院文献系统"的产业落地，服务中国医学科学院医学信息研究所</p>
+<p><strong>平行项目（同系列/同方法）：</strong>
+- <a href="../25_LLM-DailyDigest%E6%AF%8F%E6%97%A5AI%E8%BF%BD%E6%96%B0/">25 · LLM-DailyDigest每日AI追新</a> — AiMeder的RAG检索增强技术与DailyDigest的信息检索聚合形成方法论互补；两者都关注从海量文献/信息中高效检索、精准定位、智能摘要的核心需求；AiMeder覆盖医学专业领域，DailyDigest覆盖通用AI领域
+- <a href="../../phase4/18_%E5%8D%9A%E5%A3%AB%E5%BC%80%E9%A2%98/">18 · 博士开题</a> — AiMeder是自进化和LLM技术在医学领域的应用探索，为博士开题研究提供了跨学科应用场景验证的可能性；开题第一阶段强人工闭环即基于医学NLP工作（KrNER→AiMed→MedRad）
+- MedRad（投ICML，一作）— MedRad与AiMeder共享AiMed模型基座；MedRad侧重临床决策框架（门诊对话/临床诊断/可靠决策支持），AiMeder侧重文献检索与问答，两者技术路线互补
+- Med-Eval（ICML CCF-A）— Med-Eval为AiMed/AiMeder提供医学大模型能力评估基准；AiMeder的检索和问答质量可通过Med-Eval多维度评测体系评估</p>
+<hr />
+<h2 id="13">13. 跨项目对比<a class="headerlink" href="#13" title="Permanent link">&para;</a></h2>
+<h3 id="131-03">13.1 与03号（多模态大模型数学推理）对比：多模态推理<a class="headerlink" href="#131-03" title="Permanent link">&para;</a></h3>
+<p>AiMeder 与多模态大模型数学推理项目分别代表了"领域专用文本推理"和"通用多模态推理"两条技术路线，两者在模态处理和推理范式上形成对比与互补。</p>
+<table>
+<thead>
+<tr>
+<th><strong>对比维度</strong></th>
+<th><strong>03号 多模态大模型数学推理</strong></th>
+<th><strong>30号 AiMeder（本项目）</strong></th>
+<th><strong>多模态推理论对比</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>模态类型</strong></td>
+<td>视觉+语言（图文混合输入）</td>
+<td>纯文本（医学文献文本）</td>
+<td>多模态vs单模态，03号模态更丰富</td>
+</tr>
+<tr>
+<td><strong>核心任务</strong></td>
+<td>数学推理（几何图形理解+数学公式推导）</td>
+<td>医学文献检索+RAG问答+摘要生成</td>
+<td>数学推理vs医学检索问答，任务类型不同</td>
+</tr>
+<tr>
+<td><strong>模型基座</strong></td>
+<td>多模态大模型（视觉编码器+LLM）</td>
+<td>AiMed（Baichuan-13B文本基座，PT→SFT→RLHF→DPO）</td>
+<td>多模态模型vs领域专用文本模型</td>
+</tr>
+<tr>
+<td><strong>推理方式</strong></td>
+<td>视觉理解→符号推理→数学推导（多步链式推理）</td>
+<td>查询理解→混合检索→重排序→上下文构建→生成回答（RAG增强推理）</td>
+<td>内生推理vs检索增强推理，范式不同</td>
+</tr>
+<tr>
+<td><strong>知识来源</strong></td>
+<td>模型参数内化的数学知识</td>
+<td>外部医学文献库（RAG检索）+模型参数内化的医学知识</td>
+<td>纯参数知识vs参数+外部知识，AiMeder知识更新更灵活</td>
+</tr>
+<tr>
+<td><strong>幻觉风险</strong></td>
+<td>数学推理可能产生错误推导</td>
+<td>医学问答幻觉零容忍（RAG约束+引用溯源+无来源标注+人工审核）</td>
+<td>AiMeder幻觉控制更严格（医学场景要求）</td>
+</tr>
+<tr>
+<td><strong>评估方式</strong></td>
+<td>数学推理准确率（GSM8K/MATH等基准）</td>
+<td>检索质量（Recall@K/Precision@K/nDCG）+问答质量（准确率/引用覆盖率/幻觉率）</td>
+<td>03号评估更标准化，AiMeder评估体系待完善</td>
+</tr>
+<tr>
+<td><strong>应用场景</strong></td>
+<td>数学教育、智能解题、科学计算</td>
+<td>医学科研、临床决策支持、文献综述</td>
+<td>领域不同，03号偏教育科研，AiMeder偏医疗科研</td>
+</tr>
+<tr>
+<td><strong>未来融合</strong></td>
+<td>多模态技术可迁移到医学影像理解</td>
+<td>AiMeder未来可增加多模态支持（医学影像、图表、统计表格）</td>
+<td>两者可融合为"多模态医学推理"系统</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<p><strong>多模态推理结论</strong>：03号多模态大模型数学推理代表了"视觉-语言融合+内生多步推理"的技术路线，核心挑战是视觉理解与符号推理的深度融合；30号 AiMeder 代表了"领域专用文本模型+检索增强推理"的技术路线，核心挑战是医学专业理解与文献精准检索的结合。两者在模态处理（多模态vs单模态）和推理范式（内生推理vs RAG增强推理）上形成互补。AiMeder 未来可借鉴03号的多模态技术，增加医学影像、图表、统计表格的多模态支持，从"文本医学搜索引擎"升级为"多模态医学智能助手"；03号的多模态推理技术也可从数学领域迁移到医学影像理解领域。</p>
+<h3 id="132-25llm-dailydigestrag">13.2 与25号（LLM-DailyDigest）对比：RAG信息检索<a class="headerlink" href="#132-25llm-dailydigestrag" title="Permanent link">&para;</a></h3>
+<p>AiMeder 与 LLM-DailyDigest 是杜晋华在信息检索方向的两个核心项目，两者形成"专业领域RAG检索vs通用领域信息聚合"的对比与互补。</p>
+<table>
+<thead>
+<tr>
+<th><strong>对比维度</strong></th>
+<th><strong>25号 LLM-DailyDigest</strong></th>
+<th><strong>30号 AiMeder（本项目）</strong></th>
+<th><strong>RAG信息检索对比</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>检索领域</strong></td>
+<td>通用AI领域（论文/工具/新闻）</td>
+<td>医学专业领域（文献/术语/知识图谱）</td>
+<td>通用vs专业，领域不同</td>
+</tr>
+<tr>
+<td><strong>检索方式</strong></td>
+<td>关键词采集+主题聚合+研究画像（结构化聚合）</td>
+<td>向量稠密检索+BM25稀疏检索+混合召回+重排序（RAG混合检索）</td>
+<td>结构化聚合vs RAG混合检索，范式不同</td>
+</tr>
+<tr>
+<td><strong>LLM角色</strong></td>
+<td>内容工程中间件（字段提取/打分/去重/摘要）</td>
+<td>查询理解+回答生成+引用Grounding（RAG全链路驱动）</td>
+<td>LLM用于内容工程vs LLM用于检索问答，角色不同</td>
+</tr>
+<tr>
+<td><strong>信息组织</strong></td>
+<td>Hugo <code>[[items]]</code>结构化数据+Topic/Research双维聚合</td>
+<td>文档层（MeSH/ICD/知识图谱）+向量索引（FAISS/Milvus）+上下文构建</td>
+<td>静态网站聚合vs动态RAG检索，架构不同</td>
+</tr>
+<tr>
+<td><strong>引用溯源</strong></td>
+<td>原始链接保留（链接级）</td>
+<td>引用Grounding（每个论断标注来源，段落级跳转）</td>
+<td>链接级vs段落级，AiMeder溯源更精细</td>
+</tr>
+<tr>
+<td><strong>幻觉控制</strong></td>
+<td>无专门幻觉控制（LLM用于字段提取，非自由生成）</td>
+<td>多层幻觉控制（RAG约束+引用溯源+无来源标注+人工审核）</td>
+<td>AiMeder幻觉控制更系统（医学场景零容忍）</td>
+</tr>
+<tr>
+<td><strong>部署方式</strong></td>
+<td>GitHub Pages静态网站（个人公开）</td>
+<td>服务中科院文献系统（产业落地，国家级科研机构）</td>
+<td>个人网站vs产业级系统，落地级别不同</td>
+</tr>
+<tr>
+<td><strong>术语体系</strong></td>
+<td>无专门术语体系（通用AI关键词）</td>
+<td>MeSH医学主题词+ICD疾病分类+医学知识图谱</td>
+<td>AiMeder有专业术语体系，检索更精准</td>
+</tr>
+<tr>
+<td><strong>用户群体</strong></td>
+<td>个人研究者（8个研究方向）</td>
+<td>医学科研人员+临床医生+中科院文献系统用户</td>
+<td>个人vs专业群体，用户规模不同</td>
+</tr>
+<tr>
+<td><strong>评估指标</strong></td>
+<td>功能验证（信息源覆盖/去重效果/聚合准确性）</td>
+<td>检索质量（Recall@K/Precision@K/nDCG）+问答质量（准确率/引用覆盖率/幻觉率）</td>
+<td>AiMeder评估更专业，DailyDigest评估偏功能</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<p><strong>RAG信息检索结论</strong>：25号 LLM-DailyDigest 代表了"通用领域+结构化聚合+LLM内容工程"的轻量级信息检索路线，适合个人研究者的日常前沿追踪，零运维成本、部署简单；30号 AiMeder 代表了"专业领域+RAG混合检索+领域大模型驱动"的重量级信息检索路线，适合医学等专业领域的精准检索和智能问答，部署成本高但检索质量和专业度更高。两者形成"轻量通用聚合vs重量专业RAG"的完整信息检索能力矩阵。AiMeder 的RAG混合检索、引用溯源、幻觉控制等技术可反向优化DailyDigest的信息聚合质量（如引入向量检索做语义去重），DailyDigest 的结构化聚合、双维关联、零运维部署等工程实践也可为AiMeder的轻量化部署提供参考。</p>
+<hr />
+<h3 id="_7">图表索引<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>编号</strong></th>
+<th><strong>类型</strong></th>
+<th><strong>标题</strong></th>
+<th><strong>所在章节</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>表1</td>
+<td>表格</td>
+<td>关键数据速览</td>
+<td>§关键数据速览</td>
+</tr>
+<tr>
+<td>表2</td>
+<td>表格</td>
+<td>同期/前人工作对比</td>
+<td>§3.1</td>
+</tr>
+<tr>
+<td>表3</td>
+<td>表格</td>
+<td>关联研究成果</td>
+<td>§3.3</td>
+</tr>
+<tr>
+<td>表4</td>
+<td>表格</td>
+<td>与 MedRad/Med-Eval/MedGPT 关联项目关系</td>
+<td>§3.4</td>
+</tr>
+<tr>
+<td>表5</td>
+<td>表格</td>
+<td>医学 RAG/问答系统深度对比</td>
+<td>§3.5</td>
+</tr>
+<tr>
+<td>图1</td>
+<td>ASCII</td>
+<td>系统架构（RAG 四层架构）</td>
+<td>§4.1</td>
+</tr>
+<tr>
+<td>图2</td>
+<td>Mermaid</td>
+<td>RAG 系统架构流程图</td>
+<td>§4.1</td>
+</tr>
+<tr>
+<td>表6</td>
+<td>表格</td>
+<td>RAG 四层架构详解</td>
+<td>§4.1.1</td>
+</tr>
+<tr>
+<td>表7</td>
+<td>表格</td>
+<td>RAG 迭代过程设计（四阶段）</td>
+<td>§4.2</td>
+</tr>
+<tr>
+<td>图3</td>
+<td>ASCII</td>
+<td>四阶段迭代路线图</td>
+<td>§4.2</td>
+</tr>
+<tr>
+<td>图4</td>
+<td>Mermaid</td>
+<td>四阶段迭代路线图</td>
+<td>§4.2</td>
+</tr>
+<tr>
+<td>表8</td>
+<td>表格</td>
+<td>AiMed 医学大模型基座（四阶段训练）</td>
+<td>§4.3</td>
+</tr>
+<tr>
+<td>表9</td>
+<td>表格</td>
+<td>核心功能清单</td>
+<td>§5.1</td>
+</tr>
+<tr>
+<td>表10</td>
+<td>表格</td>
+<td>医学数据集与测试集</td>
+<td>§5.2</td>
+</tr>
+<tr>
+<td>表11</td>
+<td>表格</td>
+<td>医学数据集详细统计表</td>
+<td>§5.2.1</td>
+</tr>
+<tr>
+<td>表12</td>
+<td>表格</td>
+<td>AiMed 模型性能与训练配置表（一）</td>
+<td>§5.2.2</td>
+</tr>
+<tr>
+<td>表13</td>
+<td>表格</td>
+<td>AiMed 模型性能与训练配置表（二）</td>
+<td>§5.2.2</td>
+</tr>
+<tr>
+<td>表14</td>
+<td>表格</td>
+<td>RAG 检索效果消融实验设计表（一）</td>
+<td>§5.2.3</td>
+</tr>
+<tr>
+<td>表15</td>
+<td>表格</td>
+<td>RAG 检索效果消融实验设计表（二）</td>
+<td>§5.2.3</td>
+</tr>
+<tr>
+<td>表16</td>
+<td>表格</td>
+<td>医学问答基准对比表</td>
+<td>§5.2.4</td>
+</tr>
+<tr>
+<td>表17</td>
+<td>表格</td>
+<td>技术栈</td>
+<td>§6.2</td>
+</tr>
+<tr>
+<td>表18</td>
+<td>表格</td>
+<td>项目时间线与里程碑</td>
+<td>§6.5</td>
+</tr>
+<tr>
+<td>表19</td>
+<td>表格</td>
+<td>论文发表</td>
+<td>§7.1</td>
+</tr>
+<tr>
+<td>表20</td>
+<td>表格</td>
+<td>量化结果</td>
+<td>§11.2</td>
+</tr>
+<tr>
+<td>表21</td>
+<td>表格</td>
+<td>价值观锚点</td>
+<td>§11.5</td>
+</tr>
+<tr>
+<td>表22</td>
+<td>表格</td>
+<td>相关项目</td>
+<td>§12</td>
+</tr>
+<tr>
+<td>表23</td>
+<td>表格</td>
+<td>多模态推理对比（03 vs 30）</td>
+<td>§13.1</td>
+</tr>
+<tr>
+<td>表24</td>
+<td>表格</td>
+<td>RAG信息检索对比（25 vs 30）</td>
+<td>§13.2</td>
+</tr>
+<tr>
+<td>表25</td>
+<td>表格</td>
+<td>对比证据（跨项目量化参照）</td>
+<td>§11.10</td>
+</tr>
+<tr>
+<td>表26</td>
+<td>表格</td>
+<td>个人成果矩阵</td>
+<td>§个人成果矩阵</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<hr />
+<h3 id="_8">个人成果矩阵<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>类别</strong></th>
+<th><strong>成果名称</strong></th>
+<th><strong>具体内容</strong></th>
+<th><strong>时间</strong></th>
+<th><strong>角色</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>论文</strong></td>
+<td>AiMed: 中文医学大语言模型</td>
+<td>IJCAI 2024 CCF-A，第一作者，Baichuan-13B基座，PT→SFT→RLHF→DPO四阶段训练，中文医学百科问答</td>
+<td>2023-2024</td>
+<td>第一作者</td>
+</tr>
+<tr>
+<td><strong>论文</strong></td>
+<td>MedRad: 医学临床决策框架</td>
+<td>投ICML，第一作者，门诊对话/临床诊断/可靠决策支持三模块，共享AiMed模型基座</td>
+<td>2024-2025</td>
+<td>第一作者</td>
+</tr>
+<tr>
+<td><strong>论文</strong></td>
+<td>Med-Eval: 医学大模型评测基准</td>
+<td>ICML CCF-A，医学大模型多维度能力评估基准，为AiMed/AiMeder提供评估体系</td>
+<td>2024-2025</td>
+<td>核心作者</td>
+</tr>
+<tr>
+<td><strong>论文</strong></td>
+<td>医学知识检索与QA系统</td>
+<td>Engineering 1区论文，医学知识检索与问答系统理论框架</td>
+<td>2023-2024</td>
+<td>核心作者</td>
+</tr>
+<tr>
+<td><strong>开源</strong></td>
+<td>AiMed 开源模型</td>
+<td>中文医学大语言模型，开源发布，为学术社区提供医学LLM基础</td>
+<td>2024</td>
+<td>核心开发者</td>
+</tr>
+<tr>
+<td><strong>开源</strong></td>
+<td>AiMeder 医学文献搜索引擎</td>
+<td>基于AiMed+RAG的医学文献搜索引擎，四层架构（应用/生成/检索/文档），四阶段迭代</td>
+<td>2024.11-</td>
+<td>核心开发者</td>
+</tr>
+<tr>
+<td><strong>技术方案</strong></td>
+<td>领域大模型+RAG组合范式</td>
+<td>AiMed（领域专用大模型）+医学定制化RAG（混合检索+重排序+引用溯源），区别于通用大模型+通用RAG</td>
+<td>2024-2026</td>
+<td>核心设计</td>
+</tr>
+<tr>
+<td><strong>技术方案</strong></td>
+<td>医学定制化RAG四层架构</td>
+<td>应用层（搜索/列表/问答/摘要/溯源）→生成层（AiMed/AiMed_Paper/Grounding/上下文管理）→检索层（查询理解/混合检索/片段排序/上下文构建）→文档层（文献/MeSH/ICD/知识图谱/向量索引）</td>
+<td>2024-2026</td>
+<td>核心设计</td>
+</tr>
+<tr>
+<td><strong>技术方案</strong></td>
+<td>多层幻觉控制机制</td>
+<td>RAG约束+引用溯源（每个论断标注来源）+无来源标注（"模型推断"）+人工审核，医学场景幻觉零容忍</td>
+<td>2024-2026</td>
+<td>核心设计</td>
+</tr>
+<tr>
+<td><strong>技术方案</strong></td>
+<td>AiMed四阶段训练方法</td>
+<td>PT（持续预训练）→SFT（监督微调）→RLHF（人类反馈强化学习）→DPO（直接偏好优化），Baichuan-13B基座</td>
+<td>2023-2024</td>
+<td>核心实施</td>
+</tr>
+<tr>
+<td><strong>产业落地</strong></td>
+<td>医疗文献大模型服务中科院文献系统</td>
+<td>长期服务于中国医学科学院医学信息研究所，为科研人员和文献用户提供智能文献服务</td>
+<td>2024-</td>
+<td>核心开发者</td>
+</tr>
+<tr>
+<td><strong>产业落地</strong></td>
+<td>科技部重点研发计划申报</td>
+<td>与天津大学+智谱联合申报科技部重点研发计划，推动医学AI方向国家级研究</td>
+<td>2025-</td>
+<td>核心成员</td>
+</tr>
+<tr>
+<td><strong>产业落地</strong></td>
+<td>AiMed_Paper文献摘要生成模型</td>
+<td>医学文献结构化摘要自动生成（目的/方法/结果/结论），服务于文献系统</td>
+<td>2024-</td>
+<td>核心开发者</td>
+</tr>
+<tr>
+<td><strong>获奖/认可</strong></td>
+<td>IJCAI 2024 CCF-A论文接收</td>
+<td>AiMed论文被IJCAI 2024接收，CCF-A类会议</td>
+<td>2024</td>
+<td>第一作者</td>
+</tr>
+<tr>
+<td><strong>获奖/认可</strong></td>
+<td>ICML CCF-A论文接收</td>
+<td>Med-Eval论文被ICML接收，CCF-A类会议</td>
+<td>2025</td>
+<td>核心作者</td>
+</tr>
+<tr>
+<td><strong>跨机构合作</strong></td>
+<td>清华大学+中科院医学信息研究所+天津大学+智谱</td>
+<td>四家机构跨领域合作，覆盖学术研究、产业落地、国家级项目</td>
+<td>2023-</td>
+<td>核心成员</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<hr />
+<p><em>报告撰写日期：2026-09-07 | 基于 GitHub 仓库 README、飞书文档、IEEE Xplore 及项目汇总材料整理 · v2审核补强 2026-09-07 · v3图文并茂升级 2026-09-08 · 四轮深化 · 五轮深化 · 六轮深化 · 七轮深化 · 八轮深化 · 九轮终审 · 十轮深化 · 十一轮深化 · 十二轮终审 · 十三轮终审 · 十四轮深化 · 十五轮终审</em></p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+
+
+  
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.tracking", "navigation.top", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+      
+        <script src="../../../javascripts/mermaid_init.js"></script>
+      
+    
+  </body>
+</html>

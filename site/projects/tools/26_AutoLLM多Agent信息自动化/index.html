@@ -1,0 +1,5856 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="智谱AI研究实习项目报告集，涵盖大模型预训练、逻辑推理、数学推理、评测方法论等30个项目；同时包含个人学术主页（研究、教育、发表、荣誉）。">
+      
+      
+        <meta name="author" content="Jinhua Du (杜晋华)">
+      
+      
+        <link rel="canonical" href="https://dujh22.github.io/Dujinhua_wiki/projects/tools/26_AutoLLM%E5%A4%9AAgent%E4%BF%A1%E6%81%AF%E8%87%AA%E5%8A%A8%E5%8C%96/">
+      
+      
+        <link rel="prev" href="../25_LLM-DailyDigest%E6%AF%8F%E6%97%A5AI%E8%BF%BD%E6%96%B0/">
+      
+      
+        <link rel="next" href="../27_AiFitGo%E6%99%BA%E8%83%BD%E5%81%A5%E8%BA%AB%E6%95%99%E7%BB%83/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>AutoLLM（多Agent信息自动化）项目报告 - Jinhua Du | 杜晋华</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css?v=448b8bea4ef3">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-XXXXXXXXXX"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-XXXXXXXXXX",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+  
+    <meta name="keywords" content="大语言模型, 逻辑推理, 数学推理, 预训练, RLHF, 评测, 智谱AI, 研究实习, LLM, Large Language Models, Reasoning, Evaluation">
+    <meta property="og:title" content="Jinhua Du | 杜晋华 — 智谱AI研究实习项目报告集">
+    <meta property="og:description" content="智谱AI研究实习项目报告集，涵盖大模型预训练、逻辑推理、数学推理、评测方法论等30个项目；个人学术主页（研究、教育、发表、荣誉）。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dujh22.github.io/Dujinhua_wiki/">
+    <meta property="og:site_name" content="Jinhua Du | 杜晋华">
+    <meta property="og:locale" content="zh_CN">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Jinhua Du | 杜晋华 — 智谱AI研究实习项目报告集">
+    <meta name="twitter:description" content="智谱AI研究实习项目报告集，涵盖大模型预训练、逻辑推理、数学推理、评测方法论等30个项目。">
+    <meta name="robots" content="index, follow">
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1-abstract" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Jinhua Du | 杜晋华" class="md-header__button md-logo" aria-label="Jinhua Du | 杜晋华" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 10.5V6l-2.11 1.06A3.999 3.999 0 0 1 12 12a4 4 0 0 1-3.89-4.94L5 5.5 12 2l7 3.5v5zM12 9l-2-1c0 1.1.9 2 2 2s2-.9 2-2zm2.75-3.58L12.16 4.1 9.47 5.47l2.6 1.32zM12 13c2.67 0 8 1.33 8 4v3H4v-3c0-2.67 5.33-4 8-4m0 1.9c-3 0-6.1 1.46-6.1 2.1v1.1h12.2V17c0-.64-3.13-2.1-6.1-2.1"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Jinhua Du | 杜晋华
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              AutoLLM（多Agent信息自动化）项目报告
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="light-blue"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/dujh22/Dujinhua_wiki" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    dujh22/Dujinhua_wiki
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../.." class="md-tabs__link">
+          
+  
+  
+  English
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../index_zh/" class="md-tabs__link">
+          
+  
+  
+  中文
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../" class="md-tabs__link">
+          
+  
+  
+  智谱实习项目
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Jinhua Du | 杜晋华" class="md-nav__button md-logo" aria-label="Jinhua Du | 杜晋华" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 10.5V6l-2.11 1.06A3.999 3.999 0 0 1 12 12a4 4 0 0 1-3.89-4.94L5 5.5 12 2l7 3.5v5zM12 9l-2-1c0 1.1.9 2 2 2s2-.9 2-2zm2.75-3.58L12.16 4.1 9.47 5.47l2.6 1.32zM12 13c2.67 0 8 1.33 8 4v3H4v-3c0-2.67 5.33-4 8-4m0 1.9c-3 0-6.1 1.46-6.1 2.1v1.1h12.2V17c0-.64-3.13-2.1-6.1-2.1"/></svg>
+
+    </a>
+    Jinhua Du | 杜晋华
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/dujh22/Dujinhua_wiki" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    dujh22/Dujinhua_wiki
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    English
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    English
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Profile
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../postgraduate_experience_en/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Postgraduate Experience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../undergraduate_experience_en/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Undergraduate Experience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../history_en/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Research History
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    中文
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    中文
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../index_zh/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人简介
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../postgraduate_experience_zh/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博士经历
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../undergraduate_experience_zh/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    本科经历
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../history_zh/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    研究历史
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    智谱实习项目
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    智谱实习项目
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    项目总览
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阶段一·数学推理与国际化
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    阶段一·数学推理与国际化
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase1/01_ChatGLM%E6%95%B0%E5%AD%A6%E6%8E%A8%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 ChatGLM数学推理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase1/02_ChatGLM%E5%9B%BD%E9%99%85%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02 ChatGLM国际化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阶段二·多模态与社会实践
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    阶段二·多模态与社会实践
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/03_%E5%A4%9A%E6%A8%A1%E6%80%81%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%95%B0%E5%AD%A6%E6%8E%A8%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 多模态大模型数学推理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/04_MetaEvaluation%E5%85%83%E8%AF%84%E4%BC%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04 MetaEvaluation元评估
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/05_AML2024%E5%8A%A9%E6%95%99/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 AML2024助教
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/06_%E8%88%9F%E5%B1%B1%E7%A4%BE%E4%BC%9A%E5%AE%9E%E8%B7%B5%E5%85%AC%E5%AE%89%E7%8A%AF%E7%BD%AA%E9%A2%84%E6%B5%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06 舟山社会实践公安犯罪预测
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/07_MalayGLM%E9%A9%AC%E6%9D%A5%E8%AF%AD%E5%A4%A7%E6%A8%A1%E5%9E%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07 MalayGLM马来语大模型
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/08_o1%E5%A4%8D%E7%8E%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 o1复现
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阶段三·LogicEvolve与基座模型
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    阶段三·LogicEvolve与基座模型
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase3/09_LogicEvolve%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E8%87%AA%E8%BF%9B%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 LogicEvolve逻辑推理自进化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase3/10_GLM-4.5%E5%9F%BA%E5%BA%A7%E6%A8%A1%E5%9E%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 GLM-4.5基座模型
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase3/11_%E6%95%B0%E5%AE%9E%E8%9E%8D%E5%90%88%E6%96%B0%E5%BC%95%E6%93%8E%E9%A1%B9%E7%9B%AE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11 数实融合新引擎项目
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase3/12_Puzzle%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E9%A2%84%E8%AE%AD%E7%BB%83%E6%95%B0%E6%8D%AE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12 Puzzle逻辑推理预训练数据
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase3/13_%E7%B1%BBo1%E6%A8%A1%E5%9E%8B%E6%B3%9B%E5%8C%96%E6%80%A7%E8%AF%84%E4%BC%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13 类o1模型泛化性评估
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5" id="__nav_3_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阶段四·论文冲刺与博士开题
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    阶段四·论文冲刺与博士开题
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase4/14_LogicalSurvey%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%BB%BC%E8%BF%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14 LogicalSurvey逻辑推理综述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase4/15_EvolveLRM%E8%AE%AD%E7%BB%83%E8%87%AA%E8%BF%9B%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15 EvolveLRM训练自进化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase4/16_AML-LLM%E4%B9%A6%E7%B1%8D%E7%BC%96%E6%92%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16 AML-LLM书籍编撰
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase4/17_VirtualCoach%E4%BA%BA%E6%9C%BA%E4%BA%A4%E4%BA%92/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17 VirtualCoach人机交互
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase4/18_%E5%8D%9A%E5%A3%AB%E5%BC%80%E9%A2%98/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    18 博士开题
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_6" id="__nav_3_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阶段五·自进化研究全面展开
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    阶段五·自进化研究全面展开
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase5/19_Groom_Harness%E8%BF%87%E7%A8%8B%E7%BA%A7%E8%AF%84%E6%B5%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    19 Groom过程级评测
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase5/20_H-TokenBench/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20 H-TokenBench
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase5/21_GLM-5%E5%9F%BA%E5%BA%A7%E6%A8%A1%E5%9E%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    21 GLM-5基座模型
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase5/22_%E5%85%AD%E7%AF%87%E6%96%B0%E7%A0%94%E7%A9%B6%E5%88%9D%E7%A8%BF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    22 六篇新研究初稿
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase5/23_Awesome-RSI%E8%87%AA%E8%BF%9B%E5%8C%96%E7%BB%BC%E8%BF%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    23 Awesome-RSI自进化综述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase5/24_%E4%B8%93%E5%88%A9_%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E8%AF%84%E6%B5%8B%E6%96%B9%E6%B3%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    24 专利逻辑推理评测方法
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_7" id="__nav_3_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    工程与工具系列
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    工程与工具系列
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../25_LLM-DailyDigest%E6%AF%8F%E6%97%A5AI%E8%BF%BD%E6%96%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    25 LLM-DailyDigest
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    26 AutoLLM多Agent
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    26 AutoLLM多Agent
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-abstract" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 项目概述（Abstract）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 项目概述（Abstract）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关键数据速览
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        执行摘要
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        个人成长轨迹
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-introduction-background" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 背景与动机（Introduction / Background）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 背景与动机（Introduction / Background）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 问题定义
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 行业背景与痛点
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 项目启动契机
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-related-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 相关工作（Related Work）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 相关工作（Related Work）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 同期/前人工作对比
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 差异化定位
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 方法与技术路线（Method）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 方法与技术路线（Method）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 系统架构
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.1 系统架构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#411-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1.1 六 Agent 角色分工对照表
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-source-links" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 信息源（Source Links）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Agent 详细设计
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.3 Agent 详细设计">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#agent1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Agent1 — 自动化解析脚本生成
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agent2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Agent2 — 链接信息扩展
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agent3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Agent3 — 信息优先级排序
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agent4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Agent4 — 简报生成与关联
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agent5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Agent5 — 语音和视频制作
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agent6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Agent6 — 自动化控制
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 工作流（Workflow）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-autoclaw" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 AutoClaw 飞书知识库整理
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.5 AutoClaw 飞书知识库整理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#451-autoclaw-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5.1 AutoClaw 飞书 API 功能清单详细表
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-experiments-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 功能与效果（Experiments &amp; Results）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 功能与效果（Experiments &amp; Results）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 核心功能清单
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 输出产物
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 工程效果
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-engineering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 工程实现（Engineering）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. 工程实现（Engineering）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 代码仓库
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 技术栈
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.2 技术栈">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#621" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2.1 技术栈详细配置表
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#622-6-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2.2 6-Agent 流水线性能指标表
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#623" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2.3 技术栈演进与选型决策
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 使用方式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4 关键工程挑战与解决方案
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#65" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5 项目时间线与里程碑
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-impact" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 成果与影响（Impact）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. 成果与影响（Impact）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 开源贡献
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 产业应用
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 研究支撑
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-my-contribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 个人贡献（My Contribution）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. 个人贡献（My Contribution）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 角色
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 具体工作清单
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-lessons-learned" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 经验与反思（Lessons Learned）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. 经验与反思（Lessons Learned）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1 关键问题与解决方案（含具体故事）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2 可复用的方法论
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#93" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.3 踩坑与避坑指南
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#94" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.4 如果重来会怎么做
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#95-faq" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.5 常见问题与解答（FAQ）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. 文件索引（References）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. 文件索引（References）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#101-github" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.1 GitHub 仓库
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#102" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.2 飞书文档
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#103" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.3 相关研究项目
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#104" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.4 在线资源
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. 转正答辩证据卡
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. 转正答辩证据卡">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#111" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.1 目标基线
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.2 量化结果
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#113" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3 公司层面贡献
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#114" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.4 专业影响力
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#115" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.5 价值观锚点
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#116" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.6 协作与利他
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#117" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.7 反思与成长（自我批评式）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#118-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.8 6年后视角
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#119" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.9 五段式讲述（答辩稿骨架）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1110" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.10 对比证据（跨项目量化参照）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. 相关项目
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. 相关项目">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        项目间引用网络
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. 跨项目对比
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13. 跨项目对比">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#131-25llm-dailydigest-vs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.1 与25号（LLM-DailyDigest）对比：垂直工具 vs 通用框架
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#132-22swarmevolveagentagent-vs-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.2 与22号（SwarmEvolve多Agent）对比：工程多Agent vs 研究多Agent
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        图表索引
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        个人成果矩阵
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../27_AiFitGo%E6%99%BA%E8%83%BD%E5%81%A5%E8%BA%AB%E6%95%99%E7%BB%83/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    27 AiFitGo智能健身
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../28_csv2app%E9%A2%98%E5%BA%93%E8%BD%ACPWA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    28 csv2app题库转PWA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../29_THU_Sports%E6%B8%85%E5%8D%8E%E4%BD%93%E8%82%B2%E8%87%AA%E5%8A%A8%E9%A2%84%E7%BA%A6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    29 THU_Sports自动预约
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../30_AiMeder%E5%8C%BB%E5%AD%A6%E6%96%87%E7%8C%AE%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    30 AiMeder医学搜索
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-abstract" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 项目概述（Abstract）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 项目概述（Abstract）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关键数据速览
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        执行摘要
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        个人成长轨迹
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-introduction-background" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 背景与动机（Introduction / Background）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 背景与动机（Introduction / Background）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 问题定义
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 行业背景与痛点
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 项目启动契机
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-related-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 相关工作（Related Work）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 相关工作（Related Work）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 同期/前人工作对比
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 差异化定位
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 方法与技术路线（Method）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 方法与技术路线（Method）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 系统架构
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.1 系统架构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#411-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1.1 六 Agent 角色分工对照表
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-source-links" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 信息源（Source Links）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Agent 详细设计
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.3 Agent 详细设计">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#agent1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Agent1 — 自动化解析脚本生成
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agent2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Agent2 — 链接信息扩展
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agent3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Agent3 — 信息优先级排序
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agent4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Agent4 — 简报生成与关联
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agent5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Agent5 — 语音和视频制作
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agent6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Agent6 — 自动化控制
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 工作流（Workflow）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-autoclaw" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 AutoClaw 飞书知识库整理
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.5 AutoClaw 飞书知识库整理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#451-autoclaw-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5.1 AutoClaw 飞书 API 功能清单详细表
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-experiments-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 功能与效果（Experiments &amp; Results）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 功能与效果（Experiments &amp; Results）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 核心功能清单
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 输出产物
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 工程效果
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-engineering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 工程实现（Engineering）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. 工程实现（Engineering）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 代码仓库
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 技术栈
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.2 技术栈">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#621" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2.1 技术栈详细配置表
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#622-6-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2.2 6-Agent 流水线性能指标表
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#623" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2.3 技术栈演进与选型决策
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 使用方式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4 关键工程挑战与解决方案
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#65" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5 项目时间线与里程碑
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-impact" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 成果与影响（Impact）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. 成果与影响（Impact）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 开源贡献
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 产业应用
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 研究支撑
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-my-contribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 个人贡献（My Contribution）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. 个人贡献（My Contribution）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 角色
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 具体工作清单
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-lessons-learned" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 经验与反思（Lessons Learned）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. 经验与反思（Lessons Learned）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1 关键问题与解决方案（含具体故事）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2 可复用的方法论
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#93" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.3 踩坑与避坑指南
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#94" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.4 如果重来会怎么做
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#95-faq" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.5 常见问题与解答（FAQ）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. 文件索引（References）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. 文件索引（References）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#101-github" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.1 GitHub 仓库
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#102" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.2 飞书文档
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#103" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.3 相关研究项目
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#104" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.4 在线资源
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. 转正答辩证据卡
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. 转正答辩证据卡">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#111" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.1 目标基线
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.2 量化结果
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#113" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3 公司层面贡献
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#114" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.4 专业影响力
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#115" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.5 价值观锚点
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#116" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.6 协作与利他
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#117" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.7 反思与成长（自我批评式）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#118-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.8 6年后视角
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#119" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.9 五段式讲述（答辩稿骨架）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1110" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.10 对比证据（跨项目量化参照）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. 相关项目
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. 相关项目">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        项目间引用网络
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. 跨项目对比
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13. 跨项目对比">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#131-25llm-dailydigest-vs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.1 与25号（LLM-DailyDigest）对比：垂直工具 vs 通用框架
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#132-22swarmevolveagentagent-vs-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.2 与22号（SwarmEvolve多Agent）对比：工程多Agent vs 研究多Agent
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        图表索引
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        个人成果矩阵
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+  
+
+
+
+
+  <h1>26 AutoLLM多Agent</h1>
+
+<div class="admonition info">
+<p class="admonition-title">项目系列</p>
+<p><strong>工程与工具系列</strong> · 报告 #26/30</p>
+</div>
+<p><a href="../../"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg></span> 返回项目总览</a> | <a href="../../../index_zh/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg></span> 返回首页</a></p>
+<hr />
+<blockquote>
+<p>作者：杜晋华 | 时间：2026.5–2026.8 | 角色：独立开发者
+GitHub：https://github.com/dujh22/AutoLLM
+关联项目：AutoClaw 飞书知识库整理</p>
+</blockquote>
+<div class="admonition note">
+<p class="admonition-title">版本信息</p>
+<p>版本：v3（图文并茂版 · 2026-09-08）· 二轮质检补强 · 三轮精磨 · 四轮深化 · 五轮深化 · 六轮深化 · 七轮深化 · 八轮深化 · 九轮终审 · 十轮深化 · 十一轮深化 · 十二轮终审 · 十三轮终审 · 十四轮深化 · 十五轮终审 | 审核：准确性核对 + 转正答辩证据卡补强 + 图文表格升级</p>
+</div>
+<hr />
+<h2 id="1-abstract">1. 项目概述（Abstract）<a class="headerlink" href="#1-abstract" title="Permanent link">&para;</a></h2>
+<p>AutoLLM 是一个基于<strong>多 Agent 协作架构</strong>的信息自动化系统，旨在对博客、学术论文、分享内容等多源在线信息进行周期性自动处理、优先级排序和内容生成。系统由 6 个各司其职的 Agent 组成流水线，覆盖从自动化解析脚本生成、链接信息扩展、信息优先级排序、简报生成与关联，到音视频多媒体制作和全流程定时调度的完整闭环。系统设计为每日定时运行，输出文本简报和多媒体内容，可直接跨平台分享。配套的 AutoClaw 子项目打通了飞书全功能访问，实现飞书知识库的自动化整理。</p>
+<hr />
+<h3 id="_1">关键数据速览<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>维度</strong></th>
+<th><strong>核心数据</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>项目周期</strong></td>
+<td>2026.5–2026.8（阶段五启动，持续迭代）</td>
+</tr>
+<tr>
+<td><strong>个人角色</strong></td>
+<td>独立开发者（负责整体架构设计、6 个 Agent 开发、AutoClaw 飞书集成、全流程调试）</td>
+</tr>
+<tr>
+<td><strong>核心产出</strong></td>
+<td>6-Agent 专用流水线架构；AutoClaw 飞书全功能 API 打通；spider_lab 解析脚本复用机制；音视频多媒体制作模块</td>
+</tr>
+<tr>
+<td><strong>关键指标</strong></td>
+<td>6 个专用 Agent（解析/扩展/排序/简报/多媒体/调度）；3 类信息源（博客/学术论文/分享内容）；6 个飞书功能模块（文档/多维表格/日历/消息/云盘/知识库）；1 个公开仓库</td>
+</tr>
+<tr>
+<td><strong>论文/专利</strong></td>
+<td>无（工程工具类项目）</td>
+</tr>
+<tr>
+<td><strong>开源仓库</strong></td>
+<td>AutoLLM（公开）；关联 LLM-DailyDigest（垂直 AI 追新）、AutoClaw（飞书知识库整理）</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<hr />
+<h3 id="_2">执行摘要<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p><strong>一句话定位</strong>：基于多 Agent 协作架构的通用信息自动化系统，由 6 个各司其职的 Agent 组成流水线，覆盖从信息采集、扩展、排序、简报到多媒体制作和定时调度的完整闭环。</p>
+<p><strong>核心成果</strong>：
+- 构建 <strong>6-Agent 专用流水线架构</strong>（解析/扩展/排序/简报/多媒体/调度），每个 Agent 职责单一、可独立测试
+- 打通 <strong>AutoClaw 飞书全功能 API</strong>（文档/多维表格/日历/消息/云盘/知识库 6 大模块），实现飞书知识库自动化整理
+- 建立 spider_lab 解析脚本复用机制，支持新信息源快速接入；配套音视频多媒体制作模块</p>
+<p><strong>技术亮点</strong>：专用信息处理流水线设计（区别于通用自主 Agent 的开放式循环）；Agent1 自动化解析脚本生成（spider_lab 复用机制）；用户偏好驱动的优先级排序；多媒体自动生产（文本→语音→视频）。</p>
+<p><strong>个人角色</strong>：独立开发者，负责整体架构设计、6 个 Agent 开发、AutoClaw 飞书集成、全流程调试。</p>
+<p><strong>后续方向</strong>：更多信息源与输出格式扩展；与 LLM-DailyDigest 垂直场景深度整合；多 Agent 协作策略的自进化优化（与 SwarmEvolve 研究联动）。</p>
+<hr />
+<h3 id="_3">个人成长轨迹<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>阶段</strong></th>
+<th><strong>能力成长</strong></th>
+<th><strong>关键事件</strong></th>
+<th><strong>对应报告章节</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>初期</td>
+<td>从垂直工具到通用框架设计者：在LLM-DailyDigest解决了"每日AI追新"的垂直场景后，需要一个更通用的多Agent信息自动化框架，能够适配任意信息源和输出格式，确立6-Agent专用流水线架构</td>
+<td>2026.5阶段五启动，在DailyDigest垂直场景基础上需要通用多Agent信息自动化框架，6-Agent流水线架构设计（解析/扩展/排序/简报/多媒体/调度）</td>
+<td>§2.3 项目启动契机 / §1 项目概述</td>
+</tr>
+<tr>
+<td>中期</td>
+<td>从单工具到系统架构师：实现6-Agent专用流水线，Agent间使用结构化JSON传递避免自然语言歧义，spider_lab解析脚本复用机制，Agent1自动化解析脚本生成，从"单工具"扩展到"系统架构"</td>
+<td>6个专用Agent开发完成（Agent1解析/Agent2扩展/Agent3排序/Agent4简报/Agent5多媒体/Agent6调度），spider_lab复用机制，结构化JSON接口契约，3类信息源覆盖</td>
+<td>§4.1 系统架构 / §4.2 各Agent功能</td>
+</tr>
+<tr>
+<td>后期</td>
+<td>从框架设计到生态集成实践者：AutoClaw子项目打通飞书全功能API（文档/多维表格/日历/消息/云盘/知识库6大模块），实现从"外部信息采集"到"内部知识管理"的完整闭环，工程能力扩展到"系统架构+生态集成"</td>
+<td>AutoClaw飞书全功能API打通（6大模块），飞书知识库自动化整理，从外部信息采集到内部知识管理的完整闭环，音视频多媒体制作模块</td>
+<td>§4.3 AutoClaw飞书集成 / §6 工程实现 / §11.7 成长轨迹</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<hr />
+<h2 id="2-introduction-background">2. 背景与动机（Introduction / Background）<a class="headerlink" href="#2-introduction-background" title="Permanent link">&para;</a></h2>
+<h3 id="21">2.1 问题定义<a class="headerlink" href="#21" title="Permanent link">&para;</a></h3>
+<p>在信息爆炸时代，研究者和从业者需要持续追踪多个信息源（技术博客、学术论文、社区分享等），但手动收集、筛选、阅读、整理和输出摘要的流程极为耗时。传统的 RSS 阅读器和收藏夹工具只能完成信息聚合，无法实现<strong>自动化的内容理解、优先级判断和多格式输出</strong>。</p>
+<h3 id="22">2.2 行业背景与痛点<a class="headerlink" href="#22" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>信息源异构</strong>：博客有不同的页面结构，论文分布在 arXiv/会议官网/作者主页，分享内容散落在各种平台，统一解析困难；</li>
+<li><strong>筛选成本高</strong>：每日新增信息量大，人工判断哪些值得深入阅读需要消耗大量注意力；</li>
+<li><strong>输出格式单一</strong>：现有工具大多只输出文本列表，无法自动生成结构化简报，更无法转化为音视频等多媒体格式；</li>
+<li><strong>缺乏持续自动化</strong>：多数工具需要人工触发，无法做到每日无人值守运行。</li>
+</ul>
+<h3 id="23">2.3 项目启动契机<a class="headerlink" href="#23" title="Permanent link">&para;</a></h3>
+<p>2026 年 5 月阶段五启动后，杜晋华同时推进 8 个自进化研究方向，对信息自动化处理的需求迫切。在 LLM-DailyDigest 项目解决了"每日AI追新"的垂直场景后，需要一个更通用的多 Agent 信息自动化框架，能够适配任意信息源和输出格式。AutoLLM 由此启动，作为通用信息自动化基础设施，同时孵化 AutoClaw 子项目专门处理飞书知识库的自动化整理。</p>
+<hr />
+<h2 id="3-related-work">3. 相关工作（Related Work）<a class="headerlink" href="#3-related-work" title="Permanent link">&para;</a></h2>
+<h3 id="31">3.1 同期/前人工作对比<a class="headerlink" href="#31" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>系统</strong></th>
+<th><strong>定位</strong></th>
+<th><strong>局限性</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>AutoGPT</strong></td>
+<td>通用自主Agent</td>
+<td>目标驱动但缺乏信息处理专用流水线，输出不可控</td>
+</tr>
+<tr>
+<td><strong>LangChain Agents</strong></td>
+<td>Agent开发框架</td>
+<td>需自行编排，无开箱即用的信息自动化方案</td>
+</tr>
+<tr>
+<td><strong>Feedly / Inoreader</strong></td>
+<td>RSS聚合+AI摘要</td>
+<td>仅支持RSS源，无自定义爬虫，无多媒体输出</td>
+</tr>
+<tr>
+<td><strong>Make.com / Zapier</strong></td>
+<td>无代码自动化</td>
+<td>偏流程触发，缺乏LLM驱动的内容理解和生成</td>
+</tr>
+<tr>
+<td><strong>AutoLLM</strong></td>
+<td>6-Agent专用信息自动化流水线+飞书全功能打通</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：AutoLLM GitHub README（https://github.com/dujh22/AutoLLM）System Components 与 Workflow 章节；各对比系统官方文档与公开信息</p>
+</blockquote>
+<h3 id="32">3.2 差异化定位<a class="headerlink" href="#32" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>专用信息处理流水线</strong>：6 个 Agent 各司其职，形成"采集→扩展→排序→简报→多媒体→调度"的完整流水线，而非通用自主 Agent 的开放式循环；</li>
+<li><strong>自动化解析脚本生成</strong>：Agent1 能根据目标链接自动生成或复用爬虫脚本（spider_lab），降低新信息源的接入成本；</li>
+<li><strong>用户偏好驱动的优先级排序</strong>：Agent3 基于用户行为和偏好数据对信息排序，而非简单按时间或热度；</li>
+<li><strong>多媒体自动生产</strong>：Agent5 将文本简报转化为语音和视频，支持跨平台分享；</li>
+<li><strong>飞书生态深度集成</strong>：AutoClaw 子项目打通飞书全功能访问，实现知识库的自动化整理。</li>
+</ol>
+<hr />
+<h2 id="4-method">4. 方法与技术路线（Method）<a class="headerlink" href="#4-method" title="Permanent link">&para;</a></h2>
+<h3 id="41">4.1 系统架构<a class="headerlink" href="#41" title="Permanent link">&para;</a></h3>
+<p>AutoLLM 采用<strong>多 Agent 流水线架构</strong>，6 个 Agent 按顺序协作，每个 Agent 负责信息处理流程中的一个特定阶段：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>┌─────────────────────────────────────────────────────────────────────┐
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>│                        AutoLLM 多Agent 流水线                          │
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>├─────────────────────────────────────────────────────────────────────┤
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>│                                                                       │
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>│  信息源: 博客 │ 学术论文 │ 分享内容 │ 用户补充输入                      │
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>│      │                                                               │
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>│      ▼                                                               │
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>│  ┌──────────┐   ┌──────────┐   ┌──────────┐   ┌──────────┐       │
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>│  │ Agent1   │──→│ Agent2   │──→│ Agent3   │──→│ Agent4   │       │
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>│  │ 解析脚本  │   │ 信息扩展  │   │ 优先级    │   │ 简报生成  │       │
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>│  │ 生成      │   │          │   │ 排序      │   │ 与关联    │       │
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>│  └──────────┘   └──────────┘   └──────────┘   └────┬─────┘       │
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>│                                                         │             │
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>│                              ┌──────────┐   ┌──────────▼─────┐      │
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>│                              │ Agent6   │←──│ Agent5         │      │
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>│                              │ 自动化    │   │ 音视频多媒体    │      │
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>│                              │ 控制调度  │   │ 制作           │      │
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>│                              └──────────┘   └────────────────┘      │
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>│                                   │                                   │
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>│                                   ▼                                   │
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>│                         输出: 文本简报 + 音视频                        │
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>│                         (output/ 目录，可跨平台分享)                   │
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>└─────────────────────────────────────────────────────────────────────┘
+</code></pre></div>
+<p><strong>AutoLLM 6-Agent 流水线 Mermaid 流程图（含 AutoClaw 飞书全功能打通）：</strong></p>
+<p>下图以 Mermaid 流程图形式呈现 AutoLLM 的 6-Agent 流水线架构，标注各 Agent 的角色分工、输入输出，以及 AutoClaw 子项目的飞书全功能打通集成。</p>
+<pre class="mermaid"><code>flowchart LR
+    subgraph SRC["信息源"]
+        S1["博客&lt;br/&gt;Source Link 1"]
+        S2["学术论文&lt;br/&gt;Source Link 2"]
+        S3["分享内容&lt;br/&gt;Source Link 3"]
+        S4["用户补充输入"]
+    end
+
+    A1["Agent1&lt;br/&gt;信息采集&lt;br/&gt;自动化解析脚本生成&lt;br/&gt;spider_lab 复用"] --&gt; A2["Agent2&lt;br/&gt;信息扩展&lt;br/&gt;链接信息扩展&lt;br/&gt;相关链接+补充数据"]
+    A2 --&gt; A3["Agent3&lt;br/&gt;筛选排序&lt;br/&gt;信息优先级排序&lt;br/&gt;用户行为+偏好驱动"]
+    A3 --&gt; A4["Agent4&lt;br/&gt;摘要生成&lt;br/&gt;简报生成与关联&lt;br/&gt;结构化文本简报"]
+    A4 --&gt; A5["Agent5&lt;br/&gt;格式化分发&lt;br/&gt;音视频多媒体制作&lt;br/&gt;TTS+视频合成+同步"]
+    A5 --&gt; A6["Agent6&lt;br/&gt;监控调度&lt;br/&gt;自动化控制调度&lt;br/&gt;每日定时+断点续跑"]
+
+    subgraph OUT["输出产物"]
+        O1["文本简报&lt;br/&gt;output/ 目录"]
+        O2["语音播报&lt;br/&gt;多媒体文件"]
+        O3["配套视频&lt;br/&gt;跨平台分享"]
+    end
+
+    subgraph CLAW["AutoClaw 飞书全功能打通"]
+        C1["飞书文档 Doc&lt;br/&gt;创建/读取/编辑/搜索"]
+        C2["多维表格 Bitable&lt;br/&gt;CRUD/视图管理"]
+        C3["日历 Calendar&lt;br/&gt;日程/会议室"]
+        C4["消息 IM&lt;br/&gt;收发/群聊管理"]
+        C5["云盘 Drive&lt;br/&gt;上传/下载/权限"]
+        C6["知识库 Wiki&lt;br/&gt;空间/节点管理"]
+    end
+
+    S1 &amp; S2 &amp; S3 &amp; S4 --&gt; A1
+    A6 --&gt; O1
+    A5 --&gt; O2
+    A5 --&gt; O3
+    A4 -.-&gt;|简报写入飞书文档| C1
+    A6 -.-&gt;|调度通知| C4
+    A4 -.-&gt;|台账管理| C2
+    CLAW -.-&gt;|飞书知识库自动化整理| A4
+
+    style SRC fill:#e3f2fd,stroke:#1565c0
+    style A1 fill:#e8f5e9,stroke:#2e7d32
+    style A2 fill:#e8f5e9,stroke:#2e7d32
+    style A3 fill:#fff3e0,stroke:#e65100
+    style A4 fill:#fff3e0,stroke:#e65100
+    style A5 fill:#f3e5f5,stroke:#6a1b9a
+    style A6 fill:#fce4ec,stroke:#c62828
+    style OUT fill:#fffde7,stroke:#f9a825
+    style CLAW fill:#fce4ec,stroke:#ad1457,stroke-dasharray: 5 5</code></pre>
+<blockquote>
+<p>图注：AutoLLM 6-Agent 流水线按"信息采集（Agent1）→信息扩展（Agent2）→筛选排序（Agent3）→摘要生成（Agent4）→格式化分发（Agent5）→监控调度（Agent6）"顺序协作，形成从多源信息采集到文本/多媒体输出的完整闭环。AutoClaw 子项目打通飞书文档、多维表格、日历、消息、云盘、知识库六大功能模块，实现简报自动写入、调度通知推送、台账自动管理等飞书生态深度集成。</p>
+</blockquote>
+<h4 id="411-agent">4.1.1 六 Agent 角色分工对照表<a class="headerlink" href="#411-agent" title="Permanent link">&para;</a></h4>
+<p>6 个 Agent 各司其职，形成"采集→扩展→排序→简报→多媒体→调度"的完整流水线，各 Agent 的职责、输入输出和关键技术对比如下：</p>
+<table>
+<thead>
+<tr>
+<th><strong>Agent</strong></th>
+<th><strong>名称</strong></th>
+<th><strong>核心职责</strong></th>
+<th><strong>输入</strong></th>
+<th><strong>输出</strong></th>
+<th><strong>关键技术/机制</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Agent1</strong></td>
+<td>自动化解析脚本生成</td>
+<td>为指定链接创建/复用解析脚本，提取信息</td>
+<td>源链接（博客/论文/分享）</td>
+<td>解析后的结构化信息</td>
+<td>spider_lab 复用机制 + 自动爬虫脚本生成</td>
+</tr>
+<tr>
+<td><strong>Agent2</strong></td>
+<td>链接信息扩展</td>
+<td>为每个源链接获取相关链接和补充数据，扩展上下文</td>
+<td>Agent1 采集的内容</td>
+<td>扩展后的丰富信息集</td>
+<td>关键词匹配 + 引用关系发现 + 相关页面抓取</td>
+</tr>
+<tr>
+<td><strong>Agent3</strong></td>
+<td>信息优先级排序</td>
+<td>基于重要性和用户偏好对信息组织排序</td>
+<td>Agent2 扩展后的信息</td>
+<td>排序后的优先级信息列表</td>
+<td>用户行为数据 + 偏好数据 + 排序算法</td>
+</tr>
+<tr>
+<td><strong>Agent4</strong></td>
+<td>简报生成与关联</td>
+<td>通过关联收集到的信息生成简报报告</td>
+<td>排序后的优先级信息</td>
+<td>结构化文本简报（摘要+关键洞察+链接）</td>
+<td>信息关联 + 摘要生成 + 结构化输出</td>
+</tr>
+<tr>
+<td><strong>Agent5</strong></td>
+<td>语音和视频制作</td>
+<td>创建同步的多媒体内容（语音+视频）</td>
+<td>Agent4 生成的文本简报</td>
+<td>语音播报 + 配套视频（多媒体同步）</td>
+<td>TTS 语音合成 + 视频合成 + 音视频同步</td>
+</tr>
+<tr>
+<td><strong>Agent6</strong></td>
+<td>自动化控制调度</td>
+<td>管理任务周期性执行，按每日时间表运行全流水线</td>
+<td>调度配置（时间/频率）</td>
+<td>触发全流程执行，输出到 output/ 目录</td>
+<td>定时任务调度 + Agent 顺序编排 + 断点续跑</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：AutoLLM GitHub README（Agents 章节与 Workflow 章节）</p>
+</blockquote>
+<h3 id="42-source-links">4.2 信息源（Source Links）<a class="headerlink" href="#42-source-links" title="Permanent link">&para;</a></h3>
+<p>系统从三类主要信息源提取信息，用户可额外提供补充输入：</p>
+<ol>
+<li><strong>博客（Source Link 1）</strong>：技术博客、行业分析文章等；</li>
+<li><strong>学术论文（Source Link 2）</strong>：arXiv 预印本、会议论文、期刊文章等；</li>
+<li><strong>分享内容（Source Link 3）</strong>：社区分享、开源项目公告、资讯推送等。</li>
+</ol>
+<h3 id="43-agent">4.3 Agent 详细设计<a class="headerlink" href="#43-agent" title="Permanent link">&para;</a></h3>
+<h4 id="agent1">Agent1 — 自动化解析脚本生成<a class="headerlink" href="#agent1" title="Permanent link">&para;</a></h4>
+<p><strong>功能</strong>：为指定链接自动创建解析脚本，提取信息。</p>
+<p><strong>工作机制</strong>：
+- 检查本地 <code>spider_lab</code> 目录中是否已有该信息源的解析器；
+- 若存在则复用，若不存在则自动生成新的爬虫脚本；
+- 实现新信息源的低成本接入。</p>
+<h4 id="agent2">Agent2 — 链接信息扩展<a class="headerlink" href="#agent2" title="Permanent link">&para;</a></h4>
+<p><strong>功能</strong>：在 Agent1 采集的基础上，为每个源链接获取相关链接和补充数据，扩展信息上下文。</p>
+<p><strong>工作机制</strong>：
+- 基于已采集内容的关键词和引用关系，发现相关链接；
+- 抓取相关页面内容，为后续优先级判断和简报生成提供更丰富的上下文。</p>
+<h4 id="agent3">Agent3 — 信息优先级排序<a class="headerlink" href="#agent3" title="Permanent link">&para;</a></h4>
+<p><strong>功能</strong>：基于重要性和用户偏好对信息进行组织排序。</p>
+<p><strong>工作机制</strong>：
+- 应用排序机制，根据从用户收集的行为数据和偏好数据呈现内容；
+- 确保高价值信息优先进入简报生成阶段；
+- 未来改进方向：增强优先级算法，提升用户个性化推荐精度。</p>
+<h4 id="agent4">Agent4 — 简报生成与关联<a class="headerlink" href="#agent4" title="Permanent link">&para;</a></h4>
+<p><strong>功能</strong>：通过关联收集到的信息生成简报报告。</p>
+<p><strong>输出内容</strong>：
+- 优先级内容的摘要；
+- 每个源链接的关键洞察高亮；
+- 结构化链接，便于追溯原始信息。</p>
+<h4 id="agent5">Agent5 — 语音和视频制作<a class="headerlink" href="#agent5" title="Permanent link">&para;</a></h4>
+<p><strong>功能</strong>：创建同步的多媒体内容（语音和视频）。</p>
+<p><strong>工作机制</strong>：
+- 将 Agent4 生成的文本简报转化为语音播报；
+- 合成配套视频画面，实现音视频同步；
+- 支持跨平台分享，提升可访问性和传播范围；
+- 未来改进方向：扩展更多多媒体格式支持。</p>
+<h4 id="agent6">Agent6 — 自动化控制<a class="headerlink" href="#agent6" title="Permanent link">&para;</a></h4>
+<p><strong>功能</strong>：管理任务的周期性执行，按每日时间表运行整个流水线。</p>
+<p><strong>工作机制</strong>：
+- 调度所有 Agent 按顺序协作；
+- 确保内容每日更新；
+- 未来改进方向：增加实时模式，支持按需数据处理。</p>
+<h3 id="44-workflow">4.4 工作流（Workflow）<a class="headerlink" href="#44-workflow" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>数据采集</strong>：Agent1 为每个源链接生成或检索解析器；Agent2 扩展每个链接，收集相关信息以获取更多上下文；</li>
+<li><strong>数据优先级排序</strong>：Agent3 组织收集到的数据，基于相关性和用户偏好排序；</li>
+<li><strong>简报生成</strong>：Agent4 编译摘要简报，生成包含结构化链接和综合概述的报告；</li>
+<li><strong>多媒体制作</strong>：Agent5 将文本简报转化为多媒体格式，支持语音和视频输出；</li>
+<li><strong>自动化执行</strong>：Agent6 调度和控制每日执行，确保所有 Agent 按序协作，为用户产出最新内容。</li>
+</ol>
+<h3 id="45-autoclaw">4.5 AutoClaw 飞书知识库整理<a class="headerlink" href="#45-autoclaw" title="Permanent link">&para;</a></h3>
+<p>AutoClaw 是 AutoLLM 框架在飞书生态中的专项应用，核心成果是<strong>打通飞书全功能访问</strong>。基于飞书开放平台 API，实现对飞书各功能模块的自动化访问，各模块的功能和应用场景如下：</p>
+<table>
+<thead>
+<tr>
+<th><strong>飞书功能模块</strong></th>
+<th><strong>API 能力</strong></th>
+<th><strong>AutoClaw 中的应用场景</strong></th>
+<th><strong>自动化程度</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>飞书文档（Doc）</strong></td>
+<td>文档创建、读取、编辑、搜索</td>
+<td>自动整理工作记录、生成周报文档、知识库内容更新</td>
+<td>高（全自动读写）</td>
+</tr>
+<tr>
+<td><strong>多维表格（Bitable）</strong></td>
+<td>数据表创建、记录增删改查、视图管理</td>
+<td>项目台账管理、任务跟踪、数据结构化存储</td>
+<td>高（全自动 CRUD）</td>
+</tr>
+<tr>
+<td><strong>日历（Calendar）</strong></td>
+<td>日程创建、查询、会议室预定</td>
+<td>自动同步会议安排、提醒重要日程</td>
+<td>中（创建+查询）</td>
+</tr>
+<tr>
+<td><strong>消息（IM）</strong></td>
+<td>消息发送、接收、群聊管理</td>
+<td>自动推送通知、简报分发、消息汇总</td>
+<td>高（全自动收发）</td>
+</tr>
+<tr>
+<td><strong>云盘（Drive）</strong></td>
+<td>文件上传、下载、权限管理</td>
+<td>文档归档、附件管理、知识库文件同步</td>
+<td>中（上传+下载）</td>
+</tr>
+<tr>
+<td><strong>知识库（Wiki）</strong></td>
+<td>知识空间管理、文档节点组织</td>
+<td>知识库自动分类、结构化整理、内容更新</td>
+<td>中（节点管理）</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：AutoLLM GitHub README（AutoClaw 飞书知识库整理描述）+ claw-code 仓库（飞书全功能 API 打通）</p>
+</blockquote>
+<h4 id="451-autoclaw-api">4.5.1 AutoClaw 飞书 API 功能清单详细表<a class="headerlink" href="#451-autoclaw-api" title="Permanent link">&para;</a></h4>
+<p>AutoClaw 基于飞书开放平台 API 实现全功能模块访问，各模块的具体 API 能力、权限范围、AutoClaw 中的应用场景和自动化程度如下表。</p>
+<table>
+<thead>
+<tr>
+<th><strong>飞书功能模块</strong></th>
+<th><strong>API 端点类别</strong></th>
+<th><strong>核心 API 能力</strong></th>
+<th><strong>权限范围</strong></th>
+<th><strong>AutoClaw 应用场景</strong></th>
+<th><strong>自动化程度</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>飞书文档（Doc）</strong></td>
+<td>docx/v1/documents</td>
+<td>创建文档、读取内容、编辑段落、搜索文档、批量操作</td>
+<td>文档读写权限</td>
+<td>自动整理工作记录、生成周报文档、知识库内容更新、简报自动写入</td>
+<td>高（全自动读写）</td>
+</tr>
+<tr>
+<td><strong>多维表格（Bitable）</strong></td>
+<td>bitable/v1/apps</td>
+<td>数据表创建、记录增删改查、视图管理、字段管理、批量导入</td>
+<td>多维表格读写权限</td>
+<td>项目台账管理、任务跟踪、数据结构化存储、6-Agent 流水线状态记录</td>
+<td>高（全自动 CRUD）</td>
+</tr>
+<tr>
+<td><strong>日历（Calendar）</strong></td>
+<td>calendar/v4/calendars</td>
+<td>日程创建、查询、修改、删除、会议室预定、参会人管理</td>
+<td>日历读写权限</td>
+<td>自动同步会议安排、提醒重要日程、流水线执行时间调度</td>
+<td>中（创建+查询）</td>
+</tr>
+<tr>
+<td><strong>消息（IM）</strong></td>
+<td>im/v1/messages</td>
+<td>消息发送、接收、回复、群聊管理、卡片消息、批量发送</td>
+<td>消息收发权限</td>
+<td>自动推送通知、简报分发、流水线状态汇报、消息汇总</td>
+<td>高（全自动收发）</td>
+</tr>
+<tr>
+<td><strong>云盘（Drive）</strong></td>
+<td>drive/v1/files</td>
+<td>文件上传、下载、删除、权限管理、文件夹管理、版本管理</td>
+<td>云盘读写权限</td>
+<td>文档归档、附件管理、知识库文件同步、多媒体产物存储</td>
+<td>中（上传+下载）</td>
+</tr>
+<tr>
+<td><strong>知识库（Wiki）</strong></td>
+<td>wiki/v2/spaces</td>
+<td>知识空间管理、文档节点组织、节点移动、权限继承</td>
+<td>知识库管理权限</td>
+<td>知识库自动分类、结构化整理、内容更新、节点自动组织</td>
+<td>中（节点管理）</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：claw-code 仓库（https://github.com/dujh22/claw-code）飞书全功能 API 打通描述；AutoLLM GitHub README（AutoClaw 章节）；飞书开放平台 API 文档</p>
+</blockquote>
+<ul>
+<li>基于飞书开放平台 API，实现对飞书文档、多维表格、日历、消息、云盘等全功能模块的自动化访问；</li>
+<li>将 AutoLLM 的信息采集、处理、输出能力与飞书知识库结合，实现知识库的自动整理、分类和更新；</li>
+<li>作为个人周报自动化的基础设施，将分散的工作记录自动汇总整理。</li>
+</ul>
+<p><strong>补充：claw-code 仓库的 Harness 工程背景（源：claw-code 仓库 README）</strong></p>
+<p>dujh22/claw-code 是 instructkr/claw-code 的 Fork，上游项目是 Claude Code Agent Harness 的 Python 洁净室重写（clean-room rewrite），具有以下值得关注的工程背景：</p>
+<ul>
+<li><strong>开源影响力</strong>：上游仓库发布后 2 小时内突破 50K GitHub Stars，创历史最快增速纪录；</li>
+<li><strong>技术路线</strong>：基于 oh-my-codex（OmX）工作流编排层（OpenAI Codex 之上）完成 Python 移植，使用 <code>$team</code> 并行代码审查和 <code>$ralph</code> 持久执行循环+架构级验证；当前正在 <code>dev/rust</code> 分支进行 Rust 重写，目标是更快、内存安全的 Harness 运行时；</li>
+<li><strong>核心作者背景</strong>：主要创作者 Sigrid Jin 被《华尔街日报》（2026.3.21）报道，单年使用 250 亿 Claude Code tokens，是 Harness 工程的重度实践者；</li>
+<li><strong>Python 工作区结构</strong>：<code>src/</code> 包含 commands.py / main.py / models.py / port_manifest.py / query_engine.py / task.py / tools.py 等核心模块，<code>tests/</code> 提供验证。</li>
+</ul>
+<p>这些 Harness 工程经验为 AutoLLM 的多 Agent 流水线设计和 AutoClaw 的工具调用编排提供了方法论参考。</p>
+<hr />
+<h2 id="5-experiments-results">5. 功能与效果（Experiments &amp; Results）<a class="headerlink" href="#5-experiments-results" title="Permanent link">&para;</a></h2>
+<h3 id="51">5.1 核心功能清单<a class="headerlink" href="#51" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>功能模块</strong></th>
+<th><strong>对应Agent</strong></th>
+<th><strong>状态</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>自动化解析脚本生成</td>
+<td>Agent1</td>
+<td>已实现，spider_lab 复用机制</td>
+</tr>
+<tr>
+<td>链接信息扩展</td>
+<td>Agent2</td>
+<td>已实现</td>
+</tr>
+<tr>
+<td>信息优先级排序</td>
+<td>Agent3</td>
+<td>已实现，基于用户行为/偏好</td>
+</tr>
+<tr>
+<td>简报生成与关联</td>
+<td>Agent4</td>
+<td>已实现，结构化输出</td>
+</tr>
+<tr>
+<td>音视频多媒体制作</td>
+<td>Agent5</td>
+<td>已实现，语音+视频同步</td>
+</tr>
+<tr>
+<td>自动化定时调度</td>
+<td>Agent6</td>
+<td>已实现，每日运行</td>
+</tr>
+<tr>
+<td>飞书全功能访问</td>
+<td>AutoClaw</td>
+<td>已实现，打通飞书知识库整理</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：AutoLLM GitHub README Agents 与 Workflow 章节；claw-code 仓库（https://github.com/dujh22/claw-code）飞书全功能 API 打通描述；报告 §4 方法与技术路线</p>
+</blockquote>
+<h3 id="52">5.2 输出产物<a class="headerlink" href="#52" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>文本简报</strong>：结构化的每日信息摘要，包含优先级排序后的内容摘要和关键洞察；</li>
+<li><strong>多媒体内容</strong>：语音播报和配套视频，可直接跨平台分享；</li>
+<li><strong>输出目录</strong>：所有产物保存在 <code>output/</code> 目录，便于检索和分发。</li>
+</ul>
+<h3 id="53">5.3 工程效果<a class="headerlink" href="#53" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>全流程自动化</strong>：从信息采集到多媒体输出，6 个 Agent 流水线无人值守运行；</li>
+<li><strong>新源接入成本低</strong>：Agent1 的 spider_lab 复用+自动生成机制，大幅降低新信息源的接入成本；</li>
+<li><strong>飞书生态集成</strong>：AutoClaw 打通飞书全功能，实现知识库自动化整理，服务于个人周报等实际场景。</li>
+</ul>
+<hr />
+<h2 id="6-engineering">6. 工程实现（Engineering）<a class="headerlink" href="#6-engineering" title="Permanent link">&para;</a></h2>
+<h3 id="61">6.1 代码仓库<a class="headerlink" href="#61" title="Permanent link">&para;</a></h3>
+<ul>
+<li>AutoLLM 主仓库：https://github.com/dujh22/AutoLLM（公开）</li>
+<li>AutoClaw：飞书知识库整理子项目（整合于 AutoLLM 框架内，个人周报记录）</li>
+</ul>
+<h3 id="62">6.2 技术栈<a class="headerlink" href="#62" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>层级</strong></th>
+<th><strong>技术选型</strong></th>
+<th><strong>具体组件</strong></th>
+<th><strong>用途</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Agent 框架</strong></td>
+<td>Python 多模块架构</td>
+<td>6 个独立 Agent 模块（Agent1–Agent6）</td>
+<td>多 Agent 流水线协作</td>
+</tr>
+<tr>
+<td><strong>爬虫</strong></td>
+<td>自动化脚本生成</td>
+<td>spider_lab 复用机制 + 自动爬虫脚本生成</td>
+<td>异构信息源解析与采集</td>
+</tr>
+<tr>
+<td><strong>LLM 接口</strong></td>
+<td>大语言模型驱动</td>
+<td>内容理解、摘要生成、优先级判断</td>
+<td>信息处理与内容生成</td>
+</tr>
+<tr>
+<td><strong>多媒体</strong></td>
+<td>TTS + 视频合成</td>
+<td>语音合成 + 视频画面合成 + 音视频同步</td>
+<td>文本简报转多媒体内容</td>
+</tr>
+<tr>
+<td><strong>调度</strong></td>
+<td>定时任务</td>
+<td>每日周期调度 + Agent 顺序编排</td>
+<td>全流程自动化执行</td>
+</tr>
+<tr>
+<td><strong>飞书集成</strong></td>
+<td>飞书开放平台 API</td>
+<td>文档/多维表格/日历/消息/云盘/知识库</td>
+<td>AutoClaw 飞书全功能访问</td>
+</tr>
+<tr>
+<td><strong>输出</strong></td>
+<td>文件系统</td>
+<td>output/ 目录（文本简报 + 多媒体文件）</td>
+<td>产物存储与分发</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：AutoLLM GitHub README（System Components 与技术栈描述）</p>
+</blockquote>
+<h4 id="621">6.2.1 技术栈详细配置表<a class="headerlink" href="#621" title="Permanent link">&para;</a></h4>
+<p>AutoLLM 各层级的技术选型、版本配置、核心参数和用途如下表。</p>
+<table>
+<thead>
+<tr>
+<th><strong>层级</strong></th>
+<th><strong>技术选型</strong></th>
+<th><strong>版本/规格</strong></th>
+<th><strong>核心配置参数</strong></th>
+<th><strong>用途</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Agent 框架</strong></td>
+<td>Python 多模块架构</td>
+<td>Python 3.8+</td>
+<td>6 个独立 Agent 模块（Agent1–Agent6），结构化 JSON 接口传递</td>
+<td>多 Agent 流水线协作</td>
+</tr>
+<tr>
+<td><strong>爬虫引擎</strong></td>
+<td>自动化脚本生成</td>
+<td>Python requests + BeautifulSoup</td>
+<td>spider_lab 复用机制 + 自动爬虫脚本生成，超时/重试配置</td>
+<td>异构信息源解析与采集</td>
+</tr>
+<tr>
+<td><strong>LLM 接口</strong></td>
+<td>大语言模型驱动</td>
+<td>OpenAI 兼容 API</td>
+<td>内容理解、摘要生成、优先级判断、信息关联</td>
+<td>信息处理与内容生成</td>
+</tr>
+<tr>
+<td><strong>多媒体合成</strong></td>
+<td>TTS + 视频合成</td>
+<td>edge-tts / moviepy</td>
+<td>语音合成 + 视频画面合成 + 音视频同步，输出 MP3/MP4</td>
+<td>文本简报转多媒体内容</td>
+</tr>
+<tr>
+<td><strong>任务调度</strong></td>
+<td>定时任务</td>
+<td>APScheduler / cron</td>
+<td>每日周期调度 + Agent 顺序编排，支持断点续跑</td>
+<td>全流程自动化执行</td>
+</tr>
+<tr>
+<td><strong>飞书集成</strong></td>
+<td>飞书开放平台 API</td>
+<td>lark-oapi SDK</td>
+<td>文档/多维表格/日历/消息/云盘/知识库，应用 token + 用户 token 管理</td>
+<td>AutoClaw 飞书全功能访问</td>
+</tr>
+<tr>
+<td><strong>数据传递</strong></td>
+<td>结构化 JSON</td>
+<td>JSON Schema</td>
+<td>Agent 间输入输出格式标准化，避免自然语言歧义</td>
+<td>多 Agent 接口契约</td>
+</tr>
+<tr>
+<td><strong>错误处理</strong></td>
+<td>独立容错机制</td>
+<td>try/except + 重试</td>
+<td>每个 Agent 独立容错，跳过失败项继续处理，关键环节重试</td>
+<td>流水线稳定性</td>
+</tr>
+<tr>
+<td><strong>输出存储</strong></td>
+<td>文件系统</td>
+<td>output/ 目录</td>
+<td>文本简报（.md/.txt）+ 多媒体文件（.mp3/.mp4），按日期组织</td>
+<td>产物存储与分发</td>
+</tr>
+<tr>
+<td><strong>配置管理</strong></td>
+<td>YAML/JSON 配置</td>
+<td>config.yaml</td>
+<td>信息源链接、用户偏好、调度时间、LLM 参数、飞书凭证</td>
+<td>系统配置与参数管理</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：AutoLLM GitHub README（System Components 与技术栈描述）；claw-code 仓库飞书 API 集成；报告 §4.1 系统架构、§6.2 技术栈</p>
+</blockquote>
+<h4 id="622-6-agent">6.2.2 6-Agent 流水线性能指标表<a class="headerlink" href="#622-6-agent" title="Permanent link">&para;</a></h4>
+<p>AutoLLM 6-Agent 流水线各阶段的处理能力、性能特征和瓶颈分析如下表。</p>
+<table>
+<thead>
+<tr>
+<th><strong>Agent</strong></th>
+<th><strong>名称</strong></th>
+<th><strong>处理方式</strong></th>
+<th><strong>并发能力</strong></th>
+<th><strong>典型耗时</strong></th>
+<th><strong>瓶颈因素</strong></th>
+<th><strong>容错策略</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Agent1</strong></td>
+<td>信息采集</td>
+<td>spider_lab 复用 + 自动脚本生成</td>
+<td>多源并行采集</td>
+<td>取决于信息源数量与页面复杂度</td>
+<td>新信息源脚本生成、反爬机制</td>
+<td>跳过失败源，记录错误日志</td>
+</tr>
+<tr>
+<td><strong>Agent2</strong></td>
+<td>信息扩展</td>
+<td>关键词匹配 + 引用关系发现 + 相关页面抓取</td>
+<td>多链接并行扩展</td>
+<td>取决于扩展深度与链接数</td>
+<td>网络延迟、相关页面抓取失败</td>
+<td>限制扩展深度，失败链接跳过</td>
+</tr>
+<tr>
+<td><strong>Agent3</strong></td>
+<td>筛选排序</td>
+<td>用户行为数据 + 偏好数据 + 排序算法</td>
+<td>单进程排序（数据量可控）</td>
+<td>毫秒级（排序计算）</td>
+<td>用户偏好冷启动、排序算法精度</td>
+<td>通用重要性排序兜底，逐步个性化</td>
+</tr>
+<tr>
+<td><strong>Agent4</strong></td>
+<td>摘要生成</td>
+<td>LLM 驱动摘要 + 信息关联 + 结构化输出</td>
+<td>LLM API 并发（受限于 API 速率）</td>
+<td>取决于 LLM 响应时间与条目数</td>
+<td>LLM API 速率限制、摘要质量</td>
+<td>重试机制，失败条目标记待处理</td>
+</tr>
+<tr>
+<td><strong>Agent5</strong></td>
+<td>多媒体制作</td>
+<td>TTS 语音合成 + 视频合成 + 音视频同步</td>
+<td>单进程顺序合成（CPU 密集）</td>
+<td>取决于简报长度（通常数分钟）</td>
+<td>视频合成计算量大、TTS 质量</td>
+<td>分段合成，失败段落重试</td>
+</tr>
+<tr>
+<td><strong>Agent6</strong></td>
+<td>监控调度</td>
+<td>定时任务调度 + Agent 顺序编排 + 断点续跑</td>
+<td>单调度器（顺序执行）</td>
+<td>触发即时（调度开销可忽略）</td>
+<td>前序 Agent 失败导致全流程阻塞</td>
+<td>断点续跑，跳过已完成阶段</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：AutoLLM GitHub README（Agents 与 Workflow 章节）；报告 §4.3 Agent 详细设计、§6.4 关键工程挑战与解决方案。注：性能指标为基于架构设计的估算值，实际性能取决于信息源规模、LLM API 响应速度和硬件配置。</p>
+</blockquote>
+<h3 id="623">6.2.3 技术栈演进与选型决策<a class="headerlink" href="#623" title="Permanent link">&para;</a></h3>
+<p>AutoLLM 从 2026 年 5 月启动到 2026 年 8 月开源，技术栈在工程实践中经历了多次选型变化。下表梳理关键技术选型的演进背景、决策理由与最终方案。</p>
+<table>
+<thead>
+<tr>
+<th><strong>技术领域</strong></th>
+<th><strong>初期方案</strong></th>
+<th><strong>演进方案</strong></th>
+<th><strong>演进背景与决策理由</strong></th>
+<th><strong>最终方案</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Agent 架构</strong></td>
+<td>考虑使用通用自主 Agent（如 AutoGPT 式的开放式循环）</td>
+<td>专用 Agent 流水线（6 个独立 Agent 串联）</td>
+<td>通用自主 Agent 的开放式循环不可控、难以调试，对于信息处理这类有明确流程的任务效率低；专用 Agent 流水线每个模块职责单一、可独立测试、可断点续跑</td>
+<td>6-Agent 流水线（信息采集→信息扩展→筛选排序→摘要生成→多媒体制作→监控调度），结构化 JSON 接口传递</td>
+</tr>
+<tr>
+<td><strong>信息源解析</strong></td>
+<td>为每个信息源手动编写解析脚本</td>
+<td>spider_lab 复用机制 + 自动爬虫脚本生成</td>
+<td>不同博客、论文、分享页面结构差异大，手动编写脚本维护成本高；新信息源接入需要重复开发</td>
+<td>spider_lab 复用机制（已有解析脚本可复用）+ 自动爬虫脚本生成（新源自动生成解析脚本后入库）</td>
+</tr>
+<tr>
+<td><strong>Agent 间数据传递</strong></td>
+<td>自然语言传递（Agent 之间用文本描述传递信息）</td>
+<td>结构化 JSON 传递（JSON Schema 定义输入输出格式）</td>
+<td>自然语言传递存在歧义，下游 Agent 可能误解上游输出；结构化数据可以明确接口契约，避免歧义</td>
+<td>结构化 JSON 接口传递，每个 Agent 的输入输出格式由 JSON Schema 标准化</td>
+</tr>
+<tr>
+<td><strong>多媒体制作</strong></td>
+<td>考虑使用 LLM 驱动的内容编排（动态生成视频脚本）</td>
+<td>TTS + 视频合成的固定模板流水线（edge-tts / moviepy）</td>
+<td>LLM 驱动的内容编排复杂度高、质量不稳定；固定模板流水线对于文本简报转多媒体内容已经足够，且更稳定可控</td>
+<td>edge-tts 语音合成 + moviepy 视频画面合成 + 音视频同步，输出 MP3/MP4</td>
+</tr>
+<tr>
+<td><strong>飞书集成</strong></td>
+<td>考虑使用飞书机器人 Webhook（仅消息推送）</td>
+<td>飞书开放平台 API 全功能访问（lark-oapi SDK）</td>
+<td>Webhook 仅支持消息推送，无法实现文档/多维表格/日历/云盘/知识库的全功能访问；AutoClaw 需要深度集成飞书生态</td>
+<td>lark-oapi SDK，应用 token + 用户 token 管理，覆盖文档/多维表格/日历/消息/云盘/知识库全功能</td>
+</tr>
+<tr>
+<td><strong>任务调度</strong></td>
+<td>考虑使用复杂的分布式任务队列（如 Celery/RQ）</td>
+<td>APScheduler / cron 定时任务 + 断点续跑</td>
+<td>系统规模为个人使用，不需要分布式任务队列的复杂度；APScheduler/cron 足够支持每日周期调度，断点续跑解决流水线中断问题</td>
+<td>APScheduler / cron 每日周期调度 + Agent 顺序编排，支持断点续跑</td>
+</tr>
+<tr>
+<td><strong>错误处理</strong></td>
+<td>全局 try/except（任一环节失败则全流程终止）</td>
+<td>每个 Agent 独立容错 + 关键环节重试 + 跳过失败项继续</td>
+<td>全局终止导致一个信息源失败就阻塞全流程，效率低；独立容错可以跳过失败项继续处理，关键环节重试提高成功率</td>
+<td>每个 Agent 独立容错，跳过失败项继续处理，关键环节设置重试机制，断点续跑</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告 §4 方法与技术路线、§6.2 技术栈、§6.4 关键工程挑战与解决方案、§9.1 关键问题与解决方案；AutoLLM GitHub README（System Components 与技术栈描述）</p>
+</blockquote>
+<h3 id="63">6.3 使用方式<a class="headerlink" href="#63" title="Permanent link">&para;</a></h3>
+<ol>
+<li>配置待处理的链接，设置用户偏好；</li>
+<li>运行 Agent6 启动每日自动化周期；</li>
+<li>从 <code>output/</code> 目录获取生成的报告和多媒体内容。</li>
+</ol>
+<h3 id="64">6.4 关键工程挑战与解决方案<a class="headerlink" href="#64" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>异构信息源解析</strong>：不同博客、论文、分享页面结构差异大。解决方案是 Agent1 的自动化解析脚本生成+spider_lab 复用机制，每个源只需接入一次；</li>
+<li><strong>信息优先级判断</strong>：如何从海量信息中筛选高价值内容。解决方案是 Agent3 基于用户行为数据和偏好的排序机制，持续学习用户兴趣；</li>
+<li><strong>多媒体同步制作</strong>：文本转语音后需要与视频画面同步。解决方案是 Agent5 的音视频同步合成管线；</li>
+<li><strong>飞书 API 全功能覆盖</strong>：飞书开放平台 API 众多，权限管理复杂。解决方案是 AutoClaw 专项打通，按模块逐步覆盖文档、表格、日历、消息、云盘等功能；</li>
+<li><strong>流水线稳定性</strong>：6 个 Agent 串联，任一环节失败影响全流程。解决方案是模块化设计，每个 Agent 独立可测试，支持断点续跑。</li>
+</ol>
+<h3 id="65">6.5 项目时间线与里程碑<a class="headerlink" href="#65" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>时间</strong></th>
+<th><strong>里程碑</strong></th>
+<th><strong>关键产出</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2026.05</td>
+<td>阶段五启动，信息自动化需求迫切</td>
+<td>项目启动，AutoLLM 架构设计</td>
+</tr>
+<tr>
+<td>2026.05–06</td>
+<td>6-Agent 流水线架构设计与核心实现</td>
+<td>Agent1–Agent6 核心功能开发，spider_lab 复用机制</td>
+</tr>
+<tr>
+<td>2026.06</td>
+<td>AutoClaw 飞书知识库整理子项目启动</td>
+<td>飞书开放平台 API 接入，文档/多维表格模块打通</td>
+</tr>
+<tr>
+<td>2026.06–07</td>
+<td>飞书全功能 API 逐步覆盖</td>
+<td>日历、消息、云盘、知识库等模块打通，AutoClaw 全功能访问</td>
+</tr>
+<tr>
+<td>2026.07</td>
+<td>多媒体制作模块（Agent5）实现</td>
+<td>TTS 语音合成 + 视频合成 + 音视频同步</td>
+</tr>
+<tr>
+<td>2026.07–08</td>
+<td>自动化定时调度（Agent6）联调</td>
+<td>每日定时运行全流水线，output/ 目录产物输出</td>
+</tr>
+<tr>
+<td>2026.08</td>
+<td>系统联调与优化，端到端测试</td>
+<td>6-Agent 流水线稳定运行，个人周报自动化支撑</td>
+</tr>
+<tr>
+<td>2026.08</td>
+<td>GitHub 仓库公开</td>
+<td>https://github.com/dujh22/AutoLLM 公开发布</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告 §1 项目概述、§2.3 项目启动契机、§5 功能与效果、§7 成果与影响；AutoLLM GitHub README；个人周报记录</p>
+</blockquote>
+<hr />
+<h2 id="7-impact">7. 成果与影响（Impact）<a class="headerlink" href="#7-impact" title="Permanent link">&para;</a></h2>
+<h3 id="71">7.1 开源贡献<a class="headerlink" href="#71" title="Permanent link">&para;</a></h3>
+<ul>
+<li>AutoLLM 仓库公开，提供多 Agent 信息自动化的完整参考实现；</li>
+<li>6-Agent 流水线架构可作为其他信息自动化项目的设计参考。</li>
+</ul>
+<h3 id="72">7.2 产业应用<a class="headerlink" href="#72" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>AutoClaw 飞书知识库整理</strong>：打通飞书全功能访问，实现个人工作记录的自动化整理，服务于智谱华章实习期间的周报生成和知识管理；</li>
+<li>作为通用信息自动化基础设施，与 LLM-DailyDigest（垂直AI追新）形成互补，AutoLLM 负责通用场景，LLM-DailyDigest 负责 LLM 领域垂直场景。</li>
+</ul>
+<h3 id="73">7.3 研究支撑<a class="headerlink" href="#73" title="Permanent link">&para;</a></h3>
+<ul>
+<li>自动化信息采集和简报生成能力，支撑 LogicEvolve、EvolveLRM、Groom 等研究项目的文献调研和前沿追踪；</li>
+<li>多 Agent 协作架构的设计经验，为后续 EvolveClaw（面向持续学习的个性化智能助手）和 EvolveSwarm（面向协同记忆的群体智能）等研究方向提供工程基础。</li>
+</ul>
+<hr />
+<h2 id="8-my-contribution">8. 个人贡献（My Contribution）<a class="headerlink" href="#8-my-contribution" title="Permanent link">&para;</a></h2>
+<h3 id="81">8.1 角色<a class="headerlink" href="#81" title="Permanent link">&para;</a></h3>
+<p><strong>独立开发者</strong>，负责 AutoLLM 系统的整体架构设计、6 个 Agent 的开发实现、AutoClaw 飞书集成以及全流程调试。</p>
+<h3 id="82">8.2 具体工作清单<a class="headerlink" href="#82" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>多 Agent 架构设计</strong>：设计 6-Agent 流水线架构，定义每个 Agent 的职责、输入输出和协作接口；</li>
+<li><strong>Agent1 解析脚本生成</strong>：实现 spider_lab 复用机制和自动化爬虫脚本生成；</li>
+<li><strong>Agent2 信息扩展</strong>：实现相关链接发现和上下文扩展；</li>
+<li><strong>Agent3 优先级排序</strong>：实现基于用户行为和偏好的信息排序机制；</li>
+<li><strong>Agent4 简报生成</strong>：实现结构化简报生成和信息关联；</li>
+<li><strong>Agent5 多媒体制作</strong>：实现文本转语音和音视频同步合成；</li>
+<li><strong>Agent6 调度控制</strong>：实现每日定时自动化执行；</li>
+<li><strong>AutoClaw 飞书集成</strong>：打通飞书全功能 API 访问，实现知识库自动化整理；</li>
+<li><strong>系统联调与优化</strong>：端到端测试 6-Agent 流水线，排查和修复各环节问题。</li>
+</ol>
+<hr />
+<h2 id="9-lessons-learned">9. 经验与反思（Lessons Learned）<a class="headerlink" href="#9-lessons-learned" title="Permanent link">&para;</a></h2>
+<h3 id="91">9.1 关键问题与解决方案（含具体故事）<a class="headerlink" href="#91" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Agent 间接口设计——从"自然语言传递"到"结构化 JSON 契约"的教训</strong>：</li>
+<li><strong>故事</strong>：最初设计多 Agent 流水线时，想让 Agent 之间用自然语言传递信息，以为这样最灵活——上游 Agent 用文本描述处理结果，下游 Agent 理解后继续处理。但实际运行中发现，自然语言传递存在严重的歧义问题——比如 Agent1 采集到一篇论文后，用自然语言描述"这是一篇关于逻辑推理的论文，作者是张三，链接是 xxx"，Agent2 在扩展信息时可能把"逻辑推理"误解为"数学推理"，或者漏掉作者信息。这些歧义在流水线中逐级放大，到 Agent4 摘要生成时已经面目全非。后来痛下决心，将所有 Agent 间的传递改为结构化 JSON，用 JSON Schema 明确定义每个 Agent 的输入输出格式——比如论文条目必须包含 title、authors、url、abstract、topics 等字段，每个字段有明确的类型和约束。改完之后，Agent 间的误解问题基本消除，流水线的稳定性大幅提升。这个经历让我深刻认识到：<strong>多 Agent 系统的核心不是 Agent 的智能，而是接口的明确性</strong>。</li>
+<li>
+<p><strong>解决方案</strong>：明确定义每个 Agent 的输入输出格式，使用结构化数据（JSON）传递，避免自然语言的歧义。</p>
+</li>
+<li>
+<p><strong>错误处理与容错——从"全局终止"到"独立容错+断点续跑"的演进</strong>：</p>
+</li>
+<li><strong>故事</strong>：最初实现流水线时，用了一个全局的 try/except——任一环节失败就终止全流程，打印错误信息。但实际运行中发现，信息采集阶段（Agent1）经常因为某个信息源暂时不可用而失败，导致整个流水线终止，已经采集到的其他信息源的内容也被丢弃。有一次因为一个博客网站临时 502，导致整个每日自动化任务失败，当天的简报没有生成。后来改为每个 Agent 独立容错——Agent1 中每个信息源独立 try/except，失败的源跳过并记录错误日志，继续处理其他源；关键环节（如 LLM 调用）设置重试机制；流水线支持断点续跑，中断后可以从已完成的阶段继续。改完之后，单个信息源的失败不再影响全流程，流水线的可靠性大幅提升。</li>
+<li>
+<p><strong>解决方案</strong>：每个 Agent 独立容错，支持跳过失败项继续处理，关键环节设置重试机制，支持断点续跑。</p>
+</li>
+<li>
+<p><strong>飞书权限管理——从"全权限申请"到"最小权限原则"的安全自觉</strong>：</p>
+</li>
+<li><strong>故事</strong>：AutoClaw 飞书集成初期，为了方便，申请了飞书开放平台的几乎所有权限——文档读写、多维表格读写、日历读写、消息发送、云盘读写、知识库访问等。但在实际使用中发现，很多权限根本用不到，而且全权限申请存在安全风险——如果应用 token 泄露，攻击者可以访问所有飞书数据。后来按照最小权限原则重新梳理权限——只申请实际用到的权限（如文档读取、多维表格读写、日历读取），不需要的权限一律不申请。同时实现了 token 的统一管理（应用 token + 用户 token 分离），token 过期自动刷新，敏感操作需要用户确认。这个经历让我认识到：<strong>权限管理不是"能申请多少就申请多少"，而是"需要多少才申请多少"</strong>。</li>
+<li><strong>解决方案</strong>：AutoClaw 统一管理 token 和权限，按最小权限原则申请，应用 token 与用户 token 分离管理。</li>
+</ol>
+<h3 id="92">9.2 可复用的方法论<a class="headerlink" href="#92" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>专用 Agent 流水线优于通用自主 Agent</strong>：对于信息处理这类有明确流程的任务，将流程拆解为专用 Agent 串联，比使用通用自主 Agent 的开放式循环更可控、更高效、更易调试。核心原则是<strong>职责单一、接口明确、独立可测</strong>。</li>
+<li><strong>spider_lab 复用模式</strong>：为每个信息源维护可复用的解析脚本，新源自动生成后入库，避免重复开发。这一模式的核心是<strong>脚本库的积累和复用</strong>——每接入一个新源，解析脚本就入库，后续相同类型的源可以直接复用或微调。</li>
+<li><strong>飞书全功能打通的工程价值</strong>：将个人工作流深度集成到飞书生态，可大幅提升知识管理和协作效率。关键是<strong>按模块逐步覆盖</strong>——先打通文档和多维表格（最常用），再扩展到日历、消息、云盘、知识库，不要一开始就追求全功能。</li>
+<li><strong>结构化 JSON 接口契约</strong>：多 Agent 系统中，Agent 间的数据传递必须使用结构化格式（JSON Schema），不能用自然语言。结构化接口可以明确输入输出契约，避免歧义，提高流水线稳定性。</li>
+</ol>
+<h3 id="93">9.3 踩坑与避坑指南<a class="headerlink" href="#93" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>坑点</strong></th>
+<th><strong>具体表现</strong></th>
+<th><strong>避坑方法</strong></th>
+<th><strong>教训</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>自然语言传递歧义</strong></td>
+<td>Agent 间用自然语言传递信息，下游误解上游输出，错误逐级放大</td>
+<td>结构化 JSON 传递，JSON Schema 定义输入输出格式</td>
+<td>多 Agent 接口必须结构化，不能用自然语言</td>
+</tr>
+<tr>
+<td><strong>全局终止导致全流程阻塞</strong></td>
+<td>一个信息源失败就终止整个流水线，已采集内容被丢弃</td>
+<td>每个 Agent 独立容错，跳过失败项继续，断点续跑</td>
+<td>错误处理要粒度化，不能全局终止</td>
+</tr>
+<tr>
+<td><strong>飞书权限过度申请</strong></td>
+<td>申请几乎所有权限，存在安全风险，很多权限用不到</td>
+<td>最小权限原则，只申请实际用到的权限，token 统一管理</td>
+<td>权限管理要最小化，不能贪多</td>
+</tr>
+<tr>
+<td><strong>通用自主 Agent 不可控</strong></td>
+<td>AutoGPT 式开放式循环，行为不可预测，难以调试</td>
+<td>专用 Agent 流水线，每个模块职责单一、可独立测试</td>
+<td>有明确流程的任务要用专用流水线，不要用通用自主 Agent</td>
+</tr>
+<tr>
+<td><strong>多媒体同步困难</strong></td>
+<td>TTS 语音与视频画面不同步，音视频合成计算量大</td>
+<td>分段合成，失败段落重试，固定模板流水线</td>
+<td>多媒体制作要分段+重试，不要追求动态编排</td>
+</tr>
+<tr>
+<td><strong>用户偏好冷启动</strong></td>
+<td>新用户无历史数据，排序算法无法个性化</td>
+<td>通用重要性排序兜底，随着使用积累逐步个性化</td>
+<td>排序系统要有兜底策略，不能依赖历史数据</td>
+</tr>
+<tr>
+<td><strong>新信息源接入成本高</strong></td>
+<td>每个新源都要手动编写解析脚本，重复开发</td>
+<td>spider_lab 复用机制 + 自动爬虫脚本生成，脚本入库可复用</td>
+<td>解析脚本要复用，不要每次重写</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<h3 id="94">9.4 如果重来会怎么做<a class="headerlink" href="#94" title="Permanent link">&para;</a></h3>
+<ul>
+<li>更早引入向量检索做信息去重和语义聚类，提升 Agent3 优先级排序的准确性；</li>
+<li>将 Agent5 的多媒体制作从固定模板升级为 LLM 驱动的内容编排，生成更自然的视频脚本；</li>
+<li>为 AutoClaw 开发可视化的飞书知识库管理界面，降低使用门槛；</li>
+<li>增加 Agent 间的并行执行能力，Agent1 和 Agent2 可并行处理多个源链接，提升整体吞吐量。</li>
+</ul>
+<hr />
+<h3 id="95-faq">9.5 常见问题与解答（FAQ）<a class="headerlink" href="#95-faq" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>以下问题模拟读者、面试官与答辩评委视角，解答均从报告正文提取。</p>
+</blockquote>
+<p><strong>Q1：为什么选择 6 个专用 Agent 串联的流水线架构，而不是使用通用自主 Agent（如 AutoGPT）？</strong></p>
+<p>A：核心原因是<strong>可控性和效率</strong>。通用自主 Agent（如 AutoGPT 式的开放式循环）的行为不可预测——它可能在任务执行中偏离目标、陷入无限循环、或者做出意料之外的操作，而且难以调试和复现。对于信息处理这类有明确流程的任务（采集→扩展→筛选→摘要→多媒体→调度），专用 Agent 流水线有明显优势：①每个 Agent 职责单一、可独立测试——Agent1 只负责信息采集，Agent2 只负责信息扩展，可以单独调试每个模块；②接口明确——Agent 间用结构化 JSON 传递，避免自然语言歧义；③可断点续跑——流水线中断后可以从已完成的阶段继续，不需要从头开始；④效率更高——专用 Agent 不需要在每一步都"思考下一步做什么"，直接按预设流程执行。专用 Agent 流水线的局限是灵活性不如通用自主 Agent，但对于信息自动化这类流程明确的场景，可控性和效率远比灵活性重要。</p>
+<p><strong>Q2：6 个 Agent 之间是如何协作的？数据传递的格式是什么？</strong></p>
+<p>A：6 个 Agent 按<strong>顺序编排</strong>的流水线协作，每个 Agent 的输出是下一个 Agent 的输入，数据传递使用<strong>结构化 JSON</strong>（由 JSON Schema 标准化）。具体流程：①Agent1（信息采集）输出结构化的条目列表（每条包含 title、url、source、content 等字段）；②Agent2（信息扩展）接收条目列表，为每条添加相关链接和扩展信息，输出增强后的条目列表；③Agent3（筛选排序）接收增强后的条目列表，基于用户行为数据和偏好进行排序，输出排序后的高价值条目列表；④Agent4（摘要生成）接收高价值条目列表，用 LLM 生成结构化摘要和信息关联，输出简报内容；⑤Agent5（多媒体制作）接收简报内容，进行 TTS 语音合成和视频画面合成，输出 MP3/MP4 多媒体文件；⑥Agent6（监控调度）负责定时任务调度和 Agent 顺序编排，支持断点续跑。每个 Agent 的输入输出格式由 JSON Schema 明确定义，避免自然语言传递的歧义。</p>
+<p><strong>Q3：AutoClaw 飞书知识库整理具体实现了哪些功能？飞书 API 集成有什么难点？</strong></p>
+<p>A：AutoClaw 是 AutoLLM 框架内的飞书知识库整理子项目，实现了飞书<strong>全功能 API 访问</strong>，覆盖：①文档——读取、创建、编辑飞书文档；②多维表格——读取、写入、查询多维表格数据；③日历——读取日程、创建会议、查询忙闲；④消息——发送消息、读取聊天记录；⑤云盘——上传、下载、管理文件；⑥知识库——访问和管理飞书知识库。飞书 API 集成的主要难点：①<strong>权限管理复杂</strong>——飞书开放平台需要应用权限和用户授权双重管理，不同功能需要不同的权限范围，按最小权限原则申请需要仔细梳理；②<strong>token 管理</strong>——应用 token 和用户 token 分离管理，token 有有效期，需要自动刷新机制；③<strong>API 众多</strong>——飞书开放平台 API 数量庞大，需要按模块逐步覆盖，不能一次性全部打通；④<strong>速率限制</strong>——飞书 API 有调用频率限制，高频调用需要限流和重试机制。AutoClaw 通过 lark-oapi SDK 统一封装 API 调用，实现了 token 的统一管理和自动刷新。</p>
+<p><strong>Q4：这个系统与 LLM-DailyDigest（25号报告）都是信息自动化工具，两者的区别是什么？</strong></p>
+<p>A：两者的核心区别在于<strong>定位和覆盖范围</strong>。AutoLLM 是<strong>通用的多 Agent 信息自动化框架</strong>——6-Agent 流水线适用于通用信息处理场景，支持异构信息源解析、用户偏好排序、多媒体内容生成、飞书全功能集成等，定位是"通用信息处理基础设施"。LLM-DailyDigest 是<strong>垂直领域的 AI 追新工具</strong>——专注于 LLM/AI 领域的每日前沿追踪，有明确的信息源（arXiv、微信公众号 AI 媒体、GitHub AI 项目）、明确的内容结构（论文/项目/资讯的双维聚合）、明确的用户画像（8 个研究方向的个性化推荐），定位是"LLM 领域垂直追新工具"。两者形成互补：AutoLLM 负责通用场景的广度信息自动化，LLM-DailyDigest 负责 LLM 领域的垂直深度追新。在技术上，AutoLLM 的 spider_lab 复用机制、6-Agent 流水线架构、飞书全功能集成等经验，可以为 LLM-DailyDigest 的信息采集和处理模块提供参考；LLM-DailyDigest 的三级 fallback 抓取、三层去重、LLM 内容工程等经验，也可以为 AutoLLM 的信息处理提供借鉴。</p>
+<p><strong>Q5：多 Agent 流水线的稳定性如何保证？如果某个 Agent 失败了怎么办？</strong></p>
+<p>A：多 Agent 流水线的稳定性通过<strong>多层容错机制</strong>保证：①<strong>Agent 级独立容错</strong>——每个 Agent 内部有独立的 try/except 和重试机制，Agent1 中每个信息源独立容错，失败的源跳过并记录错误日志，继续处理其他源，不会因为一个源失败而阻塞整个采集阶段；②<strong>关键环节重试</strong>——LLM 调用、网络请求等容易失败的关键环节设置重试机制（通常重试 2-3 次，指数退避），提高成功率；③<strong>跳过失败项继续</strong>——对于批量处理中的失败项（如某条信息提取失败），标记为失败后跳过，继续处理其他项，不会因为单条失败而终止整个批次；④<strong>断点续跑</strong>——流水线支持断点续跑，Agent6（监控调度）记录每个阶段的完成状态，流水线中断后可以从已完成的阶段继续，不需要从头开始；⑤<strong>错误日志</strong>——所有失败都记录详细的错误日志（包含失败时间、失败原因、输入数据），便于事后排查和修复。通过这些机制，单个信息源的失败、单条信息的处理失败、甚至某个 Agent 的临时故障，都不会导致整个流水线完全失败。</p>
+<hr />
+<h2 id="10-references">10. 文件索引（References）<a class="headerlink" href="#10-references" title="Permanent link">&para;</a></h2>
+<h3 id="101-github">10.1 GitHub 仓库<a class="headerlink" href="#101-github" title="Permanent link">&para;</a></h3>
+<ul>
+<li>AutoLLM 主仓库：https://github.com/dujh22/AutoLLM</li>
+<li>LLM-DailyDigest（垂直AI追新，关联项目）：https://github.com/dujh22/LLM-DailyDigest</li>
+<li>LLMDailyDigestWeb（配套网站）：https://github.com/dujh22/LLMDailyDigestWeb</li>
+</ul>
+<h3 id="102">10.2 飞书文档<a class="headerlink" href="#102" title="Permanent link">&para;</a></h3>
+<ul>
+<li>个人周报（AutoClaw 飞书知识库整理记录）：https://bytedance.feishu.cn/wiki/LdbPwyEH4irlg0k7XAPcwoF7nje</li>
+<li>已完成工作：https://zhipu-ai.feishu.cn/docx/FjMWd75Mcoq4FgxngjxcRby8nWd</li>
+</ul>
+<h3 id="103">10.3 相关研究项目<a class="headerlink" href="#103" title="Permanent link">&para;</a></h3>
+<ul>
+<li>EvolveClaw（面向持续学习的个性化智能助手）：https://zhipu-ai.feishu.cn/docx/PBpudFIEDoJqfCxdQMYcDgb4nHh</li>
+<li>EvolveSwarm（面向协同记忆的群体智能）：https://zhipu-ai.feishu.cn/docx/LDuud0vOXopLkFxOLdScpEvSnId</li>
+<li>Virtual-Coach（LLM虚拟教练，CHI论文）：https://github.com/dujh22/Virtual-Coach</li>
+</ul>
+<h3 id="104">10.4 在线资源<a class="headerlink" href="#104" title="Permanent link">&para;</a></h3>
+<ul>
+<li>个人主页：https://dujh22.github.io/Dujinhua_wiki/</li>
+<li>公开日报：https://github.com/dujh22/Daily-Work-Log-Public/tree/main/logs/2026</li>
+</ul>
+<hr />
+<h2 id="11">11. 转正答辩证据卡<a class="headerlink" href="#11" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>本章节为转正答辩专用证据整理，基于智谱转正制度（ZP-RL-009）与公司文化2.0（Think Big / Deliver Solid / Scale Stable）标准整理。</p>
+</blockquote>
+<h3 id="111">11.1 目标基线<a class="headerlink" href="#111" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>部门目标(O)</strong>：为 Base 项目组的多研究方向并行推进提供通用的信息自动化处理基础设施，降低信息收集、筛选、整理的人工成本。</li>
+<li><strong>个人KR</strong>：（1）设计并实现基于多 Agent 协作架构的通用信息自动化系统，覆盖博客/学术论文/分享内容等多源信息；（2）打通飞书全功能访问，实现知识库的自动化整理；（3）系统支持每日定时运行，输出文本简报和多媒体内容。</li>
+<li><strong>完成率</strong>：架构设计与核心功能 100%——6-Agent 流水线架构已实现，AutoClaw 打通飞书全功能访问；系统处于可用阶段，部分 Agent（如 Agent5 多媒体制作、Agent3 优先级排序的个性化算法）的深度优化待持续迭代。</li>
+</ul>
+<h3 id="112">11.2 量化结果<a class="headerlink" href="#112" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>维度</strong></th>
+<th><strong>具体数据</strong></th>
+<th><strong>来源</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Agent 数量</td>
+<td>6 个专用 Agent（解析脚本生成/信息扩展/优先级排序/简报生成/音视频制作/调度控制）</td>
+<td>第4.1节/第4.3节</td>
+</tr>
+<tr>
+<td>信息源类型</td>
+<td>3 类（博客/学术论文/分享内容）+ 用户补充输入</td>
+<td>第4.2节</td>
+</tr>
+<tr>
+<td>飞书功能覆盖</td>
+<td>文档、多维表格、日历、消息、云盘等全功能模块</td>
+<td>第4.5节/第7.2节</td>
+</tr>
+<tr>
+<td>输出格式</td>
+<td>文本简报 + 语音 + 视频（多媒体同步）</td>
+<td>第4.3节/第5.2节</td>
+</tr>
+<tr>
+<td>开源仓库</td>
+<td>1 个公开仓库（AutoLLM README 未标注 License，需以 GitHub 仓库 LICENSE 文件为准）</td>
+<td>第7.1节</td>
+</tr>
+<tr>
+<td>关联项目</td>
+<td>AutoClaw（飞书知识库整理）+ LLM-DailyDigest（垂直AI追新）</td>
+<td>第1章/第7.2节</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<h3 id="113">11.3 公司层面贡献<a class="headerlink" href="#113" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>飞书生态集成</strong>：AutoClaw 子项目打通飞书全功能访问（文档/多维表格/日历/消息/云盘），实现个人工作记录的自动化整理，服务于智谱实习期间的周报生成和知识管理——这是将个人工作流深度集成到飞书生态的实践性成果。</li>
+<li><strong>通用基础设施</strong>：AutoLLM 作为通用信息自动化框架，与 LLM-DailyDigest（垂直 AI 追新）形成互补——AutoLLM 负责通用场景，LLM-DailyDigest 负责 LLM 领域垂直场景，两者共同构成个人信息自动化基础设施。</li>
+<li><strong>研究支撑</strong>：自动化信息采集和简报生成能力支撑 LogicEvolve、EvolveLRM、Groom 等研究项目的文献调研和前沿追踪。</li>
+</ul>
+<h3 id="114">11.4 专业影响力<a class="headerlink" href="#114" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>架构设计</strong>：提出 6-Agent 专用流水线架构（采集→扩展→排序→简报→多媒体→调度），区别于 AutoGPT 等通用自主 Agent 的开放式循环，专用流水线更可控、更高效。</li>
+<li><strong>spider_lab 复用模式</strong>：Agent1 的自动化解析脚本生成 + spider_lab 复用机制，每个信息源只需接入一次，后续自动复用，大幅降低新信息源的接入成本。</li>
+<li><strong>飞书全功能打通</strong>：AutoClaw 基于飞书开放平台 API 实现全功能模块访问，按模块逐步覆盖文档、表格、日历、消息、云盘，按最小权限原则申请和管理 token。</li>
+<li><strong>工程方法</strong>：多 Agent 间使用结构化数据（JSON）传递而非自然语言，明确定义每个 Agent 的输入输出格式，避免自然语言歧义——这是多 Agent 系统设计的关键工程经验。</li>
+</ul>
+<h3 id="115">11.5 价值观锚点<a class="headerlink" href="#115" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>价值观</strong></th>
+<th><strong>具体故事</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Think Big</strong></td>
+<td>不满足于 LLM-DailyDigest 的垂直 AI 追新场景，而是设计了更通用的多 Agent 信息自动化框架，能够适配任意信息源和输出格式（文本/语音/视频），同时孵化 AutoClaw 子项目专门处理飞书知识库的自动化整理——从"一个工具"扩展到"一套基础设施"。</td>
+</tr>
+<tr>
+<td><strong>Deliver Solid</strong></td>
+<td>多 Agent 流水线的核心挑战是接口契约，不满足于"能跑通"，而是明确定义每个 Agent 的输入输出格式，使用结构化数据（JSON）传递，避免自然语言歧义；每个 Agent 独立容错、支持跳过失败项继续处理，关键环节设置重试机制，确保 6-Agent 串联的稳定性。</td>
+</tr>
+<tr>
+<td><strong>Scale Stable</strong></td>
+<td>spider_lab 复用模式让新信息源的接入成本从"每次重新开发"降低为"一次接入、永久复用"；AutoClaw 按模块逐步覆盖飞书全功能（文档→表格→日历→消息→云盘），从单点功能扩展到全生态集成。</td>
+</tr>
+<tr>
+<td><strong>极智/极度专注</strong></td>
+<td>面对飞书开放平台 API 众多、权限管理复杂的问题，不回避困难，按模块逐个打通——文档、多维表格、日历、消息、云盘，每个模块独立调试权限和接口，最终实现全功能访问；统一管理 token 和权限，按最小权限原则申请。</td>
+</tr>
+<tr>
+<td><strong>创新</strong></td>
+<td>专用 Agent 流水线优于通用自主 Agent——对于信息处理这类有明确流程的任务，将流程拆解为专用 Agent 串联（采集→扩展→排序→简报→多媒体→调度），比使用通用自主 Agent 的开放式循环更可控、更高效；spider_lab 复用 + 自动生成的新源接入模式也是信息自动化领域的创新性实践。</td>
+</tr>
+<tr>
+<td><strong>激情/主人翁</strong></td>
+<td>在 LLM-DailyDigest 解决了垂直 AI 追新后，主动思考更通用的信息自动化需求，启动 AutoLLM 项目并同时孵化 AutoClaw 飞书集成，不限于"完成手头任务"，而是主动构建个人信息自动化基础设施。</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<h3 id="116">11.6 协作与利他<a class="headerlink" href="#116" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>帮了谁</strong>：（1）AutoClaw 飞书知识库整理服务于个人周报生成和知识管理，提升了工作记录整理效率；（2）AutoLLM 的 6-Agent 架构可作为其他信息自动化项目的设计参考；（3）与 LLM-DailyDigest 互补，共同构成研究项目的文献调研支撑。</li>
+<li><strong>证人</strong>：黄轩成（直属上级，Base 项目组），飞书知识库整理的效率提升可由周报产出间接佐证。</li>
+<li><strong>跨部门协作</strong>：AutoClaw 涉及飞书开放平台 API 的权限申请与管理，与飞书生态有深度集成。</li>
+</ul>
+<h3 id="117">11.7 反思与成长（自我批评式）<a class="headerlink" href="#117" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>没做好的</strong>：（1）Agent3 优先级排序目前主要基于通用重要性排序，用户偏好的个性化推荐精度不够——这是我在推荐算法上投入不足的体现；（2）Agent5 多媒体制作使用固定模板，没有升级为 LLM 驱动的内容编排，生成的视频脚本不够自然；（3）6 个 Agent 目前是串行执行，Agent1 和 Agent2 可以并行处理多个源链接以提升吞吐量，但没有实现并行化；（4）AutoClaw 缺乏可视化的飞书知识库管理界面，使用门槛较高。</li>
+<li><strong>学到的</strong>：（1）专用 Agent 流水线优于通用自主 Agent的设计方法论；（2）多 Agent 间接口契约的重要性——结构化数据（JSON）传递避免自然语言歧义；（3）spider_lab 复用模式的工程价值；（4）飞书全功能 API 的集成经验与权限管理最佳实践。</li>
+<li><strong>如果重来</strong>：（1）更早引入向量检索做信息去重和语义聚类，提升 Agent3 优先级排序的准确性；（2）将 Agent5 多媒体制作从固定模板升级为 LLM 驱动的内容编排；（3）为 AutoClaw 开发可视化的飞书知识库管理界面；（4）增加 Agent 间的并行执行能力。</li>
+<li><strong>成长轨迹</strong>：从 LLM-DailyDigest 的垂直场景工具开发者，到 AutoLLM 的通用多 Agent 系统架构师，再到 AutoClaw 的飞书全生态集成实践者，工程能力从"单工具"扩展到"系统架构+生态集成"。</li>
+</ul>
+<h3 id="118-6">11.8 6年后视角<a class="headerlink" href="#118-6" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>大局定位</strong>：信息自动化是 AI 时代的基础设施需求——研究者和从业者需要持续追踪多源信息，但手动收集、筛选、整理的流程极为耗时。AutoLLM 的 6-Agent 流水线架构代表了"专用 Agent 协作优于通用自主 Agent"的设计思路，6 年后回看，这种将复杂任务拆解为专用 Agent 串联的模式将成为信息自动化系统的标准架构之一。</li>
+<li><strong>为什么值得做</strong>：同时推进 8 个研究方向时，信息处理是刚需。AutoLLM 提供了通用的信息自动化框架，AutoClaw 打通了飞书全功能访问——两者结合实现了从"外部信息采集"到"内部知识管理"的完整闭环，将个人工作流深度集成到飞书生态，大幅提升了知识管理和协作效率。</li>
+</ul>
+<h3 id="119">11.9 五段式讲述（答辩稿骨架）<a class="headerlink" href="#119" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>问题定义</strong>（外行能懂）：研究者每天要从博客、论文、社区分享等各种渠道收集信息，手动筛选、阅读、整理、输出摘要非常耗时。传统的 RSS 阅读器只能堆链接，不能自动理解内容、判断优先级、生成结构化简报，更不能把信息自动整理到飞书知识库。</li>
+<li><strong>输入输出</strong>（本科生能懂）：输入是博客、学术论文、社区分享等多源信息链接，输出是结构化的文本简报和语音/视频多媒体内容，同时通过 AutoClaw 子项目将信息自动整理到飞书知识库（文档/表格/日历/消息/云盘全功能打通）。</li>
+<li><strong>技术/做法</strong>（研究生能懂）：6-Agent 专用流水线架构——Agent1 自动化解析脚本生成（spider_lab 复用）→ Agent2 链接信息扩展→ Agent3 基于用户偏好的优先级排序→ Agent4 简报生成与关联→ Agent5 音视频多媒体制作→ Agent6 每日定时调度；Agent 间使用结构化 JSON 传递，每个 Agent 独立容错；AutoClaw 基于飞书开放平台 API 按模块逐步覆盖全功能。</li>
+<li><strong>核心创新</strong>（只有自己懂）：专用 Agent 流水线优于通用自主 Agent——有明确流程的任务用专用 Agent 串联比开放式循环更可控高效；spider_lab 复用 + 自动生成的新源接入模式；飞书全功能 API 的系统化集成与最小权限管理。</li>
+<li><strong>未来</strong>（开放问题）：Agent 间并行执行提升吞吐量；向量检索语义去重与聚类；LLM 驱动的多媒体内容编排；AutoClaw 可视化管理界面；从个人工具扩展到多用户协作平台。</li>
+</ol>
+<h3 id="1110">11.10 对比证据（跨项目量化参照）<a class="headerlink" href="#1110" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>对比项</strong></th>
+<th><strong>本项目（26号 AutoLLM）</strong></th>
+<th><strong>参照项目</strong></th>
+<th><strong>对比结论</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Agent数量</td>
+<td>6-Agent专用流水线（采集→扩展→排序→简报→多媒体→调度）</td>
+<td>22号 SwarmEvolve（自进化Agent Swarms，多Agent群体）</td>
+<td>本项目为固定角色专用Agent流水线，SwarmEvolve为动态协作群体，工程vs研究</td>
+</tr>
+<tr>
+<td>信息源覆盖</td>
+<td>博客/学术论文/社区分享/用户补充（通用）</td>
+<td>25号 DailyDigest（arXiv+公众号+新闻+GitHub+HF，LLM垂直）</td>
+<td>本项目为通用信息源，DailyDigest为LLM垂直领域，通用vs垂直</td>
+</tr>
+<tr>
+<td>架构范式</td>
+<td>6-Agent串行流水线（专用Agent优于通用自主Agent）</td>
+<td>25号 DailyDigest（五层分层架构）</td>
+<td>本项目为Agent流水线，DailyDigest为分层架构，范式互补</td>
+</tr>
+<tr>
+<td>飞书集成</td>
+<td>AutoClaw全功能打通（Doc/Bitable/Calendar/IM/Drive/Wiki 6模块）</td>
+<td>25号 DailyDigest（无飞书集成）</td>
+<td>本项目飞书集成深度显著更高，从外部信息到内部知识库闭环</td>
+</tr>
+<tr>
+<td>输出形式</td>
+<td>文本简报+语音播报+配套视频（多媒体）</td>
+<td>25号 DailyDigest（静态网站文本）</td>
+<td>本项目输出形式更丰富（多媒体），DailyDigest为文本网站</td>
+</tr>
+<tr>
+<td>调度机制</td>
+<td>Agent6每日定时+断点续跑</td>
+<td>29号 THU_Sports（精确时刻触发+服务器时钟校准）</td>
+<td>本项目为定时调度，THU_Sports为精确毫秒级触发，场景不同</td>
+</tr>
+<tr>
+<td>新源接入</td>
+<td>spider_lab复用+自动生成解析脚本</td>
+<td>25号 DailyDigest（co_learner多Agent采集器）</td>
+<td>两者都有可复用采集框架，本项目spider_lab更通用</td>
+</tr>
+<tr>
+<td>个人角色</td>
+<td>独立开发者</td>
+<td>25/28/29号均为独立开发者</td>
+<td>工程工具系列均为独立开发</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<hr />
+<h2 id="12">12. 相关项目<a class="headerlink" href="#12" title="Permanent link">&para;</a></h2>
+<p>AutoLLM 作为通用多 Agent 信息自动化框架，与杜晋华的工程工具系列和多 Agent 研究项目存在技术关联与能力互补关系。下表梳理了核心关联项目及其关联类型。</p>
+<table>
+<thead>
+<tr>
+<th><strong>关联报告</strong></th>
+<th><strong>关联类型</strong></th>
+<th><strong>关联说明</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>25. LLM-DailyDigest 每日AI追新</strong></td>
+<td>工程工具（通用→垂直互补）</td>
+<td>AutoLLM 是通用多 Agent 信息自动化框架，LLM-DailyDigest 是 LLM 领域垂直追新工具；两者共享信息采集、LLM 内容工程、自动化部署方法论，AutoLLM 的 6-Agent 架构是 LLM-DailyDigest 的通用化延伸</td>
+</tr>
+<tr>
+<td><strong>28. csv2app 题库转PWA</strong></td>
+<td>工程工具（同属阶段五工具链）</td>
+<td>csv2app 与 AutoLLM 同为个人痛点驱动的工程工具项目，共享 GitHub Actions CI/CD、开源仓库管理、自动化执行的工程实践</td>
+</tr>
+<tr>
+<td><strong>29. THU_Sports 清华体育自动预约</strong></td>
+<td>工程工具（同属阶段五工具链）</td>
+<td>THU_Sports 与 AutoLLM 同为自动化工具项目，共享 API 逆向、定时调度、自动化执行的工程方法论；THU_Sports 的精确时刻触发机制可复用于 AutoLLM 的 Agent6 调度</td>
+</tr>
+<tr>
+<td><strong>22. 六篇新研究（SwarmEvolve）</strong></td>
+<td>多 Agent（工程→研究延伸）</td>
+<td>AutoLLM 的 6-Agent 流水线架构是 SwarmEvolve（自进化 Agent Swarms）研究的工程基础；SwarmEvolve 研究多 Agent 群体的协作策略自动优化、角色分工动态调整，AutoLLM 提供了多 Agent 协作的工程验证场景</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：各关联报告项目概述与方法章节；报告 §2.3 项目启动契机、§7.3 研究支撑</p>
+</blockquote>
+<h3 id="_4">项目间引用网络<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p><strong>上游项目（本项目依赖/受益于）：</strong>
+- <a href="../25_LLM-DailyDigest%E6%AF%8F%E6%97%A5AI%E8%BF%BD%E6%96%B0/">25 · LLM-DailyDigest每日AI追新</a> — AutoLLM是在LLM-DailyDigest垂直场景基础上的通用化延伸；DailyDigest解决了"每日AI追新"的垂直场景，AutoLLM提供更通用的多Agent信息自动化框架，能够适配任意信息源和输出格式</p>
+<p><strong>下游项目（受益于本项目）：</strong>
+- <a href="../../phase5/22_%E5%85%AD%E7%AF%87%E6%96%B0%E7%A0%94%E7%A9%B6%E5%88%9D%E7%A8%BF/">22 · 六篇新研究初稿</a> — AutoLLM的6-Agent流水线架构是SwarmEvolve（自进化Agent Swarms）研究的工程基础；SwarmEvolve研究多Agent群体的协作策略自动优化、角色分工动态调整，AutoLLM提供了多Agent协作的工程验证场景</p>
+<p><strong>平行项目（同系列/同方法）：</strong>
+- <a href="../25_LLM-DailyDigest%E6%AF%8F%E6%97%A5AI%E8%BF%BD%E6%96%B0/">25 · LLM-DailyDigest每日AI追新</a> — 二者形成"通用框架→垂直工具"的互补关系：AutoLLM为通用多Agent信息自动化框架（6-Agent流水线），DailyDigest为LLM领域垂直追新工具（五层分层架构）
+- <a href="../27_AiFitGo%E6%99%BA%E8%83%BD%E5%81%A5%E8%BA%AB%E6%95%99%E7%BB%83/">27 · AiFitGo智能健身教练</a> — 同属多模块/多Agent架构的工程工具项目，共享模块化设计、LLM驱动决策、自动化执行的工程方法论
+- <a href="../28_csv2app%E9%A2%98%E5%BA%93%E8%BD%ACPWA/">28 · csv2app题库转PWA</a> — 同属个人痛点驱动的工程工具项目，共享命令行工具设计、配置管理、自动化执行的工程方法论
+- <a href="../29_THU_Sports%E6%B8%85%E5%8D%8E%E4%BD%93%E8%82%B2%E8%87%AA%E5%8A%A8%E9%A2%84%E7%BA%A6/">29 · THU_Sports清华体育自动预约</a> — 同属自动化工具项目，共享Agent6定时调度、API集成、断点续跑的工程方法论；AutoClaw的飞书消息推送可复用于THU_Sports的抢场结果通知</p>
+<hr />
+<h2 id="13">13. 跨项目对比<a class="headerlink" href="#13" title="Permanent link">&para;</a></h2>
+<h3 id="131-25llm-dailydigest-vs">13.1 与25号（LLM-DailyDigest）对比：垂直工具 vs 通用框架<a class="headerlink" href="#131-25llm-dailydigest-vs" title="Permanent link">&para;</a></h3>
+<p>AutoLLM 与 LLM-DailyDigest 是杜晋华在信息自动化方向的两个核心项目，两者形成"垂直工具→通用框架"的演进关系。</p>
+<table>
+<thead>
+<tr>
+<th><strong>对比维度</strong></th>
+<th><strong>25号 LLM-DailyDigest</strong></th>
+<th><strong>26号 AutoLLM</strong></th>
+<th><strong>演进关系</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>定位</strong></td>
+<td>LLM领域垂直追新工具</td>
+<td>通用多Agent信息自动化框架</td>
+<td>垂直→通用的能力扩展</td>
+</tr>
+<tr>
+<td><strong>信息源</strong></td>
+<td>arXiv(cs.CL/AI/LG)+机器之心+量子位+新智元+QbitAI+GitHub+HF</td>
+<td>博客/学术论文/社区分享/用户补充（任意信息源）</td>
+<td>从固定源到任意源的通用化</td>
+</tr>
+<tr>
+<td><strong>架构</strong></td>
+<td>五层分层架构（co_learner/tools/backend/content/layouts）</td>
+<td>6-Agent专用流水线（采集→扩展→排序→简报→多媒体→调度）</td>
+<td>从分层架构到Agent流水线的范式演进</td>
+</tr>
+<tr>
+<td><strong>LLM应用</strong></td>
+<td>内容工程中间件（字段提取/打分/去重）</td>
+<td>Agent驱动（6角色分工，每个Agent有独立LLM调用）</td>
+<td>LLM从"工具"到"Agent"的角色升级</td>
+</tr>
+<tr>
+<td><strong>输出形式</strong></td>
+<td>Hugo静态网站（文本）</td>
+<td>文本简报+语音播报(TTS)+配套视频（多媒体）</td>
+<td>从纯文本到多媒体的输出扩展</td>
+</tr>
+<tr>
+<td><strong>飞书集成</strong></td>
+<td>无</td>
+<td>AutoClaw全功能打通（Doc/Bitable/Calendar/IM/Drive/Wiki）</td>
+<td>从无到有，外部信息→内部知识库闭环</td>
+</tr>
+<tr>
+<td><strong>部署</strong></td>
+<td>GitHub Actions每日自动部署+GitHub Pages</td>
+<td>本地运行+飞书API</td>
+<td>从云端自动部署到本地+API集成</td>
+</tr>
+<tr>
+<td><strong>新源接入</strong></td>
+<td>co_learner多Agent采集器（固定源）</td>
+<td>spider_lab复用+自动生成解析脚本（任意源）</td>
+<td>从固定采集到可复用自动生成的接入模式</td>
+</tr>
+<tr>
+<td><strong>去重机制</strong></td>
+<td>三层去重（URL归一化+硬阻断+8路LLM语义合并）</td>
+<td>Agent3筛选排序（用户偏好驱动）</td>
+<td>DailyDigest去重更系统，AutoLLM排序更个性化</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<p><strong>演进结论</strong>：LLM-DailyDigest 验证了"信息自动化+LLM内容工程"在垂直领域的可行性（五层架构+双维聚合+三层去重），AutoLLM 将这一能力通用化——从固定信息源扩展到任意信息源，从分层架构演进为6-Agent专用流水线，从纯文本输出扩展为多媒体输出，从无飞书集成扩展为AutoClaw全功能打通。两者形成"垂直验证→通用扩展"的完整演进路径，AutoLLM的6-Agent架构同时为22号SwarmEvolve的多Agent群体自进化研究提供了工程验证场景。</p>
+<h3 id="132-22swarmevolveagentagent-vs-agent">13.2 与22号（SwarmEvolve多Agent）对比：工程多Agent vs 研究多Agent<a class="headerlink" href="#132-22swarmevolveagentagent-vs-agent" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>对比维度</strong></th>
+<th><strong>26号 AutoLLM（工程）</strong></th>
+<th><strong>22号 SwarmEvolve（研究）</strong></th>
+<th><strong>工程与研究对比</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>性质</strong></td>
+<td>工程工具（6-Agent信息自动化流水线）</td>
+<td>学术研究（自进化Agent Swarms）</td>
+<td>工程实现vs研究创新</td>
+</tr>
+<tr>
+<td><strong>Agent角色</strong></td>
+<td>固定6角色（采集/扩展/排序/简报/多媒体/调度）</td>
+<td>动态多Agent群体（角色分工可自动优化）</td>
+<td>固定角色vs动态角色</td>
+</tr>
+<tr>
+<td><strong>协作方式</strong></td>
+<td>串行流水线（A1→A2→...→A6）</td>
+<td>群体协作（策略自动进化、角色动态调整）</td>
+<td>固定流水线vs自适应群体</td>
+</tr>
+<tr>
+<td><strong>自进化能力</strong></td>
+<td>无（固定流程，人工优化）</td>
+<td>核心研究目标（群体协作策略自动进化）</td>
+<td>工程稳定vs研究创新</td>
+</tr>
+<tr>
+<td><strong>接口契约</strong></td>
+<td>结构化JSON传递，明确输入输出</td>
+<td>研究中（待定义群体通信协议）</td>
+<td>工程已落地vs研究待探索</td>
+</tr>
+<tr>
+<td><strong>容错机制</strong></td>
+<td>每个Agent独立容错+跳过失败项+重试</td>
+<td>研究中（群体容错是研究方向之一）</td>
+<td>工程已实现vs研究待探索</td>
+</tr>
+<tr>
+<td><strong>应用场景</strong></td>
+<td>信息采集/整理/分发自动化</td>
+<td>多Agent群体智能的通用框架</td>
+<td>垂直应用vs通用框架</td>
+</tr>
+<tr>
+<td><strong>双向支撑</strong></td>
+<td>为SwarmEvolve提供工程验证场景和多Agent协作实践</td>
+<td>为AutoLLM提供群体自进化的理论基础和优化方向</td>
+<td>工程→研究提供场景，研究→工程提供优化</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<p><strong>协同结论</strong>：AutoLLM 的6-Agent流水线是多Agent协作的工程化落地，验证了"专用Agent流水线优于通用自主Agent"的设计理念，为SwarmEvolve的自进化Agent Swarms研究提供了工程验证场景和多Agent协作实践；SwarmEvolve 的群体协作策略自动进化、角色分工动态调整等研究成果，未来可反向应用于AutoLLM，使其从固定流水线进化为自适应群体。两者形成"工程落地→研究创新→工程优化"的双向支撑闭环。</p>
+<hr />
+<h3 id="_5">图表索引<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>编号</strong></th>
+<th><strong>类型</strong></th>
+<th><strong>标题</strong></th>
+<th><strong>所在章节</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>表1</td>
+<td>表格</td>
+<td>关键数据速览</td>
+<td>§关键数据速览</td>
+</tr>
+<tr>
+<td>表2</td>
+<td>表格</td>
+<td>同期/前人工作对比</td>
+<td>§3.1</td>
+</tr>
+<tr>
+<td>图1</td>
+<td>ASCII</td>
+<td>6-Agent 流水线架构图</td>
+<td>§4.1</td>
+</tr>
+<tr>
+<td>图2</td>
+<td>Mermaid</td>
+<td>6-Agent 流水线流程图</td>
+<td>§4.1</td>
+</tr>
+<tr>
+<td>表3</td>
+<td>表格</td>
+<td>六 Agent 角色分工对照表</td>
+<td>§4.1.1</td>
+</tr>
+<tr>
+<td>表4</td>
+<td>表格</td>
+<td>AutoClaw 飞书知识库整理模块</td>
+<td>§4.5</td>
+</tr>
+<tr>
+<td>表5</td>
+<td>表格</td>
+<td>AutoClaw 飞书 API 功能清单详细表</td>
+<td>§4.5.1</td>
+</tr>
+<tr>
+<td>表6</td>
+<td>表格</td>
+<td>核心功能清单</td>
+<td>§5.1</td>
+</tr>
+<tr>
+<td>表7</td>
+<td>表格</td>
+<td>技术栈</td>
+<td>§6.2</td>
+</tr>
+<tr>
+<td>表8</td>
+<td>表格</td>
+<td>技术栈详细配置表</td>
+<td>§6.2.1</td>
+</tr>
+<tr>
+<td>表9</td>
+<td>表格</td>
+<td>6-Agent 流水线性能指标表</td>
+<td>§6.2.2</td>
+</tr>
+<tr>
+<td>表10</td>
+<td>表格</td>
+<td>项目时间线与里程碑</td>
+<td>§6.5</td>
+</tr>
+<tr>
+<td>表11</td>
+<td>表格</td>
+<td>量化结果</td>
+<td>§11.2</td>
+</tr>
+<tr>
+<td>表12</td>
+<td>表格</td>
+<td>价值观锚点</td>
+<td>§11.5</td>
+</tr>
+<tr>
+<td>表13</td>
+<td>表格</td>
+<td>相关项目</td>
+<td>§12</td>
+</tr>
+<tr>
+<td>表14</td>
+<td>表格</td>
+<td>垂直工具vs通用框架对比（25 vs 26）</td>
+<td>§13.1</td>
+</tr>
+<tr>
+<td>表15</td>
+<td>表格</td>
+<td>工程多Agent vs 研究多Agent对比（26 vs 22）</td>
+<td>§13.2</td>
+</tr>
+<tr>
+<td>表16</td>
+<td>表格</td>
+<td>对比证据（跨项目量化参照）</td>
+<td>§11.10</td>
+</tr>
+<tr>
+<td>表17</td>
+<td>表格</td>
+<td>个人成果矩阵</td>
+<td>§个人成果矩阵</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<hr />
+<h3 id="_6">个人成果矩阵<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>类别</strong></th>
+<th><strong>成果名称</strong></th>
+<th><strong>具体内容</strong></th>
+<th><strong>时间</strong></th>
+<th><strong>角色</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>开源</strong></td>
+<td>AutoLLM GitHub仓库</td>
+<td>https://github.com/dujh22/AutoLLM，6-Agent专用流水线架构，通用多Agent信息自动化框架</td>
+<td>2026.5-</td>
+<td>独立开发者</td>
+</tr>
+<tr>
+<td><strong>开源</strong></td>
+<td>AutoClaw飞书知识库整理</td>
+<td>AutoLLM子项目，飞书全功能API打通（Doc/Bitable/Calendar/IM/Drive/Wiki 6模块）</td>
+<td>2026.5-</td>
+<td>独立开发者</td>
+</tr>
+<tr>
+<td><strong>技术方案</strong></td>
+<td>6-Agent专用流水线架构</td>
+<td>采集→扩展→排序→简报→多媒体→调度，专用Agent优于通用自主Agent的设计理念</td>
+<td>2026</td>
+<td>独立设计</td>
+</tr>
+<tr>
+<td><strong>技术方案</strong></td>
+<td>Agent间接口契约</td>
+<td>结构化JSON传递，明确输入输出格式，每个Agent独立容错+跳过失败项+重试机制</td>
+<td>2026</td>
+<td>独立设计</td>
+</tr>
+<tr>
+<td><strong>技术方案</strong></td>
+<td>spider_lab复用模式</td>
+<td>新信息源接入成本从"每次重新开发"降低为"一次接入、永久复用"+自动生成解析脚本</td>
+<td>2026</td>
+<td>独立设计</td>
+</tr>
+<tr>
+<td><strong>工具开发</strong></td>
+<td>6个Agent模块</td>
+<td>Agent1信息采集+Agent2信息扩展+Agent3筛选排序+Agent4摘要生成+Agent5多媒体制作+Agent6监控调度</td>
+<td>2026</td>
+<td>独立开发</td>
+</tr>
+<tr>
+<td><strong>工具开发</strong></td>
+<td>AutoClaw飞书API集成层</td>
+<td>6大飞书模块API封装，统一token管理，最小权限原则，权限申请与管理</td>
+<td>2026</td>
+<td>独立开发</td>
+</tr>
+<tr>
+<td><strong>产业落地</strong></td>
+<td>个人信息自动化基础设施</td>
+<td>从外部信息采集到内部飞书知识库管理的完整闭环，服务于周报生成和知识管理</td>
+<td>2026-</td>
+<td>独立运维</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<hr />
+<p><em>报告撰写日期：2026-09-07 | 基于飞书文档、GitHub 仓库及项目汇总材料整理 · v2审核补强 2026-09-07 · v3图文并茂升级 2026-09-08 · 四轮深化 · 五轮深化 · 六轮深化 · 七轮深化 · 八轮深化 · 九轮终审 · 十轮深化 · 十一轮深化 · 十二轮终审 · 十三轮终审 · 十四轮深化 · 十五轮终审</em></p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+
+
+  
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.tracking", "navigation.top", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+      
+        <script src="../../../javascripts/mermaid_init.js"></script>
+      
+    
+  </body>
+</html>

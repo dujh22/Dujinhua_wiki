@@ -1,5 +1,7 @@
 ---
 title: "09 · LogicEvolve：面向逻辑推理的自进化评测与数据合成框架"
+description: "智谱AI实习项目报告#09：LogicEvolve面向逻辑推理的自进化评测与数据合成框架，通过大模型自动生成逻辑推理题目、自动评测与数据迭代，实现逻辑推理能力的自进化提升。"
+keywords: "LogicEvolve, 逻辑推理, 自进化, 评测框架, 数据合成, 大模型, 自动出题, 智谱AI"
 hide:
   - navigation
 ---

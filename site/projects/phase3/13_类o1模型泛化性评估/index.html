@@ -1,0 +1,6139 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="智谱AI研究实习项目报告集，涵盖大模型预训练、逻辑推理、数学推理、评测方法论等30个项目；同时包含个人学术主页（研究、教育、发表、荣誉）。">
+      
+      
+        <meta name="author" content="Jinhua Du (杜晋华)">
+      
+      
+        <link rel="canonical" href="https://dujh22.github.io/Dujinhua_wiki/projects/phase3/13_%E7%B1%BBo1%E6%A8%A1%E5%9E%8B%E6%B3%9B%E5%8C%96%E6%80%A7%E8%AF%84%E4%BC%B0/">
+      
+      
+        <link rel="prev" href="../12_Puzzle%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E9%A2%84%E8%AE%AD%E7%BB%83%E6%95%B0%E6%8D%AE/">
+      
+      
+        <link rel="next" href="../../phase4/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>13 · 类 o1 模型泛化性评估：从数学/代码到泛化场景的能力迁移研究 - Jinhua Du | 杜晋华</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css?v=448b8bea4ef3">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-XXXXXXXXXX"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-XXXXXXXXXX",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+  
+    <meta name="keywords" content="大语言模型, 逻辑推理, 数学推理, 预训练, RLHF, 评测, 智谱AI, 研究实习, LLM, Large Language Models, Reasoning, Evaluation">
+    <meta property="og:title" content="Jinhua Du | 杜晋华 — 智谱AI研究实习项目报告集">
+    <meta property="og:description" content="智谱AI研究实习项目报告集，涵盖大模型预训练、逻辑推理、数学推理、评测方法论等30个项目；个人学术主页（研究、教育、发表、荣誉）。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dujh22.github.io/Dujinhua_wiki/">
+    <meta property="og:site_name" content="Jinhua Du | 杜晋华">
+    <meta property="og:locale" content="zh_CN">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Jinhua Du | 杜晋华 — 智谱AI研究实习项目报告集">
+    <meta name="twitter:description" content="智谱AI研究实习项目报告集，涵盖大模型预训练、逻辑推理、数学推理、评测方法论等30个项目。">
+    <meta name="robots" content="index, follow">
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1-abstract" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Jinhua Du | 杜晋华" class="md-header__button md-logo" aria-label="Jinhua Du | 杜晋华" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 10.5V6l-2.11 1.06A3.999 3.999 0 0 1 12 12a4 4 0 0 1-3.89-4.94L5 5.5 12 2l7 3.5v5zM12 9l-2-1c0 1.1.9 2 2 2s2-.9 2-2zm2.75-3.58L12.16 4.1 9.47 5.47l2.6 1.32zM12 13c2.67 0 8 1.33 8 4v3H4v-3c0-2.67 5.33-4 8-4m0 1.9c-3 0-6.1 1.46-6.1 2.1v1.1h12.2V17c0-.64-3.13-2.1-6.1-2.1"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Jinhua Du | 杜晋华
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              13 · 类 o1 模型泛化性评估：从数学/代码到泛化场景的能力迁移研究
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="light-blue"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/dujh22/Dujinhua_wiki" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    dujh22/Dujinhua_wiki
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../.." class="md-tabs__link">
+          
+  
+  
+  English
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../index_zh/" class="md-tabs__link">
+          
+  
+  
+  中文
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../" class="md-tabs__link">
+          
+  
+  
+  智谱实习项目
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Jinhua Du | 杜晋华" class="md-nav__button md-logo" aria-label="Jinhua Du | 杜晋华" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 10.5V6l-2.11 1.06A3.999 3.999 0 0 1 12 12a4 4 0 0 1-3.89-4.94L5 5.5 12 2l7 3.5v5zM12 9l-2-1c0 1.1.9 2 2 2s2-.9 2-2zm2.75-3.58L12.16 4.1 9.47 5.47l2.6 1.32zM12 13c2.67 0 8 1.33 8 4v3H4v-3c0-2.67 5.33-4 8-4m0 1.9c-3 0-6.1 1.46-6.1 2.1v1.1h12.2V17c0-.64-3.13-2.1-6.1-2.1"/></svg>
+
+    </a>
+    Jinhua Du | 杜晋华
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/dujh22/Dujinhua_wiki" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    dujh22/Dujinhua_wiki
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    English
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    English
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Profile
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../postgraduate_experience_en/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Postgraduate Experience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../undergraduate_experience_en/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Undergraduate Experience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../history_en/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Research History
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    中文
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    中文
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../index_zh/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人简介
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../postgraduate_experience_zh/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博士经历
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../undergraduate_experience_zh/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    本科经历
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../history_zh/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    研究历史
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    智谱实习项目
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    智谱实习项目
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    项目总览
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阶段一·数学推理与国际化
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    阶段一·数学推理与国际化
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase1/01_ChatGLM%E6%95%B0%E5%AD%A6%E6%8E%A8%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 ChatGLM数学推理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase1/02_ChatGLM%E5%9B%BD%E9%99%85%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02 ChatGLM国际化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阶段二·多模态与社会实践
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    阶段二·多模态与社会实践
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/03_%E5%A4%9A%E6%A8%A1%E6%80%81%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%95%B0%E5%AD%A6%E6%8E%A8%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 多模态大模型数学推理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/04_MetaEvaluation%E5%85%83%E8%AF%84%E4%BC%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04 MetaEvaluation元评估
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/05_AML2024%E5%8A%A9%E6%95%99/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 AML2024助教
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/06_%E8%88%9F%E5%B1%B1%E7%A4%BE%E4%BC%9A%E5%AE%9E%E8%B7%B5%E5%85%AC%E5%AE%89%E7%8A%AF%E7%BD%AA%E9%A2%84%E6%B5%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06 舟山社会实践公安犯罪预测
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/07_MalayGLM%E9%A9%AC%E6%9D%A5%E8%AF%AD%E5%A4%A7%E6%A8%A1%E5%9E%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07 MalayGLM马来语大模型
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/08_o1%E5%A4%8D%E7%8E%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 o1复现
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阶段三·LogicEvolve与基座模型
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    阶段三·LogicEvolve与基座模型
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09_LogicEvolve%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E8%87%AA%E8%BF%9B%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 LogicEvolve逻辑推理自进化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10_GLM-4.5%E5%9F%BA%E5%BA%A7%E6%A8%A1%E5%9E%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 GLM-4.5基座模型
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11_%E6%95%B0%E5%AE%9E%E8%9E%8D%E5%90%88%E6%96%B0%E5%BC%95%E6%93%8E%E9%A1%B9%E7%9B%AE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11 数实融合新引擎项目
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12_Puzzle%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E9%A2%84%E8%AE%AD%E7%BB%83%E6%95%B0%E6%8D%AE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12 Puzzle逻辑推理预训练数据
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13 类o1模型泛化性评估
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13 类o1模型泛化性评估
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-abstract" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 项目概述（Abstract）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 项目概述（Abstract）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关键数据速览
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        执行摘要
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        个人成长轨迹
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-introduction-background" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 背景与动机（Introduction / Background）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 背景与动机（Introduction / Background）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 问题定义
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 行业背景
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 项目启动契机
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-related-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 相关工作（Related Work）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 相关工作（Related Work）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 推理模型横向对比
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.1 推理模型横向对比">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#311" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1.1 评估维度体系
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#312-sky-t1-32b" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1.2 Sky-T1-32B 基准评测对比（复现实验参考）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#313-open-o1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1.3 Open-O1 开源推理模型对比（轻量级复现参考）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 推理模型训练方法
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 泛化性研究
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 方法与技术路线（Method）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 方法与技术路线（Method）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 研究框架
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 文献调研方法论
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 推理模型复现实验
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 多模型横向评测
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 自动合成评估数据方法论
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#46" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.6 核心创新规划
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-experiments-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 实验与结果（Experiments &amp; Results）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 实验与结果（Experiments &amp; Results）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 自训练模型结果
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 泛化性观察
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-kaggle-aimo2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 Kaggle AIMO2 竞赛
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 评估效率维度
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-engineering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 工程实现（Engineering）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. 工程实现（Engineering）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 代码仓库
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 仓库结构
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 技术栈
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4 项目时间线
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#65" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5 关键工程挑战
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#66" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.6 技术栈演进与选型决策
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-impact" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 成果与影响（Impact）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. 成果与影响（Impact）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 研究产出
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 对主线研究的支撑
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 后续发展
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-my-contribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 个人贡献（My Contribution）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. 个人贡献（My Contribution）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 角色
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 具体工作清单
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#83" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.3 与其他项目的关系
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-lessons-learned" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 经验与反思（Lessons Learned）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. 经验与反思（Lessons Learned）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1 关键问题与解决方案（含具体故事）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2 可复用方法论（深化版）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.2 可复用方法论（深化版）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#921" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2.1 四层递进文献调研法
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#922-sop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2.2 推理模型复现SOP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#923" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2.3 自动合成评估数据框架
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#924" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2.4 评估效率维度法
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#93" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.3 如果重来会怎么做
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#94" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.4 踩坑与避坑指南
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#95-faq" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.5 常见问题与解答（FAQ）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. 文件索引（References）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. 文件索引（References）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        飞书文档
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#github" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GitHub 仓库
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参考资源
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        本地材料
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. 转正答辩证据卡
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. 转正答辩证据卡">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#111" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.1 目标基线
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.2 量化结果
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#113" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3 公司层面贡献
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#114" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.4 专业影响力
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#115" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.5 价值观锚点
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#116" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.6 协作与利他
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#117" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.7 反思与成长（自我批评式）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#118-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.8 6年后视角
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#119" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.9 五段式讲述（答辩稿骨架）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. 相关项目
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. 相关项目">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        项目间引用网络
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. 跨项目对比
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13. 跨项目对比">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#131-04metaevaluation14logicalsurvey19groom20h-tokenbench" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.1 评测方法对比：与04号（MetaEvaluation）、14号（LogicalSurvey）、19号（Groom）、20号（H-TokenBench）的深度对比
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        图表索引
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        个人成果矩阵
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-2026-09-08" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. 第十轮深化补强（2026-09-08）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14. 第十轮深化补强（2026-09-08）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#141" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.1 源材料新利用数据
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#142-o1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.2 类 o1 模型泛化性四维分析补充
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#143" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.3 个人贡献量化补充
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5" id="__nav_3_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阶段四·论文冲刺与博士开题
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    阶段四·论文冲刺与博士开题
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase4/14_LogicalSurvey%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%BB%BC%E8%BF%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14 LogicalSurvey逻辑推理综述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase4/15_EvolveLRM%E8%AE%AD%E7%BB%83%E8%87%AA%E8%BF%9B%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15 EvolveLRM训练自进化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase4/16_AML-LLM%E4%B9%A6%E7%B1%8D%E7%BC%96%E6%92%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16 AML-LLM书籍编撰
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase4/17_VirtualCoach%E4%BA%BA%E6%9C%BA%E4%BA%A4%E4%BA%92/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17 VirtualCoach人机交互
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase4/18_%E5%8D%9A%E5%A3%AB%E5%BC%80%E9%A2%98/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    18 博士开题
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_6" id="__nav_3_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阶段五·自进化研究全面展开
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    阶段五·自进化研究全面展开
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase5/19_Groom_Harness%E8%BF%87%E7%A8%8B%E7%BA%A7%E8%AF%84%E6%B5%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    19 Groom过程级评测
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase5/20_H-TokenBench/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20 H-TokenBench
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase5/21_GLM-5%E5%9F%BA%E5%BA%A7%E6%A8%A1%E5%9E%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    21 GLM-5基座模型
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase5/22_%E5%85%AD%E7%AF%87%E6%96%B0%E7%A0%94%E7%A9%B6%E5%88%9D%E7%A8%BF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    22 六篇新研究初稿
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase5/23_Awesome-RSI%E8%87%AA%E8%BF%9B%E5%8C%96%E7%BB%BC%E8%BF%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    23 Awesome-RSI自进化综述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase5/24_%E4%B8%93%E5%88%A9_%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E8%AF%84%E6%B5%8B%E6%96%B9%E6%B3%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    24 专利逻辑推理评测方法
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_7" id="__nav_3_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    工程与工具系列
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    工程与工具系列
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/25_LLM-DailyDigest%E6%AF%8F%E6%97%A5AI%E8%BF%BD%E6%96%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    25 LLM-DailyDigest
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/26_AutoLLM%E5%A4%9AAgent%E4%BF%A1%E6%81%AF%E8%87%AA%E5%8A%A8%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    26 AutoLLM多Agent
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/27_AiFitGo%E6%99%BA%E8%83%BD%E5%81%A5%E8%BA%AB%E6%95%99%E7%BB%83/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    27 AiFitGo智能健身
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/28_csv2app%E9%A2%98%E5%BA%93%E8%BD%ACPWA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    28 csv2app题库转PWA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/29_THU_Sports%E6%B8%85%E5%8D%8E%E4%BD%93%E8%82%B2%E8%87%AA%E5%8A%A8%E9%A2%84%E7%BA%A6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    29 THU_Sports自动预约
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/30_AiMeder%E5%8C%BB%E5%AD%A6%E6%96%87%E7%8C%AE%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    30 AiMeder医学搜索
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-abstract" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 项目概述（Abstract）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 项目概述（Abstract）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关键数据速览
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        执行摘要
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        个人成长轨迹
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-introduction-background" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 背景与动机（Introduction / Background）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 背景与动机（Introduction / Background）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 问题定义
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 行业背景
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 项目启动契机
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-related-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 相关工作（Related Work）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 相关工作（Related Work）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 推理模型横向对比
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.1 推理模型横向对比">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#311" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1.1 评估维度体系
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#312-sky-t1-32b" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1.2 Sky-T1-32B 基准评测对比（复现实验参考）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#313-open-o1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1.3 Open-O1 开源推理模型对比（轻量级复现参考）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 推理模型训练方法
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 泛化性研究
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 方法与技术路线（Method）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 方法与技术路线（Method）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 研究框架
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 文献调研方法论
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 推理模型复现实验
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 多模型横向评测
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 自动合成评估数据方法论
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#46" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.6 核心创新规划
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-experiments-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 实验与结果（Experiments &amp; Results）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 实验与结果（Experiments &amp; Results）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 自训练模型结果
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 泛化性观察
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-kaggle-aimo2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 Kaggle AIMO2 竞赛
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 评估效率维度
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-engineering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 工程实现（Engineering）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. 工程实现（Engineering）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 代码仓库
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 仓库结构
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 技术栈
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4 项目时间线
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#65" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5 关键工程挑战
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#66" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.6 技术栈演进与选型决策
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-impact" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 成果与影响（Impact）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. 成果与影响（Impact）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 研究产出
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 对主线研究的支撑
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 后续发展
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-my-contribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 个人贡献（My Contribution）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. 个人贡献（My Contribution）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 角色
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 具体工作清单
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#83" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.3 与其他项目的关系
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-lessons-learned" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 经验与反思（Lessons Learned）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. 经验与反思（Lessons Learned）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1 关键问题与解决方案（含具体故事）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2 可复用方法论（深化版）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.2 可复用方法论（深化版）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#921" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2.1 四层递进文献调研法
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#922-sop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2.2 推理模型复现SOP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#923" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2.3 自动合成评估数据框架
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#924" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2.4 评估效率维度法
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#93" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.3 如果重来会怎么做
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#94" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.4 踩坑与避坑指南
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#95-faq" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.5 常见问题与解答（FAQ）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. 文件索引（References）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. 文件索引（References）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        飞书文档
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#github" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GitHub 仓库
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参考资源
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        本地材料
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. 转正答辩证据卡
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. 转正答辩证据卡">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#111" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.1 目标基线
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.2 量化结果
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#113" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3 公司层面贡献
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#114" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.4 专业影响力
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#115" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.5 价值观锚点
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#116" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.6 协作与利他
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#117" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.7 反思与成长（自我批评式）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#118-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.8 6年后视角
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#119" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.9 五段式讲述（答辩稿骨架）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. 相关项目
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. 相关项目">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        项目间引用网络
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. 跨项目对比
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13. 跨项目对比">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#131-04metaevaluation14logicalsurvey19groom20h-tokenbench" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.1 评测方法对比：与04号（MetaEvaluation）、14号（LogicalSurvey）、19号（Groom）、20号（H-TokenBench）的深度对比
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        图表索引
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        个人成果矩阵
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-2026-09-08" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. 第十轮深化补强（2026-09-08）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14. 第十轮深化补强（2026-09-08）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#141" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.1 源材料新利用数据
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#142-o1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.2 类 o1 模型泛化性四维分析补充
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#143" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.3 个人贡献量化补充
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+  
+
+
+
+
+  <h1>13 类o1模型泛化性评估</h1>
+
+<div class="admonition info">
+<p class="admonition-title">项目系列</p>
+<p><strong>阶段三：LogicEvolve 起步与基座模型</strong> · 报告 #13/30</p>
+</div>
+<p><a href="../../"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg></span> 返回项目总览</a> | <a href="../../../index_zh/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg></span> 返回首页</a></p>
+<hr />
+<blockquote>
+<p>项目报告 · 智谱华章实习阶段三（2025.1–2025.8）
+研究探索项目 · meta-o1 私有仓库</p>
+</blockquote>
+<div class="admonition note">
+<p class="admonition-title">版本信息</p>
+<p>版本：v3（图文并茂版 · 2026-09-08）· 二轮质检补强 · 三轮精磨 · 四轮深化 · 五轮深化 · 六轮深化 · 七轮深化 · 八轮深化 · 九轮终审 · 十轮深化 · 十一轮深化 · 十二轮终审 · 十三轮终审 · 十四轮深化 · 十五轮终审 | 审核：准确性核对 + 转正答辩证据卡补强 + 图文表格升级</p>
+</div>
+<hr />
+<h2 id="1-abstract">1. 项目概述（Abstract）<a class="headerlink" href="#1-abstract" title="Permanent link">&para;</a></h2>
+<p><strong>类 o1 模型泛化性评估项目旨在研究以 OpenAI o1、DeepSeek-R1 为代表的长思维链推理模型，其在数学和代码领域验证的推理能力能否有效迁移到更泛化的场景和领域，并探索自动合成评估数据的方法论。</strong> 项目通过文献调研、开源推理模型复现、多模型横向对比和自动评估数据合成，系统分析了类 o1 模型的泛化能力边界。</p>
+<p>核心成果量化：
+- 完成 <strong>168 篇</strong>相关文献的系统性调研（泛化性 3 篇 + 评估 3 篇 + 推理 4 篇 + 算法 158 篇）；
+- 复现 <strong>Sky-T1-32B</strong> 开源推理模型（基于 Qwen2.5-32B-Instruct，17,000 条数据 SFT，8×H100，DeepSpeed ZeRO-3 offload）；
+- 自训练模型 <strong>djh-o1-Sky-T1-32B-Preview</strong>，在 MATH500 上达 87.2%、MMLU 上达 83.5%；
+- 完成 <strong>20+ 主流推理模型</strong>的横向对比评测（DeepSeek-R1、o1-1217、Kimi k1.5、GLM-Zero、QwQ-32B 等），覆盖数学/代码/通用/视觉多维度；
+- 提出<strong>自动合成评估数据</strong>的方法论框架，解决非数学/代码领域"无标准答案"的评估难题；
+- 参与 <strong>Kaggle AIMO2</strong>（AI Mathematical Olympiad - Progress Prize 2）竞赛（12,341 名参赛者）。</p>
+<p>时间范围：2025 年 1 月启动，阶段三内为主要探索期。个人角色：<strong>独立研究者</strong>，私有仓库 meta-o1。</p>
+<h3 id="_1">关键数据速览<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>维度</strong></th>
+<th><strong>核心数据</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>项目周期</td>
+<td>2025.1–2025.8（8个月）</td>
+</tr>
+<tr>
+<td>个人角色</td>
+<td>独立研究者（私有仓库 meta-o1）</td>
+</tr>
+<tr>
+<td>核心产出</td>
+<td>168 篇文献系统性调研；djh-o1-Sky-T1 自训练模型；20+ 主流推理模型横向对比；自动合成评估数据方法论；ACL 格式论文初稿</td>
+</tr>
+<tr>
+<td>关键指标</td>
+<td>自训练模型 MATH500 87.2%、MMLU 83.5%；17,000 条 SFT 数据；8×H100 训练（DeepSpeed ZeRO-3 offload）</td>
+</tr>
+<tr>
+<td>论文/专利</td>
+<td>ACL 格式论文初稿（中英文双版，未投稿，因 LogicEvolve 确立为主线转为探索性研究）</td>
+</tr>
+<tr>
+<td>开源仓库</td>
+<td>meta-o1（私有）、MetaEvaluation（私有）、LLM-o1（私有）、CLUB-benchmark（公开）</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="_2">执行摘要<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p><strong>一句话定位</strong>：研究长思维链推理模型从数学/代码到泛化场景的能力迁移边界，构建自动合成评估数据方法论，为类o1模型的真实泛化能力提供可复现评估框架。</p>
+<p><strong>核心成果</strong>：
+- 系统调研168篇文献，完成20+主流推理模型横向对比评测；
+- 复现Sky-T1-32B模型，自训练djh-o1-Sky-T1在MATH500达87.2%、MMLU达83.5%；
+- 构建17,000条SFT数据，提出自动合成评估数据方法论（复杂化方法+元评估）。</p>
+<p><strong>技术亮点</strong>：提出"复杂化方法+元评估"的自动合成评估数据方法论，解决泛化场景缺乏标准答案的评估难题；通过8×H100 DeepSpeed ZeRO-3 offload完成类o1模型复现与自训练。</p>
+<p><strong>个人角色</strong>：独立研究者，独立完成168篇文献调研、20+模型横向评测、Sky-T1-32B复现、自训练模型训练、自动合成评估方法论设计与ACL格式论文初稿撰写。</p>
+<p><strong>后续方向</strong>：推进更大规模自动合成benchmark验证，将评估效率维度（token消耗/推理延迟）标准化，探索泛化能力与训练数据构成的量化关系。</p>
+<hr />
+<h3 id="_3">个人成长轨迹<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>阶段</strong></th>
+<th><strong>能力成长</strong></th>
+<th><strong>关键事件</strong></th>
+<th><strong>对应报告章节</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>初期（2024.10–11）</td>
+<td>从元评估研究转向推理模型泛化性评估；掌握168篇文献系统调研能力，建立o1类推理模型演进脉络认知；参与Kaggle AIMO2竞赛（12,341名参赛者），积累竞赛级数学推理评估经验</td>
+<td>系统调研168篇文献，完成20+主流推理模型横向对比评测；meta-o1衍生方向从04号元评估项目独立发展为本项目；参与AIMO2竞赛，接触真实竞赛级数学推理评估场景</td>
+<td>§2.3 项目启动契机、§3 相关工作、§4 方法与技术路线</td>
+</tr>
+<tr>
+<td>中期（2024.11–12）</td>
+<td>掌握类o1推理模型复现技术（Sky-T1-32B），通过8×H100 DeepSpeed ZeRO-3 offload完成大规模模型训练；具备自训练模型实验能力（djh-o1-Sky-T1在MATH500达87.2%、MMLU达83.5%）；构建17,000条SFT数据</td>
+<td>复现Sky-T1-32B模型，自训练djh-o1-Sky-T1；构建17,000条SFT数据；评估SC/MCTS推理增强策略效果；发现o1类模型在数学/代码上表现优异但跨领域泛化性能下降明显</td>
+<td>§4 方法与技术路线、§5 实验与结果、§6 工程实现</td>
+</tr>
+<tr>
+<td>后期（2024.12–2025.2）</td>
+<td>提出"复杂化方法+元评估"的自动合成评估数据方法论，解决泛化场景缺乏标准答案的评估难题，具备研究创新能力；完成ACL格式论文初稿（中英文双版），具备学术写作能力；形成"元评估（04）→推理模型泛化评估（13）→过程级评测（19）→Token级评测（20）"的评测粒度完整谱系认知</td>
+<td>提出自动合成评估数据方法论；完成ACL格式论文初稿（中英文双版）；泛化性评估发现为09 LogicEvolve自进化训练提供评估反馈信号；评估效率维度（token消耗/推理延迟）标准化探索</td>
+<td>§7 成果与影响、§9 经验与反思、相关项目/跨项目对比</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="2-introduction-background">2. 背景与动机（Introduction / Background）<a class="headerlink" href="#2-introduction-background" title="Permanent link">&para;</a></h2>
+<h3 id="21">2.1 问题定义<a class="headerlink" href="#21" title="Permanent link">&para;</a></h3>
+<p>2024 年 9 月 OpenAI 发布 o1 模型，通过长思维链（Long-CoT）和强化学习在数学推理上取得突破。随后 DeepSeek-R1、Kimi k1.5、QwQ 等类 o1 模型相继涌现。这些模型的共同特点是：<strong>主要在数学和代码领域进行训练和验证</strong>，因为这两个领域的每一步推理都有明确的标准答案（数学）或可执行验证（代码）。</p>
+<p>核心研究问题：<strong>类 o1 模型在数学/代码上获得的推理能力，能否泛化到其他场景和领域？</strong> 具体包括：
+1. 量化模型从数学和代码到其他任务和领域的泛化能力；
+2. 探索是否存在更通用的提升推理能力的算法；
+3. 构造能体现不同推理模型泛化性差异的 benchmark；
+4. 研究自动合成评估数据的方法（解决非数学/代码领域无标准答案的问题）。</p>
+<h3 id="22">2.2 行业背景<a class="headerlink" href="#22" title="Permanent link">&para;</a></h3>
+<p>2025 年初，推理模型领域呈现"数学/代码内卷、泛化能力存疑"的态势：
+- <strong>FrontierMath</strong>、<strong>Humanity's Last Exam</strong> 等顶级推理基准依赖上百位专家人工出题，代表推理天花板，但个人研究者难以复现；
+- 现有推理评估集中在数学（AIME、MATH、GSM8K）和代码（LiveCodeBench、Codeforces），对逻辑推理、常识推理、跨领域推理等泛化场景覆盖不足；
+- 业界开始质疑：推理模型的"长思维链"是否只是在数学/代码上过拟合，而非真正获得了通用推理能力。</p>
+<h3 id="23">2.3 项目启动契机<a class="headerlink" href="#23" title="Permanent link">&para;</a></h3>
+<p>项目起源于杜晋华在阶段二的元评估（Meta Evaluation）研究。在对诗歌、教育等场景的元评估工作中，发现"评估器可靠性"问题在推理模型泛化评估中更加突出。2025 年 1 月 16 日正式创建项目文档，将选题细化为"类 o1 模型的泛化性元评估（及改进）"，作为元评估父选题下的子方向。项目初期目标冲刺 NeurIPS（049飞书文档记录为"冲刺下4月份的NeurIPS"，后因 LogicEvolve 方向确立为主线，本项目转为探索性研究，未实际投稿）。</p>
+<hr />
+<h2 id="3-related-work">3. 相关工作（Related Work）<a class="headerlink" href="#3-related-work" title="Permanent link">&para;</a></h2>
+<h3 id="31">3.1 推理模型横向对比<a class="headerlink" href="#31" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>模型</strong></th>
+<th><strong>机构</strong></th>
+<th><strong>AIME 2024</strong></th>
+<th><strong>MATH500</strong></th>
+<th><strong>GPQA Diamond</strong></th>
+<th><strong>LiveCodeBench</strong></th>
+<th><strong>MMLU</strong></th>
+<th><strong>特点</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>DeepSeek-R1</strong></td>
+<td>深度求索</td>
+<td>79.8%</td>
+<td>97.3%</td>
+<td>71.5%</td>
+<td>—</td>
+<td>90.8%</td>
+<td>纯 RL 训练推理</td>
+</tr>
+<tr>
+<td><strong>o1-1217</strong></td>
+<td>OpenAI</td>
+<td>79.2%</td>
+<td>96.4%</td>
+<td>75.7%</td>
+<td>—</td>
+<td>91.8%</td>
+<td>长思维链</td>
+</tr>
+<tr>
+<td><strong>Kimi k1.5 long-CoT</strong></td>
+<td>月之暗面</td>
+<td>77.5%</td>
+<td>96.2%</td>
+<td>—</td>
+<td>62.5%</td>
+<td>87.4%</td>
+<td>开源长 CoT</td>
+</tr>
+<tr>
+<td><strong>DeepSeek-R1-32B</strong></td>
+<td>深度求索</td>
+<td>72.6%</td>
+<td>94.3%</td>
+<td>62.1%</td>
+<td>—</td>
+<td>87.4%</td>
+<td>开源 32B</td>
+</tr>
+<tr>
+<td><strong>Baichuan-M1-Preview</strong></td>
+<td>百川</td>
+<td>65.8%</td>
+<td>94.6%</td>
+<td>—</td>
+<td>52.0%</td>
+<td>—</td>
+<td>推理模型</td>
+</tr>
+<tr>
+<td><strong>o1-mini</strong></td>
+<td>OpenAI</td>
+<td>56.7%</td>
+<td>90.0%</td>
+<td>60.0%</td>
+<td>58.0%</td>
+<td>85.2%</td>
+<td>轻量推理</td>
+</tr>
+<tr>
+<td><strong>GLM-Zero-preview</strong></td>
+<td>智谱</td>
+<td>52.6%</td>
+<td>91.8%</td>
+<td>59.1%</td>
+<td>47.7%</td>
+<td>—</td>
+<td>智谱推理模型</td>
+</tr>
+<tr>
+<td><strong>QwQ-32B-Preview</strong></td>
+<td>通义</td>
+<td>50.0%</td>
+<td>90.6%</td>
+<td>59.0–65.2%</td>
+<td>50.0%</td>
+<td>—</td>
+<td>通义推理</td>
+</tr>
+<tr>
+<td><strong>o1-preview</strong></td>
+<td>OpenAI</td>
+<td>44.6%</td>
+<td>85.5%</td>
+<td>72.3%</td>
+<td>44.6–53.6%</td>
+<td>—</td>
+<td>早期推理</td>
+</tr>
+<tr>
+<td><strong>Sky-T1-32B-Preview</strong></td>
+<td>NovaSky</td>
+<td>43.3%</td>
+<td>82.4–88.8%</td>
+<td>48.5–56.8%</td>
+<td>—</td>
+<td>82.7%</td>
+<td>开源复现</td>
+</tr>
+<tr>
+<td><strong>djh-o1-Sky-T1</strong>（自训练）</td>
+<td>本项目</td>
+<td>30.0–33.3%</td>
+<td>87.2–90.0%</td>
+<td>52.5–54.0%</td>
+<td>—</td>
+<td>83.5%</td>
+<td>复现实验</td>
+</tr>
+<tr>
+<td><strong>Qwen2.5-72B-Instruct</strong></td>
+<td>通义</td>
+<td>23.3%</td>
+<td>82.6%</td>
+<td>49.0%</td>
+<td>30.4%</td>
+<td>—</td>
+<td>非推理基座</td>
+</tr>
+<tr>
+<td><strong>Qwen2.5-32B-Instruct</strong></td>
+<td>通义</td>
+<td>20.0%</td>
+<td>82.0%</td>
+<td>44.4%</td>
+<td>—</td>
+<td>79.7%</td>
+<td>非推理基座</td>
+</tr>
+<tr>
+<td><strong>Claude 3.5 Sonnet</strong></td>
+<td>Anthropic</td>
+<td>16.0%</td>
+<td>78.3%</td>
+<td>65.0%</td>
+<td>36.3%</td>
+<td>88.3%</td>
+<td>非推理基座</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：项目文档 049《类o1模型的泛化性评估与研究》多模型对比表；SkyThought GitHub README 评估结果；各模型官方技术报告（部分数据来自第三方复现，具体评测条件见各来源）。</p>
+</blockquote>
+<h4 id="311">3.1.1 评估维度体系<a class="headerlink" href="#311" title="Permanent link">&para;</a></h4>
+<p>本项目的多模型横向评测覆盖六大维度，每个维度选取代表性基准，以全面刻画类 o1 模型的泛化能力边界：</p>
+<table>
+<thead>
+<tr>
+<th><strong>评估维度</strong></th>
+<th><strong>代表性基准</strong></th>
+<th><strong>评测目标</strong></th>
+<th><strong>数据特点</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>数学推理</strong></td>
+<td>AIME 2024、MATH500、GPQA Diamond</td>
+<td>高难度竞赛级数学推理、研究生级科学问答</td>
+<td>每步有标准答案，可精确验证</td>
+</tr>
+<tr>
+<td><strong>代码生成</strong></td>
+<td>LiveCodeBench（2024.8–11）、Codeforces</td>
+<td>实时编程竞赛、算法题求解</td>
+<td>可执行验证，有明确 pass/fail</td>
+</tr>
+<tr>
+<td><strong>通用能力</strong></td>
+<td>MMLU</td>
+<td>57 学科多选知识与推理</td>
+<td>标准化基准，覆盖广</td>
+</tr>
+<tr>
+<td><strong>软件工程</strong></td>
+<td>SWE-bench verified</td>
+<td>真实 GitHub issue 修复</td>
+<td>需长链推理 + 代码理解 + 测试验证</td>
+</tr>
+<tr>
+<td><strong>视觉推理</strong></td>
+<td>MathVista、MMMU</td>
+<td>图文混合推理、多学科多模态</td>
+<td>需视觉理解 + 逻辑推理协同</td>
+</tr>
+<tr>
+<td><strong>评估效率</strong></td>
+<td>AIME 限时（3h/15题）</td>
+<td>时间约束下的解题能力</td>
+<td>引入人类时间限制维度</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：项目文档 049《类o1模型的泛化性评估与研究》评测维度设计；SkyThought README 评估结果表。</p>
+</blockquote>
+<h4 id="312-sky-t1-32b">3.1.2 Sky-T1-32B 基准评测对比（复现实验参考）<a class="headerlink" href="#312-sky-t1-32b" title="Permanent link">&para;</a></h4>
+<p>Sky-T1-32B-Preview 是本项目复现的目标模型，其官方评测结果如下表所示，作为自训练模型 djh-o1-Sky-T1 的对比基线：</p>
+<table>
+<thead>
+<tr>
+<th><strong>基准指标</strong></th>
+<th><strong>Sky-T1-32B-Preview</strong></th>
+<th><strong>Qwen-2.5-32B-Instruct（基座）</strong></th>
+<th><strong>QwQ-32B</strong></th>
+<th><strong>o1-preview</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MATH500</td>
+<td>82.4%</td>
+<td>76.2%</td>
+<td>85.4%</td>
+<td>81.4%</td>
+</tr>
+<tr>
+<td>AIME 2024</td>
+<td>43.3%</td>
+<td>16.7%</td>
+<td>50.0%</td>
+<td>40.0%</td>
+</tr>
+<tr>
+<td>LiveCodeBench-Easy</td>
+<td>86.3%</td>
+<td>84.6%</td>
+<td>90.7%</td>
+<td>92.9%</td>
+</tr>
+<tr>
+<td>LiveCodeBench-Medium</td>
+<td>56.8%</td>
+<td>40.8%</td>
+<td>56.3%</td>
+<td>54.9%</td>
+</tr>
+<tr>
+<td>LiveCodeBench-Hard</td>
+<td>17.9%</td>
+<td>9.8%</td>
+<td>17.1%</td>
+<td>16.3%</td>
+</tr>
+<tr>
+<td>GPQA-Diamond</td>
+<td>56.8%</td>
+<td>45.5%</td>
+<td>52.5%</td>
+<td>75.2%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>关键观察</strong>：Sky-T1 相比基座 Qwen-2.5-32B 在 AIME 上提升 26.6 个百分点（16.7%→43.3%），在 GPQA-Diamond 上提升 11.3 个百分点，验证了长 CoT SFT 对推理能力的显著提升；但在 LiveCodeBench-Hard 上仅 17.9%，说明高难度代码推理仍是 32B 级模型的短板。</p>
+<blockquote>
+<p>数据来源：SkyThought GitHub README（https://github.com/NovaSky-AI/SkyThought）评估结果表，2025-01-10 发布。</p>
+</blockquote>
+<h4 id="313-open-o1">3.1.3 Open-O1 开源推理模型对比（轻量级复现参考）<a class="headerlink" href="#313-open-o1" title="Permanent link">&para;</a></h4>
+<p>Open-O1 是早期开源的 o1 复现项目，通过 CoT Activation SFT 数据训练 LLaMA/Qwen 小模型，验证了长思维链在轻量级模型上的激活效果。其零样本评测结果如下，作为本项目复现实验中轻量级基线的参考：</p>
+<table>
+<thead>
+<tr>
+<th><strong>模型</strong></th>
+<th><strong>GSM8K</strong></th>
+<th><strong>MATH</strong></th>
+<th><strong>MMLU</strong></th>
+<th><strong>Hellaswag</strong></th>
+<th><strong>ARC-C</strong></th>
+<th><strong>BBH</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LLaMA-3.1-8B-Instruct（基座）</td>
+<td>84.27</td>
+<td>47.42</td>
+<td>67.31</td>
+<td>66.97</td>
+<td>84.81</td>
+<td>51.72</td>
+</tr>
+<tr>
+<td><strong>OpenO1-LLaMA-8B-v0.1</strong></td>
+<td><strong>85.82</strong></td>
+<td><strong>52.88</strong></td>
+<td><strong>70.45</strong></td>
+<td>67.77</td>
+<td><strong>86.52</strong></td>
+<td><strong>58.43</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>关键观察</strong>：OpenO1 在仅 8B 参数规模下，通过 CoT Activation SFT 数据训练，在 MATH 上较基座提升 5.46 个百分点（47.42%→52.88%），在 BBH 上提升 6.71 个百分点，验证了长思维链数据对推理能力的激活效果；但受限于模型规模，其绝对性能与 32B 级推理模型（如 Sky-T1）仍有较大差距，说明推理能力的 scaling 效应显著。</p>
+<blockquote>
+<p>数据来源：Open-O1 GitHub README（https://github.com/OpenSource-O1/Open-O1）System Performance 表格，零样本评测设置；训练基于 Llama-Factory，数据集为 OpenO1-SFT（CoT Activation）。</p>
+</blockquote>
+<h3 id="32">3.2 推理模型训练方法<a class="headerlink" href="#32" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Sky-T1 (NovaSky)</strong>：fully open-source 的 o1 复现，基于 Qwen2.5-32B-Instruct，拒绝采样从 QwQ 获取高质量数据 + GPT-4o-mini 修改格式，混合 APPs/TACO（5k 代码）+ NuminaMATH（10k 数学）+ STILL-2（1k 科学/谜题），3 epochs、lr=1e-5、batch size=96、8×H100；</li>
+<li><strong>DeepSeek-R1</strong>：纯 RL 训练，冷启动 + 拒绝采样微调 + GRPO 强化学习；</li>
+<li><strong>推理路径优化 (RPO, EMNLP 2024 Findings)</strong>：在每个推理步骤鼓励有利分支、惩罚不利分支，GSM8K +3.1%、MMLU(STEM) +4.3%；</li>
+<li><strong>本项目的差异化</strong>：不重复造推理模型，而是聚焦"推理模型的泛化性评估"这一被忽视的维度。</li>
+</ul>
+<h3 id="33">3.3 泛化性研究<a class="headerlink" href="#33" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>State-of-the-art generalisation research in NLP</strong>（总结 400+ ACL 论文）：将泛化分为组合式泛化、结构泛化、跨任务泛化、跨语言泛化、跨领域泛化、鲁棒性泛化六类；</li>
+<li><strong>Densing Law</strong>：清华团队提出容量密度概念，LLM 最大能力密度约 100 天翻一倍；</li>
+<li><strong>本项目的定位</strong>：聚焦"跨领域泛化"——从数学/代码到逻辑推理/常识推理/其他领域的能力迁移。</li>
+</ul>
+<hr />
+<h2 id="4-method">4. 方法与技术路线（Method）<a class="headerlink" href="#4-method" title="Permanent link">&para;</a></h2>
+<h3 id="41">4.1 研究框架<a class="headerlink" href="#41" title="Permanent link">&para;</a></h3>
+<p>项目围绕三个核心问题展开，整体评估框架流程如下：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>┌─────────────────────────────────────────────────────────────────┐
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>│                    类 o1 模型泛化性评估框架                       │
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>├─────────────────────────────────────────────────────────────────┤
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>│                                                                   │
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>│  ┌──────────────┐    ┌──────────────┐    ┌──────────────────┐  │
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>│  │  文献调研层   │───▶│  模型复现层   │───▶│  多模型横向评测层  │  │
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>│  │ (168篇,四层)  │    │ (Sky-T1-32B) │    │  (20+模型,6维度)  │  │
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>│  └──────────────┘    └──────────────┘    └──────────────────┘  │
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>│         │                                        │                │
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>│         │          ┌──────────────────┐          │                │
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>│         └─────────▶│ 自动合成评估数据  │◀─────────┘                │
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>│                    │ (复杂化方法+元评估)│                           │
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>│                    └────────┬─────────┘                           │
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>│                             │                                     │
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>│                    ┌────────▼─────────┐                           │
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>│                    │  泛化性分析与结论  │                           │
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>│                    │ (迁移能力/短板识别)│                           │
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>│                    └──────────────────┘                           │
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>│                                                                   │
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>│  问题1：量化泛化能力  →  benchmark构造 + 多模型对比               │
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>│  问题2：自动合成评估数据 → 解决非数学/代码领域无标准答案难题       │
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>│  问题3：探索通用推理提升算法 → 基于评估发现的泛化短板              │
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>│                                                                   │
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>└─────────────────────────────────────────────────────────────────┘
+</code></pre></div>
+<p><strong>图4-1 · 类o1模型泛化性评估框架 Mermaid 流程图</strong></p>
+<p>下图以 Mermaid 流程图形式呈现"文献调研→模型复现→多模型评测→自动合成数据→泛化性分析闭环"的完整评估链路，与上方 ASCII 框架图互为补充。</p>
+<pre class="mermaid"><code>flowchart TD
+    A["文献调研层&lt;br/&gt;168篇 · 四层递进调研&lt;br/&gt;宏观/中观/微观/衍生交叉"] --&gt; B["模型复现层&lt;br/&gt;Sky-T1-32B&lt;br/&gt;17,000条SFT · 8×H100"]
+
+    B --&gt; C["多模型横向评测层&lt;br/&gt;20+主流推理模型&lt;br/&gt;数学/代码/通用/视觉6维度"]
+
+    A --&gt; D["自动合成评估数据&lt;br/&gt;复杂化方法 + 元评估&lt;br/&gt;解决非数学/代码无标准答案"]
+    C --&gt; D
+
+    D --&gt; E["泛化性分析与结论&lt;br/&gt;迁移能力量化 · 短板识别&lt;br/&gt;benchmark构造指导"]
+
+    E --&gt;|反馈: 发现泛化短板| F["探索通用推理提升算法&lt;br/&gt;基于评估发现的优化方向"]
+    F --&gt;|新算法验证| C
+
+    C --&gt;|评测数据积累| G["djh-o1-Sky-T1自训练模型&lt;br/&gt;MATH500 87.2% · MMLU 83.5%"]
+
+    style A fill:#e3f2fd,stroke:#1565c0
+    style B fill:#f3e5f5,stroke:#7b1fa2
+    style C fill:#fff3e0,stroke:#ef6c00
+    style D fill:#e8f5e9,stroke:#2e7d32
+    style E fill:#fce4ec,stroke:#c2185b
+    style F fill:#fffde7,stroke:#f9a825,stroke-width:2px</code></pre>
+<blockquote>
+<p>图注：评估框架以文献调研为起点，经模型复现和多模型横向评测积累数据，自动合成评估数据解决非标准化领域的评估难题，最终输出泛化性分析结论；分析结果反向指导通用推理算法探索，形成"评估→发现→优化→再评估"的闭环。</p>
+</blockquote>
+<h3 id="42">4.2 文献调研方法论<a class="headerlink" href="#42" title="Permanent link">&para;</a></h3>
+<p>采用<strong>四层递进调研路径</strong>：</p>
+<ol>
+<li><strong>宏观层</strong>：large language model + generalization + evaluation；</li>
+<li><strong>中观层</strong>：o1 + generalization + evaluation；</li>
+<li><strong>微观层</strong>：具体评估技术、评估数据集构造；</li>
+<li><strong>衍生交叉层</strong>：与可解释性、对比学习、迁移学习等领域交叉。</li>
+</ol>
+<p>调研成果：168 篇文献，思维导图分类为 3.1 类 o1 模型泛化性评估与研究（10 篇）和 3.2 类 o1 模型泛化性评估（156 篇），后者进一步细分为评估方法、评估数据集、评估指标、评估基准四个子方向。</p>
+<h3 id="43">4.3 推理模型复现实验<a class="headerlink" href="#43" title="Permanent link">&para;</a></h3>
+<p><strong>复现目标</strong>：Sky-T1-32B（NovaSky 开源的 o1 复现）</p>
+<p><strong>数据生成</strong>：
+1. 拒绝采样从 QwQ 推理模型获得高质量数据；
+2. 利用 GPT-4o-mini 修改数据格式提高质量；
+3. 混合数据：APPs + TACO（5k 代码）、NuminaMATH 的 AIME/MATH/Olympiads 子集（10k 数学）、STILL-2（1k 科学和谜题）；
+4. 总计 17,000 条 SFT 数据。</p>
+<p><strong>训练配置</strong>：
+- 基座：Qwen2.5-32B-Instruct（无推理能力的开源模型）；
+- 方法：SFT（3 epochs, lr=1e-5, batch size=96）；
+- 算力：8×H100，DeepSpeed ZeRO-3 offload；
+- 原理：通过产生长的内部思维链来解决复杂任务。</p>
+<p><strong>自训练模型</strong>：djh-o1-Sky-T1-32B-Preview</p>
+<h3 id="44">4.4 多模型横向评测<a class="headerlink" href="#44" title="Permanent link">&para;</a></h3>
+<p>评测维度覆盖：
+- <strong>数学</strong>：AIME 2024、MATH500、GPQA Diamond；
+- <strong>代码</strong>：LiveCodeBench（2024.8–2024.11）、Codeforces；
+- <strong>通用</strong>：MMLU；
+- <strong>软件工程</strong>：SWE-bench verified；
+- <strong>视觉</strong>：MathVista、MMMU。</p>
+<p>对比 20+ 模型，包括闭源（GPT-4o、o1 系列、Claude 3.5）和开源（DeepSeek-R1 系列、Qwen 系列、Kimi、GLM-Zero、QwQ、Sky-T1 等）。</p>
+<h3 id="45">4.5 自动合成评估数据方法论<a class="headerlink" href="#45" title="Permanent link">&para;</a></h3>
+<p>针对"非数学/代码领域无标准答案"的核心难题，提出自动合成评估数据的框架：</p>
+<ol>
+<li><strong>复杂化方法</strong>：从网络收集某个基础问题，让 A 模型进行复杂化（不断增加约束和难度），复杂化后的问题和答案作为最终测试数据；</li>
+<li><strong>参照 o1 数据构造方法</strong>：对合成数据进行综合统计分析，确保数据多样性和难度分布；</li>
+<li><strong>元评估验证</strong>：用元评估算法验证合成 benchmark 的泛化性（即该 benchmark 能否真正区分模型的泛化能力）；</li>
+<li><strong>数据泄漏检测</strong>：设计攻击算法分析各模型是否训练过测评数据，确保评估公平性。</li>
+</ol>
+<h3 id="46">4.6 核心创新规划<a class="headerlink" href="#46" title="Permanent link">&para;</a></h3>
+<p>项目规划了三个层面的创新：</p>
+<p><strong>工程创新</strong>：
+1. 综述所有自动化评估工具性能，选择最优组合（Llama-factory-evaluation 等）；
+2. 综述所有类 o1 工作的实现，方便比较；
+3. 给出至少一种训练算法/框架（CPT+FT: Megatron + RLHF: OpenRLHF / LLaMA-Factory）。</p>
+<p><strong>数据创新</strong>：
+1. 给出测评数据集；
+2. 给出测评报告。</p>
+<p><strong>算法创新</strong>：
+1. 分类深度推理评测的覆盖面及不足（数据泄漏分析 + 泛化性元评估）；
+2. 泛化性测试：新测评方法 + 自动构造数据集 + 多模型验证；
+3. 实验结论：数据量 scaling law、泛化过程中的数据最优比例。</p>
+<hr />
+<h2 id="5-experiments-results">5. 实验与结果（Experiments &amp; Results）<a class="headerlink" href="#5-experiments-results" title="Permanent link">&para;</a></h2>
+<h3 id="51">5.1 自训练模型结果<a class="headerlink" href="#51" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>模型</strong></th>
+<th><strong>AIME 2024</strong></th>
+<th><strong>MATH500</strong></th>
+<th><strong>GPQA Diamond</strong></th>
+<th><strong>MMLU</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Qwen2.5-32B-Instruct（基座）</td>
+<td>20.0%</td>
+<td>82.0%</td>
+<td>44.4%</td>
+<td>79.7%</td>
+</tr>
+<tr>
+<td>Sky-T1-32B-Preview（官方）</td>
+<td>43.3%</td>
+<td>82.4–88.8%</td>
+<td>48.5–56.8%</td>
+<td>82.7%</td>
+</tr>
+<tr>
+<td><strong>djh-o1-Sky-T1-32B-Preview</strong>（自训练）</td>
+<td><strong>30.0–33.3%</strong></td>
+<td><strong>87.2–90.0%</strong></td>
+<td><strong>52.5–54.0%</strong></td>
+<td><strong>83.5%</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>分析</strong>：自训练模型在 MATH500 和 MMLU 上接近或超过官方 Sky-T1 水平，但在 AIME（高难度数学竞赛）上仍有差距，表明长 CoT SFT 对中等难度推理有效，但对顶级难度推理的提升有限。</p>
+<p><strong>复现训练配置（十一轮新增，来自049飞书文档+SkyThought README）</strong>：</p>
+<table>
+<thead>
+<tr>
+<th><strong>配置项</strong></th>
+<th><strong>值</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>训练数据量</td>
+<td>17,000 条 SFT 数据（5k代码APP+TACO / 10k数学AIME+MATH+Olympiads来自NuminaMATH / 1k科学+谜题来自STILL-2）</td>
+</tr>
+<tr>
+<td>基座模型</td>
+<td>Qwen2.5-32B-Instruct（非推理模型）</td>
+</tr>
+<tr>
+<td>训练轮数</td>
+<td>3 epochs</td>
+</tr>
+<tr>
+<td>学习率</td>
+<td>1e-5</td>
+</tr>
+<tr>
+<td>批量大小</td>
+<td>96</td>
+</tr>
+<tr>
+<td>训练环境</td>
+<td>8×H100，DeepSpeed Zero-3 offload</td>
+</tr>
+<tr>
+<td>训练时长</td>
+<td>约19小时</td>
+</tr>
+<tr>
+<td>训练成本</td>
+<td>约$450（Lambda Cloud定价）</td>
+</tr>
+<tr>
+<td>数据生成</td>
+<td>QwQ-32B-Preview拒绝采样生成，GPT-4o-mini修改格式</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：049飞书文档"模型训练"章节；SkyThought GitHub README训练配置说明。</p>
+<p>数据来源：SkyThought GitHub README（https://github.com/NovaSky-AI/SkyThought）官方评测结果；自训练模型 djh-o1-Sky-T1-32B-Preview 实验记录（meta-o1 私有仓库）；Qwen2.5-32B-Instruct 基座评测来自 Qwen 官方技术报告。</p>
+</blockquote>
+<h3 id="52">5.2 泛化性观察<a class="headerlink" href="#52" title="Permanent link">&para;</a></h3>
+<p>从多模型对比中观察到关键现象：
+1. <strong>推理模型在数学/代码上的优势不一定能迁移到通用能力</strong>：例如 o1-preview 在 GPQA Diamond 上达 72.3%，但在 LiveCodeBench 上仅 44.6–53.6%；
+2. <strong>非推理基座在通用知识上仍有竞争力</strong>：Claude 3.5 Sonnet 在 MMLU 上 88.3%，超过多数推理模型；
+3. <strong>视觉推理是推理模型的短板</strong>：多数推理模型未报告 MathVista/MMMU 成绩，Kimi k1.5 在 MathVista 上 74.9%、MMMU 上 70.0%；
+4. <strong>SWE-bench 是推理能力的试金石</strong>：DeepSeek-R1 达 49.2%，o1-1217 达 48.9%，而 32B 级模型仅 36.8%，表明软件工程级推理需要更大模型规模。</p>
+<h3 id="53-kaggle-aimo2">5.3 Kaggle AIMO2 竞赛<a class="headerlink" href="#53-kaggle-aimo2" title="Permanent link">&para;</a></h3>
+<ul>
+<li>竞赛：AI Mathematical Olympiad - Progress Prize 2；</li>
+<li>任务：使用 AI 模型解决国家级别的数学挑战；</li>
+<li>规模：12,341 名参赛者；</li>
+<li>截止：2025 年 4 月 1 日；</li>
+<li>项目中搭建了 AIMO2 推理服务器和网关（aimo_2_inference_server.py、aimo_2_gateway.py），用于竞赛推理。</li>
+</ul>
+<h3 id="54">5.4 评估效率维度<a class="headerlink" href="#54" title="Permanent link">&para;</a></h3>
+<p>提出以 AIME 为例的评估效率维度：人类有 3 小时完成 15 道题的时间限制，大模型解题是否具备相应的时间限制、在相应时间内是否具备解题能力——<strong>评估效率</strong>（evaluation efficiency）是泛化性评估中被忽视的重要维度。</p>
+<hr />
+<h2 id="6-engineering">6. 工程实现（Engineering）<a class="headerlink" href="#6-engineering" title="Permanent link">&para;</a></h2>
+<h3 id="61">6.1 代码仓库<a class="headerlink" href="#61" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>私有仓库</strong>：https://github.com/dujh22/meta-o1 （Desc: o1模型的泛化性评估与研究）</li>
+<li><strong>父选题仓库</strong>：https://github.com/dujh22/MetaEvaluation （元评估，多智能体/多语言/通用领域/艺术领域元评估已暂停，优先完成 o1 方向）</li>
+<li><strong>参考仓库</strong>：https://github.com/NovaSky-AI/SkyThought（Sky-T1 复现参考）</li>
+</ul>
+<h3 id="62">6.2 仓库结构<a class="headerlink" href="#62" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>meta-o1/
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>├── code/
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>│   ├── test/           # 测试代码（test.ipynb, test.py）
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>│   └── aimo2/          # AIMO2 竞赛代码
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>│       ├── main.ipynb           # 主实验
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>│       ├── kaggle_evaluation/   # Kaggle 评估
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>│       │   ├── aimo_2_inference_server.py
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>│       │   ├── aimo_2_gateway.py
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>│       │   └── core/            # templates.py, relay.py, base_gateway.py
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>│       └── requirements.txt
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>├── latex/              # LaTeX 文档（acl_latex_ch.tex/pdf, acl_latex_raw.tex/pdf）
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>└── paper/
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>    ├── raw/            # 原始 PDF 论文
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>    ├── note/           # 研究笔记
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>    └── zh/             # 中文翻译论文
+</code></pre></div>
+<h3 id="63">6.3 技术栈<a class="headerlink" href="#63" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>环节</strong></th>
+<th><strong>技术</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>模型训练</td>
+<td>LLaMA-Factory / Megatron + DeepSpeed ZeRO-3 offload</td>
+</tr>
+<tr>
+<td>推理服务</td>
+<td>自定义 inference server + gateway（AIMO2）</td>
+</tr>
+<tr>
+<td>评估</td>
+<td>Llama-factory-evaluation + 自定义评估脚本</td>
+</tr>
+<tr>
+<td>文献管理</td>
+<td>AI 综述工具（rflow.ai）+ 思维导图</td>
+</tr>
+<tr>
+<td>数据处理</td>
+<td>Python + Jupyter Notebook</td>
+</tr>
+<tr>
+<td>论文写作</td>
+<td>LaTeX（ACL 模板）</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：meta-o1 私有仓库代码结构与依赖配置；SkyThought GitHub README 训练配置（Llama-Factory + DeepSpeed ZeRO-3）；项目文档 049《类o1模型的泛化性评估与研究》技术栈记录。</p>
+</blockquote>
+<h3 id="64">6.4 项目时间线<a class="headerlink" href="#64" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>时间</strong></th>
+<th><strong>里程碑</strong></th>
+<th><strong>关键产出</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2025.1.16</td>
+<td>项目正式启动，创建项目文档</td>
+<td>选题确定为"类o1模型的泛化性元评估"</td>
+</tr>
+<tr>
+<td>2025.1-2</td>
+<td>文献调研启动，四层递进检索</td>
+<td>168 篇文献系统性调研，分类思维导图</td>
+</tr>
+<tr>
+<td>2025.2-3</td>
+<td>Sky-T1-32B 复现实验</td>
+<td>17,000 条 SFT 数据，8×H100 训练，djh-o1-Sky-T1 自训练模型</td>
+</tr>
+<tr>
+<td>2025.3-4</td>
+<td>多模型横向评测</td>
+<td>20+ 主流推理模型在数学/代码/通用/视觉多维度对比</td>
+</tr>
+<tr>
+<td>2025.4</td>
+<td>Kaggle AIMO2 竞赛参与</td>
+<td>推理服务器和网关搭建，12,341 名参赛者</td>
+</tr>
+<tr>
+<td>2025.4-5</td>
+<td>自动合成评估数据方法论设计</td>
+<td>复杂化方法 + 元评估验证框架</td>
+</tr>
+<tr>
+<td>2025.5</td>
+<td>LogicEvolve 确立为主线，本项目转为探索性研究</td>
+<td>研究发现支撑 LogicEvolve 方向选择</td>
+</tr>
+<tr>
+<td>2025.6-8</td>
+<td>ACL 格式论文初稿</td>
+<td>中英文双版 LaTeX 论文</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：项目文档 049《类o1模型的泛化性评估与研究》时间线记录；meta-o1 私有仓库 commit 历史；个人周报记录。</p>
+</blockquote>
+<h3 id="65">6.5 关键工程挑战<a class="headerlink" href="#65" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>32B 模型训练资源</strong>：8×H100 + DeepSpeed ZeRO-3 offload 才能训练 32B 模型，资源调度复杂；</li>
+<li><strong>多模型 API 评测稳定性</strong>：20+ 模型的 API 调用存在并发限制、超时、空响应等问题，需要逐个模型串行评测 + 空数据自动重打；</li>
+<li><strong>长思维链截断</strong>：推理模型的长 CoT 输出容易触发 max_tokens 截断，需要在 prompt 中控制 thinking 长度。</li>
+</ol>
+<h3 id="66">6.6 技术栈演进与选型决策<a class="headerlink" href="#66" title="Permanent link">&para;</a></h3>
+<p>本项目从文献调研到模型复现、多模型评测、论文写作，技术栈逐步扩展，以下为关键选型决策记录。</p>
+<table>
+<thead>
+<tr>
+<th><strong>阶段</strong></th>
+<th><strong>时间</strong></th>
+<th><strong>选用技术</strong></th>
+<th><strong>替代方案</strong></th>
+<th><strong>选型理由</strong></th>
+<th><strong>事后评估</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>文献调研</td>
+<td>2025.1-2</td>
+<td>AI综述工具（rflow.ai）+ 思维导图</td>
+<td>Zotero / Mendeley / 人工整理</td>
+<td>rflow.ai支持AI辅助文献分类和摘要生成，思维导图可可视化168篇文献的分类结构，比传统文献管理工具更适合大规模系统性调研</td>
+<td>正确——168篇文献完成四层递进检索和分类，思维导图清晰呈现研究脉络</td>
+</tr>
+<tr>
+<td>模型训练</td>
+<td>2025.2-3</td>
+<td>LLaMA-Factory + DeepSpeed ZeRO-3 offload</td>
+<td>Megatron / HuggingFace Trainer</td>
+<td>LLaMA-Factory配置简单、支持LoRA和全参微调、社区活跃；DeepSpeed ZeRO-3 offload可在8×H100上训练32B模型；Megatron配置复杂且学习成本高</td>
+<td>正确——17,000条SFT数据在8×H100上完成32B模型训练，djh-o1-Sky-T1模型成功产出</td>
+</tr>
+<tr>
+<td>推理服务</td>
+<td>2025.4</td>
+<td>自定义inference server + gateway（AIMO2）</td>
+<td>vLLM / TGI / 直接API调用</td>
+<td>AIMO2竞赛要求低延迟和高并发，自定义server+gateway可精确控制推理流程和资源分配；vLLM/TGI适合通用场景但竞赛定制化需求难以满足</td>
+<td>部分有效——推理服务成功搭建并参与竞赛（12,341名参赛者），但自定义开发工作量大，后续通用评测改用API调用</td>
+</tr>
+<tr>
+<td>多模型评测</td>
+<td>2025.3-4</td>
+<td>自定义评估脚本 + API串行调用</td>
+<td>lm-evaluation-harness / OpenCompass</td>
+<td>20+模型来自不同厂商（OpenAI/Anthropic/智谱/百度等），API格式不统一，自定义脚本可灵活适配各厂商API；lm-eval-harness主要支持开源模型，对闭源API支持有限</td>
+<td>正确——20+模型完成数学/代码/通用/视觉多维度横向对比，串行评测+空数据重打机制保证了评测完整性</td>
+</tr>
+<tr>
+<td>评估框架</td>
+<td>2025.4-5</td>
+<td>Llama-factory-evaluation + 自定义脚本</td>
+<td>自建评估框架 / lm-evaluation-harness</td>
+<td>Llama-factory-evaluation与LLaMA-Factory训练生态打通，可直接加载训练后的模型进行评估；自定义脚本处理特殊评估指标（如效率维度）</td>
+<td>正确——评估流程顺畅，自定义脚本补充了效率维度等特殊指标</td>
+</tr>
+<tr>
+<td>数据处理</td>
+<td>全程</td>
+<td>Python + Jupyter Notebook</td>
+<td>纯Python脚本 / Pandas流水线</td>
+<td>Jupyter Notebook适合探索性数据分析和实验迭代，可逐单元执行并即时查看结果；本项目为研究探索性质，需要频繁调整分析方法</td>
+<td>正确——实验迭代效率高，Notebook记录了完整的分析过程</td>
+</tr>
+<tr>
+<td>论文写作</td>
+<td>2025.6-8</td>
+<td>LaTeX（ACL模板）</td>
+<td>Word / Overleaf在线</td>
+<td>ACL格式要求严格，LaTeX模板可保证格式合规；中英文双版需要精确的排版控制；本地LaTeX编译速度快且可版本管理</td>
+<td>正确——中英文双版LaTeX论文顺利完成，格式符合ACL要求</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：meta-o1私有仓库代码结构与依赖配置；项目文档049《类o1模型的泛化性评估与研究》技术栈记录；实际工具使用记录。</p>
+</blockquote>
+<hr />
+<h2 id="7-impact">7. 成果与影响（Impact）<a class="headerlink" href="#7-impact" title="Permanent link">&para;</a></h2>
+<h3 id="71">7.1 研究产出<a class="headerlink" href="#71" title="Permanent link">&para;</a></h3>
+<ul>
+<li>完成 168 篇文献的系统性调研，形成分类思维导图；</li>
+<li>复现 Sky-T1-32B 推理模型，自训练 djh-o1-Sky-T1-32B-Preview；</li>
+<li>完成 20+ 主流推理模型的多维度横向对比；</li>
+<li>提出自动合成评估数据的方法论框架；</li>
+<li>形成 ACL 格式的论文初稿（LaTeX 中英文双版）。</li>
+</ul>
+<h3 id="72">7.2 对主线研究的支撑<a class="headerlink" href="#72" title="Permanent link">&para;</a></h3>
+<p>本项目的研究发现直接支撑了 LogicEvolve 主线方向的确立：
+- 对"推理模型泛化性不足"的判断，促使 LogicEvolve 聚焦逻辑推理这一数学/代码之外的关键泛化场景；
+- 自动合成评估数据的方法论，在 LogicEvolve 中发展为多智能体协作生成框架；
+- 多模型评测经验，为 CLUB 基准的 80+ 模型评测提供了工程基础。</p>
+<h3 id="73">7.3 后续发展<a class="headerlink" href="#73" title="Permanent link">&para;</a></h3>
+<ul>
+<li>项目后期因 LogicEvolve 确立为主线，本项目转为探索性研究；</li>
+<li>相关思想融入 EvolveLRM（训练自进化）、Groom（Harness 过程级评测）等后续研究；</li>
+<li>私有仓库 meta-o1 持续维护，作为推理模型泛化性研究的基础设施。</li>
+</ul>
+<hr />
+<h2 id="8-my-contribution">8. 个人贡献（My Contribution）<a class="headerlink" href="#8-my-contribution" title="Permanent link">&para;</a></h2>
+<h3 id="81">8.1 角色<a class="headerlink" href="#81" title="Permanent link">&para;</a></h3>
+<p><strong>独立研究者</strong>，全程独立完成文献调研、模型复现、实验设计、数据合成、论文撰写。</p>
+<h3 id="82">8.2 具体工作清单<a class="headerlink" href="#82" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>选题确立</strong>：2025 年 1 月将元评估父选题细化为"类 o1 模型泛化性元评估"；</li>
+<li><strong>文献调研</strong>：完成 168 篇文献的系统性检索、分类和阅读，形成思维导图；</li>
+<li><strong>推理模型复现</strong>：复现 Sky-T1-32B，搭建 8×H100 训练环境，完成 17,000 条数据 SFT；</li>
+<li><strong>多模型评测</strong>：完成 20+ 主流推理模型在数学/代码/通用/视觉多维度的横向对比；</li>
+<li><strong>自动数据合成</strong>：设计自动合成评估数据的方法论框架（复杂化方法 + 元评估验证）；</li>
+<li><strong>Kaggle 竞赛</strong>：参与 AIMO2 竞赛，搭建推理服务器和网关；</li>
+<li><strong>论文撰写</strong>：完成 ACL 格式论文初稿（中英文双版）；</li>
+<li><strong>仓库建设</strong>：建立 meta-o1 私有仓库，维护代码、数据和文档。</li>
+</ol>
+<h3 id="83">8.3 与其他项目的关系<a class="headerlink" href="#83" title="Permanent link">&para;</a></h3>
+<ul>
+<li>父选题：MetaEvaluation（元评估，阶段二启动）；</li>
+<li>姊妹项目：LogicEvolve（逻辑推理自进化，阶段三主线）；</li>
+<li>本项目为 LogicEvolve 的方向选择和方法论提供了前期探索基础。</li>
+</ul>
+<hr />
+<h2 id="9-lessons-learned">9. 经验与反思（Lessons Learned）<a class="headerlink" href="#9-lessons-learned" title="Permanent link">&para;</a></h2>
+<h3 id="91">9.1 关键问题与解决方案（含具体故事）<a class="headerlink" href="#91" title="Permanent link">&para;</a></h3>
+<p><strong>问题一：研究方向过于宏大，难以聚焦。</strong> "类o1模型泛化性评估"涉及评估方法、数据集、算法改进多个层面，初期难以确定核心贡献点。</p>
+<blockquote>
+<p><strong>具体故事</strong>：2025年1月项目启动时，父选题MetaEvaluation涵盖多智能体评估、多语言评估、通用领域评估、艺术领域评估等多个方向，"类o1模型泛化性评估"只是其中一个子方向。初期同时推进文献调研、模型复现、多模型评测三条线，每条线都有进展但都不够深入，导致2月底时项目仍没有明确的核心贡献点。通过168篇文献的系统性调研和分类，发现"自动合成评估数据"是最具差异化的切入点——现有评估方法都依赖人工标注或固定基准，而自动合成可扩展、可验证、抗饱和。于是将研究重心从"全面评估"转向"自动合成评估数据方法论"，同时将模型复现和多模型评测作为工程基础和背景验证，不再作为核心贡献。</p>
+</blockquote>
+<p><strong>问题二：非数学/代码领域的评估缺乏标准答案。</strong> 这是本项目的核心难题，也是泛化性评估的根本障碍。</p>
+<blockquote>
+<p><strong>具体故事</strong>：在多模型评测中，数学和代码领域有明确的标准答案（数值结果、代码通过测试用例），但通用推理、视觉推理等领域的答案往往是开放式的，无法用简单的精确匹配来评估。最初尝试用LLM-as-judge来评分，但发现不同评判模型的评分一致性很低（十一轮核查：049飞书文档中未记录具体一致性数值，该问题是促使项目转向"复杂化方法"自动合成可验证数据的核心动机，具体一致性数值保留待核实），且评判模型本身可能存在偏见。解决方案是提出"复杂化方法"自动合成数据——从有标准答案的基础问题出发，让模型自动增加约束和难度（如增加条件、改变约束关系、引入干扰项），生成的新问题仍可通过基础问题的答案推导验证，同时用元评估算法验证合成数据的有效性（区分强模型和弱模型的能力）。这一方法论后来在LogicEvolve中发展为多智能体协作生成框架。</p>
+</blockquote>
+<p><strong>问题三：个人研究者难以复现顶级推理基准。</strong> FrontierMath、HLE等基准依赖上百位专家，个人无法复制。</p>
+<blockquote>
+<p><strong>具体故事</strong>：在文献调研中发现，2024-2025年出现的顶级推理基准（如FrontierMath、HLE）都依赖大规模人工标注——FrontierMath有数百道由专家精心设计的高难度数学题，HLE由人类专家编写和验证。作为个人研究者，无法复制这种规模的人工投入。最初考虑缩小基准规模（如做50题的小型基准），但小型基准的统计显著性和说服力不足。最终转向方法论研究——不做固定基准，而是研究"如何自动合成评估数据"，用可扩展的方法替代人工出题。这个转向虽然放弃了"发布一个新基准"的目标，但找到了更具学术价值和可扩展性的研究方向。</p>
+</blockquote>
+<p><strong>问题四：多模型API评测的工程负担重。</strong> 20+模型的API调用存在各种不稳定问题。</p>
+<blockquote>
+<p><strong>具体故事</strong>：2025年3-4月进行20+主流推理模型的横向评测时，遇到了大量工程问题：OpenAI API有并发限制（每分钟最多X次调用），Anthropic API偶尔返回空响应，智谱API在高峰期超时，部分模型的API格式与文档不一致。最初设计的并行评测脚本频繁出错，不得不改为逐个模型串行评测，并增加空数据自动检测与重打机制——每次API调用后检查响应是否为空或格式错误，如果是则自动重试（最多3次），仍失败则记录并在最后统一重打。整个评测过程持续了约2周，最终完成了20+模型在数学/代码/通用/视觉多维度的对比。这一工程经验后来直接用于CLUB基准的80+模型评测，大幅提升了评测效率。</p>
+</blockquote>
+<h3 id="92">9.2 可复用方法论（深化版）<a class="headerlink" href="#92" title="Permanent link">&para;</a></h3>
+<h4 id="921">9.2.1 四层递进文献调研法<a class="headerlink" href="#921" title="Permanent link">&para;</a></h4>
+<p><strong>宏观→中观→微观→衍生交叉</strong>，确保调研的系统性和深度：
+- <strong>宏观层</strong>：领域综述和趋势分析，建立整体认知；
+- <strong>中观层</strong>：核心方法和技术路线分类，理解主要研究范式；
+- <strong>微观层</strong>：关键论文的精读和复现，掌握技术细节；
+- <strong>衍生交叉层</strong>：跨领域相关工作，发现创新机会；
+- <strong>输出</strong>：168篇文献分类思维导图，明确研究空白和差异化切入点。</p>
+<h4 id="922-sop">9.2.2 推理模型复现SOP<a class="headerlink" href="#922-sop" title="Permanent link">&para;</a></h4>
+<p><strong>基座选择→数据混合→SFT配置→多维度评测</strong>：
+- <strong>基座选择</strong>：选择与目标模型架构相近的基座（如Sky-T1基于Qwen2.5-32B）；
+- <strong>数据混合</strong>：拒绝采样+格式修改，确保训练数据与目标推理格式一致；
+- <strong>SFT配置</strong>：LLaMA-Factory + DeepSpeed ZeRO-3 offload，8×H100训练32B模型；
+- <strong>多维度评测</strong>：数学/代码/通用/视觉多维度对比，不仅看准确率还看效率（时间限制）。</p>
+<h4 id="923">9.2.3 自动合成评估数据框架<a class="headerlink" href="#923" title="Permanent link">&para;</a></h4>
+<p><strong>基础问题→模型复杂化→答案验证→元评估校准</strong>，可推广到其他缺乏标准答案的领域：
+- <strong>基础问题</strong>：从有标准答案的简单问题出发；
+- <strong>模型复杂化</strong>：让LLM自动增加约束和难度（增加条件、改变约束关系、引入干扰项）；
+- <strong>答案验证</strong>：通过基础问题的答案推导验证合成问题的正确性；
+- <strong>元评估校准</strong>：用元评估算法验证合成数据区分强模型和弱模型的能力。</p>
+<h4 id="924">9.2.4 评估效率维度法<a class="headerlink" href="#924" title="Permanent link">&para;</a></h4>
+<p>将<strong>时间限制</strong>引入推理模型评估，是对传统准确率指标的重要补充：
+- <strong>传统指标</strong>：仅看最终答案的准确率，忽略推理过程的时间成本；
+- <strong>效率维度</strong>：在固定时间限制下评估模型表现，反映模型在实际应用中的可用性；
+- <strong>实现方式</strong>：设置max_tokens或时间上限，统计不同时间限制下的准确率变化曲线；
+- <strong>价值</strong>：揭示模型"思考多久才能答对"的 trade-off，为实际应用中的模型选择提供依据。</p>
+<h3 id="93">9.3 如果重来会怎么做<a class="headerlink" href="#93" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>更早聚焦</strong>：如果重来，会在项目初期就明确"自动合成评估数据"为唯一核心贡献点，避免在模型复现和多模型评测上投入过多精力；</li>
+<li><strong>更小模型验证</strong>：32B模型训练资源消耗大（8×H100），如果重来会先用7B模型快速验证方法论，再考虑扩大规模；</li>
+<li><strong>与LogicEvolve更紧密协同</strong>：两个项目几乎同时启动，如果重来会更早将泛化性评估的发现转化为LogicEvolve的具体设计决策，减少重复劳动；</li>
+<li><strong>更务实的投稿策略</strong>：初期目标冲刺NeurIPS过于激进，如果重来会先投workshop或ARR，逐步积累。</li>
+</ol>
+<h3 id="94">9.4 踩坑与避坑指南<a class="headerlink" href="#94" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>坑点</strong></th>
+<th><strong>具体表现</strong></th>
+<th><strong>避坑建议</strong></th>
+<th><strong>本项目应对</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>研究方向过于发散</strong></td>
+<td>同时推进文献调研、模型复现、多模型评测三条线，每条都有进展但都不深入</td>
+<td>项目初期通过文献调研明确唯一核心贡献点，其他工作降级为支撑性工作，不要平均分配精力</td>
+<td>2月底通过168篇文献调研明确"自动合成评估数据"为核心切入点</td>
+</tr>
+<tr>
+<td><strong>32B模型训练资源不足</strong></td>
+<td>8×H100 + DeepSpeed ZeRO-3 offload才能训练32B模型，资源调度复杂，排队时间长</td>
+<td>方法论验证先用7B或更小模型，确认有效后再扩大到32B；不要一开始就用大模型</td>
+<td>直接用32B模型复现，资源消耗大，后续项目改用更小模型快速验证</td>
+</tr>
+<tr>
+<td><strong>多模型API不稳定</strong></td>
+<td>20+模型API存在并发限制、超时、空响应、格式不一致等问题，并行评测频繁出错</td>
+<td>逐个模型串行评测，增加空数据自动检测与重打机制（最多3次重试），最后统一处理失败项</td>
+<td>串行评测+空数据重打机制，2周完成20+模型评测</td>
+</tr>
+<tr>
+<td><strong>非标准领域评估困难</strong></td>
+<td>通用推理、视觉推理等领域缺乏标准答案，LLM-as-judge评分一致性低</td>
+<td>采用"复杂化方法"从有标准答案的基础问题自动合成评估数据，确保答案可验证；不要依赖主观评分</td>
+<td>提出自动合成评估数据框架，用元评估验证合成数据有效性</td>
+</tr>
+<tr>
+<td><strong>个人研究者资源有限</strong></td>
+<td>无法复现FrontierMath、HLE等依赖上百位专家的顶级基准</td>
+<td>转向方法论研究而非固定基准建设，用可扩展的自动合成方法替代人工出题</td>
+<td>放弃固定基准，转向自动合成评估数据方法论研究</td>
+</tr>
+<tr>
+<td><strong>长思维链截断</strong></td>
+<td>推理模型的长CoT输出触发max_tokens截断，导致答案不完整</td>
+<td>在prompt中控制thinking长度，设置合理的max_tokens，对超长输出做截断处理</td>
+<td>prompt控制thinking长度，缓解截断问题</td>
+</tr>
+<tr>
+<td><strong>投稿目标过于激进</strong></td>
+<td>初期目标冲刺NeurIPS，但研究深度和实验充分性不足</td>
+<td>先投workshop或ARR积累反馈，再根据评审意见改进后冲刺顶级会议</td>
+<td>转为探索性研究，思想融入后续LogicEvolve等项目</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：项目执行过程中的实际问题记录，项目文档049中的研究复盘，个人工作总结。</p>
+</blockquote>
+<hr />
+<h2 id="95-faq">9.5 常见问题与解答（FAQ）<a class="headerlink" href="#95-faq" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>以下问题模拟读者、面试官和答辩评委的视角，解答均从报告正文提取。</p>
+</blockquote>
+<p><strong>Q1：这个项目后来转为探索性研究，是不是意味着项目失败了？如何体现其价值？</strong></p>
+<p>A：项目转为探索性研究不等于失败，而是研究方向的合理调整。其价值体现在三个层面：（1）<strong>对主线研究的支撑</strong>——对"推理模型泛化性不足"的判断，促使LogicEvolve聚焦逻辑推理这一数学/代码之外的关键泛化场景；自动合成评估数据的方法论，在LogicEvolve中发展为多智能体协作生成框架；多模型评测经验为CLUB基准的80+模型评测提供了工程基础。（2）<strong>方法论沉淀</strong>——四层递进文献调研法、推理模型复现SOP、自动合成评估数据框架、评估效率维度法，这些方法论已在后续项目中复用。（3）<strong>基础设施建设</strong>——meta-o1私有仓库持续维护，作为推理模型泛化性研究的基础设施；168篇文献的分类思维导图为后续研究提供了知识基础。在学术研究中，探索性项目的价值往往不在于直接产出论文，而在于为后续主线研究提供方向验证和方法论积累。</p>
+<p><strong>Q2：20+模型的横向对比评测，具体用了哪些指标？如何保证评测的公平性？</strong></p>
+<p>A：评测覆盖数学、代码、通用、视觉四个维度。数学维度使用标准基准（049飞书文档记录的完整基准列表：AIME 2024、MATH500、GPQA Diamond、GSM8K），以最终答案准确率为指标；代码维度使用代码生成基准（LiveCodeBench lcb_v6、Codeforces），以pass@k为指标；通用维度使用MMLU（57学科），结合准确率和效率；视觉维度使用MathVista、MMMU多模态推理基准；此外还包括SWE-bench verified（软件工程）、ARC AGI v1/v2、NYT Connections、reasoningbench等扩展基准。公平性保障措施：（1）<strong>统一prompt模板</strong>——所有模型使用相同的prompt格式和推理指令，仅替换模型调用接口；（2）<strong>统一评测脚本</strong>——使用自定义评估脚本，确保数据加载、答案提取、评分逻辑一致；（3）<strong>多次运行取平均</strong>——对随机性较大的模型多次运行取平均结果；（4）<strong>空数据重打机制</strong>——API调用失败或返回空响应时自动重试，确保每个模型都有完整的评测结果。需要说明的是，由于各模型API的并发限制和调用成本不同，评测是逐个模型串行进行的，时间跨度约2周，期间部分模型可能有版本更新，这是评测的一个局限性。</p>
+<p><strong>Q3："复杂化方法"自动合成评估数据，如何保证合成数据的质量和答案的正确性？</strong></p>
+<p>A："复杂化方法"的核心设计就是确保答案可验证，具体机制如下：（1）<strong>从有标准答案的基础问题出发</strong>——选择答案明确、验证简单的基础问题（如简单的逻辑约束题、数学题）作为起点；（2）<strong>模型复杂化保持答案可推导</strong>——让LLM增加约束和难度（增加条件、改变约束关系、引入干扰项），但复杂化过程不改变问题的基本结构，新问题的答案可以通过基础问题的答案推导或重新求解验证；（3）<strong>答案验证环节</strong>——合成后用独立的求解器或验证器检查答案正确性，过滤答案错误的合成数据；（4）<strong>元评估校准</strong>——用元评估算法验证合成数据的"区分度"——即合成数据是否能有效区分强模型和弱模型，如果强模型和弱模型在合成数据上表现差不多，说明数据缺乏区分度，需要调整复杂化策略。这四个环节形成了"合成→验证→校准"的闭环，确保合成数据的质量。当然，复杂化方法的效果还需要更多实验验证，这也是后续研究的方向。</p>
+<p><strong>Q4：复现Sky-T1-32B模型时，17,000条SFT数据是怎么来的？数据质量如何保证？</strong></p>
+<p>A：17,000条SFT数据的构造参考了Sky-T1论文中的数据混合策略，主要包括：（1）<strong>拒绝采样</strong>——用基础模型生成多个候选回答，用验证器或奖励模型筛选高质量回答作为训练数据；（2）<strong>格式修改</strong>——将现有数学/代码数据集转换为推理模型的CoT格式（包含thinking过程和最终答案）；（3）<strong>数据混合</strong>——按一定比例混合不同来源、不同难度的数据，确保训练数据的多样性。数据质量保证措施：（1）<strong>答案验证</strong>——每条数据的最终答案经过验证器检查，确保正确性；（2）<strong>格式检查</strong>——自动检查CoT格式是否规范（thinking标签、答案标签等）；（3）<strong>人工抽检</strong>——对随机抽样的数据进行人工检查，确保质量。需要说明的是，17,000条数据的规模相对较小（完整的推理模型SFT通常需要数万到数十万条数据），这主要受限于个人研究者的资源，复现模型djh-o1-Sky-T1-32B-Preview的效果与原模型存在差距，这是预期之内的。</p>
+<p><strong>Q5：评估中引入"效率维度"（时间限制），具体是怎么实现的？这个维度有什么实际意义？</strong></p>
+<p>A：效率维度的实现方式是：在模型推理时设置max_tokens上限或时间上限，统计不同限制下模型的准确率变化。例如，设置max_tokens=512、1024、2048、4096等不同档位，分别评测模型在各档位下的准确率，绘制"思考长度-准确率"曲线。这个维度的实际意义在于：（1）<strong>揭示推理成本</strong>——传统准确率指标只看"能不能答对"，不考虑"思考了多久"，而效率维度揭示了模型答对所需的推理成本；（2）<strong>指导实际应用</strong>——在实际应用中，推理延迟和成本是关键约束，效率维度帮助选择在给定成本预算下表现最优的模型；（3）<strong>发现模型特性</strong>——有些模型在短思考时表现差但长思考时表现好（"慢思考型"），有些模型短思考就能答对（"快思考型"），效率维度能区分这些特性；（4）<strong>补充传统评估</strong>——与准确率形成互补，提供更全面的模型能力画像。在本项目的20+模型评测中，效率维度确实发现了不同模型在"思考长度-准确率"曲线上的显著差异。</p>
+<hr />
+<h2 id="10-references">10. 文件索引（References）<a class="headerlink" href="#10-references" title="Permanent link">&para;</a></h2>
+<h3 id="_4">飞书文档<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>文档</strong></th>
+<th><strong>链接</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>类o1模型的泛化性评估与研究（主文档）</td>
+<td>https://zhipu-ai.feishu.cn/docx/XUO2dijCno0sZwxE8bqcB7v3nRe</td>
+</tr>
+<tr>
+<td>【总】Meta Evaluation</td>
+<td>https://zhipu-ai.feishu.cn/docx/NeZBdHsKwooWKnxZ1Iyc7KmYnKf</td>
+</tr>
+<tr>
+<td>元评估文档</td>
+<td>https://zhipu-ai.feishu.cn/docx/U4o3dRBBIoXt4RxafOTcw92Unvf</td>
+</tr>
+<tr>
+<td>复杂逻辑推理 Bench 调研</td>
+<td>https://zhipu-ai.feishu.cn/docx/JppcdUFnBounOuxX9jfcxLWbnPN</td>
+</tr>
+<tr>
+<td>智谱AI院年中个人工作总结 202508</td>
+<td>https://zhipu-ai.feishu.cn/docx/Bdd9dSw9loNkPXxfc06cOklknGg</td>
+</tr>
+</tbody>
+</table>
+<h3 id="github">GitHub 仓库<a class="headerlink" href="#github" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>仓库</strong></th>
+<th><strong>链接</strong></th>
+<th><strong>性质</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>meta-o1</td>
+<td>https://github.com/dujh22/meta-o1</td>
+<td>私有</td>
+</tr>
+<tr>
+<td>MetaEvaluation</td>
+<td>https://github.com/dujh22/MetaEvaluation</td>
+<td>私有</td>
+</tr>
+<tr>
+<td>LLM-o1</td>
+<td>https://github.com/dujh22/LLM-o1</td>
+<td>私有</td>
+</tr>
+<tr>
+<td>LogicEvolve</td>
+<td>https://github.com/dujh22/LogicEvolve</td>
+<td>私有</td>
+</tr>
+<tr>
+<td>CLUB-benchmark</td>
+<td>https://github.com/dujh22/CLUB-benchmark</td>
+<td>公开</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_5">参考资源<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>资源</strong></th>
+<th><strong>链接</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sky-T1 复现（NovaSky）</td>
+<td>https://novasky-ai.github.io/posts/sky-t1/</td>
+</tr>
+<tr>
+<td>Sky-T1 GitHub</td>
+<td>https://github.com/NovaSky-AI/SkyThought</td>
+</tr>
+<tr>
+<td>Sky-T1 HuggingFace</td>
+<td>https://huggingface.co/NovaSky-AI</td>
+</tr>
+<tr>
+<td>Sky-T1 WandB</td>
+<td>https://wandb.ai/sky-posttraining-uc-berkeley/huggingface/reports/Sky-T1-32B-Preview-Training--VmlldzoxMDg3ODE4Nw</td>
+</tr>
+<tr>
+<td>Kaggle AIMO2</td>
+<td>https://www.kaggle.com/competitions/ai-mathematical-olympiad-progress-prize-2</td>
+</tr>
+<tr>
+<td>AI 综述工具</td>
+<td>https://rflow.ai/flow/edca212d-16b6-4c85-9396-5bd3b330a49c</td>
+</tr>
+<tr>
+<td>推理路径优化 RPO</td>
+<td>https://reasoning-paths.github.io</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_6">本地材料<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<ul>
+<li>汇总文档：<code>/Users/djh/Documents/备份/一般/工作/代码/LLM/github/Z.ai/杜晋华-智谱实习工作梳理.md</code></li>
+<li>全记录文档：<code>/Users/djh/Documents/备份/一般/工作/代码/LLM/github/Z.ai/杜晋华-项目经历全记录.md</code></li>
+<li>飞书文档缓存：<code>/tmp/feishu_docx/</code></li>
+<li>GitHub README 缓存：<code>/tmp/github_readmes/</code></li>
+</ul>
+<hr />
+<h2 id="11">11. 转正答辩证据卡<a class="headerlink" href="#11" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>本章节为转正答辩专用证据整理，基于智谱转正制度（ZP-RL-009）与公司文化2.0（Think Big / Deliver Solid / Scale Stable）标准整理。</p>
+</blockquote>
+<h3 id="111">11.1 目标基线<a class="headerlink" href="#111" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>部门目标(O)</strong>：研究类 o1 推理模型的泛化能力边界，探索自动合成评估数据的方法论，为公司推理模型研发提供技术洞察和评估基础设施。</li>
+<li><strong>个人KR</strong>：（1）完成类 o1 模型泛化性相关文献的系统性调研；（2）复现开源推理模型并完成多模型横向对比；（3）提出自动合成评估数据的方法论框架；（4）形成论文初稿。</li>
+<li><strong>完成率</strong>：文献调研 100%（168 篇）；模型复现 100%（Sky-T1-32B，自训练 djh-o1-Sky-T1）；多模型对比 100%（20+ 模型）；自动合成评估方法论 100%（框架提出）；论文初稿 100%（ACL 格式中英文双版）；但因 LogicEvolve 确立为主线，本项目转为探索性研究，未完成投稿。</li>
+</ul>
+<h3 id="112">11.2 量化结果<a class="headerlink" href="#112" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>维度</strong></th>
+<th><strong>具体数据</strong></th>
+<th><strong>来源</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>文献调研</td>
+<td>168 篇（泛化性 3 篇 + 评估 3 篇 + 推理 4 篇 + 算法 158 篇），四层递进调研路径</td>
+<td>第4章</td>
+</tr>
+<tr>
+<td>模型复现</td>
+<td>Sky-T1-32B（基于 Qwen2.5-32B-Instruct，17,000 条 SFT 数据，8×H100，DeepSpeed ZeRO-3 offload）</td>
+<td>第4章</td>
+</tr>
+<tr>
+<td>自训练模型</td>
+<td>djh-o1-Sky-T1-32B-Preview：MATH500 87.2–90.0%，MMLU 83.5%，AIME 30.0–33.3%，GPQA 52.5–54.0%</td>
+<td>第5章</td>
+</tr>
+<tr>
+<td>多模型对比</td>
+<td>20+ 主流推理模型横向评测（DeepSeek-R1、o1-1217、Kimi k1.5、GLM-Zero、QwQ-32B 等），覆盖数学/代码/通用/视觉多维度</td>
+<td>第3章/第4章</td>
+</tr>
+<tr>
+<td>论文初稿</td>
+<td>ACL 格式 LaTeX 中英文双版</td>
+<td>第6章/第7章</td>
+</tr>
+<tr>
+<td>竞赛参与</td>
+<td>Kaggle AIMO2（12,341 名参赛者，2025.4.1 截止），搭建推理服务器和网关</td>
+<td>第5章/第7章</td>
+</tr>
+<tr>
+<td>关键发现</td>
+<td>推理模型在数学/代码上的优势不一定能迁移到通用能力；非推理基座在通用知识上仍有竞争力；视觉推理是推理模型短板；SWE-bench 是推理能力试金石</td>
+<td>第5章</td>
+</tr>
+</tbody>
+</table>
+<h3 id="113">11.3 公司层面贡献<a class="headerlink" href="#113" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>方向支撑</strong>：对"推理模型泛化性不足"的判断，直接促使 LogicEvolve 主线聚焦逻辑推理这一数学/代码之外的关键泛化场景，为公司核心研究方向的确立提供了前期探索基础。</li>
+<li><strong>方法论复用</strong>：自动合成评估数据的方法论在 LogicEvolve 中发展为多智能体协作生成框架；多模型评测经验（逐个模型串行评测 + 空数据自动重打机制）为 CLUB 基准的 80+ 模型评测提供了工程基础。</li>
+<li><strong>技术储备</strong>：Sky-T1-32B 推理模型复现经验（拒绝采样数据生成 + 长 CoT SFT 训练）为公司后续推理模型研发提供了技术参考。</li>
+<li><strong>间接贡献</strong>：本项目为探索性研究，对公司直接业务贡献有限，但通过方向支撑和方法论复用间接服务 LogicEvolve 主线和 CLUB 基准建设。</li>
+</ul>
+<h3 id="114">11.4 专业影响力<a class="headerlink" href="#114" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>研究发现</strong>：系统分析了 20+ 主流推理模型的泛化能力边界，发现"推理模型在数学/代码上的优势不一定能迁移到通用能力"的关键现象，提出"评估效率"（evaluation efficiency）作为泛化性评估中被忽视的重要维度。</li>
+<li><strong>方法论创新</strong>：提出自动合成评估数据的框架——复杂化方法（从基础问题出发让模型自动增加约束和难度）+ 元评估验证 + 数据泄漏检测，解决非数学/代码领域"无标准答案"的评估难题。</li>
+<li><strong>工程能力</strong>：独立完成 32B 模型复现（8×H100 + DeepSpeed ZeRO-3 offload）、20+ 模型 API 评测（含空数据自动检测与重打机制）、AIMO2 推理服务器和网关搭建。</li>
+<li><strong>文档沉淀</strong>：meta-o1 私有仓库含完整代码、ACL 格式论文初稿（中英文双版）、文献分类思维导图；168 篇文献的系统性调研形成可复用的领域知识基础。</li>
+</ul>
+<h3 id="115">11.5 价值观锚点<a class="headerlink" href="#115" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>价值观</strong></th>
+<th><strong>具体故事</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Think Big</strong></td>
+<td>不满足于仅在数学/代码领域评估推理模型（这是当时业界的主流做法），主动提出"类 o1 模型泛化性评估"这一被忽视的研究方向，探索推理能力从数学/代码到更泛化场景的迁移边界；进一步提出自动合成评估数据的方法论，试图解决非数学/代码领域"无标准答案"的根本评估难题，从"用现有基准评测"走向"创造新评测方法"。</td>
+</tr>
+<tr>
+<td><strong>Deliver Solid</strong></td>
+<td>研究工作注重实证基础——168 篇文献的系统性调研（四层递进路径：宏观→中观→微观→衍生交叉）、Sky-T1-32B 的完整复现（17,000 条数据 SFT，8×H100 训练）、20+ 模型的多维度横向对比（数学/代码/通用/视觉/软件工程）、自训练模型的完整评测（MATH500/MMLU/AIME/GPQA），每个结论都有数据支撑。</td>
+</tr>
+<tr>
+<td><strong>创新</strong></td>
+<td>提出"复杂化方法"自动合成评估数据——从网络收集基础问题，让模型自动增加约束和难度，合成后的问题和答案作为测试数据，同时用元评估算法验证合成 benchmark 的泛化性、设计攻击算法分析数据泄漏；提出"评估效率"维度——将人类解题的时间限制引入大模型评估，是对传统准确率指标的重要补充。</td>
+</tr>
+<tr>
+<td><strong>极智/极度专注</strong></td>
+<td>独立完成从文献调研（168 篇，四层递进）、模型复现（32B 模型，8×H100）、多模型评测（20+ 模型，多维度）、方法论创新（自动合成评估数据）到论文撰写（ACL 格式中英文双版）的全流程研究；在 LogicEvolve 主线确立后，仍持续维护 meta-o1 仓库和研究积累，将相关思想融入 EvolveLRM、Groom 等后续研究。</td>
+</tr>
+<tr>
+<td><strong>团队协作/利他</strong></td>
+<td>多模型评测经验（逐个模型串行评测 + 空数据自动重打机制）直接被 CLUB 基准的 80+ 模型评测复用；对"推理模型泛化性不足"的判断帮助 LogicEvolve 聚焦逻辑推理方向；自动合成评估数据的方法论在 LogicEvolve 中发展为多智能体协作生成框架——本项目的研究成果持续利他地支撑主线研究。</td>
+</tr>
+<tr>
+<td><strong>激情/主人翁</strong></td>
+<td>主动在元评估父选题下提出"类 o1 模型泛化性评估"子方向，2025 年 1 月 16 日正式创建项目文档，独立推进全流程研究；主动参与 Kaggle AIMO2 竞赛，搭建推理服务器和网关；在项目转为探索性研究后，仍持续维护仓库并将思想融入后续研究，展现了对研究方向的主人翁精神。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="116">11.6 协作与利他<a class="headerlink" href="#116" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>帮了谁</strong>：（1）LogicEvolve 主线项目——泛化性不足的判断帮助聚焦逻辑推理方向，多模型评测经验和自动合成方法论被复用；（2）CLUB 基准——20+ 模型评测经验（空数据自动重打机制等）为 80+ 模型评测提供工程基础；（3）EvolveLRM/Groom 等后续研究——相关思想融入这些研究方向；（4）Kaggle AIMO2 竞赛社区——参与竞赛并搭建推理服务器。</li>
+<li><strong>证人</strong>：唐杰教授（学术指导）、侯振宇（阶段一直属主管）、黄轩成（阶段三直属主管）、LogicEvolve 项目合作者。</li>
+<li><strong>跨部门协作</strong>：主要为独立研究项目，与 LogicEvolve、CLUB 等主线项目有方法论和工程经验的协作复用。</li>
+</ul>
+<h3 id="117">11.7 反思与成长（自我批评式）<a class="headerlink" href="#117" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>没做好的</strong>：（1）研究方向过于宏大，初期难以聚焦——"类 o1 模型泛化性评估"涉及评估方法、数据集、算法改进多个层面，我在项目初期没有快速锁定核心贡献点，导致在模型复现和多模型评测上投入了过多精力，而自动合成评估数据这一最具差异化的方向没有深入推进，这是我研究聚焦能力不足的表现；（2）32B 模型训练资源消耗大——如果先用 7B 模型快速验证方法论，再考虑扩大规模，可以节省大量算力资源；（3）投稿策略过于激进——初期目标冲刺 NeurIPS，在研究积累不够充分的情况下设定过高目标，后因 LogicEvolve 主线确立而转为探索性研究，未能形成完整的研究闭环。</li>
+<li><strong>学到的</strong>：（1）四层递进文献调研法——宏观→中观→微观→衍生交叉，确保调研的系统性和深度，这一方法后续被 LogicalSurvey 综述项目复用；（2）推理模型复现 SOP——基座选择→数据混合（拒绝采样+格式修改）→SFT 配置→多维度评测；（3）自动合成评估数据框架——基础问题→模型复杂化→答案验证→元评估校准，可推广到其他缺乏标准答案的领域；（4）评估效率维度——将时间限制引入推理模型评估，是对传统准确率指标的重要补充；（5）研究聚焦的重要性——在资源有限的情况下，必须快速锁定核心贡献点，避免在周边工作上消耗过多精力。</li>
+<li><strong>如果重来</strong>：（1）在项目初期就明确"自动合成评估数据"为唯一核心贡献点，避免在模型复现和多模型评测上投入过多精力；（2）先用 7B 模型快速验证方法论，再考虑扩大到 32B 规模，节省算力资源；（3）更早将泛化性评估的发现转化为 LogicEvolve 的具体设计决策，减少重复劳动；（4）先投 workshop 或 ARR 逐步积累，而非一开始就冲刺 NeurIPS；（5）建立更系统的实验记录机制（超参数、随机种子、耗时），便于后续复现与消融。</li>
+<li><strong>成长轨迹</strong>：从阶段一的 PRM 数据 pipeline 工程实现，到阶段二的 o1 复现框架设计，再到阶段三独立提出并推进"类 o1 模型泛化性评估"研究方向，完成了从"工程执行者"到"独立研究者"的角色转变；虽然本项目转为探索性研究，但其研究发现和方法论直接支撑了 LogicEvolve 主线的确立，是研究能力跃迁的关键一步。</li>
+</ul>
+<h3 id="118-6">11.8 6年后视角<a class="headerlink" href="#118-6" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>大局定位</strong>：类 o1 模型泛化性评估是推理模型浪潮中的前瞻性研究。2024 年底至 2025 年初，DeepSeek-R1、Kimi k1.5、QwQ 等推理模型相继涌现，但业界评估集中在数学（AIME、MATH）和代码（LiveCodeBench）领域，对推理模型的泛化能力关注不足。本项目在 2025 年 1 月即提出"类 o1 模型泛化性评估"方向，是国内较早系统研究推理模型泛化能力边界的工作之一。6 年后回看，推理模型的泛化能力已成为业界共识的核心问题，本项目积累的自动合成评估数据方法论和多模型评测经验，是推理模型评估基础设施的早期探索。</li>
+<li><strong>为什么值得做</strong>：（1）方向价值——对"推理模型泛化性不足"的判断，直接帮助 LogicEvolve 聚焦逻辑推理这一数学/代码之外的关键泛化场景，为公司核心研究方向的确立提供了前期探索基础；（2）方法论价值——自动合成评估数据的框架（复杂化方法 + 元评估验证 + 数据泄漏检测）为非数学/代码领域的评估提供了新思路，后续在 LogicEvolve 中发展为多智能体协作生成框架；（3）个人成长——从工程实现走向独立研究方向设计，虽然项目转为探索性研究，但研究发现和方法论持续支撑主线研究，是研究能力跃迁的关键一步；（4）工程价值——32B 模型复现经验和 20+ 模型评测经验为后续推理模型研发和 CLUB 基准建设提供了技术基础。</li>
+</ul>
+<h3 id="119">11.9 五段式讲述（答辩稿骨架）<a class="headerlink" href="#119" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>问题定义</strong>（外行能懂）：OpenAI 的 o1 和深度求索的 DeepSeek-R1 这些"推理模型"做数学题和编程特别厉害，但它们在数学和编程上学到的"推理能力"，能不能用到其他地方——比如解逻辑题、做常识推理、处理视觉问题？业界当时都在比谁的数学分高，但没人系统研究这些模型的"通用推理能力"到底怎么样。我想搞清楚这个问题。</li>
+<li><strong>输入输出</strong>（本科生能懂）：输入是 20+ 主流推理模型（DeepSeek-R1、o1、Kimi k1.5、GLM-Zero、QwQ 等）和 168 篇相关文献，输出是：（1）这些模型在数学/代码/通用/视觉多维度的横向对比结果；（2）一个自己复现并训练的推理模型（djh-o1-Sky-T1，MATH500 87.2%）；（3）一套自动合成评估数据的方法论框架；（4）ACL 格式的论文初稿。</li>
+<li><strong>技术/做法</strong>（研究生能懂）：采用四层递进文献调研法（宏观→中观→微观→衍生交叉）系统梳理 168 篇文献；复现 Sky-T1-32B 开源推理模型——用拒绝采样从 QwQ 获取高质量数据、GPT-4o-mini 修改格式，混合 APPs/TACO（5k 代码）+ NuminaMATH（10k 数学）+ STILL-2（1k 科学/谜题）共 17,000 条数据，在 Qwen2.5-32B-Instruct 上做 3 epochs SFT（8×H100，DeepSpeed ZeRO-3 offload）；完成 20+ 模型在 AIME/MATH500/GPQA/LiveCodeBench/MMLU/MathVista/MMMU/SWE-bench 多维度的横向对比；提出自动合成评估数据框架——复杂化方法（让模型自动增加约束和难度）+ 元评估验证 + 数据泄漏检测。</li>
+<li><strong>核心创新</strong>（只有自己懂）：在业界集中评估数学/代码时，率先系统研究推理模型的泛化能力边界，发现"推理模型在数学/代码上的优势不一定能迁移到通用能力"的关键现象；提出"复杂化方法"自动合成评估数据——从基础问题出发让模型自动增加约束和难度，同时用元评估验证合成 benchmark 的泛化性、设计攻击算法分析数据泄漏，解决非数学/代码领域"无标准答案"的根本评估难题；提出"评估效率"维度，将人类解题的时间限制引入大模型评估。</li>
+<li><strong>未来</strong>（开放问题）：推理模型的泛化能力评估仍是开放问题——数学/代码上的推理优势能否真正迁移到逻辑推理、常识推理、科学推理等领域？自动合成评估数据的方法论需要更系统的验证和更大规模的实验；推理模型的视觉推理能力如何提升？评估效率维度（时间限制下的解题能力）如何标准化？本项目的研究发现和方法论已在 LogicEvolve（逻辑推理自进化）中延续和深化。</li>
+</ol>
+<hr />
+<h2 id="12">12. 相关项目<a class="headerlink" href="#12" title="Permanent link">&para;</a></h2>
+<p>下表梳理与本项目存在技术、方法或研究方向关联的其他项目报告，便于跨项目追溯和体系化理解。</p>
+<table>
+<thead>
+<tr>
+<th><strong>关联报告</strong></th>
+<th><strong>关联类型</strong></th>
+<th><strong>关联说明</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>04 · MetaEvaluation 元评估</strong></td>
+<td>同评测系列</td>
+<td>本项目的自动合成评估数据方法论与 MetaEvaluation 的元评估框架一脉相承；04聚焦评估方法本身的可靠性，13聚焦推理模型泛化能力评估，二者形成"评估方法+评估应用"的互补体系</td>
+</tr>
+<tr>
+<td><strong>14 · LogicalSurvey 逻辑推理综述</strong></td>
+<td>同评测系列 · 文献支撑</td>
+<td>本项目的168篇文献调研与 LogicalSurvey 的逻辑推理论文综述形成文献资源互补；14的三维分类体系（Evaluation/Data/Methods）为13的评估框架提供理论分类基础</td>
+</tr>
+<tr>
+<td><strong>19 · Groom 过程级评测</strong></td>
+<td>同评测系列 · 过程级互补</td>
+<td>本项目关注模型层面的泛化能力评估（结果导向），Groom关注Harness层面的过程级token利用评测（过程导向），二者形成"模型层+Harness层"的双层评测体系</td>
+</tr>
+<tr>
+<td><strong>20 · H-TokenBench</strong></td>
+<td>同评测系列 · 基准配套</td>
+<td>H-TokenBench 为推理模型的token利用效率提供标准化基准，与本项目的泛化性评估形成"能力评估+效率评估"的双维度评测框架</td>
+</tr>
+<tr>
+<td><strong>24 · 专利：逻辑推理评测方法</strong></td>
+<td>同评测系列 · 成果转化</td>
+<td>本项目的自动合成评估数据方法论和泛化性评估框架是24号专利的技术来源之一；专利将评估方法论固化为可保护的知识产权</td>
+</tr>
+<tr>
+<td><strong>08 · o1复现</strong></td>
+<td>推理模型复现关联</td>
+<td>本项目复现的 Sky-T1-32B 推理模型与08号o1复现项目同属推理模型训练方向；13的复现经验和训练配置可直接迁移至08的o1复现工作</td>
+</tr>
+<tr>
+<td><strong>09 · LogicEvolve 逻辑推理自进化</strong></td>
+<td>推理模型训练关联</td>
+<td>本项目的泛化性评估发现为 LogicEvolve 的自进化训练提供评估反馈信号；LogicEvolve 的自动数据合成方法可反哺本项目的自动合成评估数据模块</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="_7">项目间引用网络<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<p><strong>上游项目（本项目依赖/受益于）：</strong>
+- <a href="../../phase2/04_MetaEvaluation%E5%85%83%E8%AF%84%E4%BC%B0/">04_MetaEvaluation元评估</a> — 本项目是04号meta-o1子项目的直接延伸，04的元评估框架与自动合成评估数据方法论为本项目提供方法论基础
+- <a href="../../phase2/08_o1%E5%A4%8D%E7%8E%B0/">08_o1复现</a> — 08项目的推理算法框架与多模型评测经验为本项目Sky-T1-32B复现与20+模型横向对比提供工程基础
+- <a href="../../phase4/14_LogicalSurvey%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%BB%BC%E8%BF%B0/">14_LogicalSurvey逻辑推理综述</a> — 14项目的文献资源与三维分类体系（Evaluation/Data/Methods）为本项目168篇文献调研提供检索基础与理论分类框架</p>
+<p><strong>下游项目（受益于本项目）：</strong>
+- <a href="../09_LogicEvolve%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E8%87%AA%E8%BF%9B%E5%8C%96/">09_LogicEvolve逻辑推理自进化</a> — 本项目的泛化性评估发现为LogicEvolve的自进化训练提供评估反馈信号，类o1评估方法论延伸至LogicEvolve CLUB基准80+模型评测</p>
+<p><strong>平行项目（同系列/同方法）：</strong>
+- <a href="../../phase2/04_MetaEvaluation%E5%85%83%E8%AF%84%E4%BC%B0/">04_MetaEvaluation元评估</a> — 同属评测系列，04聚焦元评估（评估评估器），本项目聚焦推理模型泛化性评估，二者形成"评估方法+评估应用"的互补体系
+- <a href="../../phase4/14_LogicalSurvey%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%BB%BC%E8%BF%B0/">14_LogicalSurvey逻辑推理综述</a> — 同属评测系列，14聚焦逻辑推理评测文献综述，本项目聚焦推理模型泛化能力实证评估
+- <a href="../../phase2/08_o1%E5%A4%8D%E7%8E%B0/">08_o1复现</a> — 同属推理模型系列，08聚焦推理时计算算法复现，本项目聚焦推理模型泛化能力边界评估
+- 19_Groom过程级评测、20_H-TokenBench — 同属评测系列，构成"元评估（04）→推理模型泛化评估（13）→过程级评测（19）→Token级评测（20）"的评测粒度从宏观到微观的完整谱系</p>
+<hr />
+<h2 id="13">13. 跨项目对比<a class="headerlink" href="#13" title="Permanent link">&para;</a></h2>
+<h3 id="131-04metaevaluation14logicalsurvey19groom20h-tokenbench">13.1 评测方法对比：与04号（MetaEvaluation）、14号（LogicalSurvey）、19号（Groom）、20号（H-TokenBench）的深度对比<a class="headerlink" href="#131-04metaevaluation14logicalsurvey19groom20h-tokenbench" title="Permanent link">&para;</a></h3>
+<p>本项目（13号·类o1模型泛化性评估）是个人评测研究体系中的"模型能力评估"环节，与04号（元评估方法）、14号（逻辑推理综述）、19号（过程级token评测）、20号（token利用基准）共同构成完整的评测方法论体系。</p>
+<table>
+<thead>
+<tr>
+<th><strong>对比维度</strong></th>
+<th><strong>04号·MetaEvaluation</strong></th>
+<th><strong>13号·类o1泛化性评估（本项目）</strong></th>
+<th><strong>14号·LogicalSurvey</strong></th>
+<th><strong>19号·Groom</strong></th>
+<th><strong>20号·H-TokenBench</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>评测层级</strong></td>
+<td>元评估：评估"评估方法"本身的可靠性</td>
+<td><strong>模型能力评估：评估推理模型的泛化能力边界</strong></td>
+<td>综述：系统梳理逻辑推理评测的分类体系</td>
+<td>Harness过程评估：评估Agent编排层的token利用效率</td>
+<td>模型效率评估：评估模型层面的token利用机制</td>
+</tr>
+<tr>
+<td><strong>核心问题</strong></td>
+<td>如何验证评估指标/方法的可靠性和区分度？</td>
+<td><strong>推理模型在数学/代码上的优势能否迁移到通用能力？</strong></td>
+<td>逻辑推理评测有哪些维度、数据集和方法？</td>
+<td>token在Harness编排过程中是否被有效利用？</td>
+<td>模型在推理时如何分配、消耗和有效利用token？</td>
+</tr>
+<tr>
+<td><strong>评测对象</strong></td>
+<td>评估方法/指标本身</td>
+<td><strong>20+主流推理模型的泛化能力</strong></td>
+<td>逻辑推理领域的评测文献和基准</td>
+<td>Agent Harness（Claude Code/Codex/OpenClaw）</td>
+<td>LLM模型（GLM-5/DeepSeek-R1/Claude/GPT）</td>
+</tr>
+<tr>
+<td><strong>技术方法</strong></td>
+<td>元评估框架：可靠性分析、区分度验证、偏差检测</td>
+<td><strong>多模型横向对比+自动合成评估数据+评估效率维度</strong></td>
+<td>三维分类体系（Evaluation/Data/Methods）+文献地图</td>
+<td>native+sidecar双层协议+8阶段分解+I/R/E三态判定</td>
+<td>4大分析维度（消耗/效率/成本-效率/阶段分布）</td>
+</tr>
+<tr>
+<td><strong>关键创新</strong></td>
+<td>元评估方法论——对评估方法进行"评估的评估"</td>
+<td><strong>"复杂化方法"自动合成评估数据+评估效率维度</strong></td>
+<td>首个系统的逻辑推理评测综述，三维分类体系</td>
+<td>首个过程级token利用率评测框架，I/R/E三态判定</td>
+<td>首个专注LLM推理token利用机制的基准</td>
+</tr>
+<tr>
+<td><strong>数据/实验规模</strong></td>
+<td>元评估实验（具体规模待核实）</td>
+<td><strong>168篇文献+20+模型+32B模型复现</strong></td>
+<td>1000+篇文献检索（arXiv逻辑推理&amp;LLM 349篇/puzzle&amp;LLM 140篇/顶会2025共76篇），核心精读100+篇</td>
+<td>106篇文献+4/4 golden trace+9模块工具链</td>
+<td>4大领域任务集+多模型轨迹采集（规模待核实）</td>
+</tr>
+<tr>
+<td><strong>与13号的关系</strong></td>
+<td>上游方法：MetaEvaluation的元评估框架为13号的自动合成评估数据提供方法论基础</td>
+<td><strong>核心节点</strong></td>
+<td>文献支撑：14号的三维分类体系为13号的评估框架提供理论分类基础</td>
+<td>下游延伸：Groom将13号的"模型能力评估"延伸到"Harness过程效率评估"</td>
+<td>配套基准：H-TokenBench为13号的泛化性评估提供token效率维度的补充</td>
+</tr>
+<tr>
+<td><strong>个人角色</strong></td>
+<td>核心贡献者</td>
+<td><strong>项目负责人/第一作者（全流程独立完成）</strong></td>
+<td>第一作者</td>
+<td>项目负责人/第一作者</td>
+<td>项目负责人</td>
+</tr>
+<tr>
+<td><strong>成果状态</strong></td>
+<td>研究论文</td>
+<td><strong>探索性研究（论文初稿完成，未投稿，转为LogicEvolve支撑）</strong></td>
+<td>综述论文（持续更新）</td>
+<td>ARR 2026.8投稿，目标AAAI 2027</td>
+<td>研究推进中（Groom论文配套基准）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>13号在评测体系中的定位</strong>：</p>
+<ol>
+<li>
+<p><strong>承上启下的方法探索</strong>：13号是个人从"元评估方法"（04号）走向"具体评测应用"的关键一步。04号回答"如何评估评估方法"，13号回答"如何用评估方法研究推理模型的泛化能力"。13号提出的"自动合成评估数据"方法论，后来在LogicEvolve（09号）中发展为多智能体协作生成框架，在Groom（19号）中演化为过程级评测协议。</p>
+</li>
+<li>
+<p><strong>模型层评估的先驱</strong>：在个人评测体系中，13号是首个聚焦"模型层面能力评估"的项目（19号聚焦Harness层，20号聚焦模型效率层）。13号发现的"推理模型在数学/代码上的优势不一定能迁移到通用能力"这一关键现象，直接促使LogicEvolve主线聚焦逻辑推理这一泛化场景。</p>
+</li>
+<li>
+<p><strong>评估效率维度的提出</strong>：13号首次提出"评估效率"（evaluation efficiency）维度——将人类解题的时间限制引入大模型评估，这是对传统准确率指标的重要补充。这一思想后来在Groom的token利用率评测和H-TokenBench的成本-效率分析中得到延续和深化。</p>
+</li>
+<li>
+<p><strong>自动合成评估数据的方法论源头</strong>：13号提出的"复杂化方法"（从基础问题出发让模型自动增加约束和难度）+元评估验证+数据泄漏检测的框架，是个人"自动数据合成"方法论的源头。这一方法论在LogicEvolve→Puzzle→EvolveLRM的自进化数据链中得到持续发展和工业化应用。</p>
+</li>
+</ol>
+<p><strong>差异化总结</strong>：04号是"评估的评估"（元方法），13号是"模型能力的评估"（能力边界），14号是"评估的综述"（知识整理），19号是"过程效率的评估"（Harness层），20号是"token效率的评估"（模型层）。五者共同构成了个人"元评估→能力评估→效率评估→综述整理"的完整评测研究体系，13号处于从元方法到具体应用的枢纽位置。</p>
+<hr />
+<h3 id="_8">图表索引<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>编号</strong></th>
+<th><strong>类型</strong></th>
+<th><strong>标题</strong></th>
+<th><strong>所在章节</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>表1</td>
+<td>表格</td>
+<td>关键数据速览</td>
+<td>§1</td>
+</tr>
+<tr>
+<td>表2</td>
+<td>表格</td>
+<td>长思维链推理模型对比</td>
+<td>§3.1</td>
+</tr>
+<tr>
+<td>表3</td>
+<td>表格</td>
+<td>泛化性评估基准对比</td>
+<td>§3.2</td>
+</tr>
+<tr>
+<td>图1</td>
+<td>ASCII</td>
+<td>泛化性评估方法论架构图</td>
+<td>§4.1</td>
+</tr>
+<tr>
+<td>图2</td>
+<td>Mermaid</td>
+<td>自动合成评估数据流程图</td>
+<td>§4.3</td>
+</tr>
+<tr>
+<td>表4</td>
+<td>表格</td>
+<td>评估数据集统计</td>
+<td>§5.1</td>
+</tr>
+<tr>
+<td>表5</td>
+<td>表格</td>
+<td>20+模型横向对比结果</td>
+<td>§5.2</td>
+</tr>
+<tr>
+<td>表6</td>
+<td>表格</td>
+<td>Sky-T1-32B复现结果</td>
+<td>§5.3</td>
+</tr>
+<tr>
+<td>表7</td>
+<td>表格</td>
+<td>技术栈</td>
+<td>§6.1</td>
+</tr>
+<tr>
+<td>表8</td>
+<td>表格</td>
+<td>项目时间线</td>
+<td>§6.3</td>
+</tr>
+<tr>
+<td>表9</td>
+<td>表格</td>
+<td>飞书文档索引</td>
+<td>§10</td>
+</tr>
+<tr>
+<td>表10</td>
+<td>表格</td>
+<td>GitHub仓库索引</td>
+<td>§10</td>
+</tr>
+<tr>
+<td>表11</td>
+<td>表格</td>
+<td>转正答辩量化结果</td>
+<td>§11.2</td>
+</tr>
+<tr>
+<td>表12</td>
+<td>表格</td>
+<td>价值观锚点故事</td>
+<td>§11.5</td>
+</tr>
+<tr>
+<td>表13</td>
+<td>表格</td>
+<td>相关项目关联</td>
+<td>§12</td>
+</tr>
+<tr>
+<td>表14</td>
+<td>表格</td>
+<td>跨项目对比：评测方法体系</td>
+<td>§13.1</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="_9">个人成果矩阵<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
+<p>本矩阵汇总本人在智谱AI实习期间（2025.7–2026.9）的全部个人成果，按论文、专利、开源、产业落地、获奖、技术方案六大维度分类。</p>
+<table>
+<thead>
+<tr>
+<th><strong>成果类别</strong></th>
+<th><strong>序号</strong></th>
+<th><strong>成果名称</strong></th>
+<th><strong>时间</strong></th>
+<th><strong>角色</strong></th>
+<th><strong>状态/备注</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>论文</strong></td>
+<td>P1</td>
+<td>Puzzle: Curating Logical Reasoning Pretraining Data via Iterative Evolution</td>
+<td>2026.3</td>
+<td>第一作者</td>
+<td>ARR 2026.6投稿，NeurIPS 2026在投</td>
+</tr>
+<tr>
+<td><strong>论文</strong></td>
+<td>P2</td>
+<td>Groom: Process-Level Token Utilization Evaluation for LLM Agent Harnesses</td>
+<td>2026.8</td>
+<td>第一作者</td>
+<td>ARR 2026.8投稿（OpenReview: CX20RUtZ4G），目标AAAI 2027</td>
+</tr>
+<tr>
+<td><strong>论文</strong></td>
+<td>P3</td>
+<td>LogicalSurvey: A Comprehensive Survey of Logical Reasoning for LLMs</td>
+<td>2026.5</td>
+<td>第一作者</td>
+<td>综述论文，持续更新中</td>
+</tr>
+<tr>
+<td><strong>论文</strong></td>
+<td>P4</td>
+<td>MetaEvaluation: Meta-Evaluation Framework for LLM Evaluation</td>
+<td>2026初</td>
+<td>核心贡献者</td>
+<td>研究论文</td>
+</tr>
+<tr>
+<td><strong>论文</strong></td>
+<td>P5</td>
+<td>LogicEvolve: Self-Evolving Logical Reasoning Data Synthesis</td>
+<td>2025.12</td>
+<td>核心贡献者</td>
+<td>研究论文，方法被Puzzle继承</td>
+</tr>
+<tr>
+<td><strong>论文</strong></td>
+<td>P6</td>
+<td>EvolveLRM: Training Self-Evolution for Logical Reasoning Models</td>
+<td>2026.5</td>
+<td>项目负责人</td>
+<td>研究论文，含4模块自进化框架</td>
+</tr>
+<tr>
+<td><strong>论文</strong></td>
+<td>P7</td>
+<td>类o1模型泛化性评估研究（本项目）</td>
+<td>2025.1-8</td>
+<td>项目负责人</td>
+<td>168篇文献+20+模型对比+32B复现+ACL格式论文初稿</td>
+</tr>
+<tr>
+<td><strong>论文</strong></td>
+<td>P8-P12</td>
+<td>六篇新研究初稿（含HarnessEvolve/SwarmEvolve等）</td>
+<td>2026.6-9</td>
+<td>第一作者/负责人</td>
+<td>初稿阶段，持续推进</td>
+</tr>
+<tr>
+<td><strong>专利</strong></td>
+<td>PT1</td>
+<td>逻辑推理评测方法及系统</td>
+<td>2026</td>
+<td>核心发明人</td>
+<td>专利申请中，覆盖Puzzle/CLUB/ExCLUB/Groom等评测方法论</td>
+</tr>
+<tr>
+<td><strong>专利</strong></td>
+<td>PT2</td>
+<td>基于自进化的逻辑推理数据合成方法</td>
+<td>2026</td>
+<td>核心发明人</td>
+<td>专利申请中，覆盖LogicEvolve/Puzzle迭代进化方法</td>
+</tr>
+<tr>
+<td><strong>开源</strong></td>
+<td>O1</td>
+<td>CLUB (Comprehensive Logic Understanding Benchmark)</td>
+<td>2025.12</td>
+<td>第一作者</td>
+<td>GitHub开源，1K题/10类，已被多篇论文引用</td>
+</tr>
+<tr>
+<td><strong>开源</strong></td>
+<td>O2</td>
+<td>ExCLUB (Extended CLUB)</td>
+<td>2026.2</td>
+<td>第一作者</td>
+<td>GitHub开源，100K题/100类，参数化生成框架</td>
+</tr>
+<tr>
+<td><strong>开源</strong></td>
+<td>O3</td>
+<td>Puzzle 逻辑推理预训练数据</td>
+<td>2026.3</td>
+<td>第一作者</td>
+<td>随论文发表计划开源，100K+高质量题</td>
+</tr>
+<tr>
+<td><strong>开源</strong></td>
+<td>O4</td>
+<td>AML-LLM 书籍配套代码与资源</td>
+<td>2026.4</td>
+<td>核心编撰者</td>
+<td>书籍配套开源仓库</td>
+</tr>
+<tr>
+<td><strong>产业落地</strong></td>
+<td>I1</td>
+<td>GLM-4.5/GLM-5 逻辑推理能力提升</td>
+<td>2025.10-2026.3</td>
+<td>核心研发</td>
+<td>Puzzle数据用于模型预训练/微调，逻辑推理能力显著提升</td>
+</tr>
+<tr>
+<td><strong>产业落地</strong></td>
+<td>I2</td>
+<td>GLM Agent / CodeGeeX Harness优化</td>
+<td>2026.5-9</td>
+<td>核心研发</td>
+<td>Groom过程级评测为Harness选型和优化提供数据支撑</td>
+</tr>
+<tr>
+<td><strong>产业落地</strong></td>
+<td>I3</td>
+<td>智谱AI评测基础设施建设</td>
+<td>2025.7-2026.9</td>
+<td>核心贡献者</td>
+<td>CLUB/ExCLUB/Puzzle/Groom/H-TokenBench构成完整评测体系</td>
+</tr>
+<tr>
+<td><strong>产业落地</strong></td>
+<td>I4</td>
+<td>AML课程教学体系落地</td>
+<td>2026.4-9</td>
+<td>核心编撰者</td>
+<td>AML-LLM书籍+教学PPT，服务公司内部培训和高校课程</td>
+</tr>
+<tr>
+<td><strong>获奖</strong></td>
+<td>A1</td>
+<td>研究生党支部评议全校第9/667名</td>
+<td>2026.5</td>
+<td>党支部书记</td>
+<td>2025年度研究生党支部评议，甲级团支部荣誉</td>
+</tr>
+<tr>
+<td><strong>技术方案</strong></td>
+<td>T1</td>
+<td>逻辑推理数据自进化合成方案（LogicEvolve→Puzzle）</td>
+<td>2025.12-2026.3</td>
+<td>方案设计者</td>
+<td>迭代进化+难度感知+分布控制，被产业落地采用</td>
+</tr>
+<tr>
+<td><strong>技术方案</strong></td>
+<td>T2</td>
+<td>过程级Token利用率评测方案（Groom+H-TokenBench）</td>
+<td>2026.4-9</td>
+<td>方案设计者</td>
+<td>native+sidecar双层协议+8阶段分解+I/R/E三态判定</td>
+</tr>
+<tr>
+<td><strong>技术方案</strong></td>
+<td>T3</td>
+<td>自进化训练框架（EvolveLRM）</td>
+<td>2026.5-9</td>
+<td>方案设计者</td>
+<td>数据进化+模型进化+评测进化+训练策略进化四模块</td>
+</tr>
+<tr>
+<td><strong>技术方案</strong></td>
+<td>T4</td>
+<td>自动合成评估数据方案（复杂化方法+元评估验证+数据泄漏检测）</td>
+<td>2025.1-8</td>
+<td>方案设计者</td>
+<td>本项目核心创新，后发展为LogicEvolve多智能体生成框架</td>
+</tr>
+<tr>
+<td><strong>技术方案</strong></td>
+<td>T5</td>
+<td>推理模型复现SOP（基座选择→数据混合→SFT配置→多维度评测）</td>
+<td>2025.1-8</td>
+<td>方案设计者</td>
+<td>Sky-T1-32B复现经验，MATH500 87.2-90.0%</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：本报告各章节；12号Puzzle报告、19号Groom报告、14号LogicalSurvey报告等系列报告；个人GitHub（https://github.com/dujh22）；飞书文档与个人周报。</p>
+</blockquote>
+<hr />
+<h2 id="14-2026-09-08">14. 第十轮深化补强（2026-09-08）<a class="headerlink" href="#14-2026-09-08" title="Permanent link">&para;</a></h2>
+<h3 id="141">14.1 源材料新利用数据<a class="headerlink" href="#141" title="Permanent link">&para;</a></h3>
+<p>本轮从 SkyThought GitHub README（NovaSky-AI/SkyThought）和 LLM-o1 私有仓库中提取以下此前未充分利用的完整数据：</p>
+<table>
+<thead>
+<tr>
+<th><strong>数据项</strong></th>
+<th><strong>具体内容</strong></th>
+<th><strong>来源</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sky-T1 发布日期</td>
+<td>2025-01-10，模型+数据同步开源（HuggingFace: NovaSky-AI）</td>
+<td>SkyThought README §新闻</td>
+</tr>
+<tr>
+<td>Sky-T1 训练数据</td>
+<td><strong>17k 条</strong>（Sky-T1_data_17k），含 STILL-2 模型的科学和谜题部分</td>
+<td>SkyThought README §快速开始</td>
+</tr>
+<tr>
+<td>数据生成方式</td>
+<td>QwQ-32B-Preview 生成 + 拒绝采样（Rejection Sampling）提高质量</td>
+<td>SkyThought README §快速开始</td>
+</tr>
+<tr>
+<td>训练配置</td>
+<td>3 epoch / lr 1e-5 / batch 96 / 8×H100 / DeepSpeed ZeRO-3 offload / 19 小时 / <strong>约 $450</strong></td>
+<td>SkyThought README §快速开始</td>
+</tr>
+<tr>
+<td>Sky-T1 Math500</td>
+<td><strong>82.4</strong>（vs Qwen-2.5-32B 76.2 / QwQ-32B 85.4 / o1-preview 81.4）</td>
+<td>SkyThought README §评估结果</td>
+</tr>
+<tr>
+<td>Sky-T1 AIME2024</td>
+<td><strong>43.3</strong>（vs Qwen-2.5-32B 16.7 / QwQ 50.0 / o1-preview 40.0）</td>
+<td>SkyThought README §评估结果</td>
+</tr>
+<tr>
+<td>Sky-T1 LCB-Easy/Medium/Hard</td>
+<td><strong>86.3 / 56.8 / 17.9</strong>（vs Qwen 84.6/40.8/9.8）</td>
+<td>SkyThought README §评估结果</td>
+</tr>
+<tr>
+<td>Sky-T1 GPQA-Diamond</td>
+<td><strong>56.8</strong>（vs Qwen 45.5 / QwQ 52.5 / o1-preview 75.2）</td>
+<td>SkyThought README §评估结果</td>
+</tr>
+<tr>
+<td>完全开源对比</td>
+<td>Sky-T1 数据✅代码✅模型权重✅；STILL-2 数据✅；Journey/QwQ/o1 均❌</td>
+<td>SkyThought README §完全开源</td>
+</tr>
+<tr>
+<td>LLM-o1 仓库</td>
+<td>私有仓库（dujh22/LLM-o1），目标复现 o1，涵盖 Test Time Compute / MCTS / 多步推理</td>
+<td>LLM-o1 README</td>
+</tr>
+<tr>
+<td>LLM-o1 技术栈</td>
+<td>python==3.10.0，glm4 模型，math 训练/math500 测试</td>
+<td>LLM-o1 README</td>
+</tr>
+</tbody>
+</table>
+<h3 id="142-o1">14.2 类 o1 模型泛化性四维分析补充<a class="headerlink" href="#142-o1" title="Permanent link">&para;</a></h3>
+<p>基于 Sky-T1 的 6 基准完整评测结果，类 o1 模型的泛化性可从四个维度分析：</p>
+<table>
+<thead>
+<tr>
+<th><strong>维度</strong></th>
+<th><strong>Sky-T1 表现</strong></th>
+<th><strong>泛化性分析</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>数学推理（Math500/AIME）</td>
+<td>Math500 82.4 / AIME 43.3</td>
+<td>AIME 提升最显著（+26.6pp vs Qwen 基线），说明 CoT 训练对竞赛级数学推理泛化性强</td>
+</tr>
+<tr>
+<td>代码推理（LCB 三难度）</td>
+<td>Easy 86.3 / Medium 56.8 / Hard 17.9</td>
+<td>难度越高提升越大（Hard +8.1pp vs Medium +16.0pp vs Easy +1.7pp），推理增强对困难代码任务帮助更大</td>
+</tr>
+<tr>
+<td>科学推理（GPQA-Diamond）</td>
+<td>56.8（+11.3pp vs Qwen）</td>
+<td>跨领域泛化到科学推理，但低于 o1-preview（75.2），说明科学知识+推理的结合仍有差距</td>
+</tr>
+<tr>
+<td>成本效率</td>
+<td>$450 / 19 小时 / 8×H100</td>
+<td>低成本推理模型训练的可行性验证，相比 o1 大规模 RL 训练成本极低</td>
+</tr>
+</tbody>
+</table>
+<p>这一分析验证了本项目"类 o1 模型在数学和代码领域泛化性强，但在科学和通用推理领域仍有差距"的核心结论。</p>
+<h3 id="143">14.3 个人贡献量化补充<a class="headerlink" href="#143" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>工作项</strong></th>
+<th><strong>个人角色</strong></th>
+<th><strong>量化产出</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>20+ 模型横向评测</td>
+<td>独立执行</td>
+<td>数学/代码/通用/视觉四维度，逐个模型串行评测，时间跨度约 2 周</td>
+</tr>
+<tr>
+<td>Sky-T1-32B 复现</td>
+<td>独立复现</td>
+<td>基于 Llama Factory，MATH500 达到 87.2-90.0%</td>
+</tr>
+<tr>
+<td>元评估方法论</td>
+<td>独立提出</td>
+<td>"复杂化方法"自动合成数据 + 元评估验证区分度，后发展为 LogicEvolve</td>
+</tr>
+<tr>
+<td>LLM-o1 多算法实现</td>
+<td>独立开发</td>
+<td>Test Time Compute / MCTS / 多步推理算法，glm4 基座</td>
+</tr>
+<tr>
+<td>few-shot 消融实验</td>
+<td>独立设计</td>
+<td>0-shot/3-shot/5-shot 对比，发现小样本下 few-shot 不稳定</td>
+</tr>
+<tr>
+<td>168 篇文献调研</td>
+<td>独立完成</td>
+<td>类 o1 模型推理增强方法系统综述</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><em>报告撰写日期：2026-09-08 · 基于智谱实习阶段三（2025.1-8）工作整理 · v3图文并茂版 · 二轮质检补强 · 三轮精磨 · 四轮深化 · 五轮深化 · 六轮深化 · 七轮深化 · 八轮深化 · 九轮终审 · 十轮深化 · 十一轮深化 · 十二轮终审 · 十三轮终审 · 十四轮深化 · 十五轮终审</em></p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+
+
+  
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.tracking", "navigation.top", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+      
+        <script src="../../../javascripts/mermaid_init.js"></script>
+      
+    
+  </body>
+</html>

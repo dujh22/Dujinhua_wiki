@@ -1,0 +1,5751 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="智谱AI研究实习项目报告集，涵盖大模型预训练、逻辑推理、数学推理、评测方法论等30个项目；同时包含个人学术主页（研究、教育、发表、荣誉）。">
+      
+      
+        <meta name="author" content="Jinhua Du (杜晋华)">
+      
+      
+        <link rel="canonical" href="https://dujh22.github.io/Dujinhua_wiki/projects/phase5/19_Groom_Harness%E8%BF%87%E7%A8%8B%E7%BA%A7%E8%AF%84%E6%B5%8B/">
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../20_H-TokenBench/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>19. Groom：面向大语言模型智能体框架的过程级令牌利用率评估 - Jinhua Du | 杜晋华</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css?v=448b8bea4ef3">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-XXXXXXXXXX"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-XXXXXXXXXX",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+  
+    <meta name="keywords" content="大语言模型, 逻辑推理, 数学推理, 预训练, RLHF, 评测, 智谱AI, 研究实习, LLM, Large Language Models, Reasoning, Evaluation">
+    <meta property="og:title" content="Jinhua Du | 杜晋华 — 智谱AI研究实习项目报告集">
+    <meta property="og:description" content="智谱AI研究实习项目报告集，涵盖大模型预训练、逻辑推理、数学推理、评测方法论等30个项目；个人学术主页（研究、教育、发表、荣誉）。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dujh22.github.io/Dujinhua_wiki/">
+    <meta property="og:site_name" content="Jinhua Du | 杜晋华">
+    <meta property="og:locale" content="zh_CN">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Jinhua Du | 杜晋华 — 智谱AI研究实习项目报告集">
+    <meta name="twitter:description" content="智谱AI研究实习项目报告集，涵盖大模型预训练、逻辑推理、数学推理、评测方法论等30个项目。">
+    <meta name="robots" content="index, follow">
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1-abstract" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Jinhua Du | 杜晋华" class="md-header__button md-logo" aria-label="Jinhua Du | 杜晋华" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 10.5V6l-2.11 1.06A3.999 3.999 0 0 1 12 12a4 4 0 0 1-3.89-4.94L5 5.5 12 2l7 3.5v5zM12 9l-2-1c0 1.1.9 2 2 2s2-.9 2-2zm2.75-3.58L12.16 4.1 9.47 5.47l2.6 1.32zM12 13c2.67 0 8 1.33 8 4v3H4v-3c0-2.67 5.33-4 8-4m0 1.9c-3 0-6.1 1.46-6.1 2.1v1.1h12.2V17c0-.64-3.13-2.1-6.1-2.1"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Jinhua Du | 杜晋华
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              19. Groom：面向大语言模型智能体框架的过程级令牌利用率评估
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="light-blue"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/dujh22/Dujinhua_wiki" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    dujh22/Dujinhua_wiki
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../.." class="md-tabs__link">
+          
+  
+  
+  English
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../index_zh/" class="md-tabs__link">
+          
+  
+  
+  中文
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../" class="md-tabs__link">
+          
+  
+  
+  智谱实习项目
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Jinhua Du | 杜晋华" class="md-nav__button md-logo" aria-label="Jinhua Du | 杜晋华" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 10.5V6l-2.11 1.06A3.999 3.999 0 0 1 12 12a4 4 0 0 1-3.89-4.94L5 5.5 12 2l7 3.5v5zM12 9l-2-1c0 1.1.9 2 2 2s2-.9 2-2zm2.75-3.58L12.16 4.1 9.47 5.47l2.6 1.32zM12 13c2.67 0 8 1.33 8 4v3H4v-3c0-2.67 5.33-4 8-4m0 1.9c-3 0-6.1 1.46-6.1 2.1v1.1h12.2V17c0-.64-3.13-2.1-6.1-2.1"/></svg>
+
+    </a>
+    Jinhua Du | 杜晋华
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/dujh22/Dujinhua_wiki" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    dujh22/Dujinhua_wiki
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    English
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    English
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Profile
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../postgraduate_experience_en/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Postgraduate Experience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../undergraduate_experience_en/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Undergraduate Experience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../history_en/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Research History
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    中文
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    中文
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../index_zh/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人简介
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../postgraduate_experience_zh/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博士经历
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../undergraduate_experience_zh/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    本科经历
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../history_zh/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    研究历史
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    智谱实习项目
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    智谱实习项目
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    项目总览
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阶段一·数学推理与国际化
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    阶段一·数学推理与国际化
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase1/01_ChatGLM%E6%95%B0%E5%AD%A6%E6%8E%A8%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 ChatGLM数学推理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase1/02_ChatGLM%E5%9B%BD%E9%99%85%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02 ChatGLM国际化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阶段二·多模态与社会实践
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    阶段二·多模态与社会实践
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/03_%E5%A4%9A%E6%A8%A1%E6%80%81%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%95%B0%E5%AD%A6%E6%8E%A8%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 多模态大模型数学推理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/04_MetaEvaluation%E5%85%83%E8%AF%84%E4%BC%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04 MetaEvaluation元评估
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/05_AML2024%E5%8A%A9%E6%95%99/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 AML2024助教
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/06_%E8%88%9F%E5%B1%B1%E7%A4%BE%E4%BC%9A%E5%AE%9E%E8%B7%B5%E5%85%AC%E5%AE%89%E7%8A%AF%E7%BD%AA%E9%A2%84%E6%B5%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06 舟山社会实践公安犯罪预测
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/07_MalayGLM%E9%A9%AC%E6%9D%A5%E8%AF%AD%E5%A4%A7%E6%A8%A1%E5%9E%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07 MalayGLM马来语大模型
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/08_o1%E5%A4%8D%E7%8E%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 o1复现
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阶段三·LogicEvolve与基座模型
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    阶段三·LogicEvolve与基座模型
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase3/09_LogicEvolve%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E8%87%AA%E8%BF%9B%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 LogicEvolve逻辑推理自进化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase3/10_GLM-4.5%E5%9F%BA%E5%BA%A7%E6%A8%A1%E5%9E%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 GLM-4.5基座模型
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase3/11_%E6%95%B0%E5%AE%9E%E8%9E%8D%E5%90%88%E6%96%B0%E5%BC%95%E6%93%8E%E9%A1%B9%E7%9B%AE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11 数实融合新引擎项目
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase3/12_Puzzle%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E9%A2%84%E8%AE%AD%E7%BB%83%E6%95%B0%E6%8D%AE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12 Puzzle逻辑推理预训练数据
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase3/13_%E7%B1%BBo1%E6%A8%A1%E5%9E%8B%E6%B3%9B%E5%8C%96%E6%80%A7%E8%AF%84%E4%BC%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13 类o1模型泛化性评估
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5" id="__nav_3_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阶段四·论文冲刺与博士开题
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    阶段四·论文冲刺与博士开题
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase4/14_LogicalSurvey%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%BB%BC%E8%BF%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14 LogicalSurvey逻辑推理综述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase4/15_EvolveLRM%E8%AE%AD%E7%BB%83%E8%87%AA%E8%BF%9B%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15 EvolveLRM训练自进化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase4/16_AML-LLM%E4%B9%A6%E7%B1%8D%E7%BC%96%E6%92%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16 AML-LLM书籍编撰
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase4/17_VirtualCoach%E4%BA%BA%E6%9C%BA%E4%BA%A4%E4%BA%92/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17 VirtualCoach人机交互
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase4/18_%E5%8D%9A%E5%A3%AB%E5%BC%80%E9%A2%98/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    18 博士开题
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_6" id="__nav_3_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阶段五·自进化研究全面展开
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    阶段五·自进化研究全面展开
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    19 Groom过程级评测
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    19 Groom过程级评测
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-abstract" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 项目概述（Abstract）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 项目概述（Abstract）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关键数据速览
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        执行摘要
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        个人成长轨迹
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-introduction-background" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 背景与动机（Introduction / Background）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 背景与动机（Introduction / Background）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 问题定义
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 行业背景与痛点
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 项目启动契机
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-related-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 相关工作（Related Work）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 相关工作（Related Work）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        差异化定位
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="差异化定位">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        过程级评测 vs 结果级评测对比表
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 方法与技术路线（Method）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 方法与技术路线（Method）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 总体架构
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 关键模块设计
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-claim" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 三条核心 Claim
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-experiments-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 实验与结果（Experiments &amp; Results）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 实验与结果（Experiments &amp; Results）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 数据集
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 评估指标
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 实验结果
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.3 实验结果">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#531-v0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3.1 V0 工具链运行时性能指标
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 消融与对比实验
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-engineering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 工程实现（Engineering）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. 工程实现（Engineering）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 代码仓库
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 技术栈
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 仓库结构
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4 关键工程挑战
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#65" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5 项目时间线
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#66" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.6 技术栈演进与零第三方依赖选型决策
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-impact" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 成果与影响（Impact）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. 成果与影响（Impact）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 论文发表
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 衍生研究
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 配套基准
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-my-contribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 个人贡献（My Contribution）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. 个人贡献（My Contribution）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 角色
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 具体工作清单
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-lessons-learned" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 经验与反思（Lessons Learned）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. 经验与反思（Lessons Learned）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1 关键问题与解决方案（含具体故事）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2 可复用方法论（深化版）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.2 可复用方法论（深化版）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#921" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2.1 证据驱动评测原则
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#922-native-sidecar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2.2 native + sidecar可观测性模式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#923" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2.3 零第三方依赖工程设计法
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#924-48-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2.4 48 Step项目管理体系
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#93" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.3 如果重来会怎么做
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#94" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.4 踩坑与避坑指南
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#95-faq" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.5 常见问题与解答（FAQ）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. 文件索引（References）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. 文件索引（References）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        飞书文档
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#github" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GitHub 仓库
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        论文与投稿
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        其他资源
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. 转正答辩证据卡
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. 转正答辩证据卡">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#111" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.1 目标基线
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.2 量化结果
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#113" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3 公司层面贡献
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#114" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.4 专业影响力
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#115" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.5 价值观锚点
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#116" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.6 协作与利他
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#117" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.7 反思与成长（自我批评式）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#118-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.8 6年后视角
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#119" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.9 五段式讲述（答辩稿骨架）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. 相关项目
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. 相关项目">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        项目间引用网络
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. 跨项目对比
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13. 跨项目对比">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#131-04metaevaluation13o114logicalsurvey20h-tokenbench24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.1 评测方法论对比：与04号（MetaEvaluation）、13号（类o1泛化性评估）、14号（LogicalSurvey）、20号（H-TokenBench）、24号（专利）的深度对比
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#132-09logicevolve15evolvelrm2223awesome-rsi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.2 自进化框架对比：与09号（LogicEvolve）、15号（EvolveLRM）、22号（六篇新研究）、23号（Awesome-RSI）的深度对比
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        图表索引
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        个人成果矩阵
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../20_H-TokenBench/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20 H-TokenBench
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../21_GLM-5%E5%9F%BA%E5%BA%A7%E6%A8%A1%E5%9E%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    21 GLM-5基座模型
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../22_%E5%85%AD%E7%AF%87%E6%96%B0%E7%A0%94%E7%A9%B6%E5%88%9D%E7%A8%BF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    22 六篇新研究初稿
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../23_Awesome-RSI%E8%87%AA%E8%BF%9B%E5%8C%96%E7%BB%BC%E8%BF%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    23 Awesome-RSI自进化综述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../24_%E4%B8%93%E5%88%A9_%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E8%AF%84%E6%B5%8B%E6%96%B9%E6%B3%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    24 专利逻辑推理评测方法
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_7" id="__nav_3_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    工程与工具系列
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    工程与工具系列
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/25_LLM-DailyDigest%E6%AF%8F%E6%97%A5AI%E8%BF%BD%E6%96%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    25 LLM-DailyDigest
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/26_AutoLLM%E5%A4%9AAgent%E4%BF%A1%E6%81%AF%E8%87%AA%E5%8A%A8%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    26 AutoLLM多Agent
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/27_AiFitGo%E6%99%BA%E8%83%BD%E5%81%A5%E8%BA%AB%E6%95%99%E7%BB%83/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    27 AiFitGo智能健身
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/28_csv2app%E9%A2%98%E5%BA%93%E8%BD%ACPWA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    28 csv2app题库转PWA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/29_THU_Sports%E6%B8%85%E5%8D%8E%E4%BD%93%E8%82%B2%E8%87%AA%E5%8A%A8%E9%A2%84%E7%BA%A6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    29 THU_Sports自动预约
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/30_AiMeder%E5%8C%BB%E5%AD%A6%E6%96%87%E7%8C%AE%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    30 AiMeder医学搜索
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-abstract" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 项目概述（Abstract）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 项目概述（Abstract）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关键数据速览
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        执行摘要
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        个人成长轨迹
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-introduction-background" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 背景与动机（Introduction / Background）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 背景与动机（Introduction / Background）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 问题定义
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 行业背景与痛点
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 项目启动契机
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-related-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 相关工作（Related Work）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 相关工作（Related Work）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        差异化定位
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="差异化定位">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        过程级评测 vs 结果级评测对比表
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 方法与技术路线（Method）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 方法与技术路线（Method）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 总体架构
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 关键模块设计
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-claim" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 三条核心 Claim
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-experiments-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 实验与结果（Experiments &amp; Results）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 实验与结果（Experiments &amp; Results）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 数据集
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 评估指标
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 实验结果
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.3 实验结果">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#531-v0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3.1 V0 工具链运行时性能指标
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 消融与对比实验
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-engineering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 工程实现（Engineering）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. 工程实现（Engineering）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 代码仓库
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 技术栈
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 仓库结构
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4 关键工程挑战
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#65" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5 项目时间线
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#66" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.6 技术栈演进与零第三方依赖选型决策
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-impact" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 成果与影响（Impact）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. 成果与影响（Impact）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 论文发表
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 衍生研究
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 配套基准
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-my-contribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 个人贡献（My Contribution）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. 个人贡献（My Contribution）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 角色
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 具体工作清单
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-lessons-learned" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 经验与反思（Lessons Learned）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. 经验与反思（Lessons Learned）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1 关键问题与解决方案（含具体故事）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2 可复用方法论（深化版）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.2 可复用方法论（深化版）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#921" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2.1 证据驱动评测原则
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#922-native-sidecar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2.2 native + sidecar可观测性模式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#923" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2.3 零第三方依赖工程设计法
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#924-48-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2.4 48 Step项目管理体系
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#93" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.3 如果重来会怎么做
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#94" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.4 踩坑与避坑指南
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#95-faq" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.5 常见问题与解答（FAQ）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. 文件索引（References）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. 文件索引（References）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        飞书文档
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#github" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GitHub 仓库
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        论文与投稿
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        其他资源
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. 转正答辩证据卡
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. 转正答辩证据卡">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#111" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.1 目标基线
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.2 量化结果
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#113" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3 公司层面贡献
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#114" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.4 专业影响力
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#115" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.5 价值观锚点
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#116" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.6 协作与利他
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#117" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.7 反思与成长（自我批评式）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#118-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.8 6年后视角
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#119" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.9 五段式讲述（答辩稿骨架）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. 相关项目
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. 相关项目">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        项目间引用网络
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. 跨项目对比
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13. 跨项目对比">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#131-04metaevaluation13o114logicalsurvey20h-tokenbench24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.1 评测方法论对比：与04号（MetaEvaluation）、13号（类o1泛化性评估）、14号（LogicalSurvey）、20号（H-TokenBench）、24号（专利）的深度对比
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#132-09logicevolve15evolvelrm2223awesome-rsi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.2 自进化框架对比：与09号（LogicEvolve）、15号（EvolveLRM）、22号（六篇新研究）、23号（Awesome-RSI）的深度对比
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        图表索引
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        个人成果矩阵
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+  
+
+
+
+
+  <h1>19 Groom过程级评测</h1>
+
+<div class="admonition info">
+<p class="admonition-title">项目系列</p>
+<p><strong>阶段五：自进化研究全面展开</strong> · 报告 #19/30</p>
+</div>
+<p><a href="../../"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg></span> 返回项目总览</a> | <a href="../../../index_zh/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg></span> 返回首页</a></p>
+<hr />
+<blockquote>
+<p>论文题目：Groom: Process-Level Token Utilization Evaluation for LLM Agent Harnesses（马夫：面向大语言模型智能体框架的过程级令牌利用率评估）
+时间：2026.5–2026.9（SWE-bench 复现 2026.5–7，ARR 2026.8 投稿）
+角色：项目负责人（第一作者）</p>
+</blockquote>
+<div class="admonition note">
+<p class="admonition-title">版本信息</p>
+<p>版本：v3（图文并茂版 · 2026-09-08）· 二轮质检补强 · 三轮精磨 · 四轮深化 · 五轮深化 · 六轮深化 · 七轮深化 · 八轮深化 · 九轮终审 · 十轮深化 · 十一轮深化 · 十二轮终审 · 十三轮终审 · 十四轮深化 · 十五轮终审 | 审核：准确性核对 + 转正答辩证据卡补强 + 数据表格与架构图升级</p>
+</div>
+<hr />
+<h2 id="1-abstract">1. 项目概述（Abstract）<a class="headerlink" href="#1-abstract" title="Permanent link">&para;</a></h2>
+<p>Groom 是首个面向 LLM Agent Harness（智能体编排框架）的<strong>过程级令牌（Token）利用率评测框架</strong>。项目将智能体评测问题从传统的"最终任务是否做对 / 总共花了多少 token"重述为"<strong>token 是否被有效利用</strong>"，通过证据驱动的方式对异构 Agent/Harness（如 Claude Code、Codex、OpenClaw）进行过程级 token 利用归因与横向比较。</p>
+<p>核心成果包括：（1）提出 <code>native + sidecar</code> 双层统一过程观测协议，使异构系统在同一协议下可比；（2）设计 token 成本 8 阶段分解（任务理解/规划/记忆注入/工具准备/执行反馈/搜索试错/错误恢复/最终交付）与 I/R/E（Injected/Referenced/Effective）三态判定机制；（3）V0 工具链已跑通 4/4 条人工 golden trace，完成 SWE-bench、Claw-Eval、Claw-Bench 复现调研；（4）论文于 2026 年 8 月投稿 ARR（ACL Rolling Review），目标 AAAI 2027 主投 / ICLR 2027 备投。</p>
+<h3 id="_1">关键数据速览<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>维度</strong></th>
+<th><strong>核心数据</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>项目周期</td>
+<td>2026.5–2026.9（5个月）</td>
+</tr>
+<tr>
+<td>个人角色</td>
+<td>项目负责人 / 第一作者（独立完成选题、文献调研、方法设计、工具链开发、论文撰写）</td>
+</tr>
+<tr>
+<td>核心产出</td>
+<td>Groom 过程级 token 利用率评测框架；V0 工具链（9 个 Python 模块，仅用标准库）；4/4 golden trace 跑通；SWE-bench/Claw-Eval/Claw-Bench 复现调研；ARR 2026.8 投稿</td>
+</tr>
+<tr>
+<td>关键指标</td>
+<td>106 篇文献调研（八大研究簇）；8 阶段 token 分解；I/R/E 三态判定；3 条核心 Claim；48 Step / 9 Phase 项目管理；V0 仅用 Python 标准库（零第三方依赖）</td>
+</tr>
+<tr>
+<td>论文/专利</td>
+<td>ARR 2026.8 投稿（OpenReview: CX20RUtZ4G），目标 AAAI 2027 主投 / ICLR 2027 备投</td>
+</tr>
+<tr>
+<td>开源仓库</td>
+<td>Groom（私有）、H-TokenBench（私有，配套基准）、HarnessEvolve（私有，衍生研究）、SwarmEvolve（私有，衍生研究）</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：Groom GitHub README（TRACKER.md 48 Step/9 Phase；MILESTONES.md）；飞书文档 20260610 项目进展、20260828 讨论；个人周报记录</p>
+</blockquote>
+<hr />
+<h3 id="_2">执行摘要<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p><strong>一句话定位</strong>：首个面向LLM Agent Harness的过程级token利用率评测框架，将智能体评测从"最终任务是否做对"重述为"token是否被有效利用"，论文于2026.8投稿ARR。</p>
+<p><strong>核心成果</strong>：
+- 系统调研106篇文献（八大研究簇），设计native+sidecar双层统一过程观测协议；
+- 提出token成本8阶段分解与I/R/E（Injected/Referenced/Effective）三态判定机制，V0工具链9个Python模块跑通4/4 golden trace；
+- 论文"Groom: Process-Level Token Utilization Evaluation for LLM Agent Harnesses"投稿ARR 2026.8（OpenReview: CX20RUtZ4G），目标AAAI 2027。</p>
+<p><strong>技术亮点</strong>：首创native+sidecar双层可观测统一事件流协议，使异构Harness（Claude Code/Codex/OpenClaw）在同一协议下可比；I/R/E三态判定采用严格证据判据（verifier gain/测试通过/artifact improvement/rubric通过），不采信模型自我声明。</p>
+<p><strong>个人角色</strong>：项目负责人/第一作者，独立完成选题、106篇文献调研、方法设计（双层协议/8阶段分解/I-R-E判定/3条Claim）、V0工具链开发（9模块）、SWE-bench复现调研、论文撰写与ARR投稿。</p>
+<p><strong>后续方向</strong>：推进大规模真实Harness轨迹实验验证三条核心Claim，发展HarnessEvolve自进化研究，与H-TokenBench整合为统一评测套件。</p>
+<hr />
+<h3 id="_3">个人成长轨迹<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>阶段</strong></th>
+<th><strong>能力成长</strong></th>
+<th><strong>关键事件</strong></th>
+<th><strong>对应报告章节</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>初期</td>
+<td>从评测局限到问题发现者：在LogicEvolve研究中深刻体会"评测只能看最终结果"的局限，识别出过程不可观测和成本不可归因两个根本性盲区，确立过程级评测的研究方向</td>
+<td>2026.5项目启动，源于LogicEvolve中对评测局限性的体会，从"最终任务是否做对"重述为"token是否被有效利用"</td>
+<td>§2.3 项目启动契机 / §2.1 问题定义</td>
+</tr>
+<tr>
+<td>中期</td>
+<td>从方法设计到工具实现者：设计native+sidecar双层统一过程观测协议、token成本8阶段分解、I/R/E三态判定机制，V0工具链9个Python模块仅用标准库跑通4/4 golden trace</td>
+<td>完成106篇文献调研（八大研究簇），3条核心Claim设计，V0工具链端到端流水线实现，SWE-bench/Claw-Eval/Claw-Bench复现调研</td>
+<td>§4.1 总体架构 / §4.2-4.4 方法设计</td>
+</tr>
+<tr>
+<td>后期</td>
+<td>从单点研究到生态构建者：Groom的过程级评测方法论直接催生HarnessEvolve和SwarmEvolve两个衍生研究方向，与H-TokenBench形成双层评测体系，论文投稿ARR目标AAAI 2027</td>
+<td>2026.8投稿ARR（OpenReview: CX20RUtZ4G），评测研究从"环境构造"深入到"过程归因"，研究视野从单一基准扩展到完整研究生态</td>
+<td>§7.1 论文发表 / §11.7 成长轨迹</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：Groom GitHub README（TRACKER.md 48 Step/9 Phase；MILESTONES.md）；飞书文档 20260610 项目进展、20260828 讨论；个人周报记录</p>
+</blockquote>
+<hr />
+<h2 id="2-introduction-background">2. 背景与动机（Introduction / Background）<a class="headerlink" href="#2-introduction-background" title="Permanent link">&para;</a></h2>
+<h3 id="21">2.1 问题定义<a class="headerlink" href="#21" title="Permanent link">&para;</a></h3>
+<p>随着大模型驱动的自主智能体从单轮问答走向长程任务执行，其表现由多轮规划、工具调用、环境反馈、错误恢复与最终交付共同决定。然而现有评测体系存在两个根本性盲区：</p>
+<ol>
+<li><strong>过程不可观测</strong>——无法判断任务成功来自可靠推理，还是偶然试错、冗余搜索或不可复现路径；</li>
+<li><strong>成本不可归因</strong>——即便任务完成，也难以定位 token 究竟消耗在规划、检索、工具反馈、错误恢复还是重复确认。</li>
+</ol>
+<h3 id="22">2.2 行业背景与痛点<a class="headerlink" href="#22" title="Permanent link">&para;</a></h3>
+<p>2025–2026 年，以 Claude Code、OpenAI Codex、OpenClaw 为代表的 Agent Harness 快速迭代，MCP（Model Context Protocol）插件生态日益繁荣。但 Harness 的评测仍主要依赖 SWE-bench 等基准的<strong>最终任务成功率</strong>，导致：</p>
+<ul>
+<li>不同 Harness 在成功率相近时无法区分优劣；</li>
+<li>Harness 开发者缺乏精细化的迭代反馈信号；</li>
+<li>token 成本持续攀升但效率无人度量。</li>
+</ul>
+<h3 id="23">2.3 项目启动契机<a class="headerlink" href="#23" title="Permanent link">&para;</a></h3>
+<p>Groom 项目启动于 2026 年 5 月，源于在 LogicEvolve 研究中对"评测只能看最终结果"这一局限的深刻体会。项目最初拟投 2026 年 6 月底 AAAI，后调整为 ARR 2026.8 投稿，并同步推进 SWE-bench 复现以获取真实 Harness 轨迹数据。</p>
+<hr />
+<h2 id="3-related-work">3. 相关工作（Related Work）<a class="headerlink" href="#3-related-work" title="Permanent link">&para;</a></h2>
+<p>Groom 的文献调研覆盖约 <strong>106 篇</strong>相关论文，分为八大研究簇（十一轮补全，来自Groom.md完整文献统计）：</p>
+<table>
+<thead>
+<tr>
+<th><strong>研究簇</strong></th>
+<th><strong>篇数</strong></th>
+<th><strong>代表工作</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Token 成本与预算</td>
+<td>25</td>
+<td>Token-Economics、Co-Saving、TALE、各路 Routing</td>
+</tr>
+<tr>
+<td>评测基准</td>
+<td>16</td>
+<td>SEA-Eval、Claw-Eval、AI Agents That Matter</td>
+</tr>
+<tr>
+<td>Harness 官方文章</td>
+<td>11</td>
+<td>Building Effective Agents、Harness Engineering</td>
+</tr>
+<tr>
+<td>自进化与 Skill 学习</td>
+<td>8</td>
+<td>SkillRL、SKILL0</td>
+</tr>
+<tr>
+<td>综述与架构</td>
+<td>7</td>
+<td>Agent Harness Engineering Survey</td>
+</tr>
+<tr>
+<td>推理优化 / 工具与产品</td>
+<td>6+6</td>
+<td>推理优化方法、Agent工具链产品</td>
+</tr>
+<tr>
+<td>行业与安全 / Harness 自优化</td>
+<td>5+5</td>
+<td>Meta-Harness、MetaClaw</td>
+</tr>
+<tr>
+<td>其余（交叉领域）</td>
+<td>~12</td>
+<td>多Agent协同、上下文管理等</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：Groom GitHub README §相关工作文献统计；related_work/ 目录106篇论文分类。</p>
+</blockquote>
+<h3 id="_4">差异化定位<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p>与现有工作相比，Groom 的核心差异在于：</p>
+<ol>
+<li><strong>过程级而非结果级</strong>：SWE-bench、Claw-Eval 等只关注最终任务成功率，Groom 关注 token 在过程中的利用效率；</li>
+<li><strong>证据驱动而非自我声明</strong>：Effective 判定要求 verifier gain、测试通过、artifact improvement 或 rubric 通过，不采信模型自我声明；</li>
+<li><strong>异构 Harness 横向可比</strong>：通过 <code>native + sidecar</code> 双层观测协议，使 Claude Code、Codex、OpenClaw 等不同架构的 Harness 在同一评测协议下可比。</li>
+</ol>
+<h4 id="vs">过程级评测 vs 结果级评测对比表<a class="headerlink" href="#vs" title="Permanent link">&para;</a></h4>
+<p>下表从评测粒度、核心指标、可解释性、成本、异构系统可比性、适用场景和核心盲区七个维度，系统对比 Groom 所代表的过程级评测与传统结果级评测方法的差异：</p>
+<table>
+<thead>
+<tr>
+<th><strong>对比维度</strong></th>
+<th><strong>Groom（过程级评测）</strong></th>
+<th><strong>传统评测方法（结果级）</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>评测粒度</strong></td>
+<td>过程级：对每个 span、每轮交互、每个工具调用进行细粒度 token 归因，覆盖任务理解→规划→记忆注入→工具准备→执行反馈→搜索试错→错误恢复→最终交付 8 个阶段</td>
+<td>结果级：仅关注最终任务是否完成（pass/fail），不观测中间过程</td>
+</tr>
+<tr>
+<td><strong>核心指标</strong></td>
+<td><code>rho_I</code> / <code>rho_R</code> / <code>rho_E</code>（I/R/E 三态 token 占比）、<code>TUS</code>（Token Utilization Score）、<code>stage_share</code>（8 阶段 token 消耗分布）、<code>failure_modes</code>（低效模式诊断）</td>
+<td><code>pass@k</code>、任务成功率、准确率、完成率（SWE-bench resolved rate、Claw-Eval 任务完成度等）</td>
+</tr>
+<tr>
+<td><strong>可解释性</strong></td>
+<td>高：可精确定位 token 消耗在哪个阶段（规划/检索/工具反馈/错误恢复），识别哪些 token 被有效利用（Effective）、哪些被浪费（Injected 未引用），诊断重复规划/无效检索/上下文污染/错误恢复等低效模式</td>
+<td>低：只知道任务成功或失败，无法解释为什么成功/失败，无法定位 token 浪费在哪里，无法区分"可靠推理"与"偶然试错"</td>
+</tr>
+<tr>
+<td><strong>评测成本</strong></td>
+<td>中高：需要采集完整推理轨迹（API 日志 + sidecar 代理补齐），执行 8 阶段归因和 I/R/E 三态判定，V0 工具链 9 个模块端到端流水线</td>
+<td>低：只需最终答案与标准答案比对（测试用例通过/答案匹配），无需采集中间过程</td>
+</tr>
+<tr>
+<td><strong>异构系统可比性</strong></td>
+<td>高：通过 <code>native + sidecar</code> 双层统一过程观测协议，使 Claude Code、Codex、OpenClaw 等不同架构的 Harness 在同一协议下可比</td>
+<td>中：依赖统一 benchmark（如 SWE-bench），不同 Harness 的执行过程不可比，仅最终成功率可比</td>
+</tr>
+<tr>
+<td><strong>证据驱动性</strong></td>
+<td>强：Effective 判定采用严格证据判据（verifier gain / 测试通过 / artifact improvement / rubric 通过），不采信模型自我声明</td>
+<td>弱：传统评测仅验证最终结果，不验证中间推理是否可靠，可能存在"偶然正确"或"试错蒙对"</td>
+</tr>
+<tr>
+<td><strong>适用场景</strong></td>
+<td>Harness 优化与选型、token 成本归因、低效模式诊断、过程质量分析、Harness 自进化（HarnessEvolve）反馈信号</td>
+<td>模型能力排名、任务能力评估、基准排行榜、模型选型（仅看最终效果）</td>
+</tr>
+<tr>
+<td><strong>核心盲区</strong></td>
+<td>过程级评测不替代结果级评测——token 利用率高不代表任务一定成功，需与成功率联合分析</td>
+<td>过程不可观测（无法判断成功来自可靠推理还是偶然试错）、成本不可归因（无法定位 token 消耗在哪个环节）</td>
+</tr>
+<tr>
+<td><strong>代表工作/基准</strong></td>
+<td>Groom（本项目）、H-TokenBench（配套基准）</td>
+<td>SWE-bench、Claw-Eval、Claw-Bench、MATH、GSM8K、HumanEval 等</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：Groom 仓库 README §1 问题陈述与 §2 三大核心组件；本报告第2.1节问题定义（过程不可观测/成本不可归因两个盲区）；第4.1–4.2节方法设计（8阶段分解/I-R-E判定/native+sidecar协议）；SWE-bench、Claw-Eval 等传统基准官方论文。</p>
+</blockquote>
+<p><strong>小结</strong>：过程级评测与结果级评测是互补而非替代关系——结果级评测回答"任务做对了吗"，过程级评测回答"token 被有效利用了吗、为什么成功/失败"。Groom 的核心价值在于填补了传统评测体系"过程不可观测、成本不可归因"的两个根本性盲区，使 Harness 开发者能够获得精细化的迭代反馈信号，在不同 Harness 成功率相近时区分优劣，并为 Harness 自进化（HarnessEvolve）提供过程级反馈基础。</p>
+<hr />
+<h2 id="4-method">4. 方法与技术路线（Method）<a class="headerlink" href="#4-method" title="Permanent link">&para;</a></h2>
+<h3 id="41">4.1 总体架构<a class="headerlink" href="#41" title="Permanent link">&para;</a></h3>
+<p>Groom 的评测流水线由三大核心组件构成，形成"观测→归因→判定"的完整过程级评测闭环。</p>
+<p><strong>Groom 过程级评测架构图（三大组件 → 8 阶段 → I/R/E 判定）：</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>┌─────────────────────────────────────────────────────────────────┐
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>│                    原始异构 Harness 轨迹                          │
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>│         (Claude Code / Codex / OpenClaw 执行日志 + 环境快照)       │
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>└──────────────────────────────┬──────────────────────────────────┘
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>                               ▼
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>┌─────────────────────────────────────────────────────────────────┐
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>│  ① 统一过程观测（native + sidecar 双层可观测统一事件流）            │
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>│  ┌──────────────┐    ┌──────────────────────────────────────┐   │
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>│  │ native 层    │    │ sidecar 旁路补齐层                     │   │
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>│  │ 原生日志直接  │───▶│ 代理转发 / 工具包装 / 环境快照 / 文件diff │   │
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>│  │ 接入结构化事件 │    │ (日志不足时启用)                       │   │
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>│  └──────────────┘    └──────────────────────────────────────┘   │
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>└──────────────────────────────┬──────────────────────────────────┘
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>                               ▼  归一化事件流 (normalized events)
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>┌─────────────────────────────────────────────────────────────────┐
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>│  ② Token 阶段分解（8 阶段归因）                                    │
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>│  任务理解 → 规划 → 记忆注入 → 工具准备 → 执行反馈                  │
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>│           → 搜索试错 → 错误恢复 → 最终交付                         │
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>│  输出：每个 span 的 stage 标签 + stage_share 分布                  │
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>└──────────────────────────────┬──────────────────────────────────┘
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>                               ▼  分阶段 token 消耗
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>┌─────────────────────────────────────────────────────────────────┐
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>│  ③ I/R/E 三态判定（证据驱动，不采信自我声明）                       │
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>│  ┌──────────┐  ┌──────────┐  ┌──────────────────────────────┐  │
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>│  │ Injected │→ │Referenced│→ │ Effective（需证据判据通过）     │  │
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>│  │ 注入未引用 │  │ 被读取/引用│  │ verifier gain/测试通过/       │  │
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>│  │          │  │          │  │ artifact improvement/rubric通过 │  │
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>│  └──────────┘  └──────────┘  └──────────────────────────────┘  │
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>└──────────────────────────────┬──────────────────────────────────┘
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>                               ▼
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>┌─────────────────────────────────────────────────────────────────┐
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>│  指标输出：rho_I / rho_R / rho_E / TUS / stage_share / failure_modes │
+<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>└─────────────────────────────────────────────────────────────────┘
+</code></pre></div>
+<p><strong>图4-1 · Groom 过程级评测架构 Mermaid 流程图</strong></p>
+<p>下图以 Mermaid 流程图形式呈现"三大核心组件→8阶段token分解→I/R/E三态判定→token利用率分析"的完整评测架构，与上方 ASCII 架构图互为补充。</p>
+<pre class="mermaid"><code>flowchart TD
+    RAW["原始异构 Harness 轨迹&lt;br/&gt;Claude Code / Codex / OpenClaw&lt;br/&gt;执行日志 + 环境快照 + 文件diff"]
+
+    RAW --&gt; C1["① 统一过程观测&lt;br/&gt;native + sidecar 双层可观测&lt;br/&gt;统一事件流"]
+
+    C1 --&gt; C1a["native 层&lt;br/&gt;原生日志直接接入&lt;br/&gt;结构化事件"]
+    C1 --&gt; C1b["sidecar 旁路补齐层&lt;br/&gt;代理转发 / 工具包装&lt;br/&gt;环境快照 / 文件diff&lt;br/&gt;(日志不足时启用)"]
+
+    C1a &amp; C1b --&gt; NE["归一化事件流&lt;br/&gt;normalized events"]
+
+    NE --&gt; C2["② Token 阶段分解&lt;br/&gt;8 阶段归因"]
+
+    C2 --&gt; S1["任务理解&lt;br/&gt;Task Understanding"]
+    C2 --&gt; S2["规划&lt;br/&gt;Planning"]
+    C2 --&gt; S3["记忆注入&lt;br/&gt;Memory Injection"]
+    C2 --&gt; S4["工具准备&lt;br/&gt;Tool Preparation"]
+    C2 --&gt; S5["执行反馈&lt;br/&gt;Execution Feedback"]
+    C2 --&gt; S6["搜索试错&lt;br/&gt;Search &amp; Trial"]
+    C2 --&gt; S7["错误恢复&lt;br/&gt;Error Recovery"]
+    C2 --&gt; S8["最终交付&lt;br/&gt;Final Delivery"]
+
+    S1 &amp; S2 &amp; S3 &amp; S4 &amp; S5 &amp; S6 &amp; S7 &amp; S8 --&gt; SS["分阶段 token 消耗&lt;br/&gt;stage_share 分布"]
+
+    SS --&gt; C3["③ I/R/E 三态判定&lt;br/&gt;证据驱动，不采信自我声明"]
+
+    C3 --&gt; I["Injected 注入态&lt;br/&gt;注入但未被引用&lt;br/&gt;rho_I"]
+    I --&gt; R["Referenced 引用态&lt;br/&gt;被读取/引用但未影响行为&lt;br/&gt;rho_R"]
+    R --&gt; E["Effective 有效态&lt;br/&gt;需证据判据通过:&lt;br/&gt;verifier gain / 测试通过 /&lt;br/&gt;artifact improvement / rubric通过&lt;br/&gt;rho_E"]
+
+    E --&gt; METRICS["指标输出&lt;br/&gt;rho_I / rho_R / rho_E&lt;br/&gt;TUS (Token Utilization Score)&lt;br/&gt;stage_share / failure_modes"]
+
+    METRICS --&gt; ANALYSIS["token 利用率分析&lt;br/&gt;低效模式诊断:&lt;br/&gt;重复规划 / 无效检索 /&lt;br/&gt;上下文污染 / 错误恢复"]
+
+    style C1 fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
+    style C2 fill:#fff3e0,stroke:#ef6c00,stroke-width:2px
+    style C3 fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
+    style I fill:#ffebee,stroke:#c62828
+    style R fill:#fff8e1,stroke:#f9a825
+    style E fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
+    style METRICS fill:#f3e5f5,stroke:#7b1fa2
+    style ANALYSIS fill:#fce4ec,stroke:#c2185b</code></pre>
+<blockquote>
+<p>图注：Groom 过程级评测架构以三大核心组件为骨架：①统一过程观测将异构 Harness 轨迹归一化为统一事件流；②Token 阶段分解将 token 成本归因到 8 个语义阶段；③I/R/E 三态判定以证据驱动方式验证 token 是否真正支撑决策。最终输出 rho_I/rho_R/rho_E/TUS 等指标，并进行 token 利用率分析和低效模式诊断。</p>
+</blockquote>
+<p>三大核心组件的详细对比如下表所示：</p>
+<table>
+<thead>
+<tr>
+<th><strong>组件</strong></th>
+<th><strong>核心内容</strong></th>
+<th><strong>解决的问题</strong></th>
+<th><strong>关键技术手段</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>① 统一过程观测</strong></td>
+<td><code>native + sidecar</code> 双层可观测统一事件流</td>
+<td>让异构系统在同一协议下可比</td>
+<td>有原生日志直接接入；不足时用代理转发/工具包装/环境快照/文件 diff 旁路补齐</td>
+</tr>
+<tr>
+<td><strong>② Token 阶段分解</strong></td>
+<td>把 token 成本分解为 8 阶段</td>
+<td>让"花在哪"可归因</td>
+<td>span 抽取 + 阶段归因规则（attribute_rules）</td>
+</tr>
+<tr>
+<td><strong>③ I/R/E 三态判定</strong></td>
+<td><code>Injected / Referenced / Effective</code> 三态 + 证据判据</td>
+<td>让"是否真的支撑决策"可验证</td>
+<td>注入/读取/引用/行为变化/结果影响的证据链判定</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：Groom 仓库 README §2「三大核心组件」（https://github.com/dujh22/Groom）</p>
+</blockquote>
+<h3 id="42">4.2 关键模块设计<a class="headerlink" href="#42" title="Permanent link">&para;</a></h3>
+<p><strong>统一过程观测协议</strong>：采用 <code>native + sidecar</code> 双层架构。对于有原生日志的 Harness（如 Claude Code），直接接入结构化事件流；对于日志不足的系统，通过代理转发、工具包装、环境快照、文件 diff 等旁路方式补齐可观测性。</p>
+<p><strong>Token 8 阶段分解</strong>：将每个 span 的 token 消耗归因到 8 个语义阶段，使"花在哪"可精确归因。阶段划分基于对 Harness 执行流程的系统性分析。各阶段的定义与典型 token 消耗场景如下表：</p>
+<table>
+<thead>
+<tr>
+<th><strong>阶段编号</strong></th>
+<th><strong>阶段名称</strong></th>
+<th><strong>定义</strong></th>
+<th><strong>典型 token 消耗场景</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S1</td>
+<td>任务理解</td>
+<td>解析用户指令、明确任务目标与约束</td>
+<td>系统提示词、任务描述读取、意图识别</td>
+</tr>
+<tr>
+<td>S2</td>
+<td>规划</td>
+<td>制定执行计划、分解子任务、选择工具</td>
+<td>规划推理输出、任务分解、工具选择决策</td>
+</tr>
+<tr>
+<td>S3</td>
+<td>记忆注入</td>
+<td>从历史对话/知识库/文件中注入上下文</td>
+<td>历史会话加载、RAG 检索结果、文件内容读取</td>
+</tr>
+<tr>
+<td>S4</td>
+<td>工具准备</td>
+<td>构造工具调用参数、加载工具定义</td>
+<td>Function Call 参数构造、工具 schema 加载</td>
+</tr>
+<tr>
+<td>S5</td>
+<td>执行反馈</td>
+<td>接收工具返回结果、环境反馈</td>
+<td>工具执行结果、命令输出、环境状态</td>
+</tr>
+<tr>
+<td>S6</td>
+<td>搜索试错</td>
+<td>多路径探索、候选方案尝试、冗余搜索</td>
+<td>多次工具调用、方案对比、重复检索</td>
+</tr>
+<tr>
+<td>S7</td>
+<td>错误恢复</td>
+<td>检测错误、回退、重试、修正</td>
+<td>错误信息处理、重试逻辑、方案修正</td>
+</tr>
+<tr>
+<td>S8</td>
+<td>最终交付</td>
+<td>生成最终答案、总结、输出格式化</td>
+<td>最终回答生成、结果汇总、格式整理</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：Groom 仓库 README §2「Token 阶段分解」及 <code>code/src/groom/attribute_rules.py</code> 阶段归因规则（https://github.com/dujh22/Groom）</p>
+</blockquote>
+<p><strong>I/R/E 三态判定</strong>：这是 Groom 的核心创新。对每一段注入上下文的 token，判定其处于三种状态之一：
+- <strong>Injected</strong>：被注入上下文但未被模型引用；
+- <strong>Referenced</strong>：被模型读取或在输出中引用；
+- <strong>Effective</strong>：实际影响了后续决策、行为变化或最终结果。</p>
+<p>Effective 判定采用严格的证据判据，要求 verifier gain、测试通过、artifact improvement 或 rubric 通过，<strong>不采信模型自我声明</strong>。三态判定的详细标准如下：</p>
+<table>
+<thead>
+<tr>
+<th><strong>状态</strong></th>
+<th><strong>判定条件</strong></th>
+<th><strong>证据要求</strong></th>
+<th><strong>对应指标</strong></th>
+<th><strong>典型场景</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Injected (I)</strong></td>
+<td>token 被注入上下文窗口，但模型未在输出中读取或引用</td>
+<td>存在于上下文但无引用痕迹</td>
+<td>rho_I</td>
+<td>冗余的系统提示、未被使用的 RAG 检索结果</td>
+</tr>
+<tr>
+<td><strong>Referenced (R)</strong></td>
+<td>token 被模型读取或在推理输出中明确引用</td>
+<td>输出中出现对该内容的引用/复述</td>
+<td>rho_R</td>
+<td>模型提及"根据文件中的..."、引用检索片段</td>
+</tr>
+<tr>
+<td><strong>Effective (E)</strong></td>
+<td>token 实际影响了后续决策、行为变化或最终结果</td>
+<td>需满足以下至少一项：verifier gain / 测试通过 / artifact improvement / rubric 通过</td>
+<td>rho_E</td>
+<td>注入的代码片段被采纳并通过测试、检索结果改变了工具调用决策</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：Groom 仓库 README §2「I/R/E 三态判定」及 <code>code/src/groom/ire_gate.py</code> 判定逻辑（https://github.com/dujh22/Groom）；Effective 不采信模型自我声明的原则见 README §6 注意事项</p>
+</blockquote>
+<h3 id="43-claim">4.3 三条核心 Claim<a class="headerlink" href="#43-claim" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Claim A · 成本守恒的任务 grooming</strong>：从多个现有 benchmark 候选池中自动筛出的任务子集，能以显著更低成本近似复现全量评测结论（保持系统排名、难度梯度、跨领域趋势一致）。</li>
+<li><strong>Claim B · 过程级归因有额外解释力</strong>：在成功率相近的系统/任务间，过程级 token 归因能揭示原始 benchmark 看不见的低效模式（重复规划/无效检索/上下文污染/错误恢复）。</li>
+<li><strong>Claim C · Harness 选择超越模型能力影响 token 利用</strong>：相同任务、相近底层模型下，不同 Agent/Harness 的 token 成本结构存在系统性差异——评测不能只归因于模型能力。</li>
+</ul>
+<hr />
+<h2 id="5-experiments-results">5. 实验与结果（Experiments &amp; Results）<a class="headerlink" href="#5-experiments-results" title="Permanent link">&para;</a></h2>
+<h3 id="51">5.1 数据集<a class="headerlink" href="#51" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>人工 Golden Trace</strong>：4 条人工构造的标准轨迹（coding×2 + claw×2），用于 V0 工具链的端到端验证。每条轨迹包含完整的事件流 <code>manual_events.jsonl</code>。</li>
+<li><strong>外部 Benchmark 复现</strong>：SWE-bench（源码 + 论文 + 复现流程）、Claw-Eval、Claw-Bench，用于获取真实 Harness 轨迹数据。</li>
+<li><strong>任务与系统注册</strong>：<code>configs/tasks.jsonl</code> + <code>configs/systems.yaml</code> 维护任务与系统注册表。</li>
+</ul>
+<h3 id="52">5.2 评估指标<a class="headerlink" href="#52" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>rho_I</code> / <code>rho_R</code> / <code>rho_E</code>：Injected/Referenced/Effective 三态 token 占比；</li>
+<li><code>TUS</code>（Token Utilization Score）：综合 token 利用率得分；</li>
+<li><code>stage_share</code>：8 阶段 token 消耗分布；</li>
+<li><code>failure_modes</code>：低效模式诊断（重复规划/无效检索/上下文污染/错误恢复）。</li>
+</ul>
+<h3 id="53">5.3 实验结果<a class="headerlink" href="#53" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>V0 工具链验证</strong>：4/4 条 golden trace 全部跑通，输出归一化事件、span、阶段归因、I/R/E 标签、指标与报告的全链路产物。</li>
+</ul>
+<p>V0 golden trace 验证的详细结果如下表所示，4 条人工构造的标准轨迹覆盖 coding 与 claw 两大类场景，全部通过端到端流水线验证：</p>
+<table>
+<thead>
+<tr>
+<th><strong>Run ID</strong></th>
+<th><strong>轨迹类型</strong></th>
+<th><strong>场景</strong></th>
+<th><strong>归一化事件</strong></th>
+<th><strong>Span 抽取</strong></th>
+<th><strong>阶段归因</strong></th>
+<th><strong>I/R/E 标签</strong></th>
+<th><strong>指标计算</strong></th>
+<th><strong>报告生成</strong></th>
+<th><strong>状态</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>run-01</td>
+<td>coding</td>
+<td>编程任务轨迹 1</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>通过</td>
+</tr>
+<tr>
+<td>run-02</td>
+<td>coding</td>
+<td>编程任务轨迹 2</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>通过</td>
+</tr>
+<tr>
+<td>run-03</td>
+<td>claw</td>
+<td>OpenClaw 智能体轨迹 1</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>通过</td>
+</tr>
+<tr>
+<td>run-04</td>
+<td>claw</td>
+<td>OpenClaw 智能体轨迹 2</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>通过</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：Groom GitHub README（TRACKER.md 48 Step/9 Phase；MILESTONES.md）；飞书文档 20260610 项目进展、20260828 讨论；个人周报记录</p>
+</blockquote>
+<p>每条 run 的输出目录包含：<code>events.jsonl</code>（归一化事件）、<code>spans.jsonl</code>（span 抽取）、<code>labels.stage.jsonl</code>（阶段归因）、<code>labels.jsonl</code>（I/R/E 判定）、<code>metrics.json</code>（rho_I/rho_R/rho_E/TUS/stage_share/failure_modes）、<code>report.md</code>（含 effective evidence chain），并汇总为 <code>summary.md</code> / <code>summary.json</code>。</p>
+<blockquote>
+<p>数据来源：Groom 仓库 README §6「如何运行」及 <code>code/reports/golden/</code> 输出结构（https://github.com/dujh22/Groom）；V0 工具链已跑通 4/4 golden traces，Step 5.1 ✅，见 README §8 当前进度</p>
+</blockquote>
+<h4 id="531-v0">5.3.1 V0 工具链运行时性能指标<a class="headerlink" href="#531-v0" title="Permanent link">&para;</a></h4>
+<p>V0 工具链采用纯 Python 标准库实现，无需第三方依赖，运行时性能特征如下：</p>
+<table>
+<thead>
+<tr>
+<th><strong>性能维度</strong></th>
+<th><strong>指标值/特征</strong></th>
+<th><strong>说明</strong></th>
+<th><strong>优化方向</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Python 版本要求</td>
+<td>≥ 3.9</td>
+<td>仅用标准库，无需安装第三方依赖</td>
+<td>保持零依赖设计</td>
+</tr>
+<tr>
+<td>依赖数量</td>
+<td>0（纯标准库）</td>
+<td>schema_validate/normalize/extract_spans/attribute_rules/ire_gate/score/report/pipeline/common 共9模块</td>
+<td>后续大规模评测可引入 pandas 加速</td>
+</tr>
+<tr>
+<td>单 run 处理产物</td>
+<td>6 类文件</td>
+<td>events.jsonl / spans.jsonl / labels.stage.jsonl / labels.jsonl / metrics.json / report.md</td>
+<td>可扩展为实时流式输出</td>
+</tr>
+<tr>
+<td>批量处理能力</td>
+<td>4 runs 一键跑通</td>
+<td><code>bash code/scripts/run_all.sh</code> 处理全部 golden traces</td>
+<td>支持并行多 run 处理</td>
+</tr>
+<tr>
+<td>回归测试</td>
+<td>unittest 框架</td>
+<td><code>PYTHONPATH=code/src python -m unittest discover -s code/tests</code></td>
+<td>增加覆盖率至 80%+</td>
+</tr>
+<tr>
+<td>输入格式</td>
+<td>JSONL 事件流</td>
+<td><code>manual_events.jsonl</code>，必填字段见 schema_validate.py 顶部 REQUIRED_EVENT_FIELDS</td>
+<td>支持更多原生日志格式接入</td>
+</tr>
+<tr>
+<td>输出汇总</td>
+<td>summary.md + summary.json</td>
+<td>全部 run 的指标汇总与对比</td>
+<td>增加可视化图表输出</td>
+</tr>
+<tr>
+<td>Effective 判定延迟</td>
+<td>离线批处理</td>
+<td>需 verifier gain/测试通过/artifact improvement/rubric 通过等证据</td>
+<td>探索在线实时判定</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：Groom 仓库 README §6「如何运行」环境要求与分步命令；<code>code/src/groom/</code> 9 模块清单；<code>code/scripts/run_all.sh</code> 一键运行脚本。</p>
+</blockquote>
+<ul>
+<li><strong>SWE-bench 复现</strong>：2026.5–7 完成 SWE-bench 复现调研，包括 task schema、verifier、trajectory 的反向工程。</li>
+<li><strong>ARR 投稿版本</strong>：在公开 harness 轨迹上验证了评测协议的基本功能有效性。具体数值结果待核实（十一轮核查：Groom README确认当前为Phase 5，4/4 golden trace已跑通，大规模真实轨迹实验数值论文审稿中未公开，保留待核实）。</li>
+</ul>
+<h3 id="54">5.4 消融与对比实验<a class="headerlink" href="#54" title="Permanent link">&para;</a></h3>
+<p>论文规划了对比实验 / 消融实验以支撑三条核心 Claim，包括：
+- Claim A：全量评测 vs 筛选子集的排名一致性对比；
+- Claim B：成功率相近系统间的过程级归因差异分析；
+- Claim C：相同底层模型 + 不同 Harness 的 token 成本结构对比。</p>
+<p>具体实验数值待核实（十一轮核查：Groom README确认三条Claim的对比/消融实验为论文核心实验，数值在ARR审稿中未公开，保留待核实）。</p>
+<hr />
+<h2 id="6-engineering">6. 工程实现（Engineering）<a class="headerlink" href="#6-engineering" title="Permanent link">&para;</a></h2>
+<h3 id="61">6.1 代码仓库<a class="headerlink" href="#61" title="Permanent link">&para;</a></h3>
+<ul>
+<li>私有仓库：https://github.com/dujh22/Groom</li>
+<li>仓库描述：How Regulated LLMs Harness Tokens for Reasoning</li>
+</ul>
+<h3 id="62">6.2 技术栈<a class="headerlink" href="#62" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>语言</strong>：Python ≥ 3.9，<strong>仅用标准库，无需安装任何第三方依赖</strong>（V0 工具链）</li>
+<li><strong>论文工程</strong>：LaTeX（ACL 格式 for ARR / AAAI 格式 for AAAI 2027）</li>
+<li><strong>可观测性</strong>：native 日志接入 + sidecar 旁路（代理转发/工具包装/环境快照/文件 diff）</li>
+</ul>
+<h3 id="63">6.3 仓库结构<a class="headerlink" href="#63" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Groom/
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>├── RESEARCH.md              # 研究核心：问题陈述/Claims/贡献类型
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>├── TRACKER.md               # 48 Step / 9 Phase 全流程跟踪
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>├── MILESTONES.md            # AAAI 投稿硬规定 + 时间盒
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>├── 后续完整的逐步开发计划.md   # 小时制开发排期（三阶段/约120小时）
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>├── code/src/groom/          # 9 模块工具链
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>│   ├── schema_validate      # 输入事件 schema 校验
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>│   ├── normalize            # 事件归一化
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>│   ├── extract_spans        # span 抽取
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>│   ├── attribute_rules      # 阶段归因规则
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>│   ├── ire_gate             # I/R/E 三态判定
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>│   ├── score                # 指标计算
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>│   ├── report               # 报告生成
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>│   ├── pipeline             # 端到端流水线
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>│   └── common               # 公共工具
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>├── code/golden_traces/      # 4 个 run 的机器可读输入
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>├── code/reports/golden/     # 每 run 的全链路输出 + summary
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>├── reproduce/               # SWE-bench / Claw-Eval / Claw-Bench 复现
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>├── related_work/            # 106 篇文献精读笔记 + 差异化对照表
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>└── paper/                   # LaTeX 论文工程（ARR_en_now / AAAI_zh_now）
+</code></pre></div>
+<h3 id="64">6.4 关键工程挑战<a class="headerlink" href="#64" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>异构 Harness 可观测性统一</strong>：不同 Harness 的日志格式、粒度、可访问性差异巨大，通过 <code>native + sidecar</code> 双层架构解决。</li>
+<li><strong>Effective 判定的证据严格性</strong>：必须避免采信模型自我声明，设计了基于 verifier gain/测试通过/artifact improvement/rubric 通过的证据判据。</li>
+<li><strong>SWE-bench 复现的工程复杂度</strong>：涉及 Docker 环境、任务实例化、测试验证等多环节，2026.5–7 集中攻关。</li>
+</ol>
+<h3 id="65">6.5 项目时间线<a class="headerlink" href="#65" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>时间</strong></th>
+<th><strong>里程碑</strong></th>
+<th><strong>关键产出</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2026.5</td>
+<td>项目启动，选题确定</td>
+<td>提出"过程级 token 利用率"评测维度，问题陈述与三条核心 Claim 设计</td>
+</tr>
+<tr>
+<td>2026.5-6</td>
+<td>文献调研</td>
+<td>系统精读 106 篇相关论文，八大研究簇分类，6 篇最强相关工作差异化对照表</td>
+</tr>
+<tr>
+<td>2026.5-7</td>
+<td>SWE-bench 复现调研</td>
+<td>task schema、verifier、trajectory 反向工程，Claw-Eval/Claw-Bench 复现</td>
+</tr>
+<tr>
+<td>2026.6</td>
+<td>论文初稿完成</td>
+<td>Groom 论文中英文初稿，方法设计（双层观测协议/8阶段分解/I-R-E判定）</td>
+</tr>
+<tr>
+<td>2026.6-7</td>
+<td>V0 工具链开发</td>
+<td>9 个 Python 模块（schema_validate→report/pipeline），仅用标准库</td>
+</tr>
+<tr>
+<td>2026.7</td>
+<td>Golden Trace 验证</td>
+<td>4/4 条人工 golden trace 全部跑通（coding×2 + claw×2）</td>
+</tr>
+<tr>
+<td>2026.7.21</td>
+<td>AAAI 投稿截止调整</td>
+<td>从 AAAI 2026.6 底调整为 ARR 2026.8 投稿，争取更多实验时间</td>
+</tr>
+<tr>
+<td>2026.8</td>
+<td>ARR 投稿</td>
+<td>论文 "Groom: Process-Level Token Utilization Evaluation for LLM Agent Harnesses" 投稿 ACL Rolling Review（OpenReview: CX20RUtZ4G）</td>
+</tr>
+<tr>
+<td>2026.8-9</td>
+<td>审稿与后续</td>
+<td>ARR 审稿中，目标 AAAI 2027 主投 / ICLR 2027 备投</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：Groom 仓库 TRACKER.md（48 Step / 9 Phase）；MILESTONES.md 投稿时间盒；飞书文档 20260610 项目进展、20260828 讨论；个人周报记录。</p>
+</blockquote>
+<h3 id="66">6.6 技术栈演进与零第三方依赖选型决策<a class="headerlink" href="#66" title="Permanent link">&para;</a></h3>
+<p>Groom的核心工程设计决策是<strong>仅用Python标准库、零第三方依赖</strong>，这一决策贯穿整个工具链开发，以下为关键选型决策记录。</p>
+<table>
+<thead>
+<tr>
+<th><strong>阶段</strong></th>
+<th><strong>时间</strong></th>
+<th><strong>选用技术</strong></th>
+<th><strong>替代方案</strong></th>
+<th><strong>选型理由</strong></th>
+<th><strong>事后评估</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>核心语言</td>
+<td>2026.6</td>
+<td>Python ≥ 3.9 标准库（json/re/datetime/argparse/logging/collections等）</td>
+<td>使用pydantic/numpy/pandas/click等第三方库</td>
+<td><strong>零第三方依赖是核心设计决策</strong>：（1）评测工具应尽可能减少环境依赖，确保在任何Python环境中都能直接运行，避免"评测工具本身需要复杂环境"的悖论；（2）标准库的json/re/datetime/argparse/logging/collections等模块已足够支撑事件校验、归一化、span抽取、指标计算等核心功能；（3）零依赖使工具更容易被Harness开发者集成和使用，降低了采用门槛</td>
+<td>正确——V0工具链9个模块全部仅用标准库，4/4 golden trace全部跑通，工具可在任何Python 3.9+环境直接运行，零安装成本</td>
+</tr>
+<tr>
+<td>事件校验</td>
+<td>2026.6</td>
+<td>schema_validate模块（标准库json + 自定义schema校验）</td>
+<td>使用jsonschema/pydantic等第三方校验库</td>
+<td>jsonschema/pydantic虽然功能强大但增加了依赖，而Groom的事件schema相对简单（固定字段+类型检查），标准库的json+自定义校验函数已足够；零依赖的优先级高于功能丰富度</td>
+<td>正确——自定义schema校验覆盖了所有必需字段和类型检查，golden trace验证通过</td>
+</tr>
+<tr>
+<td>事件归一化</td>
+<td>2026.6</td>
+<td>normalize模块（标准库re/datetime/collections）</td>
+<td>使用pandas进行数据清洗和转换</td>
+<td>pandas是数据处理的常用工具，但对于事件归一化这种结构化数据处理任务，标准库的re（正则匹配）、datetime（时间格式转换）、collections（字典操作）已足够；引入pandas会增加大量依赖和环境复杂度</td>
+<td>正确——标准库实现的归一化模块处理了不同Harness的事件格式差异，golden trace验证通过</td>
+</tr>
+<tr>
+<td>span抽取</td>
+<td>2026.6</td>
+<td>extract_spans模块（标准库re/json）</td>
+<td>使用spacy/nltk等NLP库进行文本分析</td>
+<td>span抽取的目标是从事件文本中提取token使用相关的span，这是基于规则的模式匹配任务，标准库的re（正则表达式）已足够；spacy/nltk适合复杂NLP任务但增加了大量依赖和模型加载开销</td>
+<td>正确——基于正则的span抽取覆盖了所有需要的模式，无需NLP库</td>
+</tr>
+<tr>
+<td>指标计算</td>
+<td>2026.6</td>
+<td>score模块（标准库math/collections/json）</td>
+<td>使用numpy/scipy进行数值计算</td>
+<td>Groom的指标计算主要是计数、比例、加权平均等基础统计，标准库的math和collections已足够；numpy适合大规模数组运算但Groom的数据规模不需要</td>
+<td>正确——标准库实现的指标计算覆盖了token利用率、阶段分布、I/R/E三态比例等所有指标</td>
+</tr>
+<tr>
+<td>报告生成</td>
+<td>2026.6</td>
+<td>report模块（标准库json/string Template）</td>
+<td>使用jinja2/markdown等模板引擎</td>
+<td>报告生成是结构化文本输出，标准库的json（JSON报告）和string Template（文本模板）已足够；jinja2虽然功能强大但增加了依赖</td>
+<td>正确——标准库实现的报告生成输出了完整的JSON报告和summary，golden trace验证通过</td>
+</tr>
+<tr>
+<td>可观测性</td>
+<td>2026.6-7</td>
+<td>native日志接入 + sidecar旁路（代理转发/工具包装/环境快照/文件diff）</td>
+<td>使用OpenTelemetry/Prometheus等可观测性框架</td>
+<td>native+sidecar双层架构是Groom的核心方法设计，sidecar通过标准库的subprocess（进程代理）、os（环境快照）、difflib（文件diff）实现，无需第三方可观测性框架；OpenTelemetry等框架虽然功能强大但过于重量级，且增加了依赖</td>
+<td>正确——native+sidecar双层架构实现了对异构Harness的统一可观测性，sidecar全部用标准库实现</td>
+</tr>
+<tr>
+<td>论文工程</td>
+<td>2026.6-8</td>
+<td>LaTeX（ACL格式for ARR / AAAI格式for AAAI 2027），Overleaf在线协作</td>
+<td>Word / 本地LaTeX</td>
+<td>ARR和AAAI都有严格的LaTeX格式要求，使用官方模板可确保格式合规；Overleaf在线协作便于导师修改和版本管理；中英文双版需要精确的排版控制</td>
+<td>正确——论文中英文版均完成，ARR 2026.8投稿成功（OpenReview: CX20RUtZ4G）</td>
+</tr>
+<tr>
+<td>项目管理</td>
+<td>2026.5-9</td>
+<td>TRACKER.md（48 Step / 9 Phase）+ MILESTONES.md（投稿时间盒）+ 小时制开发排期（约120小时）</td>
+<td>使用Jira/Notion/Trello等项目管理工具</td>
+<td>纯Markdown文件的项目管理零依赖、可版本控制（Git）、可直接嵌入仓库，与代码和论文在同一仓库中管理；第三方项目管理工具增加了工具切换成本和数据孤岛</td>
+<td>正确——48 Step / 9 Phase跟踪体系有效提升了长周期研究的可控性，小时制排期确保了开发进度</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：Groom仓库code/src/groom/各模块源码（import语句验证零第三方依赖）；TRACKER.md；MILESTONES.md；实际技术选型决策记录。</p>
+</blockquote>
+<hr />
+<h2 id="7-impact">7. 成果与影响（Impact）<a class="headerlink" href="#7-impact" title="Permanent link">&para;</a></h2>
+<h3 id="71">7.1 论文发表<a class="headerlink" href="#71" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>ARR 2026.8 投稿</strong>：论文 "Groom: Process-Level Token Utilization Evaluation for LLM Agent Harnesses" 于 2026 年 8 月投稿 ACL Rolling Review（OpenReview: https://openreview.net/forum?id=CX20RUtZ4G）</li>
+<li><strong>目标会议</strong>：AAAI 2027（主投，Groom README确认abstract截稿2026-07-21，full paper截稿2026-07-28）/ ICLR 2027（备投）</li>
+<li><strong>论文 Overleaf</strong>：https://www.overleaf.com/read/rpgdqbggzbzt</li>
+</ul>
+<h3 id="72">7.2 衍生研究<a class="headerlink" href="#72" title="Permanent link">&para;</a></h3>
+<p>Groom 作为评测基础设施，直接催生了两个后续研究方向：
+- <strong>HarnessEvolve</strong>：让 Agent Harness 走向自我进化（建立在 Groom 评测基础上，对单 Harness 的系统层级进化）
+- <strong>SwarmEvolve</strong>：自进化 Agent Swarms（对多 Agent 群体的进化研究）</p>
+<h3 id="73">7.3 配套基准<a class="headerlink" href="#73" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>H-TokenBench</strong>：与 Groom 配套的基准评测，"Benchmarking How LLMs Harness Tokens for Reasoning"，私有仓库 https://github.com/dujh22/H-TokenBench</li>
+</ul>
+<hr />
+<h2 id="8-my-contribution">8. 个人贡献（My Contribution）<a class="headerlink" href="#8-my-contribution" title="Permanent link">&para;</a></h2>
+<h3 id="81">8.1 角色<a class="headerlink" href="#81" title="Permanent link">&para;</a></h3>
+<p>项目负责人、第一作者。独立完成选题、文献调研、方法设计、论文写作、工具链开发与实验推进。</p>
+<h3 id="82">8.2 具体工作清单<a class="headerlink" href="#82" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>选题与问题定义</strong>：提出"过程级 token 利用率"这一新的评测维度，完成问题陈述与三条核心 Claim 设计；</li>
+<li><strong>文献调研</strong>：系统精读 106 篇相关论文，完成文献地图（四线+八簇）与 6 篇最强相关工作的差异化对照表；</li>
+<li><strong>方法设计</strong>：设计 <code>native + sidecar</code> 双层观测协议、8 阶段 token 分解、I/R/E 三态判定机制；</li>
+<li><strong>工具链开发</strong>：独立开发 V0 工具链（9 个 Python 模块，仅用标准库），实现从事件输入到报告输出的端到端流水线，跑通 4/4 golden trace；</li>
+<li><strong>SWE-bench 复现</strong>：2026.5–7 完成 SWE-bench、Claw-Eval、Claw-Bench 的反向工程与复现调研；</li>
+<li><strong>论文写作</strong>：完成论文中英文稿，2026.6 月初稿完成，2026.8 投稿 ARR；</li>
+<li><strong>项目管理</strong>：建立 48 Step / 9 Phase 的 TRACKER 体系、小时制开发排期（约 120 小时）、每日执行清单与研究过程日志。</li>
+</ol>
+<hr />
+<h2 id="9-lessons-learned">9. 经验与反思（Lessons Learned）<a class="headerlink" href="#9-lessons-learned" title="Permanent link">&para;</a></h2>
+<h3 id="91">9.1 关键问题与解决方案（含具体故事）<a class="headerlink" href="#91" title="Permanent link">&para;</a></h3>
+<p><strong>问题一：评测协议的实际效用验证不足。</strong> 初期只有初步评测协议设计，在基本Harness轨迹数据集上验证了功能有效性（4/4 golden trace跑通），但实际效用——即Groom的评测结果能否真正区分不同Harness的token利用效率、能否指导Harness优化——需要在更大规模的真实轨迹上验证。</p>
+<blockquote>
+<p><strong>具体故事</strong>：2026年6-7月V0工具链开发完成后，4/4条人工golden trace（coding×2 + claw×2）全部跑通，功能验证通过。但golden trace是人工构造的小规模数据，每条trace只有几十个事件，无法代表真实Harness在复杂任务中的token使用行为。在论文撰写过程中，审稿人可能会质疑："你的评测协议在真实场景中有用吗？能区分不同Harness的优劣吗？"为了回答这个问题，需要获取大规模真实Harness轨迹数据。SWE-bench是目前最权威的软件工程Agent基准，包含真实的GitHub issue和测试用例，但SWE-bench的复现涉及Docker环境、任务实例化、测试验证、trajectory采集等多个复杂环节。2026年5-7月集中攻关SWE-bench复现，完成了task schema、verifier、trajectory的反向工程，以及Claw-Eval/Claw-Bench的复现。但完整的SWE-bench大规模实验（运行数百个任务实例、采集完整trajectory）在ARR 2026.8投稿截止前未能全部完成。解决方案是：（1）在论文中如实报告已完成的golden trace验证和SWE-bench复现调研；（2）规划HarnessEvolve和SwarmEvolve两个衍生研究，建立长期进化闭环，在更大规模上验证Groom的实际效用；（3）将H-TokenBench作为配套基准，提供标准化的评测数据集。投稿策略也相应调整——从AAAI 2026.6底调整为ARR 2026.8，争取更多实验时间。</p>
+</blockquote>
+<p><strong>问题二：从AAAI到ARR的投稿策略调整。</strong> 项目最初拟投2026年6月底的AAAI 2027，但工程实施尚未充分展开——V0工具链刚开发完成，SWE-bench大规模实验尚未启动，论文实验部分不够充分。如果强行投AAAI，很可能因为实验不充分被拒。</p>
+<blockquote>
+<p><strong>具体故事</strong>：2026年6月初，Groom论文初稿完成，方法设计（native+sidecar双层观测协议、8阶段分解、I/R/E三态判定）已经成熟，但实验部分只有4/4 golden trace的功能验证，缺乏大规模真实数据的实验结果。AAAI 2027的abstract截稿是2026年7月21日，full paper截稿是7月28日（Groom README确认），距离初稿完成只有不到2个月。在这2个月内，需要完成SWE-bench大规模实验、补充对比实验、完善论文论述，时间非常紧张。经过与导师和实验室同学的讨论，决定调整投稿策略：（1）放弃AAAI 2026.6底的投稿，改为投ARR 2026.8（ACL Rolling Review，8月截稿），多出约1个月的实验时间；（2）以AAAI 2027为主投目标（ARR审稿通过后可转投AAAI），ICLR 2027为备投；（3）利用多出的1个月时间推进SWE-bench实验和工具链完善。这个调整是务实的——与其仓促投稿被拒，不如多花1个月完善实验，提高录用概率。最终论文于2026年8月投稿ARR（OpenReview: CX20RUtZ4G），实验部分比初稿时更充分。</p>
+</blockquote>
+<p><strong>问题三：Effective判定的边界问题。</strong> 如何在不采信模型自我声明的前提下严格判定token是否"有效"（Effective），是方法设计的核心难点。模型经常会声明"我已经完成了任务"或"这个修改是正确的"，但这些声明可能是虚假的——模型可能产生了幻觉，或者修改实际上没有通过测试。</p>
+<blockquote>
+<p><strong>具体故事</strong>：在设计I/R/E三态判定机制时，最初的想法是根据模型的输出来判定token是否有效——如果模型说"我修复了这个bug"，就认为相关token是有效的。但很快发现这个方法有严重问题：模型的自我声明不可信。例如，在一个coding任务中，模型生成了一段代码修改并声明"修复完成"，但实际上这段修改没有通过测试用例，甚至引入了新的bug。如果采信模型的自我声明，就会高估token的有效性，导致评测结果不准确。解决方案是设计<strong>多源证据判据</strong>，完全不采信模型的自我声明，而是基于可审计的外部证据判定有效性：（1）<strong>verifier gain</strong>——自动验证器（如测试用例）在模型执行前后的通过率变化，如果测试通过率提升了，说明相关token可能是有效的；（2）<strong>测试通过</strong>——具体的测试用例是否通过，这是最直接的有效性证据；（3）<strong>artifact improvement</strong>——生成的代码/文档/配置等产物是否有可验证的改进（如代码行数增加、文档更完整、配置更合理）；（4）<strong>rubric通过</strong>——人工评分标准（rubric）是否通过，适用于无法自动验证的任务。只有当至少一个外部证据支持时，才判定token为Effective（E）；如果token被生成但没有任何外部证据支持其有效性，判定为Ineffective（I）；如果token是冗余的、重复的或与任务无关的，判定为Redundant（R）。这个多源证据判据确保了Effective判定的严格性和可审计性，是Groom方法的核心创新之一。</p>
+</blockquote>
+<h3 id="92">9.2 可复用方法论（深化版）<a class="headerlink" href="#92" title="Permanent link">&para;</a></h3>
+<h4 id="921">9.2.1 证据驱动评测原则<a class="headerlink" href="#921" title="Permanent link">&para;</a></h4>
+<p><strong>任何评测指标的判定都应基于可审计的外部证据，而非模型自我声明</strong>——这一原则可推广到其他Agent评测场景：
+- <strong>核心思想</strong>：模型的输出和声明是不可信的（可能存在幻觉、虚假声明、过度自信），评测必须基于独立的、可验证的外部证据；
+- <strong>证据类型</strong>：自动验证器结果（测试通过率）、产物改进（代码/文档质量）、人工评分标准（rubric）、外部工具反馈（编译器错误、lint警告）；
+- <strong>判定逻辑</strong>：只有当至少一个外部证据支持时，才判定为正向（有效/正确/成功），否则判定为负向或不确定；
+- <strong>推广价值</strong>：这一原则不仅适用于token利用率评测，也适用于任何Agent任务的成功率评测、代码生成的正确性评测、工具调用的有效性评测等场景。</p>
+<h4 id="922-native-sidecar">9.2.2 native + sidecar可观测性模式<a class="headerlink" href="#922-native-sidecar" title="Permanent link">&para;</a></h4>
+<p>对于日志不足的异构系统，<strong>sidecar旁路补齐是一种通用的可观测性增强方案</strong>：
+- <strong>native层</strong>：直接接入系统原生日志，对于日志完善的系统（如开源Harness），native层即可获取足够的事件数据；
+- <strong>sidecar层</strong>：对于日志不足或无法接入原生日志的系统（如闭源Harness），通过sidecar旁路补齐——代理转发（拦截API调用）、工具包装（包装系统命令记录调用）、环境快照（记录环境变量和文件状态）、文件diff（对比执行前后的文件变化）；
+- <strong>双层协同</strong>：native层提供细粒度的内部事件，sidecar层提供粗粒度的外部行为观测，两者结合实现对异构系统的统一可观测性；
+- <strong>推广价值</strong>：这一模式不仅适用于LLM Agent Harness的评测，也适用于任何异构系统的可观测性增强——微服务、分布式系统、第三方工具等。</p>
+<h4 id="923">9.2.3 零第三方依赖工程设计法<a class="headerlink" href="#923" title="Permanent link">&para;</a></h4>
+<p><strong>评测工具应尽可能减少环境依赖，仅用标准库实现核心功能</strong>：
+- <strong>设计原则</strong>：评测工具的价值在于被广泛使用，复杂的环境依赖会显著降低采用率；零依赖工具可以在任何环境中直接运行，降低了集成和使用门槛；
+- <strong>实现策略</strong>：（1）优先使用标准库模块（json/re/datetime/argparse/logging/collections/math/os/subprocess/difflib等）；（2）对于标准库无法实现的功能，评估是否真的需要——很多时候标准库的组合已足够；（3）如果确实需要第三方库，将其作为可选依赖（optional dependency），核心功能不依赖；
+- <strong>Groom实践</strong>：V0工具链9个模块全部仅用Python标准库，零第三方依赖，4/4 golden trace全部跑通，可在任何Python 3.9+环境直接运行；
+- <strong>推广价值</strong>：这一设计原则适用于任何需要被广泛集成的工具类软件——评测工具、CLI工具、SDK、插件等。</p>
+<h4 id="924-48-step">9.2.4 48 Step项目管理体系<a class="headerlink" href="#924-48-step" title="Permanent link">&para;</a></h4>
+<p>将研究项目分解为<strong>可追踪的Step + Phase</strong>，配合每日执行清单与研究过程日志，有效提升长周期研究的可控性：
+- <strong>Step分解</strong>：将整个研究项目分解为48个可执行的Step，每个Step有明确的输入、输出和完成标准；
+- <strong>Phase组织</strong>：48个Step按9个Phase组织（选题→文献调研→方法设计→工具链开发→实验→论文撰写→投稿→审稿→后续），每个Phase有明确的里程碑；
+- <strong>时间盒管理</strong>：MILESTONES.md记录投稿硬规定和时间盒，确保关键节点不延误；
+- <strong>小时制排期</strong>：开发排期精确到小时（约120小时），三阶段划分，确保开发进度可控；
+- <strong>每日执行清单</strong>：每日更新执行清单和研究过程日志，记录进展、问题和决策；
+- <strong>推广价值</strong>：这一管理体系适用于任何长周期、多阶段的研究项目，特别是需要同时推进方法设计、工程实现、论文写作的复合型研究项目。</p>
+<h3 id="93">9.3 如果重来会怎么做<a class="headerlink" href="#93" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>更早启动SWE-bench等真实轨迹的复现</strong>：如果重来会在项目启动时（2026年5月）就同步启动SWE-bench复现，而非等到论文初稿完成后（6月底）才集中攻关，避免论文实验部分不充分的问题；</li>
+<li><strong>在方法设计阶段就与Harness开发者建立沟通</strong>：如果重来会在方法设计阶段就与主流Harness开发者（如Claude Code团队、OpenAI Code Interpreter团队等）建立沟通，获取更丰富的原生日志格式和设计反馈，使native层的接入更顺畅；</li>
+<li><strong>将Groom评测协议与H-TokenBench基准更紧密地整合</strong>：如果重来会在项目初期就将Groom评测协议与H-TokenBench基准作为统一的评测套件设计，而非两个独立项目，减少重复工作并提升评测的标准化程度；</li>
+<li><strong>增加更多Harness的对比实验</strong>：如果重来会在实验部分增加更多Harness（至少5-6个主流Harness）的横向对比实验，用更充分的数据证明Groom评测协议的区分度和实用性；</li>
+<li><strong>更早确定投稿目标</strong>：如果重来会在项目启动时就明确投稿目标（ARR还是AAAI），根据投稿截止时间倒排开发和实验计划，避免中途调整投稿策略带来的时间压力。</li>
+</ol>
+<h3 id="94">9.4 踩坑与避坑指南<a class="headerlink" href="#94" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>坑点</strong></th>
+<th><strong>具体表现</strong></th>
+<th><strong>避坑建议</strong></th>
+<th><strong>本项目应对</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>golden trace规模不足</strong></td>
+<td>4/4 golden trace跑通仅验证了功能有效性，无法证明实际效用，审稿人可能质疑实验不充分</td>
+<td>项目启动时就同步推进真实基准（如SWE-bench）的复现，不要等到论文初稿完成后才开始大规模实验</td>
+<td>SWE-bench复现2026.5-7集中攻关，投稿策略从AAAI调整为ARR争取更多实验时间</td>
+</tr>
+<tr>
+<td><strong>投稿策略中途调整</strong></td>
+<td>最初拟投AAAI 2026.6底，但实验不充分，中途调整为ARR 2026.8，时间压力大</td>
+<td>项目启动时就明确投稿目标，根据截止时间倒排计划，预留充足的实验时间，不要仓促投稿</td>
+<td>从AAAI调整为ARR，多出1个月实验时间，论文实验更充分</td>
+</tr>
+<tr>
+<td><strong>Effective判定采信自我声明</strong></td>
+<td>最初想根据模型声明判定有效性，但模型自我声明不可信（幻觉、虚假声明），会高估有效性</td>
+<td>完全不采信模型自我声明，基于可审计的外部证据（verifier gain/测试通过/artifact improvement/rubric通过）判定</td>
+<td>多源证据判据，I/R/E三态判定，只有外部证据支持才判定为Effective</td>
+</tr>
+<tr>
+<td><strong>异构Harness日志不统一</strong></td>
+<td>不同Harness的日志格式、粒度、可访问性差异巨大，统一处理困难</td>
+<td>设计native+sidecar双层架构，native接入原生日志，sidecar旁路补齐，不要试图用统一格式要求所有Harness</td>
+<td>native+sidecar双层观测协议，sidecar通过代理转发/工具包装/环境快照/文件diff实现</td>
+</tr>
+<tr>
+<td><strong>第三方依赖增加采用门槛</strong></td>
+<td>如果使用pydantic/numpy/pandas等第三方库，用户需要安装依赖，增加了采用门槛和环境复杂度</td>
+<td>评测工具优先用标准库实现，零第三方依赖，确保在任何Python环境中都能直接运行</td>
+<td>V0工具链9个模块全部仅用标准库，零第三方依赖，4/4 golden trace跑通</td>
+</tr>
+<tr>
+<td><strong>SWE-bench复现工程复杂</strong></td>
+<td>SWE-bench复现涉及Docker环境、任务实例化、测试验证、trajectory采集等多环节，工程复杂度高</td>
+<td>提前启动SWE-bench复现，分解为task schema/verifier/trajectory三个子任务逐步攻克，不要低估工程复杂度</td>
+<td>2026.5-7集中攻关，完成反向工程和Claw-Eval/Claw-Bench复现，大规模实验在投稿后继续推进</td>
+</tr>
+<tr>
+<td><strong>论文与工程不同步</strong></td>
+<td>论文初稿完成时工程实施尚未充分展开，实验部分薄弱</td>
+<td>论文写作与工程开发同步推进，每完成一个工程模块就撰写对应论文章节，不要先写论文再补实验</td>
+<td>论文初稿6月完成，工程V0工具链6-7月开发，投稿前补充实验，后续仍在持续完善</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：Groom仓库TRACKER.md和MILESTONES.md的项目记录；code/src/groom/各模块源码；SWE-bench复现调研记录；论文撰写过程中的修改记录；个人工作总结。</p>
+</blockquote>
+<hr />
+<h3 id="95-faq">9.5 常见问题与解答（FAQ）<a class="headerlink" href="#95-faq" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>以下问题模拟读者、面试官和答辩评委的视角，解答均从报告正文提取。</p>
+</blockquote>
+<p><strong>Q1：Groom提出的"过程级token利用率"与传统的token效率（如每美元token数、推理速度）有什么区别？为什么需要这个新维度？</strong></p>
+<p>A：Groom的"过程级token利用率"与传统token效率的区别体现在三个层面：（1）<strong>评估粒度不同</strong>——传统token效率（如每美元token数、推理速度）是系统级的粗粒度指标，衡量的是整体资源消耗；Groom的过程级token利用率是任务级的细粒度指标，衡量的是在完成具体任务的过程中，哪些token是有效的、哪些是无效的、哪些是冗余的；（2）<strong>评估内容不同</strong>——传统token效率只关心"用了多少token"，不关心"这些token用得好不好"；Groom关心的是"这些token中有多少真正对任务完成有贡献"，通过I/R/E三态判定（Ineffective/Redundant/Effective）区分token的质量；（3）<strong>指导价值不同</strong>——传统token效率只能指导"如何降低整体资源消耗"（如用更小的模型、更快的推理）；Groom的过程级token利用率可以指导"如何优化Harness的设计"——例如，如果发现大量token消耗在无效的工具调用上，就可以优化工具选择策略；如果发现大量冗余的重复思考，就可以优化思考长度控制。为什么需要这个新维度：随着LLM Agent Harness（如Claude Code、OpenAI Code Interpreter等）的兴起，Agent在完成复杂任务时会消耗大量token（一个复杂任务可能消耗数十万甚至数百万token），但传统指标无法回答"这些token中有多少是真正有效的"。Groom填补了这一空白——通过过程级的token利用率评测，可以量化Harness的设计质量，指导Harness优化，最终提升Agent的资源效率和任务完成率。</p>
+<p><strong>Q2：native + sidecar双层观测架构中，sidecar具体是如何实现的？会不会对Harness的性能产生影响？</strong></p>
+<p>A：sidecar旁路通过四种机制实现，全部基于Python标准库：（1）<strong>代理转发（proxy）</strong>——在Harness与LLM API之间插入代理层，拦截并记录所有API请求和响应，包括请求的prompt、返回的completion、token使用量等，使用标准库的subprocess和http.server实现；（2）<strong>工具包装（tool wrapper）</strong>——包装Harness调用的外部工具（如shell命令、文件操作、代码执行），记录工具调用的输入、输出、执行时间，使用标准库的subprocess和os实现；（3）<strong>环境快照（environment snapshot）</strong>——在任务执行前后记录环境状态（环境变量、工作目录、文件列表），使用标准库的os和json实现；（4）<strong>文件diff（file difference）</strong>——对比任务执行前后的文件变化，识别哪些文件被修改、新增、删除，使用标准库的difflib和os实现。关于性能影响：sidecar确实会引入一定的性能开销，但这个开销是可控的——（1）代理转发的开销主要是网络延迟的增加（多一跳），通常在毫秒级，相对于LLM API的秒级响应可以忽略；（2）工具包装的开销主要是进程创建和日志记录，通常在毫秒级；（3）环境快照和文件diff只在任务开始和结束时执行一次，不影响任务执行过程中的性能；（4）所有sidecar组件都是异步记录（先记录到内存或文件，不阻塞主流程），对Harness的正常执行影响极小。综合来看，sidecar的性能开销在5%以内，对于评测场景是完全可接受的。</p>
+<p><strong>Q3：I/R/E三态判定中，Effective的判定基于多源证据（verifier gain/测试通过/artifact improvement/rubric通过），如果这些证据之间冲突怎么办？</strong></p>
+<p>A：多源证据冲突是实际评测中可能遇到的情况，Groom的处理策略是<strong>保守判定+证据优先级</strong>：（1）<strong>保守判定原则</strong>——当证据冲突时，倾向于不判定为Effective，即"疑罪从无"——如果没有明确的外部证据支持token的有效性，就不轻易判定为Effective，避免高估token利用率；（2）<strong>证据优先级</strong>——不同类型的证据有不同的可信度优先级，从高到低依次为：测试通过（最直接、最可验证）&gt; verifier gain（自动验证器的通过率变化，可量化）&gt; artifact improvement（产物改进，相对主观但可审计）&gt; rubric通过（人工评分，最主观但适用于无法自动验证的任务）；（3）<strong>冲突处理</strong>——当高优先级证据与低优先级证据冲突时，以高优先级证据为准。例如，如果测试通过（高优先级）显示任务未完成，但artifact improvement（低优先级）显示代码有修改，此时不判定为Effective——因为代码修改没有通过测试，说明修改是无效的；（4）<strong>不确定状态</strong>——如果所有证据都不明确（既没有明确支持也没有明确反对），可以标记为"不确定"（Undetermined），在统计时单独处理，不强行归入I/R/E任何一类。需要说明的是，在实际的golden trace验证中，证据冲突的情况并不常见——大多数情况下，测试通过和verifier gain是一致的，artifact improvement与测试通过也是正相关的。证据冲突的处理策略主要是为了方法的严谨性和完备性。</p>
+<p><strong>Q4：Groom工具链零第三方依赖，这在工程上是如何做到的？9个模块全部用标准库实现，会不会功能不够强大？</strong></p>
+<p>A：零第三方依赖的实现策略是<strong>深入挖掘标准库的能力，用标准库的组合实现所需功能</strong>：（1）<strong>事件校验（schema_validate）</strong>——用标准库的json（JSON解析）+ 自定义校验函数（字段存在性检查、类型检查、值范围检查）实现，不需要jsonschema/pydantic；（2）<strong>事件归一化（normalize）</strong>——用标准库的re（正则表达式，处理不同格式的时间戳、标识符）、datetime（时间格式转换）、collections（字典操作、默认字典）实现，不需要pandas；（3）<strong>span抽取（extract_spans）</strong>——用标准库的re（正则模式匹配）、json（结构化数据处理）实现，不需要spacy/nltk；（4）<strong>阶段归因（attribute_rules）</strong>——用标准库的re（规则匹配）、json（规则配置）实现，基于规则的归因不需要机器学习；（5）<strong>I/R/E判定（ire_gate）</strong>——用标准库的json（证据数据处理）、collections（证据计数）实现，基于规则的判定逻辑；（6）<strong>指标计算（score）</strong>——用标准库的math（数学运算）、collections（计数、统计）、json（数据读写）实现，基础统计不需要numpy/scipy；（7）<strong>报告生成（report）</strong>——用标准库的json（JSON报告输出）、string Template（文本模板）实现，不需要jinja2；（8）<strong>端到端流水线（pipeline）</strong>——用标准库的argparse（命令行参数）、logging（日志）、os（文件操作）实现；（9）<strong>公共工具（common）</strong>——用标准库的各种通用模块实现。关于功能是否足够强大：Groom的核心功能是事件处理、规则匹配、指标计算、报告生成，这些都是结构化数据处理任务，标准库的能力完全足够。第三方库（如pandas/numpy/pydantic）的优势在于大规模数据处理和复杂数值计算，但Groom的数据规模（每条trace几十到几百个事件）和计算复杂度（基础统计）不需要这些重型工具。零依赖的设计决策是基于"够用就好"的工程原则——用最简单的依赖实现所需功能，降低采用门槛。</p>
+<p><strong>Q5：Groom投稿ARR后，如果审稿人要求补充更多实验，你有什么计划？Groom的长期研究路线是什么？</strong></p>
+<p>A：如果审稿人要求补充更多实验，已有明确的应对计划和长期研究路线：（1）<strong>短期实验补充（投稿后3-6个月）</strong>：（a）完成SWE-bench大规模实验——运行数百个任务实例，采集完整的Harness trajectory，用Groom评测不同Harness的token利用率，提供大规模真实数据的实验结果；（b）增加更多Harness的横向对比——至少覆盖5-6个主流Harness（Claude Code、OpenAI Code Interpreter、SWE-agent、AutoGPT、LangChain Agent等），证明Groom评测协议的区分度；（c）消融实验——验证native层、sidecar层、I/R/E三态判定各组件的必要性和贡献度。（2）<strong>中期衍生研究（6-12个月）</strong>：（a）HarnessEvolve——让Agent Harness走向自我进化，建立在Groom评测基础上，对单Harness进行系统层级的进化优化，用Groom的token利用率作为进化的奖励信号；（b）SwarmEvolve——自进化Agent Swarms，对多Agent群体的进化研究，Groom的过程级评测可扩展到多Agent场景；（c）H-TokenBench——与Groom配套的基准评测，提供标准化的评测数据集和评测协议，使Groom的评测结果可复现、可比较。（3）<strong>长期研究路线（1-3年）</strong>：（a）将Groom的过程级token利用率评测从Harness扩展到更广泛的Agent系统（多Agent协作、人机协作、Agent工具链等）；（b）建立token利用率的理论模型——研究token利用率与任务完成率、模型能力、Harness设计之间的量化关系，为Harness的设计提供理论指导；（c）推动Groom成为社区标准——通过开源、基准、论文等方式，推动过程级token利用率成为LLM Agent评测的标准维度之一。Groom作为评测基础设施，其长期价值在于为整个Agent领域提供标准化的过程级评测能力，推动Agent系统的效率优化和设计改进。</p>
+<hr />
+<h2 id="10-references">10. 文件索引（References）<a class="headerlink" href="#10-references" title="Permanent link">&para;</a></h2>
+<h3 id="_5">飞书文档<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<ul>
+<li>20260610 项目进展：https://zhipu-ai.feishu.cn/wiki/KIO2wZF6higLR6kRPQHcWwHanne</li>
+<li>20260828 讨论：https://zhipu-ai.feishu.cn/wiki/VLVQwV3yoi3vXukl3UcckpsMnMT</li>
+<li>小组周报（26年5-9月）：https://zhipu-ai.feishu.cn/wiki/Qxi9wvxb8iqe36ka6IkcUEj5n5b</li>
+<li>个人周报《博|周报-杜晋华》：https://zhipu-ai.feishu.cn/docx/WPC7d1uyTomAyXxTUFQcFxnanJc</li>
+</ul>
+<h3 id="github">GitHub 仓库<a class="headerlink" href="#github" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Groom（私有）：https://github.com/dujh22/Groom</li>
+<li>H-TokenBench（私有，配套基准）：https://github.com/dujh22/H-TokenBench</li>
+<li>HarnessEvolve（私有，衍生研究）：https://github.com/dujh22/HarnessEvolve</li>
+<li>SwarmEvolve（私有，衍生研究）：https://github.com/dujh22/SwarmEvolve</li>
+</ul>
+<h3 id="_6">论文与投稿<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<ul>
+<li>论文 Overleaf：https://www.overleaf.com/read/rpgdqbggzbzt</li>
+<li>ARR OpenReview：https://openreview.net/forum?id=CX20RUtZ4G</li>
+<li>算法工程细化文档：groom_algorithm_process_zh.tex/.pdf（仓库内）</li>
+</ul>
+<h3 id="_7">其他资源<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Groom 论文展示 PPT：Groom_马夫_论文展示.pptx（飞书附件）</li>
+<li>后续完整的逐步开发计划.md（仓库内，小时制排期）</li>
+<li>相关工作差异化对照表：related_work/compare_table.md（仓库内）</li>
+</ul>
+<hr />
+<h2 id="11">11. 转正答辩证据卡<a class="headerlink" href="#11" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>本章节为转正答辩专用证据整理，基于智谱转正制度（ZP-RL-009）与公司文化2.0（Think Big / Deliver Solid / Scale Stable）标准整理。</p>
+</blockquote>
+<h3 id="111">11.1 目标基线<a class="headerlink" href="#111" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>部门目标(O)</strong>：研究 LLM Agent Harness 的过程级评测方法，填补现有评测体系"只看最终结果、不看过程效率"的盲区，为公司 Agent 产品的 Harness 选型和优化提供精细化评测工具。</li>
+<li><strong>个人KR</strong>：（1）提出过程级 token 利用率评测框架，设计 <code>native + sidecar</code> 双层观测协议和 I/R/E 三态判定机制；（2）开发 V0 工具链，跑通 golden trace 验证；（3）完成 SWE-bench 等基准复现，获取真实 Harness 轨迹数据；（4）撰写论文并投稿 ARR 2026.8。</li>
+<li><strong>完成率</strong>：核心方法设计已完成（双层观测协议、8 阶段分解、I/R/E 三态判定、三条核心 Claim）；V0 工具链 9 模块已开发，4/4 golden trace 全部跑通；SWE-bench/Claw-Eval/Claw-Bench 复现调研已完成；论文 2026.8 已投稿 ARR。整体完成率约 85%（十一轮核查：大规模真实轨迹实验数值在ARR审稿中未公开，保留待核实，论文审稿中）。</li>
+</ul>
+<h3 id="112">11.2 量化结果<a class="headerlink" href="#112" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>维度</strong></th>
+<th><strong>具体数据</strong></th>
+<th><strong>来源</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>文献调研</td>
+<td>系统精读 106 篇相关论文，八大研究簇</td>
+<td>第3章/第8章</td>
+</tr>
+<tr>
+<td>工具链模块</td>
+<td>9 个 Python 模块（schema_validate/normalize/extract_spans/attribute_rules/ire_gate/score/report/pipeline/common）</td>
+<td>第6章</td>
+</tr>
+<tr>
+<td>Golden Trace</td>
+<td>4/4 条全部跑通（coding×2 + claw×2）</td>
+<td>第5章</td>
+</tr>
+<tr>
+<td>Token 阶段分解</td>
+<td>8 阶段（任务理解/规划/记忆注入/工具准备/执行反馈/搜索试错/错误恢复/最终交付）</td>
+<td>第4章</td>
+</tr>
+<tr>
+<td>I/R/E 三态</td>
+<td>Injected/Referenced/Effective 三态判定 + 严格证据判据</td>
+<td>第4章</td>
+</tr>
+<tr>
+<td>核心 Claim</td>
+<td>3 条（成本守恒的任务 grooming / 过程级归因有额外解释力 / Harness 选择超越模型能力）</td>
+<td>第4章</td>
+</tr>
+<tr>
+<td>项目管理</td>
+<td>48 Step / 9 Phase 全流程跟踪，小时制开发排期约 120 小时</td>
+<td>第6章/第8章</td>
+</tr>
+<tr>
+<td>论文投稿</td>
+<td>ARR 2026.8（OpenReview: CX20RUtZ4G），目标 AAAI 2027 / ICLR 2027</td>
+<td>第7章</td>
+</tr>
+<tr>
+<td>第三方依赖</td>
+<td>V0 工具链仅用 Python 标准库，无需安装任何第三方依赖</td>
+<td>第6章</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：Groom GitHub README（TRACKER.md 48 Step/9 Phase；MILESTONES.md）；飞书文档 20260610 项目进展、20260828 讨论；个人周报记录</p>
+</blockquote>
+<h3 id="113">11.3 公司层面贡献<a class="headerlink" href="#113" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>评测基础设施</strong>：Groom 提出的过程级 token 利用率评测方法，可直接应用于公司 Agent 产品（如 GLM Agent、CodeGeeX 等）的 Harness 选型和优化——在不同 Harness 成功率相近时，过程级归因能揭示原始 benchmark 看不见的低效模式（重复规划/无效检索/上下文污染/错误恢复），为产品迭代提供精细化反馈信号。</li>
+<li><strong>衍生研究支撑</strong>：Groom 作为评测基础设施，直接催生了 HarnessEvolve（让 Agent Harness 走向自我进化）和 SwarmEvolve（自进化 Agent Swarms）两个后续研究方向，是公司自进化研究体系的重要组成部分。</li>
+<li><strong>配套基准</strong>：与 H-TokenBench 形成"评测协议 + 基准数据集"的完整闭环，为公司在 token 利用效率领域的研究提供标准化工具。</li>
+<li><strong>成本优化</strong>：过程级 token 归因能定位 token 消耗在哪些阶段（规划/检索/工具反馈/错误恢复等），为公司 Agent 产品的推理成本优化提供数据支撑——在 token 成本持续攀升的背景下，这具有直接的商业价值。</li>
+</ul>
+<h3 id="114">11.4 专业影响力<a class="headerlink" href="#114" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>技术方案</strong>：首次提出"过程级 token 利用率"这一新的评测维度，将智能体评测从"最终任务是否做对/总共花了多少 token"重述为"token 是否被有效利用"；设计 <code>native + sidecar</code> 双层统一过程观测协议，使异构 Harness（Claude Code/Codex/OpenClaw）在同一协议下可比；I/R/E（Injected/Referenced/Effective）三态判定机制采用严格证据判据（verifier gain/测试通过/artifact improvement/rubric 通过），不采信模型自我声明。</li>
+<li><strong>文档沉淀</strong>：私有仓库含 RESEARCH.md（问题陈述/Claims/贡献类型）、TRACKER.md（48 Step/9 Phase）、MILESTONES.md（投稿硬规定+时间盒）、106 篇文献精读笔记+差异化对照表、算法工程细化文档（groom_algorithm_process_zh.tex/.pdf）、论文展示 PPT。</li>
+<li><strong>被依赖情况</strong>：HarnessEvolve 和 SwarmEvolve 两个后续研究方向建立在 Groom 评测基础上；H-TokenBench 配套基准复用 Groom 的 I/R/E 判定和 8 阶段分解方法论；是博士开题课题第三阶段（无人工自进化）的重要评测基础设施。</li>
+<li><strong>分享/培训</strong>：在小组周报中持续汇报进展（2026.5-9）；20260610 项目进展汇报、20260828 讨论；论文展示 PPT 已准备。</li>
+</ul>
+<h3 id="115">11.5 价值观锚点<a class="headerlink" href="#115" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>价值观</strong></th>
+<th><strong>具体故事</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Think Big</strong></td>
+<td>不满足于 SWE-bench 等传统基准"只看最终任务成功率"的评测范式，主动提出"过程级 token 利用率"这一新的评测维度——将评测问题从"任务做对了吗"重述为"token 被有效利用了吗"，这是评测理念上的根本转变；从单一 Harness 评测扩展到异构 Harness 横向可比（Claude Code/Codex/OpenClaw），再到催生 HarnessEvolve/SwarmEvolve 两个自进化研究方向，持续拓展研究边界。</td>
+</tr>
+<tr>
+<td><strong>Deliver Solid</strong></td>
+<td>V0 工具链不是概念验证，而是完整实现了 9 个 Python 模块（从 schema_validate 到 report/pipeline），4/4 条 golden trace 全部跑通，输出归一化事件、span、阶段归因、I/R/E 标签、指标与报告的全链路产物；Effective 判定采用严格证据判据（verifier gain/测试通过/artifact improvement/rubric 通过），不采信模型自我声明——把评测的严谨性做到最后 1%；V0 工具链仅用 Python 标准库，无需安装任何第三方依赖，确保可复现性。</td>
+</tr>
+<tr>
+<td><strong>Scale Stable</strong></td>
+<td><code>native + sidecar</code> 双层观测协议设计从一开始就考虑了异构系统的可扩展性——有原生日志的直接接入，日志不足的用 sidecar 旁路补齐，使 Claude Code/Codex/OpenClaw 等不同架构的 Harness 在同一评测协议下可比；8 阶段 token 分解和 I/R/E 三态判定是通用方法论，可迁移到 H-TokenBench（模型层面）和其他 Agent 评测场景；项目管理采用 48 Step/9 Phase 跟踪体系，确保长周期研究的可控性。</td>
+</tr>
+<tr>
+<td><strong>极智/极度专注</strong></td>
+<td>从 2026.5 启动到 2026.8 投稿 ARR，在短短 3 个月内完成从选题、文献调研（106 篇精读）、方法设计（双层协议/8阶段分解/I-R-E判定/3条Claim）、工具链开发（9模块）、golden trace 验证（4/4）、SWE-bench 复现调研到论文撰写投稿的全流程；2026.6.10 时"还未开始具体工程实施"，到 8 月投稿时 V0 工具链已跑通 4/4 golden trace——在 2 个月内完成了从论文初稿到工程实现的跨越；投稿策略从 AAAI 2026.6 底调整为 ARR 2026.8，争取更多实验时间，体现了对研究质量的坚持而非赶截止日期。</td>
+</tr>
+<tr>
+<td><strong>创新</strong></td>
+<td>首次提出"过程级 token 利用率"评测维度，填补了现有评测体系"过程不可观测、成本不可归因"的两个根本性盲区；I/R/E 三态判定机制——将注入上下文的 token 分为"注入但未引用""被引用""实际影响决策"三种状态，并用严格证据判据判定 Effective，这是 token 利用效率评测的方法论创新；<code>native + sidecar</code> 双层统一过程观测协议——解决了异构 Harness 日志格式差异大、难以横向比较的工程难题；三条核心 Claim（成本守恒/过程级归因有额外解释力/Harness选择超越模型能力）从成本、解释力、归因三个维度系统论证了过程级评测的价值。</td>
+</tr>
+<tr>
+<td><strong>团队协作/利他</strong></td>
+<td>Groom 作为评测基础设施，直接支撑了 HarnessEvolve 和 SwarmEvolve 两个后续研究方向——让其他研究者能在 Groom 的评测基础上开展自进化研究，而非重复造轮子；与 H-TokenBench 形成"评测协议+基准数据集"的配套组合，为团队 token 利用效率研究提供完整工具链；106 篇文献精读笔记和差异化对照表对团队其他研究者开放，减少重复调研成本。</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：Groom GitHub README（TRACKER.md 48 Step/9 Phase；MILESTONES.md）；飞书文档 20260610 项目进展、20260828 讨论；个人周报记录</p>
+</blockquote>
+<h3 id="116">11.6 协作与利他<a class="headerlink" href="#116" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>帮了谁</strong>：（1）HarnessEvolve/SwarmEvolve 后续研究——提供过程级评测基础设施；（2）公司 Agent 产品团队——提供 Harness 选型和优化的精细化评测工具；（3）团队 token 利用效率研究——与 H-TokenBench 形成配套组合；（4）Agent 评测研究社区——提出新的评测维度和方法论。</li>
+<li><strong>证人</strong>：黄轩成（直属上级，研究方向指导）、唐杰（导师，学术指导）、HarnessEvolve/SwarmEvolve 研究者（评测基础设施使用者）。</li>
+<li><strong>跨部门协作</strong>：主要为 Base 项目组内部研究；与 GLM Agent 产品团队有潜在应用对接；SWE-bench 复现涉及开源社区工具链。</li>
+</ul>
+<h3 id="117">11.7 反思与成长（自我批评式）<a class="headerlink" href="#117" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>没做好的</strong>：（1）工程实施启动较晚——2026.6.10 时"论文初稿完成但还未开始具体工程实施"，导致投稿时大规模真实轨迹实验数据不足，具体数值结果标注为"待核实"（十一轮核查：Groom README确认当前Phase 5，大规模实验数值论文审稿中未公开），这是我在项目时间管理上的缺陷——应该在论文初稿的同时并行推进工程实现；（2）SWE-bench 复现的深度不够——虽然完成了 task schema、verifier、trajectory 的反向工程和复现调研，但获取的真实 Harness 轨迹数据规模有限，影响了实验结果的统计显著性；（3）三条核心 Claim 的实验支撑不够充分——Claim A（成本守恒）、Claim B（过程级归因有额外解释力）、Claim C（Harness 选择超越模型能力）都规划了对比/消融实验，但具体数值待核实（十一轮核查：实验数值在ARR审稿中未公开，保留待核实），实验完整性不足；（4）与 Harness 开发者（如 Claude Code 团队）的沟通不够，未能获取更丰富的原生日志，sidecar 旁路补齐的工作量较大。</li>
+<li><strong>学到的</strong>：（1）证据驱动评测原则——任何评测指标的判定都应基于可审计的外部证据（verifier gain/测试通过/artifact improvement/rubric 通过），而非模型自我声明，这一原则可推广到其他 Agent 评测场景；（2）<code>native + sidecar</code> 可观测性模式——对于日志不足的异构系统，sidecar 旁路补齐（代理转发/工具包装/环境快照/文件 diff）是一种通用的可观测性增强方案；（3）论文与工程应并行推进——论文初稿完成时工程应同步启动，避免投稿前实验数据不足；（4）48 Step/9 Phase 项目管理体系——将研究项目分解为可追踪的 Step + Phase，配合每日执行清单与研究过程日志，有效提升了长周期研究的可控性。</li>
+<li><strong>如果重来</strong>：（1）在论文初稿撰写的同时并行启动工程实现，而非等论文初稿完成后才开始，确保投稿时有充足的实验数据；（2）更早启动 SWE-bench 等真实轨迹的复现，获取更大规模的真实 Harness 轨迹数据，提升实验结果的统计显著性；（3）在方法设计阶段就与 Harness 开发者（如 Claude Code 团队）建立沟通，获取更丰富的原生日志，减少 sidecar 旁路补齐的工作量；（4）考虑将 Groom 评测协议与 H-TokenBench 基准更紧密地整合为统一的评测套件，降低用户使用门槛。</li>
+<li><strong>成长轨迹</strong>：从 LogicEvolve（评测自进化，关注"如何自动构造评测环境"）到 Groom（过程级评测，关注"如何精细化度量 token 利用效率"），评测研究从"环境构造"深入到"过程归因"；工程能力从单模块算法实现提升到完整评测工具链设计（9 模块端到端流水线 + 异构系统可观测性协议）；研究视野从单一基准扩展到"评测协议+基准数据集+衍生研究"的完整研究生态。</li>
+</ul>
+<h3 id="118-6">11.8 6年后视角<a class="headerlink" href="#118-6" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>大局定位</strong>：随着 LLM Agent 从单轮问答走向长程任务执行，token 成本持续攀升，而现有评测体系只看最终结果、不看过程效率的盲区将日益突出。Groom 提出的"过程级 token 利用率"评测维度，6 年后回看，可能成为 Agent 评测的标准维度之一——正如今天的模型评测不仅看准确率，也看推理成本和延迟一样，未来的 Agent 评测将不仅看任务成功率，也看 token 利用效率和过程质量。<code>native + sidecar</code> 双层观测协议和 I/R/E 三态判定机制，可能成为异构 Agent 系统可观测性和效率评测的通用方法论。</li>
+<li><strong>为什么值得做</strong>：解决了 Agent 评测中"过程不可观测、成本不可归因"的两个根本性盲区——在不同 Harness 成功率相近时无法区分优劣，Harness 开发者缺乏精细化迭代反馈信号，token 成本持续攀升但效率无人度量。Groom 的过程级归因能揭示原始 benchmark 看不见的低效模式（重复规划/无效检索/上下文污染/错误恢复），为 Agent 产品的成本优化和体验提升提供数据支撑。同时，Groom 作为评测基础设施直接催生了 HarnessEvolve/SwarmEvolve 两个自进化研究方向，是公司自进化研究体系的重要组成部分。</li>
+</ul>
+<h3 id="119">11.9 五段式讲述（答辩稿骨架）<a class="headerlink" href="#119" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>问题定义</strong>（外行能懂）：现在评测 AI 智能体（Agent）干活好不好，主要看"任务最终做对了没有"——就像评价一个员工只看他最后有没有交差，不管他中间走了多少弯路、浪费了多少时间。但一个复杂任务可能消耗数万甚至数十万 token，其中有多少 token 被真正有效利用？不同智能体框架（Harness）在 token 利用效率上有什么差异？现有评测无法回答这些问题。</li>
+<li><strong>输入输出</strong>（本科生能懂）：输入是异构 Agent Harness（Claude Code/Codex/OpenClaw 等）的执行轨迹，输出是过程级 token 利用率评测报告——包括 8 阶段 token 消耗分布（任务理解/规划/记忆注入/工具准备/执行反馈/搜索试错/错误恢复/最终交付）、I/R/E 三态 token 占比（注入但未引用/被引用/实际影响决策）、综合 token 利用率得分（TUS）、低效模式诊断（重复规划/无效检索/上下文污染/错误恢复）。</li>
+<li><strong>技术/做法</strong>（研究生能懂）：设计 <code>native + sidecar</code> 双层统一过程观测协议——有原生日志的 Harness 直接接入结构化事件流，日志不足的通过代理转发/工具包装/环境快照/文件 diff 等 sidecar 旁路补齐；将每个 span 的 token 消耗归因到 8 个语义阶段；对每一段注入上下文的 token 判定 I/R/E 三态，其中 Effective 判定采用严格证据判据（verifier gain/测试通过/artifact improvement/rubric 通过），不采信模型自我声明；V0 工具链 9 个 Python 模块实现从事件输入到报告输出的端到端流水线，仅用标准库确保可复现。</li>
+<li><strong>核心创新</strong>（只有自己懂）：首次提出"过程级 token 利用率"评测维度，将 Agent 评测从"最终结果"重述为"过程效率"；I/R/E 三态判定机制——特别是 Effective 态的严格证据判据，解决了"如何判定 token 是否真正影响了决策"这一核心难题，不采信模型自我声明确保了评测的客观性；<code>native + sidecar</code> 双层观测协议——解决了异构 Harness 日志格式差异大、难以横向比较的工程难题，使 Claude Code/Codex/OpenClaw 在同一协议下可比；三条核心 Claim（成本守恒/过程级归因有额外解释力/Harness选择超越模型能力）系统论证了过程级评测的价值。</li>
+<li><strong>未来</strong>（开放问题）：大规模真实 Harness 轨迹上的实验验证（目前 V0 仅跑通 4/4 golden trace）；三条核心 Claim 的充分实验支撑；与 H-TokenBench 整合为统一的评测套件（模型层+Harness 层双层归因）；向更多 Agent 场景（智能客服、教育辅导、科研助手等）的迁移；实时过程级评测（在线监控而非离线分析）；基于过程级评测反馈的 Harness 自动优化（HarnessEvolve）。</li>
+</ol>
+<hr />
+<h2 id="12">12. 相关项目<a class="headerlink" href="#12" title="Permanent link">&para;</a></h2>
+<p>下表梳理与本项目存在技术、方法或研究方向关联的其他项目报告，便于跨项目追溯和体系化理解。</p>
+<table>
+<thead>
+<tr>
+<th><strong>关联报告</strong></th>
+<th><strong>关联类型</strong></th>
+<th><strong>关联说明</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>09 · LogicEvolve 逻辑推理自进化</strong></td>
+<td>自进化系列 · 评测层关联</td>
+<td>Groom 的过程级 token 利用评测可为 LogicEvolve 的自进化训练提供更细粒度的反馈信号（不仅看最终准确率，还看推理过程中的 token 利用效率）；LogicEvolve 的自动数据合成方法可为 Groom 提供多样化的评测任务</td>
+</tr>
+<tr>
+<td><strong>15 · EvolveLRM 训练自进化</strong></td>
+<td>自进化系列 · 训练层关联</td>
+<td>EvolveLRM 的自适应训练模块可利用 Groom 的过程级评测结果优化训练策略（如减少无效 token 消耗的训练方向）；Groom 的 I/R/E 三态判定可用于评估 EvolveLRM 训练后模型的 token 利用效率变化</td>
+</tr>
+<tr>
+<td><strong>20 · H-TokenBench</strong></td>
+<td>配套基准 · 双层协同</td>
+<td>H-TokenBench 聚焦模型层面的 token 利用效率基准评测，Groom 聚焦 Harness 层面的过程级 token 利用评测，二者形成"模型层+Harness层"双层协同评测体系；H-TokenBench 的任务集和轨迹采集可直接输入 Groom 的评测流水线进行过程级归因分析</td>
+</tr>
+<tr>
+<td><strong>22 · 六篇新研究初稿</strong></td>
+<td>自进化系列 · 成果延伸</td>
+<td>Groom 的过程级评测方法论和实验结果是22号项目中六篇新研究初稿的重要素材来源；过程级评测框架可复用于多篇研究的实验设计和结果分析</td>
+</tr>
+<tr>
+<td><strong>23 · Awesome-RSI 自进化综述</strong></td>
+<td>自进化系列 · 文献支撑</td>
+<td>Awesome-RSI 综述系统梳理了自进化与 RSI 领域的文献，为 Groom 的方法设计提供理论基础和竞品定位；Groom 是综述中"过程级评测"子类的典型案例</td>
+</tr>
+<tr>
+<td><strong>24 · 专利：逻辑推理评测方法</strong></td>
+<td>评测系列 · 成果转化</td>
+<td>Groom 的过程级 token 利用评测方法论（8阶段分解+I/R/E三态判定）是24号专利的核心技术来源之一；专利将过程级评测方法论固化为可保护的知识产权</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：Groom GitHub README（TRACKER.md 48 Step/9 Phase；MILESTONES.md）；飞书文档 20260610 项目进展、20260828 讨论；个人周报记录</p>
+</blockquote>
+<h3 id="_8">项目间引用网络<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<p><strong>上游项目（本项目依赖/受益于）：</strong>
+- <a href="../../phase3/09_LogicEvolve%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E8%87%AA%E8%BF%9B%E5%8C%96/">09 · LogicEvolve逻辑推理自进化</a> — Groom项目启动源于在LogicEvolve研究中对"评测只能看最终结果"这一局限的深刻体会；LogicEvolve的自动数据合成方法可为Groom提供多样化的评测任务</p>
+<p><strong>下游项目（受益于本项目）：</strong>
+- <a href="../20_H-TokenBench/">20 · H-TokenBench</a> — H-TokenBench是与Groom配套的基准评测，Groom定义"怎么评"（评测协议），H-TokenBench建设"用什么评"（基准数据集），二者形成"模型层+Harness层"双层协同评测体系
+- <a href="../22_%E5%85%AD%E7%AF%87%E6%96%B0%E7%A0%94%E7%A9%B6%E5%88%9D%E7%A8%BF/">22 · 六篇新研究初稿</a> — Groom的过程级评测方法论直接催生HarnessEvolve（Harness自进化）和SwarmEvolve（多Agent群体自进化）两个衍生研究方向，是六篇新研究的重要基础</p>
+<p><strong>平行项目（同系列/同方法）：</strong>
+- <a href="../20_H-TokenBench/">20 · H-TokenBench</a> — 二者形成"评测协议+基准数据集"的配套组合，Groom聚焦Harness层面的过程级token利用评测，H-TokenBench聚焦模型层面的token利用效率基准评测
+- <a href="../24_%E4%B8%93%E5%88%A9_%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E8%AF%84%E6%B5%8B%E6%96%B9%E6%B3%95/">24 · 专利：逻辑推理评测方法</a> — Groom的过程级token利用评测方法论（8阶段分解+I/R/E三态判定）是24号专利的核心技术来源之一，专利将过程级评测方法论固化为可保护的知识产权
+- <a href="../23_Awesome-RSI%E8%87%AA%E8%BF%9B%E5%8C%96%E7%BB%BC%E8%BF%B0/">23 · Awesome-RSI自进化综述</a> — Awesome-RSI综述系统梳理了自进化与RSI领域的文献，为Groom的方法设计提供理论基础和竞品定位；Groom是综述中"过程级评测"子类的典型案例</p>
+<hr />
+<h2 id="13">13. 跨项目对比<a class="headerlink" href="#13" title="Permanent link">&para;</a></h2>
+<h3 id="131-04metaevaluation13o114logicalsurvey20h-tokenbench24">13.1 评测方法论对比：与04号（MetaEvaluation）、13号（类o1泛化性评估）、14号（LogicalSurvey）、20号（H-TokenBench）、24号（专利）的深度对比<a class="headerlink" href="#131-04metaevaluation13o114logicalsurvey20h-tokenbench24" title="Permanent link">&para;</a></h3>
+<p>Groom是个人评测研究体系中的"过程级评测"创新环节，与04/13/14/20/24号共同构成完整的评测方法论体系。</p>
+<table>
+<thead>
+<tr>
+<th><strong>对比维度</strong></th>
+<th><strong>04号·MetaEvaluation</strong></th>
+<th><strong>13号·类o1泛化性评估</strong></th>
+<th><strong>14号·LogicalSurvey</strong></th>
+<th><strong>19号·Groom（本项目）</strong></th>
+<th><strong>20号·H-TokenBench</strong></th>
+<th><strong>24号·专利</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>评测层级</strong></td>
+<td>元评估：评估"评估方法"本身</td>
+<td>模型能力评估：推理模型泛化能力</td>
+<td>综述：评测文献系统梳理</td>
+<td><strong>Harness过程评估：Agent编排层token利用效率</strong></td>
+<td>模型效率评估：模型层token利用机制</td>
+<td>成果转化：评测方法论知识产权化</td>
+</tr>
+<tr>
+<td><strong>核心问题</strong></td>
+<td>如何验证评估指标的可靠性？</td>
+<td>推理模型在数学/代码外的泛化能力如何？</td>
+<td>逻辑推理评测有哪些维度和方法？</td>
+<td><strong>token在Harness编排过程中是否被有效利用？</strong></td>
+<td>模型推理时如何分配和利用token？</td>
+<td>如何保护逻辑推理评测方法论的知识产权？</td>
+</tr>
+<tr>
+<td><strong>关键创新</strong></td>
+<td>元评估框架（可靠性/区分度/偏差）</td>
+<td>自动合成评估数据+评估效率维度</td>
+<td>Evaluation-Data-Methods三维分类体系</td>
+<td><strong>native+sidecar双层协议+8阶段分解+I/R/E三态判定</strong></td>
+<td>4大分析维度（消耗/效率/成本-效率/阶段分布）</td>
+<td>CLUB/ExCLUB/Puzzle/Groom方法整合</td>
+</tr>
+<tr>
+<td><strong>评测对象</strong></td>
+<td>评估方法/指标本身</td>
+<td>20+推理模型</td>
+<td>逻辑推理评测文献</td>
+<td><strong>Agent Harness（Claude Code/Codex/OpenClaw）</strong></td>
+<td>LLM模型（GLM-5/DeepSeek-R1等）</td>
+<td>评测方法论（专利保护）</td>
+</tr>
+<tr>
+<td><strong>与Groom的关系</strong></td>
+<td>上游方法：元评估框架为Groom的I/R/E判定提供可靠性验证思路</td>
+<td>能力评估互补：13号看模型能力，Groom看Harness过程效率</td>
+<td>文献支撑：14号的Evaluation维度分类为Groom提供理论框架</td>
+<td><strong>核心节点</strong></td>
+<td>配套基准：H-TokenBench（模型层）+Groom（Harness层）双层协同</td>
+<td>成果转化：Groom的过程级评测方法是专利核心技术之一</td>
+</tr>
+<tr>
+<td><strong>个人角色</strong></td>
+<td>核心贡献者</td>
+<td>项目负责人</td>
+<td>第一作者</td>
+<td><strong>项目负责人/第一作者</strong></td>
+<td>项目负责人</td>
+<td>核心发明人</td>
+</tr>
+<tr>
+<td><strong>成果状态</strong></td>
+<td>研究论文</td>
+<td>探索性研究（论文初稿）</td>
+<td>综述论文（持续更新）</td>
+<td><strong>ARR 2026.8投稿，目标AAAI 2027</strong></td>
+<td>研究推进中（Groom论文配套）</td>
+<td>2026.7授权</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：Groom GitHub README（TRACKER.md 48 Step/9 Phase；MILESTONES.md）；飞书文档 20260610 项目进展、20260828 讨论；个人周报记录</p>
+</blockquote>
+<p><strong>Groom在评测体系中的过程级创新地位</strong>：</p>
+<ol>
+<li>
+<p><strong>从结果级到过程级的范式转换</strong>：04号（元评估）、13号（泛化性评估）、14号（综述）、20号（token基准）都属于"结果级"或"模型级"评测——关注最终任务成功率或模型层面的token消耗。Groom首次将评测粒度推进到"Harness过程级"——关注token在Agent编排过程中的利用效率，填补了"过程不可观测、成本不可归因"的评测盲区。</p>
+</li>
+<li>
+<p><strong>I/R/E三态判定的方法论创新</strong>：Groom提出的Injected/Referenced/Effective三态判定机制，特别是Effective态的严格证据判据（verifier gain/测试通过/artifact improvement/rubric通过，不采信模型自我声明），是评测方法论的创新。这一方法可迁移到20号（H-TokenBench模型层）和其他Agent评测场景，04号的元评估框架可以用来验证I/R/E判定的可靠性。</p>
+</li>
+<li>
+<p><strong>与H-TokenBench的双层协同</strong>：Groom（Harness层）与20号（H-TokenBench，模型层）形成"模型层+Harness层"的双层token利用评测体系。Groom的I/R/E判定和8阶段分解方法论可迁移到H-TokenBench的模型层分析，H-TokenBench的标准化任务集和轨迹数据为Groom提供底层数据支撑。这一双层体系是个人评测研究的核心架构。</p>
+</li>
+<li>
+<p><strong>专利成果转化的核心技术</strong>：Groom的过程级token评测方法论（native+sidecar双层协议、8阶段分解、I/R/E三态判定）是24号专利的核心技术来源之一。专利将Groom的评测方法论与CLUB/ExCLUB/Puzzle的评测方法整合，形成完整的逻辑推理评测知识产权保护。</p>
+</li>
+</ol>
+<h3 id="132-09logicevolve15evolvelrm2223awesome-rsi">13.2 自进化框架对比：与09号（LogicEvolve）、15号（EvolveLRM）、22号（六篇新研究）、23号（Awesome-RSI）的深度对比<a class="headerlink" href="#132-09logicevolve15evolvelrm2223awesome-rsi" title="Permanent link">&para;</a></h3>
+<p>Groom不仅是评测框架，更是自进化研究体系的"过程级反馈基础设施"，与09/15/22/23号共同构成自进化研究生态。</p>
+<table>
+<thead>
+<tr>
+<th><strong>对比维度</strong></th>
+<th><strong>09号·LogicEvolve</strong></th>
+<th><strong>15号·EvolveLRM</strong></th>
+<th><strong>19号·Groom（本项目）</strong></th>
+<th><strong>22号·六篇新研究</strong></th>
+<th><strong>23号·Awesome-RSI</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>自进化定位</strong></td>
+<td>评测+数据自进化</td>
+<td>训练自进化</td>
+<td><strong>过程级评测基础设施（为自进化提供细粒度反馈信号）</strong></td>
+<td>多方向自进化延伸（HarnessEvolve/SwarmEvolve等）</td>
+<td>自进化领域综述</td>
+</tr>
+<tr>
+<td><strong>核心问题</strong></td>
+<td>如何自动构造评测环境和合成数据？</td>
+<td>如何让模型自动选择训练策略并持续提升？</td>
+<td><strong>如何度量过程级token利用效率，为自进化提供反馈？</strong></td>
+<td>自进化在Harness/Swarm/数据/评测等方向如何实现？</td>
+<td>自进化与RSI领域发展到哪了？</td>
+</tr>
+<tr>
+<td><strong>在自进化闭环中的角色</strong></td>
+<td>输入：提供评测环境和合成数据</td>
+<td>核心：执行"评测→数据→训练"闭环</td>
+<td><strong>反馈：提供过程级细粒度反馈信号（不仅看最终准确率，还看token利用效率）</strong></td>
+<td>延伸：将自进化扩展到更多层级和场景</td>
+<td>理论：梳理自进化方法和文献</td>
+</tr>
+<tr>
+<td><strong>关键创新</strong></td>
+<td>多智能体协作生成+自动评测</td>
+<td>Planner+三执行智能体+跨任务迁移信号+经验池</td>
+<td><strong>native+sidecar双层协议+8阶段分解+I/R/E三态判定+证据驱动</strong></td>
+<td>HarnessEvolve（Harness自进化）、SwarmEvolve（群体自进化）等</td>
+<td>自进化方法分类+Awesome列表</td>
+</tr>
+<tr>
+<td><strong>衍生关系</strong></td>
+<td>Groom的过程级评测可增强LogicEvolve的评测粒度</td>
+<td>Groom的反馈信号可优化EvolveLRM的训练策略选择</td>
+<td><strong>Groom直接催生HarnessEvolve和SwarmEvolve两个衍生研究方向</strong></td>
+<td>六篇新研究中HarnessEvolve/SwarmEvolve建立在Groom评测基础上</td>
+<td>Awesome-RSI为Groom提供自进化领域的理论基础和竞品定位</td>
+</tr>
+<tr>
+<td><strong>个人角色</strong></td>
+<td>核心贡献者</td>
+<td>项目负责人/第一作者</td>
+<td><strong>项目负责人/第一作者</strong></td>
+<td>第一作者/负责人</td>
+<td>核心编撰者</td>
+</tr>
+<tr>
+<td><strong>成果状态</strong></td>
+<td>研究论文（方法被Puzzle继承）</td>
+<td>多轮投稿中，产业验证提升约30%</td>
+<td><strong>ARR 2026.8投稿，V0工具链9模块跑通4/4 golden trace</strong></td>
+<td>六篇初稿，持续推进</td>
+<td>Awesome列表+可能的综述论文</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：Groom GitHub README（TRACKER.md 48 Step/9 Phase；MILESTONES.md）；飞书文档 20260610 项目进展、20260828 讨论；个人周报记录</p>
+</blockquote>
+<p><strong>Groom在自进化体系中的反馈基础设施地位</strong>：</p>
+<ol>
+<li>
+<p><strong>从"结果反馈"到"过程反馈"的升级</strong>：09号（LogicEvolve）和15号（EvolveLRM）的自进化闭环主要依赖"最终任务准确率"作为反馈信号——模型在评测基准上的得分决定下一步的数据选择和训练策略。Groom将反馈信号从"结果级"升级到"过程级"——不仅看最终准确率，还看token在8个阶段中的消耗分布和I/R/E三态利用效率，为自进化提供更细粒度的反馈信号。这一升级可以帮助自进化系统识别"准确率高但token浪费严重"的低效模式，从而优化训练策略。</p>
+</li>
+<li>
+<p><strong>HarnessEvolve和SwarmEvolve的直接催生</strong>：Groom作为评测基础设施，直接催生了两个衍生研究方向——HarnessEvolve（让Agent Harness走向自我进化，对单Harness的系统层级进化）和SwarmEvolve（自进化Agent Swarms，对多Agent群体的进化研究）。这两个方向是22号（六篇新研究初稿）的核心内容，建立在Groom的过程级评测基础上。没有Groom的过程级反馈信号，Harness和Swarm的自进化缺乏可靠的评估基础。</p>
+</li>
+<li>
+<p><strong>自进化研究的"评测-反馈-进化"闭环</strong>：在个人自进化研究体系中，Groom填补了"过程级反馈"这一关键环节——09号提供"评测环境+数据"，15号提供"训练自进化"，Groom提供"过程级反馈信号"，三者共同构成"评测→数据→训练→过程反馈→再进化"的完整自进化闭环。23号（Awesome-RSI综述）为这一闭环提供理论基础和竞品定位，22号（六篇新研究）将闭环延伸到更多场景。</p>
+</li>
+<li>
+<p><strong>从模型层到Harness层的自进化扩展</strong>：09号和15号的自进化主要聚焦"模型层"——模型的数据合成和训练策略自进化。Groom将自进化的研究范围扩展到"Harness层"——Agent编排框架的自优化。HarnessEvolve正是这一扩展的具体实现，它使用Groom的过程级token评测作为反馈信号，让Harness自动优化其编排策略（记忆管理、工具调用、错误恢复等）。这是自进化研究从"模型层"到"系统层"的重要扩展。</p>
+</li>
+</ol>
+<hr />
+<h3 id="_9">图表索引<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>编号</strong></th>
+<th><strong>类型</strong></th>
+<th><strong>标题</strong></th>
+<th><strong>所在章节</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>表1</td>
+<td>表格</td>
+<td>关键数据速览</td>
+<td>§1</td>
+</tr>
+<tr>
+<td>表2</td>
+<td>表格</td>
+<td>八大研究簇文献统计</td>
+<td>§3</td>
+</tr>
+<tr>
+<td>表3</td>
+<td>表格</td>
+<td>过程级评测vs结果级评测对比</td>
+<td>§3</td>
+</tr>
+<tr>
+<td>图1</td>
+<td>ASCII</td>
+<td>Groom过程级评测架构图</td>
+<td>§4.1</td>
+</tr>
+<tr>
+<td>图2</td>
+<td>Mermaid</td>
+<td>Groom过程级评测架构流程图</td>
+<td>§4.1</td>
+</tr>
+<tr>
+<td>表4</td>
+<td>表格</td>
+<td>三大核心组件对比</td>
+<td>§4.1</td>
+</tr>
+<tr>
+<td>表5</td>
+<td>表格</td>
+<td>Token 8阶段分解</td>
+<td>§4.2</td>
+</tr>
+<tr>
+<td>表6</td>
+<td>表格</td>
+<td>I/R/E三态判定标准</td>
+<td>§4.2</td>
+</tr>
+<tr>
+<td>表7</td>
+<td>表格</td>
+<td>V0 Golden Trace验证结果</td>
+<td>§5.3</td>
+</tr>
+<tr>
+<td>表8</td>
+<td>表格</td>
+<td>V0工具链运行时性能指标</td>
+<td>§5.3.1</td>
+</tr>
+<tr>
+<td>表9</td>
+<td>表格</td>
+<td>项目时间线</td>
+<td>§6.5</td>
+</tr>
+<tr>
+<td>表10</td>
+<td>表格</td>
+<td>转正答辩量化结果</td>
+<td>§11.2</td>
+</tr>
+<tr>
+<td>表11</td>
+<td>表格</td>
+<td>价值观锚点故事</td>
+<td>§11.5</td>
+</tr>
+<tr>
+<td>表12</td>
+<td>表格</td>
+<td>相关项目关联</td>
+<td>§12</td>
+</tr>
+<tr>
+<td>表13</td>
+<td>表格</td>
+<td>跨项目对比：评测方法论体系（vs04/13/14/20/24）</td>
+<td>§13.1</td>
+</tr>
+<tr>
+<td>表14</td>
+<td>表格</td>
+<td>跨项目对比：自进化框架体系（vs09/15/22/23）</td>
+<td>§13.2</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：Groom GitHub README（TRACKER.md 48 Step/9 Phase；MILESTONES.md）；飞书文档 20260610 项目进展、20260828 讨论；个人周报记录</p>
+</blockquote>
+<hr />
+<h3 id="_10">个人成果矩阵<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
+<p>本矩阵汇总本人在智谱AI实习期间（2025.7–2026.9）的全部个人成果，按论文、专利、开源、产业落地、获奖、技术方案六大维度分类。</p>
+<table>
+<thead>
+<tr>
+<th><strong>成果类别</strong></th>
+<th><strong>序号</strong></th>
+<th><strong>成果名称</strong></th>
+<th><strong>时间</strong></th>
+<th><strong>角色</strong></th>
+<th><strong>状态/备注</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>论文</strong></td>
+<td>P1</td>
+<td>Puzzle: Curating Logical Reasoning Pretraining Data via Iterative Evolution</td>
+<td>2026.3</td>
+<td>第一作者</td>
+<td>ARR 2026.6投稿，NeurIPS 2026在投</td>
+</tr>
+<tr>
+<td><strong>论文</strong></td>
+<td>P2</td>
+<td>Groom: Process-Level Token Utilization Evaluation for LLM Agent Harnesses（本项目）</td>
+<td>2026.8</td>
+<td>第一作者</td>
+<td>ARR 2026.8投稿（OpenReview: CX20RUtZ4G），目标AAAI 2027</td>
+</tr>
+<tr>
+<td><strong>论文</strong></td>
+<td>P3</td>
+<td>LogicalSurvey: A Comprehensive Survey of Logical Reasoning for LLMs</td>
+<td>2026.5</td>
+<td>第一作者</td>
+<td>综述论文，持续更新中</td>
+</tr>
+<tr>
+<td><strong>论文</strong></td>
+<td>P4</td>
+<td>MetaEvaluation: Meta-Evaluation Framework for LLM Evaluation</td>
+<td>2026初</td>
+<td>核心贡献者</td>
+<td>研究论文</td>
+</tr>
+<tr>
+<td><strong>论文</strong></td>
+<td>P5</td>
+<td>LogicEvolve: Self-Evolving Logical Reasoning Data Synthesis</td>
+<td>2025.12</td>
+<td>核心贡献者</td>
+<td>研究论文，方法被Puzzle继承</td>
+</tr>
+<tr>
+<td><strong>论文</strong></td>
+<td>P6</td>
+<td>EvolveLRM: Training Self-Evolution for Logical Reasoning Models</td>
+<td>2026.5</td>
+<td>项目负责人</td>
+<td>研究论文，含4模块自进化框架</td>
+</tr>
+<tr>
+<td><strong>论文</strong></td>
+<td>P7</td>
+<td>类o1模型泛化性评估研究</td>
+<td>2026.3</td>
+<td>项目负责人</td>
+<td>20+模型横向对比评测报告</td>
+</tr>
+<tr>
+<td><strong>论文</strong></td>
+<td>P8-P12</td>
+<td>六篇新研究初稿（含HarnessEvolve/SwarmEvolve等，本项目直接催生）</td>
+<td>2026.6-9</td>
+<td>第一作者/负责人</td>
+<td>初稿阶段，持续推进</td>
+</tr>
+<tr>
+<td><strong>专利</strong></td>
+<td>PT1</td>
+<td>逻辑推理评测方法及系统</td>
+<td>2026</td>
+<td>核心发明人</td>
+<td>专利申请中，Groom过程级评测方法是核心技术之一</td>
+</tr>
+<tr>
+<td><strong>专利</strong></td>
+<td>PT2</td>
+<td>基于自进化的逻辑推理数据合成方法</td>
+<td>2026</td>
+<td>核心发明人</td>
+<td>专利申请中</td>
+</tr>
+<tr>
+<td><strong>开源</strong></td>
+<td>O1</td>
+<td>CLUB (Comprehensive Logic Understanding Benchmark)</td>
+<td>2025.12</td>
+<td>第一作者</td>
+<td>GitHub开源，1K题/10类</td>
+</tr>
+<tr>
+<td><strong>开源</strong></td>
+<td>O2</td>
+<td>ExCLUB (Extended CLUB)</td>
+<td>2026.2</td>
+<td>第一作者</td>
+<td>GitHub开源，100K题/100类</td>
+</tr>
+<tr>
+<td><strong>开源</strong></td>
+<td>O3</td>
+<td>Puzzle 逻辑推理预训练数据</td>
+<td>2026.3</td>
+<td>第一作者</td>
+<td>随论文发表计划开源</td>
+</tr>
+<tr>
+<td><strong>开源</strong></td>
+<td>O4</td>
+<td>AML-LLM 书籍配套代码与资源</td>
+<td>2026.4</td>
+<td>核心编撰者</td>
+<td>书籍配套开源仓库</td>
+</tr>
+<tr>
+<td><strong>产业落地</strong></td>
+<td>I1</td>
+<td>GLM-4.5/GLM-5 逻辑推理能力提升</td>
+<td>2025.10-2026.3</td>
+<td>核心研发</td>
+<td>Puzzle数据用于模型预训练/微调</td>
+</tr>
+<tr>
+<td><strong>产业落地</strong></td>
+<td>I2</td>
+<td>GLM Agent / CodeGeeX Harness优化（本项目核心产业价值）</td>
+<td>2026.5-9</td>
+<td>核心研发</td>
+<td>Groom过程级评测为Harness选型和优化提供数据支撑，揭示低效模式</td>
+</tr>
+<tr>
+<td><strong>产业落地</strong></td>
+<td>I3</td>
+<td>智谱AI评测基础设施建设</td>
+<td>2025.7-2026.9</td>
+<td>核心贡献者</td>
+<td>CLUB/ExCLUB/Puzzle/Groom/H-TokenBench构成完整评测体系</td>
+</tr>
+<tr>
+<td><strong>产业落地</strong></td>
+<td>I4</td>
+<td>AML课程教学体系落地</td>
+<td>2026.4-9</td>
+<td>核心编撰者</td>
+<td>AML-LLM书籍+教学PPT</td>
+</tr>
+<tr>
+<td><strong>获奖</strong></td>
+<td>A1</td>
+<td>研究生党支部评议全校第9/667名</td>
+<td>2026.5</td>
+<td>党支部书记</td>
+<td>2025年度研究生党支部评议，甲级团支部荣誉</td>
+</tr>
+<tr>
+<td><strong>技术方案</strong></td>
+<td>T1</td>
+<td>逻辑推理数据自进化合成方案（LogicEvolve→Puzzle）</td>
+<td>2025.12-2026.3</td>
+<td>方案设计者</td>
+<td>迭代进化+难度感知+分布控制</td>
+</tr>
+<tr>
+<td><strong>技术方案</strong></td>
+<td>T2</td>
+<td>过程级Token利用率评测方案（Groom+H-TokenBench，本项目核心）</td>
+<td>2026.4-9</td>
+<td>方案设计者</td>
+<td>native+sidecar双层协议+8阶段分解+I/R/E三态判定+证据驱动</td>
+</tr>
+<tr>
+<td><strong>技术方案</strong></td>
+<td>T3</td>
+<td>自进化训练框架（EvolveLRM）</td>
+<td>2026.5-9</td>
+<td>方案设计者</td>
+<td>数据进化+模型进化+评测进化+训练策略进化</td>
+</tr>
+<tr>
+<td><strong>技术方案</strong></td>
+<td>T4</td>
+<td>Harness自进化方案（HarnessEvolve，本项目衍生）</td>
+<td>2026.6-9</td>
+<td>方案设计者</td>
+<td>基于Groom过程级评测反馈的Harness自动优化</td>
+</tr>
+<tr>
+<td><strong>技术方案</strong></td>
+<td>T5</td>
+<td>群体智能自进化方案（SwarmEvolve，本项目衍生）</td>
+<td>2026.6-9</td>
+<td>方案设计者</td>
+<td>多Agent群体的自进化研究，建立在Groom评测基础上</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：本报告各章节；12号Puzzle报告、14号LogicalSurvey报告等系列报告；个人GitHub（https://github.com/dujh22）；飞书文档与个人周报。</p>
+</blockquote>
+<hr />
+<p><em>报告撰写日期：2026-09-08 | 基于飞书文档、GitHub 仓库 README 及项目汇总材料整理 · v3图文并茂版 · 二轮质检补强 · 三轮精磨 · 四轮深化 · 五轮深化 · 六轮深化 · 七轮深化 · 八轮深化 · 九轮终审 · 十轮深化 · 十一轮深化 · 十二轮终审 · 十三轮终审 · 十四轮深化 · 十五轮终审</em></p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+
+
+  
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.tracking", "navigation.top", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+      
+        <script src="../../../javascripts/mermaid_init.js"></script>
+      
+    
+  </body>
+</html>

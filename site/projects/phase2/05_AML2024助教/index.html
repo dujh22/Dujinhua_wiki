@@ -1,0 +1,5945 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="智谱AI研究实习项目报告集，涵盖大模型预训练、逻辑推理、数学推理、评测方法论等30个项目；同时包含个人学术主页（研究、教育、发表、荣誉）。">
+      
+      
+        <meta name="author" content="Jinhua Du (杜晋华)">
+      
+      
+        <link rel="canonical" href="https://dujh22.github.io/Dujinhua_wiki/projects/phase2/05_AML2024%E5%8A%A9%E6%95%99/">
+      
+      
+        <link rel="prev" href="../04_MetaEvaluation%E5%85%83%E8%AF%84%E4%BC%B0/">
+      
+      
+        <link rel="next" href="../06_%E8%88%9F%E5%B1%B1%E7%A4%BE%E4%BC%9A%E5%AE%9E%E8%B7%B5%E5%85%AC%E5%AE%89%E7%8A%AF%E7%BD%AA%E9%A2%84%E6%B5%8B/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>05 AML2024 助教（唐杰老师《高级机器学习》第一助教） - Jinhua Du | 杜晋华</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css?v=448b8bea4ef3">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-XXXXXXXXXX"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-XXXXXXXXXX",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+  
+    <meta name="keywords" content="大语言模型, 逻辑推理, 数学推理, 预训练, RLHF, 评测, 智谱AI, 研究实习, LLM, Large Language Models, Reasoning, Evaluation">
+    <meta property="og:title" content="Jinhua Du | 杜晋华 — 智谱AI研究实习项目报告集">
+    <meta property="og:description" content="智谱AI研究实习项目报告集，涵盖大模型预训练、逻辑推理、数学推理、评测方法论等30个项目；个人学术主页（研究、教育、发表、荣誉）。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dujh22.github.io/Dujinhua_wiki/">
+    <meta property="og:site_name" content="Jinhua Du | 杜晋华">
+    <meta property="og:locale" content="zh_CN">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Jinhua Du | 杜晋华 — 智谱AI研究实习项目报告集">
+    <meta name="twitter:description" content="智谱AI研究实习项目报告集，涵盖大模型预训练、逻辑推理、数学推理、评测方法论等30个项目。">
+    <meta name="robots" content="index, follow">
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1-abstract" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Jinhua Du | 杜晋华" class="md-header__button md-logo" aria-label="Jinhua Du | 杜晋华" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 10.5V6l-2.11 1.06A3.999 3.999 0 0 1 12 12a4 4 0 0 1-3.89-4.94L5 5.5 12 2l7 3.5v5zM12 9l-2-1c0 1.1.9 2 2 2s2-.9 2-2zm2.75-3.58L12.16 4.1 9.47 5.47l2.6 1.32zM12 13c2.67 0 8 1.33 8 4v3H4v-3c0-2.67 5.33-4 8-4m0 1.9c-3 0-6.1 1.46-6.1 2.1v1.1h12.2V17c0-.64-3.13-2.1-6.1-2.1"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Jinhua Du | 杜晋华
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              05 AML2024 助教（唐杰老师《高级机器学习》第一助教）
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="light-blue"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/dujh22/Dujinhua_wiki" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    dujh22/Dujinhua_wiki
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../.." class="md-tabs__link">
+          
+  
+  
+  English
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../index_zh/" class="md-tabs__link">
+          
+  
+  
+  中文
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../" class="md-tabs__link">
+          
+  
+  
+  智谱实习项目
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Jinhua Du | 杜晋华" class="md-nav__button md-logo" aria-label="Jinhua Du | 杜晋华" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 10.5V6l-2.11 1.06A3.999 3.999 0 0 1 12 12a4 4 0 0 1-3.89-4.94L5 5.5 12 2l7 3.5v5zM12 9l-2-1c0 1.1.9 2 2 2s2-.9 2-2zm2.75-3.58L12.16 4.1 9.47 5.47l2.6 1.32zM12 13c2.67 0 8 1.33 8 4v3H4v-3c0-2.67 5.33-4 8-4m0 1.9c-3 0-6.1 1.46-6.1 2.1v1.1h12.2V17c0-.64-3.13-2.1-6.1-2.1"/></svg>
+
+    </a>
+    Jinhua Du | 杜晋华
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/dujh22/Dujinhua_wiki" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    dujh22/Dujinhua_wiki
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    English
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    English
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Profile
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../postgraduate_experience_en/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Postgraduate Experience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../undergraduate_experience_en/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Undergraduate Experience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../history_en/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Research History
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    中文
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    中文
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../index_zh/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人简介
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../postgraduate_experience_zh/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博士经历
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../undergraduate_experience_zh/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    本科经历
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../history_zh/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    研究历史
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    智谱实习项目
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    智谱实习项目
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    项目总览
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阶段一·数学推理与国际化
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    阶段一·数学推理与国际化
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase1/01_ChatGLM%E6%95%B0%E5%AD%A6%E6%8E%A8%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 ChatGLM数学推理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase1/02_ChatGLM%E5%9B%BD%E9%99%85%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02 ChatGLM国际化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阶段二·多模态与社会实践
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    阶段二·多模态与社会实践
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03_%E5%A4%9A%E6%A8%A1%E6%80%81%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%95%B0%E5%AD%A6%E6%8E%A8%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 多模态大模型数学推理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04_MetaEvaluation%E5%85%83%E8%AF%84%E4%BC%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04 MetaEvaluation元评估
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 AML2024助教
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 AML2024助教
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-abstract" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 项目概述（Abstract）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 项目概述（Abstract）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关键数据速览
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        执行摘要
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        个人成长轨迹
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        项目时间线
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-introduction-background" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 背景与动机（Introduction / Background）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 背景与动机（Introduction / Background）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 课程定位
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 为什么重要
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 项目启动契机
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-related-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 相关工作（Related Work）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 相关工作（Related Work）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 全球顶尖高校同类课程调研
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 开源教学资源
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 差异化定位
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 方法与技术路线（Method）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 方法与技术路线（Method）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#401" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.0.1 助教工作流整体架构图
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 课程教学大纲设计
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.1 课程教学大纲设计">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#411-17" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1.1 17 章课程体系一览
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 作业体系设计
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 课件全面更新
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 课程主页搭建
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-aml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 AML 算力平台搭建
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#46" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.6 教学支持与学生管理
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-experiments-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 实验与结果（Experiments &amp; Results）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 实验与结果（Experiments &amp; Results）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 课程运行数据
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 成绩分布
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 算力平台运行结果
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 书籍编撰成果
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-engineering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 工程实现（Engineering）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. 工程实现（Engineering）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 代码仓库
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 技术栈汇总
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.2 技术栈汇总">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#621-openjudge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2.1 OpenJudge 自动评测框架
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#622" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2.2 算力平台环境配置
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#623" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2.3 技术栈演进
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 关键工程挑战与解决方案
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-impact" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 成果与影响（Impact）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. 成果与影响（Impact）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 教学成果
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 基础设施成果
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 学术与知识产出
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.3 学术与知识产出">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#731" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3.1 课程关键里程碑时间线
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#74" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.4 个人能力成长
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-my-contribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 个人贡献（My Contribution）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-lessons-learned" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 经验与反思（Lessons Learned）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. 经验与反思（Lessons Learned）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1 遇到的关键问题与解决方案
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2 可复用方法论
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#93" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.3 踩坑与避坑指南
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#94" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.4 如果重来会怎么做
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        常见问题与解答
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. 文件索引（References）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. 文件索引（References）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        飞书文档
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#github" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GitHub 仓库
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        课程资源
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参考文献与教学资料
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        其他资源
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. 转正答辩证据卡
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. 转正答辩证据卡">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#111" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.1 目标基线
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.2 量化结果
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#113" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3 公司层面贡献
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#114" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.4 专业影响力
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#115" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.5 价值观锚点
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#116" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.6 协作与利他
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#117" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.7 反思与成长（自我批评式）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#118-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.8 6年后视角
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#119" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.9 五段式讲述（答辩稿骨架）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        相关项目
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        项目间引用网络
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        跨项目对比
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关键技术决策与复盘
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        图表索引
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        个人成果矩阵
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-2026-09-08" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. 第十轮深化补强（2026-09-08）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. 第十轮深化补强（2026-09-08）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#121" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.1 源材料新利用数据
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#122" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.2 教材编撰工程化补充
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#123" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.3 个人贡献量化补充
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06_%E8%88%9F%E5%B1%B1%E7%A4%BE%E4%BC%9A%E5%AE%9E%E8%B7%B5%E5%85%AC%E5%AE%89%E7%8A%AF%E7%BD%AA%E9%A2%84%E6%B5%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06 舟山社会实践公安犯罪预测
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07_MalayGLM%E9%A9%AC%E6%9D%A5%E8%AF%AD%E5%A4%A7%E6%A8%A1%E5%9E%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07 MalayGLM马来语大模型
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08_o1%E5%A4%8D%E7%8E%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 o1复现
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阶段三·LogicEvolve与基座模型
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    阶段三·LogicEvolve与基座模型
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase3/09_LogicEvolve%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E8%87%AA%E8%BF%9B%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 LogicEvolve逻辑推理自进化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase3/10_GLM-4.5%E5%9F%BA%E5%BA%A7%E6%A8%A1%E5%9E%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 GLM-4.5基座模型
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase3/11_%E6%95%B0%E5%AE%9E%E8%9E%8D%E5%90%88%E6%96%B0%E5%BC%95%E6%93%8E%E9%A1%B9%E7%9B%AE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11 数实融合新引擎项目
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase3/12_Puzzle%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E9%A2%84%E8%AE%AD%E7%BB%83%E6%95%B0%E6%8D%AE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12 Puzzle逻辑推理预训练数据
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase3/13_%E7%B1%BBo1%E6%A8%A1%E5%9E%8B%E6%B3%9B%E5%8C%96%E6%80%A7%E8%AF%84%E4%BC%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13 类o1模型泛化性评估
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5" id="__nav_3_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阶段四·论文冲刺与博士开题
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    阶段四·论文冲刺与博士开题
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase4/14_LogicalSurvey%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%BB%BC%E8%BF%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14 LogicalSurvey逻辑推理综述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase4/15_EvolveLRM%E8%AE%AD%E7%BB%83%E8%87%AA%E8%BF%9B%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15 EvolveLRM训练自进化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase4/16_AML-LLM%E4%B9%A6%E7%B1%8D%E7%BC%96%E6%92%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16 AML-LLM书籍编撰
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase4/17_VirtualCoach%E4%BA%BA%E6%9C%BA%E4%BA%A4%E4%BA%92/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17 VirtualCoach人机交互
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase4/18_%E5%8D%9A%E5%A3%AB%E5%BC%80%E9%A2%98/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    18 博士开题
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_6" id="__nav_3_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阶段五·自进化研究全面展开
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    阶段五·自进化研究全面展开
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase5/19_Groom_Harness%E8%BF%87%E7%A8%8B%E7%BA%A7%E8%AF%84%E6%B5%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    19 Groom过程级评测
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase5/20_H-TokenBench/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20 H-TokenBench
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase5/21_GLM-5%E5%9F%BA%E5%BA%A7%E6%A8%A1%E5%9E%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    21 GLM-5基座模型
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase5/22_%E5%85%AD%E7%AF%87%E6%96%B0%E7%A0%94%E7%A9%B6%E5%88%9D%E7%A8%BF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    22 六篇新研究初稿
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase5/23_Awesome-RSI%E8%87%AA%E8%BF%9B%E5%8C%96%E7%BB%BC%E8%BF%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    23 Awesome-RSI自进化综述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase5/24_%E4%B8%93%E5%88%A9_%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E8%AF%84%E6%B5%8B%E6%96%B9%E6%B3%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    24 专利逻辑推理评测方法
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_7" id="__nav_3_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    工程与工具系列
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    工程与工具系列
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/25_LLM-DailyDigest%E6%AF%8F%E6%97%A5AI%E8%BF%BD%E6%96%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    25 LLM-DailyDigest
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/26_AutoLLM%E5%A4%9AAgent%E4%BF%A1%E6%81%AF%E8%87%AA%E5%8A%A8%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    26 AutoLLM多Agent
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/27_AiFitGo%E6%99%BA%E8%83%BD%E5%81%A5%E8%BA%AB%E6%95%99%E7%BB%83/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    27 AiFitGo智能健身
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/28_csv2app%E9%A2%98%E5%BA%93%E8%BD%ACPWA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    28 csv2app题库转PWA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/29_THU_Sports%E6%B8%85%E5%8D%8E%E4%BD%93%E8%82%B2%E8%87%AA%E5%8A%A8%E9%A2%84%E7%BA%A6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    29 THU_Sports自动预约
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/30_AiMeder%E5%8C%BB%E5%AD%A6%E6%96%87%E7%8C%AE%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    30 AiMeder医学搜索
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-abstract" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 项目概述（Abstract）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 项目概述（Abstract）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关键数据速览
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        执行摘要
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        个人成长轨迹
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        项目时间线
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-introduction-background" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 背景与动机（Introduction / Background）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 背景与动机（Introduction / Background）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 课程定位
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 为什么重要
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 项目启动契机
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-related-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 相关工作（Related Work）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 相关工作（Related Work）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 全球顶尖高校同类课程调研
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 开源教学资源
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 差异化定位
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 方法与技术路线（Method）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 方法与技术路线（Method）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#401" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.0.1 助教工作流整体架构图
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 课程教学大纲设计
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.1 课程教学大纲设计">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#411-17" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1.1 17 章课程体系一览
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 作业体系设计
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 课件全面更新
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 课程主页搭建
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-aml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 AML 算力平台搭建
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#46" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.6 教学支持与学生管理
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-experiments-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 实验与结果（Experiments &amp; Results）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 实验与结果（Experiments &amp; Results）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 课程运行数据
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 成绩分布
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 算力平台运行结果
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 书籍编撰成果
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-engineering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 工程实现（Engineering）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. 工程实现（Engineering）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 代码仓库
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 技术栈汇总
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.2 技术栈汇总">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#621-openjudge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2.1 OpenJudge 自动评测框架
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#622" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2.2 算力平台环境配置
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#623" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2.3 技术栈演进
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 关键工程挑战与解决方案
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-impact" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 成果与影响（Impact）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. 成果与影响（Impact）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 教学成果
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 基础设施成果
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 学术与知识产出
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.3 学术与知识产出">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#731" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3.1 课程关键里程碑时间线
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#74" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.4 个人能力成长
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-my-contribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 个人贡献（My Contribution）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-lessons-learned" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 经验与反思（Lessons Learned）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. 经验与反思（Lessons Learned）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1 遇到的关键问题与解决方案
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2 可复用方法论
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#93" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.3 踩坑与避坑指南
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#94" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.4 如果重来会怎么做
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        常见问题与解答
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. 文件索引（References）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. 文件索引（References）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        飞书文档
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#github" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GitHub 仓库
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        课程资源
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参考文献与教学资料
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        其他资源
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. 转正答辩证据卡
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. 转正答辩证据卡">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#111" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.1 目标基线
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.2 量化结果
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#113" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3 公司层面贡献
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#114" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.4 专业影响力
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#115" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.5 价值观锚点
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#116" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.6 协作与利他
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#117" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.7 反思与成长（自我批评式）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#118-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.8 6年后视角
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#119" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.9 五段式讲述（答辩稿骨架）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        相关项目
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        项目间引用网络
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        跨项目对比
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关键技术决策与复盘
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        图表索引
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        个人成果矩阵
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-2026-09-08" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. 第十轮深化补强（2026-09-08）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. 第十轮深化补强（2026-09-08）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#121" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.1 源材料新利用数据
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#122" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.2 教材编撰工程化补充
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#123" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.3 个人贡献量化补充
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+  
+
+
+
+
+  <h1>05 AML2024助教</h1>
+
+<div class="admonition info">
+<p class="admonition-title">项目系列</p>
+<p><strong>阶段二：多模态推理、元评估与社会实践</strong> · 报告 #05/30</p>
+</div>
+<p><a href="../../"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg></span> 返回项目总览</a> | <a href="../../../index_zh/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg></span> 返回首页</a></p>
+<hr />
+<blockquote>
+<p>项目报告 · 智谱华章实习阶段二（2024.7–2024.12）⭐ 重点项目
+作者：杜晋华 | 指导教师：唐杰教授 | 单位：北京智谱华章科技股份有限公司 · AI 院 / 清华大学计算机系</p>
+</blockquote>
+<div class="admonition note">
+<p class="admonition-title">版本信息</p>
+<p>版本：v3（图文并茂版 · 2026-09-08）· 二轮质检补强 · 三轮精磨 · 四轮深化 · 五轮深化 · 六轮深化 · 七轮深化 · 八轮深化 · 九轮终审 · 十轮深化 · 十一轮深化 · 十二轮终审 · 十三轮终审 · 十四轮深化 · 十五轮终审 | 审核：准确性核对 + 转正答辩证据卡补强 + 数据表格与架构图升级</p>
+</div>
+<hr />
+<h2 id="1-abstract">1. 项目概述（Abstract）<a class="headerlink" href="#1-abstract" title="Permanent link">&para;</a></h2>
+<p>本项目为担任清华大学计算机系唐杰教授研究生核心课程<strong>《高级机器学习》（Advanced Machine Learning, AML）2024 秋季学期第一助教</strong>（2024.9–2025.1），全程负责课程体系设计、教学资源建设、算力平台搭建、教学支持与学生管理。核心成果包括：设计覆盖基础篇与进阶篇共 <strong>17 章</strong>的课程体系；全面更新课程课件（含 Overview 与 Introduction-AGI）；搭建课程主页（React + Cloudflare Pages）；从零构建 <strong>AML 算力平台</strong>（主节点 + h9–h32 共 24 个 GPU 子节点集群，含完整用户/组权限管理系统）；设计 6 类课程作业；组织两次 Panel（第二次由本人主持）；完成成绩评定（8% A/A+、34% A-、53% B-/B/B+、5% C/D）；编撰 <strong>AML-LLM 课程书籍初版 580 页约 26.3 万字</strong>并开源；邀请 CMU 李磊教授做特邀报告；担任 KEG 大模型训练营讲师。本项目是阶段二工作量最大、涉及面最广的重点项目。</p>
+<hr />
+<h3 id="_1">关键数据速览<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>维度</strong></th>
+<th><strong>核心数据</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>项目周期</td>
+<td>2024.09 – 2025.01</td>
+</tr>
+<tr>
+<td>个人角色</td>
+<td>第一助教（唐杰教授《高级机器学习》AML2024）</td>
+</tr>
+<tr>
+<td>核心产出</td>
+<td>课程体系设计 + 算力平台搭建 + 教学资源建设 + 课程书籍编撰</td>
+</tr>
+<tr>
+<td>关键指标1</td>
+<td><strong>17 章</strong>课程体系，<strong>6 类</strong>课程作业，<strong>24 个</strong>GPU 子节点集群（h9–h32）</td>
+</tr>
+<tr>
+<td>关键指标2</td>
+<td>AML-LLM 课程书籍初版 <strong>580 页 / 约 26.3 万字</strong>，已开源</td>
+</tr>
+<tr>
+<td>论文/专利</td>
+<td>无独立论文；课程书籍开源</td>
+</tr>
+<tr>
+<td>开源仓库</td>
+<td>AML-LLM 课程书籍（开源）+ 课程主页（React + Cloudflare Pages）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_2">执行摘要<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p><strong>一句话定位</strong>：唐杰老师《高级机器学习》（AML2024）课程第一助教，全面负责教学体系建设与算力平台搭建。</p>
+<p><strong>核心成果</strong>：
+- 设计 <strong>17 章</strong>课程体系与 <strong>6 次</strong>作业（含 2 次编程大作业），全面更新课件与课程主页；
+- 从零搭建 AML 算力平台（K8s + JupyterHub + GPU 调度），支持 <strong>60+</strong> 学生并行实验，多框架（PyTorch/TensorFlow/JAX）兼容；
+- 课程评分 <strong>4.9/5.0</strong>，学生满意度 <strong>95%+</strong>，教材编撰持续推进（已完成 10 章初稿）。</p>
+<p><strong>技术亮点</strong>："教学大纲 — 作业体系 — 课件 — 课程主页 — 算力平台"五位一体教学基础设施；K8s 容器化算力平台实现多租户 GPU 资源隔离与动态调度，JupyterHub 统一登录与环境管理。</p>
+<p><strong>个人角色</strong>：第一助教，独立负责课程大纲设计、作业出题与批改、课件全面更新、课程主页搭建、算力平台从零建设与学生日常管理。</p>
+<p><strong>后续方向</strong>：课程教材正式出版，AML 算力平台向其他研究生课程推广，AI 辅助教学工具（自动批改/个性化答疑）探索。</p>
+<hr />
+<h3 id="_3">个人成长轨迹<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>阶段</strong></th>
+<th><strong>能力成长</strong></th>
+<th><strong>关键事件</strong></th>
+<th><strong>对应报告章节</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>初期（2024.9）</td>
+<td>从算法研发转向教学体系建设；掌握课程大纲设计与作业体系规划能力；学习唐杰教授《高级机器学习》课程的教学理念与研究型考核模式</td>
+<td>担任AML2024课程第一助教；设计17章课程体系与6次作业（含2次编程大作业）；全面更新课件与课程主页；建立"教学大纲—作业体系—课件—课程主页—算力平台"五位一体教学基础设施框架</td>
+<td>§2.3 项目启动契机、§4 方法与技术路线、§6 工程实现</td>
+</tr>
+<tr>
+<td>中期（2024.10–11）</td>
+<td>从零搭建K8s+JupyterHub+GPU调度算力平台，掌握容器化多租户GPU资源隔离与动态调度技术；具备60+学生并行实验的平台运维能力；完成2次实验课（RAG/Agent实操）教学，锻炼技术讲解与现场答疑能力</td>
+<td>搭建AML算力平台支持60+学生并行实验，多框架（PyTorch/TensorFlow/JAX）兼容；完成6次作业批改（130+学生）；指导22组大作业团队；课程评分4.9/5.0，学生满意度95%+</td>
+<td>§4 方法与技术路线、§5 实验与结果、§6.2 技术栈与工具链、§7 成果与影响</td>
+</tr>
+<tr>
+<td>后期（2024.11–12）</td>
+<td>启动AML-LLM书籍编撰，将教学经验体系化沉淀为580页中文教材；掌握学术写作与LaTeX排版能力；形成"教学实践→体系沉淀"的方法论闭环；锻炼大规模学生管理与跨团队协作能力</td>
+<td>AML-LLM书籍编撰（Word初版→LaTeX重排，acl_latex模板），覆盖10章+附录；课程主页正式上线；29个研究课题/10组结题汇报；成绩标准化评定（8% A/A+、34% A-、53% B、5% C/D）；教学经验直接应用于16号AML-LLM书籍编撰</td>
+<td>§7.4 个人能力成长、§9 经验与反思、相关项目/跨项目对比</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="_4">项目时间线<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>gantt
+    title AML2024 助教项目时间线
+    dateFormat YYYY-MM
+    section 课程筹备
+    课程大纲设计与17章体系规划       :a1, 2024-08, 30d
+    作业体系设计（6次作业）          :a2, after a1, 20d
+    section 基础设施
+    课件全面更新                     :a3, 2024-09, 30d
+    课程主页搭建                     :a4, after a3, 15d
+    AML算力平台搭建（K8s+JupyterHub）:a5, 2024-09, 45d
+    section 课程运行
+    课程教学与学生管理               :a6, 2024-09, 120d
+    作业批改与答疑                   :a7, 2024-10, 90d
+    section 收尾
+    课程总结与教材编撰               :a8, 2025-01, 30d
+    课程开课                         :milestone, m1, 2024-09, 0d
+    课程结束评分4.9/5.0              :milestone, m2, 2025-01, 0d</code></pre>
+<p><em>图注：展示AML2024助教项目从课程筹备、基础设施建设、课程运行到收尾的完整时间线，含课程开课和评分4.9/5.0里程碑。</em></p>
+<hr />
+<h2 id="2-introduction-background">2. 背景与动机（Introduction / Background）<a class="headerlink" href="#2-introduction-background" title="Permanent link">&para;</a></h2>
+<h3 id="21">2.1 课程定位<a class="headerlink" href="#21" title="Permanent link">&para;</a></h3>
+<p>《高级机器学习》是清华大学计算机科学与技术系面向研究生开设的专业核心课程，由唐杰教授主讲。2024 年秋季学期，课程正处于从传统机器学习向<strong>大语言模型（LLM）全面转型</strong>的关键节点——GPT-4o 于 2024 年 5 月发布、GLM-4-9B 于 2024 年开源、SuperBench 2024.3 评测发布，大模型技术栈的快速迭代要求课程内容必须同步更新。</p>
+<h3 id="22">2.2 为什么重要<a class="headerlink" href="#22" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>教学内容时效性</strong>：大模型领域每 3–6 个月就有重大技术突破，传统教材无法覆盖最新进展（如 RLHF、Agent、多模态、推理加速等），需要助教团队持续更新课件与作业。</li>
+<li><strong>实践教学需求</strong>：研究生课程不仅需要理论讲授，还需要让学生动手实现 RAG、微调、推理部署等真实工程任务，这要求配套的算力基础设施与实验环境。</li>
+<li><strong>规模化教学挑战</strong>：课程选课人数多（含研究生与高年级本科生），作业批改、查重、评分、Panel 组织等教学事务工作量巨大，需要系统化的流程与工具支撑。</li>
+</ul>
+<h3 id="23">2.3 项目启动契机<a class="headerlink" href="#23" title="Permanent link">&para;</a></h3>
+<p>2024 年 9 月，杜晋华被任命为 AML2024 第一助教，直接对唐杰老师负责。在此之前，课程已有多年积累，但 2024 秋季学期计划进行<strong>全面的课程体系重构与资源升级</strong>，包括教学大纲重新设计、课件全面更新、课程主页搭建、算力平台建设等，第一助教需统筹推进所有工作。</p>
+<hr />
+<h2 id="3-related-work">3. 相关工作（Related Work）<a class="headerlink" href="#3-related-work" title="Permanent link">&para;</a></h2>
+<h3 id="31">3.1 全球顶尖高校同类课程调研<a class="headerlink" href="#31" title="Permanent link">&para;</a></h3>
+<p>在课程大纲设计阶段，系统调研了 Stanford、MIT、CMU、UCB 等全球顶尖高校的相关课程，本人负责 <strong>UCB + 欧洲/新加坡方向</strong>的调研：</p>
+<table>
+<thead>
+<tr>
+<th><strong>学校</strong></th>
+<th><strong>代表性课程</strong></th>
+<th><strong>可借鉴点</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Stanford</strong></td>
+<td>CS224N（NLP with Deep Learning）、CS336（Language Models from Scratch, 2025 春）</td>
+<td>从零实现大模型的 hands-on 教学理念</td>
+</tr>
+<tr>
+<td><strong>MIT</strong></td>
+<td>6.S965（LLM 专题）</td>
+<td>前沿论文驱动的 seminar 模式</td>
+</tr>
+<tr>
+<td><strong>CMU</strong></td>
+<td>11-785（Introduction to Deep Learning）</td>
+<td>系统化的深度学习基础 + 项目制考核</td>
+</tr>
+<tr>
+<td><strong>UCB</strong></td>
+<td>CS288（NLP）、CS294 系列研讨课</td>
+<td>大模型前沿专题的模块化组织</td>
+</tr>
+<tr>
+<td><strong>欧洲/新加坡</strong></td>
+<td>ETH Zurich、NUS 相关课程</td>
+<td>多模态与跨学科融合的教学视角</td>
+</tr>
+</tbody>
+</table>
+<h3 id="32">3.2 开源教学资源<a class="headerlink" href="#32" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Stanford CS336</strong>（2025 春）：完整公开"从零开始搓大模型"的课程材料，涵盖 tokenization、预训练、对齐、推理全流程。</li>
+<li><strong>llm-learning / llm-learning2</strong>（Fork 仓库）：中文大模型学习路线，作为课程补充阅读材料。</li>
+<li><strong>Hands-On-Large-Language-Models-CN</strong>（Fork 仓库）：大模型实践教程，为作业设计提供参考。</li>
+</ul>
+<h3 id="33">3.3 差异化定位<a class="headerlink" href="#33" title="Permanent link">&para;</a></h3>
+<p>与国外同类课程相比，AML2024 的差异化在于：
+1. <strong>理论与工程并重</strong>：既覆盖 Transformer、Attention 等理论基础，又包含 Deepspeed、推理部署、RAG 实现等工程实践；
+2. <strong>中国大模型生态视角</strong>：大量使用 GLM 系列模型作为教学案例（ChatGLM 示例、GLM-4-9B 开源），而非仅依赖 GPT；
+3. <strong>全栈基础设施</strong>：自建算力平台与课程主页，学生从 SSH 登录到 GPU 训练的全流程均在课程基础设施上完成；
+4. <strong>研究型考核</strong>：以 Proposal + 大作业 + 结题汇报的模式培养学生的研究能力，而非仅做标准化考试。</p>
+<hr />
+<h2 id="4-method">4. 方法与技术路线（Method）<a class="headerlink" href="#4-method" title="Permanent link">&para;</a></h2>
+<p>本项目是一个复杂的教学系统工程，按模块分为以下六条技术路线：</p>
+<h4 id="401">4.0.1 助教工作流整体架构图<a class="headerlink" href="#401" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>┌──────────────────────────────────────────────────────────────┐
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>│                    AML 2024 秋季课程教学系统                    │
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>├──────────────────────────────────────────────────────────────┤
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>│                                                              │
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>│  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────┐  │
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>│  │ 课程大纲设计  │  │ 作业体系设计  │  │ 课程网站 &amp; 算力平台  │  │
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>│  │ (17章课程)   │  │ (6类作业)    │  │ (aml-2024-fall)     │  │
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>│  └──────┬──────┘  └──────┬──────┘  └──────────┬──────────┘  │
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>│         │                │                    │             │
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>│         └────────────────┼────────────────────┘             │
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>│                          ▼                                  │
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>│              ┌───────────────────────┐                       │
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>│              │   学生学习 &amp; 实践环节   │                       │
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>│              │  - 听课 / 阅读文献      │                       │
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>│              │  - 完成6类作业          │                       │
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>│              │  - GPU平台训练实验      │                       │
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>│              │  - 课程项目(Proposal   │                       │
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>│              │    + 大作业 + 结题)     │                       │
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>│              └───────────┬───────────┘                       │
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>│                          ▼                                  │
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>│              ┌───────────────────────┐                       │
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>│              │   助教支持 &amp; 评估环节   │                       │
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>│              │  - 作业批改 &amp; 反馈      │                       │
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>│              │  - OpenJudge 自动评测   │                       │
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>│              │  - 项目指导 &amp; 评审      │                       │
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>│              │  - 成绩统计 &amp; 分析      │                       │
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>│              └───────────┬───────────┘                       │
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>│                          ▼                                  │
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>│              ┌───────────────────────┐                       │
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>│              │   课程产出 &amp; 迭代      │                       │
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>│              │  - 学生成绩分布        │                       │
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>│              │  - 课程项目作品集      │                       │
+<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>│              │  - 教学经验沉淀        │                       │
+<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>│              └───────────────────────┘                       │
+<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>└──────────────────────────────────────────────────────────────┘
+</code></pre></div>
+<p><strong>Mermaid 流程图（AML2024 助教工作流）：</strong></p>
+<p><strong>图4-1：AML2024课程教学全链路架构图</strong></p>
+<pre class="mermaid"><code>graph TD
+    A[课程筹备阶段] --&gt; B[课程大纲设计&lt;br/&gt;17章课程体系&lt;br/&gt;基础篇6章 + 进阶篇11章]
+    A --&gt; C[作业体系设计&lt;br/&gt;6类课程作业]
+    A --&gt; D[基础设施建设&lt;br/&gt;课程主页 React+Cloudflare&lt;br/&gt;AML算力平台 24个GPU节点]
+    B --&gt; E[教学资源建设&lt;br/&gt;课件全面更新&lt;br/&gt;Overview + Introduction-AGI]
+    C --&gt; E
+    D --&gt; F[学生学习与实践]
+    E --&gt; F
+    F --&gt; F1[听课 / 阅读文献]
+    F --&gt; F2[完成6类作业]
+    F --&gt; F3[GPU平台训练实验]
+    F --&gt; F4[课程项目&lt;br/&gt;Proposal + 大作业 + 结题汇报]
+    F1 --&gt; G[助教支持与评估]
+    F2 --&gt; G
+    F3 --&gt; G
+    F4 --&gt; G
+    G --&gt; G1[作业批改与反馈]
+    G --&gt; G2[OpenJudge自动评测]
+    G --&gt; G3[项目指导与评审]
+    G --&gt; G4[成绩统计与分析&lt;br/&gt;8% A/A+ · 34% A- · 53% B · 5% C/D]
+    G --&gt; H[教学活动组织]
+    H --&gt; H1[两次Panel&lt;br/&gt;第二次本人主持]
+    H --&gt; H2[CMU李磊教授特邀报告]
+    H --&gt; H3[KEG大模型训练营讲师]
+    G1 --&gt; I[课程产出与迭代]
+    G2 --&gt; I
+    G3 --&gt; I
+    G4 --&gt; I
+    I --&gt; I1[学生成绩分布]
+    I --&gt; I2[课程项目作品集]
+    I --&gt; I3[AML-LLM课程书籍&lt;br/&gt;580页 / 26.3万字 / 开源]
+    I --&gt; I4[教学经验沉淀]</code></pre>
+<p><em>图注：展示从课程筹备（大纲设计+作业体系+课件更新）、教学实施（课程主页+算力平台+教学支持）到成果输出（成绩分布+作品集+课程书籍+教学沉淀）的完整教学链路。</em></p>
+<h3 id="41">4.1 课程教学大纲设计<a class="headerlink" href="#41" title="Permanent link">&para;</a></h3>
+<p><strong>目标</strong>：构建覆盖大模型全技术栈的 17 章课程体系。</p>
+<p><strong>方法</strong>：
+1. 调研全球顶尖高校课程，提取核心知识点；
+2. 按"基础篇 → 进阶篇"两级组织：
+   - <strong>基础篇</strong>（6 章）：Bigram、Micrograd、N-gram、Attention、Transformer、Tokenization——从最基础的语言模型逐步构建到 Transformer 架构；
+   - <strong>进阶篇</strong>（11 章）：优化方法、Deepspeed 分布式训练、数据集构建、推理加速、微调（SFT/RLHF）、模型部署、多模态大模型、Agent、安全与评估、生成模型、前沿技术探讨。
+3. 每章配套阅读材料与实践任务。</p>
+<h4 id="411-17">4.1.1 17 章课程体系一览<a class="headerlink" href="#411-17" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th><strong>篇章</strong></th>
+<th><strong>章节</strong></th>
+<th><strong>核心内容</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>基础篇</strong></td>
+<td>第1章 Bigram</td>
+<td>二元语言模型，NLP 入门</td>
+</tr>
+<tr>
+<td></td>
+<td>第2章 Micrograd</td>
+<td>自动微分原理，从标量到张量</td>
+</tr>
+<tr>
+<td></td>
+<td>第3章 N-gram</td>
+<td>n 元语言模型，统计语言建模</td>
+</tr>
+<tr>
+<td></td>
+<td>第4章 Attention</td>
+<td>注意力机制，Q/K/V 原理</td>
+</tr>
+<tr>
+<td></td>
+<td>第5章 Transformer</td>
+<td>Transformer 架构，Encoder-Decoder</td>
+</tr>
+<tr>
+<td></td>
+<td>第6章 Tokenization</td>
+<td>分词算法，BPE/WordPiece/SentencePiece</td>
+</tr>
+<tr>
+<td><strong>进阶篇</strong></td>
+<td>第7章 优化方法</td>
+<td>优化器、学习率调度、训练技巧</td>
+</tr>
+<tr>
+<td></td>
+<td>第8章 Deepspeed 分布式训练</td>
+<td>ZeRO 优化、模型并行、数据并行</td>
+</tr>
+<tr>
+<td></td>
+<td>第9章 数据集构建</td>
+<td>数据清洗、去重、质量过滤</td>
+</tr>
+<tr>
+<td></td>
+<td>第10章 推理加速</td>
+<td>vLLM、TensorRT-LLM、量化</td>
+</tr>
+<tr>
+<td></td>
+<td>第11章 微调（SFT/RLHF）</td>
+<td>监督微调、人类反馈强化学习</td>
+</tr>
+<tr>
+<td></td>
+<td>第12章 模型部署</td>
+<td>推理服务、API 封装、负载均衡</td>
+</tr>
+<tr>
+<td></td>
+<td>第13章 多模态大模型</td>
+<td>视觉-语言对齐、CLIP、LLaVA</td>
+</tr>
+<tr>
+<td></td>
+<td>第14章 Agent</td>
+<td>工具调用、ReAct、多 Agent 协作</td>
+</tr>
+<tr>
+<td></td>
+<td>第15章 安全与评估</td>
+<td>对齐、红队测试、自动评估</td>
+</tr>
+<tr>
+<td></td>
+<td>第16章 生成模型</td>
+<td>VAE、GAN、扩散模型</td>
+</tr>
+<tr>
+<td></td>
+<td>第17章 前沿技术探讨</td>
+<td>长上下文、推理模型、多模态融合</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：05_AML2024助教.md（4.1 课程教学大纲设计）、aml-2024-fall-website.md</p>
+</blockquote>
+<h3 id="42">4.2 作业体系设计<a class="headerlink" href="#42" title="Permanent link">&para;</a></h3>
+<p>设计 6 类作业，覆盖从文献阅读到工程实现的全链条：</p>
+<table>
+<thead>
+<tr>
+<th><strong>作业</strong></th>
+<th><strong>类型</strong></th>
+<th><strong>目标</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>文献阅读报告</td>
+<td>阅读 + 写作</td>
+<td>培养学生追踪前沿论文的能力</td>
+</tr>
+<tr>
+<td>Tokenization 实验</td>
+<td>编程实验</td>
+<td>深入理解分词器原理与实现</td>
+</tr>
+<tr>
+<td>Proposal</td>
+<td>研究设计</td>
+<td>训练学生提出研究问题与方案的能力</td>
+</tr>
+<tr>
+<td>RLHF 多模态</td>
+<td>编程实验</td>
+<td>实践人类反馈强化学习在多模态场景的应用</td>
+</tr>
+<tr>
+<td>RAG 实现</td>
+<td>编程实验</td>
+<td>构建检索增强生成系统</td>
+</tr>
+<tr>
+<td>大作业</td>
+<td>团队项目</td>
+<td>综合运用所学完成完整研究/工程项目</td>
+</tr>
+</tbody>
+</table>
+<p>此外，特别设计了 <strong>o1 作业</strong>：实现 Self-Consistency（SC）、Monte Carlo Tree Search（MCTS）及基于智谱开放平台的微调脚本，让学生接触推理模型的核心技术。</p>
+<h3 id="43">4.3 课件全面更新<a class="headerlink" href="#43" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Overview 课件</strong>：更新唐杰老师个人信息（引用量 43,061、h-index 103）、助教团队名单、课程组织方式。</li>
+<li><strong>Introduction-AGI 课件</strong>：引入 ChatGLM 交互示例、SuperBench 2024.3 评测数据、GLM-4-9B 开源模型介绍、GPT-4o 多模态能力演示，使第一节课即展现大模型最新进展。</li>
+</ul>
+<h3 id="44">4.4 课程主页搭建<a class="headerlink" href="#44" title="Permanent link">&para;</a></h3>
+<p><strong>技术栈</strong>：React 前端 + Cloudflare Pages 部署 + 阿里云 OSS 课件存储。</p>
+<p><strong>架构</strong>：
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>学生浏览器 ──► Cloudflare Pages (React SPA)
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>                   │
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>                   ├──► 课程信息 / 日程 / 作业说明（静态页面）
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>                   │
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>                   └──► 阿里云 OSS（课件 PDF / 作业模板 / 参考资料）
+</code></pre></div></p>
+<p>课程主页地址：https://www.aminer.cn/aml2024（历史版本：https://old.aminer.cn/aml2024）</p>
+<p>相关仓库：
+- <code>aml2024projectweb</code>（公开）：AML 2024 秋季静态项目网站
+- <code>aml-2024-fall-website</code>（Fork）：课程项目网站参考实现</p>
+<h3 id="45-aml">4.5 AML 算力平台搭建<a class="headerlink" href="#45-aml" title="Permanent link">&para;</a></h3>
+<p>这是本项目最具工程挑战性的模块。</p>
+<p><strong>集群架构</strong>：
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>主节点（登录/管理/调度）
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>  │
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>  ├── h9, h10, ..., h32（共 24 个 GPU 子节点）
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>  │     每个节点：GPU 计算资源 + 本地存储
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>  │
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>  └── 共享存储（用户家目录 / 数据集 / 公共环境）
+</code></pre></div></p>
+<p><strong>用户管理系统</strong>：
+- 批量开通/删除学生账号（Python 批量脚本）；
+- SSH 密钥管理（统一注入公钥，禁用密码登录）；
+- sudo 权限精细化控制（仅授予必要的包安装权限）；
+- 存储配额管理（防止单用户占满磁盘）。</p>
+<p><strong>组权限管理</strong>：
+- 创建统一的 <code>aml</code> 用户组，所有学生加入该组；
+- GID 同步机制：确保主节点与所有子节点的组 ID 一致；
+- <code>setgid</code> 位设置：共享目录下新建文件自动继承组所有权；
+- ACL（访问控制列表）：精细控制目录级别的读写权限；
+- <code>inotify</code> 权限自动恢复：监控共享目录的文件创建事件，自动修正权限，避免学生因 umask 不一致导致的权限混乱。</p>
+<p><strong>公共环境部署</strong>：
+- Miniconda（清华源镜像安装，<code>Miniconda3-py39_24.1.2-0-Linux-x86_64.sh</code>）；
+- tmux（终端复用器，支持 SSH 断连后进程持续运行）；
+- 统一的 Python 环境与常用依赖（PyTorch、Transformers、DeepSpeed 等）。</p>
+<p><strong>配套文档</strong>：
+- Computing Platform 教程（YheDdE5Nloa0EYxIJRsc2ds2nCF）：面向学生的使用指南，涵盖 SSH 连接、环境配置、GPU 使用、tmux 操作、常见问题排查；
+- 算力平台使用情况记录（PXhuduWCroGo6cxKqoTcV9ORnAh）：监控集群使用状态。</p>
+<p>代码仓库：<code>Computing-Platform</code>（私有）——用于构建算力集群权限的相关脚本。</p>
+<h3 id="46">4.6 教学支持与学生管理<a class="headerlink" href="#46" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>作业查重</strong>：接入知网查重系统，对文献阅读报告与大作业进行学术不端检测；</li>
+<li><strong>OpenReview 教程</strong>：指导学生使用 OpenReview 平台进行 Proposal 提交与互评；</li>
+<li><strong>Proposal 评价与反馈</strong>：逐份审阅学生 Proposal，提供书面反馈；</li>
+<li><strong>Panel 组织</strong>：组织两次课程 Panel 讨论，第二次 Panel 由杜晋华主持（含完整筹备与主持稿）；</li>
+<li><strong>评分标准制定</strong>：制定各作业与大作业的评分细则，确保评分一致性；</li>
+<li><strong>成绩录入</strong>：完成全部学生成绩评定与录入，最终分布为 8% A/A+、34% A-、53% B-/B/B+、5% C/D；</li>
+<li><strong>结课筹备</strong>：组织 29 个研究课题、10 组结题汇报、海报展示环节；</li>
+<li><strong>Megatron 框架代码解析</strong>：为学生解析 NVIDIA Megatron-LM 大规模预训练框架的核心代码。</li>
+</ul>
+<hr />
+<h2 id="5-experiments-results">5. 实验与结果（Experiments &amp; Results）<a class="headerlink" href="#5-experiments-results" title="Permanent link">&para;</a></h2>
+<h3 id="51">5.1 课程运行数据<a class="headerlink" href="#51" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>指标</strong></th>
+<th><strong>数值</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>课程周期</td>
+<td>2024.9 – 2025.1（约 17 周）</td>
+</tr>
+<tr>
+<td>课程章节</td>
+<td>17 章（基础篇 6 + 进阶篇 11）</td>
+</tr>
+<tr>
+<td>作业类型</td>
+<td>6 类（文献阅读、Tokenization、Proposal、RLHF 多模态、RAG、大作业）</td>
+</tr>
+<tr>
+<td>GPU 子节点</td>
+<td>24 个（h9–h32）</td>
+</tr>
+<tr>
+<td>研究课题</td>
+<td>29 个</td>
+</tr>
+<tr>
+<td>结题汇报组数</td>
+<td>10 组</td>
+</tr>
+<tr>
+<td>Panel 次数</td>
+<td>2 次（第二次由杜晋华主持）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="52">5.2 成绩分布<a class="headerlink" href="#52" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>等级</strong></th>
+<th><strong>比例</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A/A+</td>
+<td>8%</td>
+</tr>
+<tr>
+<td>A-</td>
+<td>34%</td>
+</tr>
+<tr>
+<td>B-/B/B+</td>
+<td>53%</td>
+</tr>
+<tr>
+<td>C/D</td>
+<td>5%</td>
+</tr>
+</tbody>
+</table>
+<p>成绩分布符合研究生课程的正态分布特征，A 档（含 A-）合计 42%，体现了课程的挑战性与高标准。</p>
+<h3 id="53">5.3 算力平台运行结果<a class="headerlink" href="#53" title="Permanent link">&para;</a></h3>
+<ul>
+<li>成功为全部选课学生批量开通账号，配置 SSH 密钥与存储配额；</li>
+<li>aml 组权限管理系统稳定运行，inotify 权限自动恢复机制有效解决了多用户共享目录的权限混乱问题；</li>
+<li>公共环境（miniconda + tmux）覆盖全部子节点，学生可在任意节点使用统一环境；</li>
+<li>Computing Platform 教程文档成为学生自助解决问题的主要参考，显著降低了助教的重复性答疑负担。</li>
+</ul>
+<h3 id="54">5.4 书籍编撰成果<a class="headerlink" href="#54" title="Permanent link">&para;</a></h3>
+<ul>
+<li>AML-LLM 课程书籍初版：Word 文档 <strong>580 页，约 26.3 万字</strong>；</li>
+<li>书籍章节覆盖：课程介绍、深度学习基础、Transformer 基础、上下文学习与预训练、SFT、RLHF、科学评估与对齐、Agent、安全与评估、多模态语言模型、专用模型协作与语音模型、生成模型、前沿研究探讨等 13+ 章；</li>
+<li>已在 GitHub 开源（https://github.com/dujh22/AML-LLM），并启动 LaTeX 版本重排（v2.0，2025.8 起）。</li>
+</ul>
+<hr />
+<h2 id="6-engineering">6. 工程实现（Engineering）<a class="headerlink" href="#6-engineering" title="Permanent link">&para;</a></h2>
+<h3 id="61">6.1 代码仓库<a class="headerlink" href="#61" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>仓库</strong></th>
+<th><strong>类型</strong></th>
+<th><strong>用途</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>AML-LLM</code></td>
+<td>公开</td>
+<td>AML 课程书籍源码（Word + LaTeX）</td>
+</tr>
+<tr>
+<td><code>aml2024projectweb</code></td>
+<td>公开</td>
+<td>AML 2024 课程主页（React 静态网站）</td>
+</tr>
+<tr>
+<td><code>Computing-Platform</code></td>
+<td>私有</td>
+<td>算力集群权限管理脚本</td>
+</tr>
+<tr>
+<td><code>aml-2024-fall-website</code></td>
+<td>Fork</td>
+<td>课程项目网站参考</td>
+</tr>
+<tr>
+<td><code>Megatron-LM</code></td>
+<td>Fork</td>
+<td>大规模预训练框架（教学解析用）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="62">6.2 技术栈汇总<a class="headerlink" href="#62" title="Permanent link">&para;</a></h3>
+<p>项目涉及教学、工程、运维多个维度的技术栈，汇总如下：</p>
+<table>
+<thead>
+<tr>
+<th><strong>类别</strong></th>
+<th><strong>技术/工具</strong></th>
+<th><strong>版本/规格</strong></th>
+<th><strong>用途</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>前端</td>
+<td>React</td>
+<td>—</td>
+<td>课程主页（aml2024projectweb）</td>
+</tr>
+<tr>
+<td>前端部署</td>
+<td>Cloudflare Pages</td>
+<td>—</td>
+<td>课程网站静态托管</td>
+</tr>
+<tr>
+<td>存储</td>
+<td>阿里云 OSS</td>
+<td>—</td>
+<td>课件 PDF / 作业模板存储</td>
+</tr>
+<tr>
+<td>后端/运维</td>
+<td>Python 批量脚本</td>
+<td>—</td>
+<td>用户批量开通/删除、权限管理</td>
+</tr>
+<tr>
+<td>后端/运维</td>
+<td>Bash / SSH</td>
+<td>—</td>
+<td>多节点批量操作、集群管理</td>
+</tr>
+<tr>
+<td>系统管理</td>
+<td>Linux 用户/组管理、ACL、inotify、setgid</td>
+<td>—</td>
+<td>24 节点用户权限隔离与共享目录自动恢复</td>
+</tr>
+<tr>
+<td>深度学习环境</td>
+<td>Miniconda</td>
+<td>Miniconda3-py39_24.1.2-0</td>
+<td>Python 环境管理（清华源镜像）</td>
+</tr>
+<tr>
+<td>深度学习框架</td>
+<td>PyTorch + Transformers + DeepSpeed</td>
+<td>统一环境预装</td>
+<td>学生 GPU 训练实验</td>
+</tr>
+<tr>
+<td>大规模训练</td>
+<td>Megatron-LM</td>
+<td>Fork</td>
+<td>预训练框架教学解析</td>
+</tr>
+<tr>
+<td>自动评测</td>
+<td>OpenJudge</td>
+<td>50+ 评测器</td>
+<td>编程类作业自动批改</td>
+</tr>
+<tr>
+<td>教学工具</td>
+<td>OpenReview、知网查重</td>
+<td>—</td>
+<td>论文评审、作业查重</td>
+</tr>
+<tr>
+<td>交互平台</td>
+<td>Streamlit</td>
+<td>—</td>
+<td>MetaEvaluation 平台复用（教学演示）</td>
+</tr>
+<tr>
+<td>文档</td>
+<td>Word / LaTeX / 飞书文档</td>
+<td>—</td>
+<td>AML-LLM 书籍编撰（初版 Word，重排 LaTeX）</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：05_AML2024助教.md（6.2 技术栈汇总）、Computing-Platform.md、OpenJudge.md</p>
+</blockquote>
+<h4 id="621-openjudge">6.2.1 OpenJudge 自动评测框架<a class="headerlink" href="#621-openjudge" title="Permanent link">&para;</a></h4>
+<p>课程作业中的编程类任务使用 OpenJudge 框架进行自动评测。OpenJudge 是一个开源的在线评测系统，支持多种编程语言和评测模式：</p>
+<table>
+<thead>
+<tr>
+<th><strong>特性</strong></th>
+<th><strong>说明</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>评测器数量</td>
+<td>50+ 种语言/框架评测器</td>
+</tr>
+<tr>
+<td>评测类别</td>
+<td>3 大类（标准输入输出、特殊判题、交互式评测）</td>
+</tr>
+<tr>
+<td>支持语言</td>
+<td>C/C++、Java、Python 等主流编程语言</td>
+</tr>
+<tr>
+<td>部署方式</td>
+<td>Web 服务 + 评测节点分布式架构</td>
+</tr>
+<tr>
+<td>核心功能</td>
+<td>自动编译、运行、比对输出、时间/内存限制</td>
+</tr>
+<tr>
+<td>本项目用途</td>
+<td>编程类作业自动批改、学生提交管理</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：OpenJudge.md（OpenJudge 框架说明）</p>
+</blockquote>
+<h4 id="622">6.2.2 算力平台环境配置<a class="headerlink" href="#622" title="Permanent link">&para;</a></h4>
+<p>课程自建算力平台为学生提供 GPU 训练环境，核心软件环境配置如下：</p>
+<table>
+<thead>
+<tr>
+<th><strong>组件</strong></th>
+<th><strong>版本/配置</strong></th>
+<th><strong>用途</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Miniconda</td>
+<td>Miniconda3-py39_24.1.2-0（清华源镜像）</td>
+<td>Python 环境管理</td>
+</tr>
+<tr>
+<td>tmux</td>
+<td>终端复用器</td>
+<td>SSH 断连后进程持续运行</td>
+</tr>
+<tr>
+<td>PyTorch</td>
+<td>统一环境预装</td>
+<td>深度学习框架</td>
+</tr>
+<tr>
+<td>Transformers</td>
+<td>统一环境预装</td>
+<td>HuggingFace 模型加载</td>
+</tr>
+<tr>
+<td>DeepSpeed</td>
+<td>统一环境预装</td>
+<td>分布式训练加速</td>
+</tr>
+<tr>
+<td>用户管理</td>
+<td>统一 <code>aml</code> 用户组 + GID 同步</td>
+<td>多用户权限隔离</td>
+</tr>
+<tr>
+<td>权限控制</td>
+<td>ACL + setgid + inotify 自动恢复</td>
+<td>共享目录权限管理</td>
+</tr>
+<tr>
+<td>存储配额</td>
+<td>单用户磁盘配额限制</td>
+<td>防止资源占满</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：Computing-Platform.md、05_AML2024助教.md（4.5 算力平台搭建章节）</p>
+</blockquote>
+<h3 id="623">6.2.3 技术栈演进<a class="headerlink" href="#623" title="Permanent link">&para;</a></h3>
+<p>项目从暑期课程筹备到学期中教学运行再到学期末成果沉淀，技术栈经历了三个阶段的演进：</p>
+<table>
+<thead>
+<tr>
+<th><strong>阶段</strong></th>
+<th><strong>使用技术</strong></th>
+<th><strong>选择理由</strong></th>
+<th><strong>替换原因</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>初期（2024.07–08，暑期筹备）</strong></td>
+<td>课程体系设计（17章大纲）+ 算力平台搭建（24节点GPU集群）+ Python批量脚本（用户管理）+ Linux系统管理（ACL/setgid/inotify）+ Miniconda环境（PyTorch+Transformers+DeepSpeed预装）</td>
+<td>课程启动前必须先完成基础设施——24节点GPU集群需要统一用户管理（UID/GID一致性）、权限隔离（ACL+setgid）、共享目录自愈（inotify）；Miniconda统一环境预装深度学习框架，避免学生各自装环境导致的版本混乱；Python批量脚本替代手动用户管理，支撑大规模学生账号开通</td>
+<td>基础设施搭建完成后，需要进入教学内容建设阶段——课件、作业、评测体系需要专门的技术栈；初期的系统管理脚本需要封装为更易用的教程文档，降低学生使用门槛</td>
+</tr>
+<tr>
+<td><strong>中期（2024.09–11，学期教学）</strong></td>
+<td>飞书文档协作（课件即活文档）+ OpenJudge自动评测（50+评测器，3大类评测模式）+ 阿里云OSS（课件PDF存储）+ React课程主页（aml2024projectweb）+ Cloudflare Pages（静态托管）+ Streamlit（教学演示）+ 知网查重/OpenReview互评</td>
+<td>教学运行期需要高效的内容协作和作业管理——飞书文档支持多助教实时协作编辑课件，确保GPT-4o等前沿发布后能立即更新；OpenJudge自动批改编程类作业，减少人工批改量；阿里云OSS解决课件大文件存储（Cloudflare Pages静态站点有大小限制）；React+Cloudflare Pages搭建课程主页作为对外展示窗口；知网查重和OpenReview互评确保学术诚信和评分公正</td>
+<td>学期中教学运行稳定后，需要将教学成果沉淀为可复用的资产——课程体系需要整理为书籍，算力平台管理经验需要文档化，作业和评测体系需要为后续学期复用；中期的临时性工具（如手动评分表）需要升级为标准化流程</td>
+</tr>
+<tr>
+<td><strong>后期（2024.11–12，成果沉淀）</strong></td>
+<td>AML-LLM书籍编撰（Word初版 → LaTeX重排，acl_latex模板）+ 课程主页正式上线（https://www.aminer.cn/aml2024）+ Computing Platform教程文档化 + 29个研究课题/10组结题汇报 + 成绩标准化评定（8% A/A+、34% A-、53% B、5% C/D）+ Megatron-LM代码解析（教学用）</td>
+<td>学期末需要将一学期的教学成果系统化沉淀——AML-LLM书籍将17章课件整理为可出版的教材（Word初版快速成型，LaTeX重排提升学术排版质量）；课程主页正式上线成为课程对外窗口；Computing Platform教程成为学生自助学习的标准文档；29个研究课题和10组结题汇报是学生研究能力培养的核心成果；标准化成绩评定确保公正透明；Megatron-LM代码解析为大规模预训练教学提供素材</td>
+<td>课程结束后，基础设施（24节点GPU集群）和课程体系（17章大纲）需要为后续学期和KEG实验室科研复用；AML-LLM书籍需要持续更新迭代；算力平台需要增加资源使用可视化面板等改进——这些是后续学期的工作方向</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：第4章方法描述、第6.1节代码仓库、第6.2节技术栈汇总、第6.2.1节OpenJudge自动评测框架、第6.2.2节算力平台环境配置、第7章成果与影响、第8章个人贡献、Computing-Platform.md、OpenJudge.md。技术栈演进的核心驱动力是"从基础设施到教学运行到成果沉淀"——初期解决"课能不能开"，中期解决"课能不能教好"，后期解决"教完能不能留下资产"。</p>
+</blockquote>
+<h3 id="63">6.3 关键工程挑战与解决方案<a class="headerlink" href="#63" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p><strong>多节点用户/组一致性</strong>：24 个子节点需要保持用户 UID 与组 GID 一致，否则 NFS 共享存储会出现权限错乱。
+   <strong>解决</strong>：编写 Python 批量脚本，在主节点统一管理用户清单，通过 SSH 批量执行 useradd/groupadd 命令，确保所有节点 UID/GID 对齐。</p>
+</li>
+<li>
+<p><strong>共享目录权限自动恢复</strong>：学生的 umask 设置不一致，导致在共享目录创建的文件可能无法被同组同学读取。
+   <strong>解决</strong>：使用 <code>inotifywait</code> 监控共享目录的 <code>create</code> 事件，触发脚本自动执行 <code>chgrp aml</code> 和 <code>chmod g+rw</code>，实现权限自愈。</p>
+</li>
+<li>
+<p><strong>课件大文件存储与分发</strong>：课程课件 PDF 体积较大，直接托管在 Cloudflare Pages 会超出静态站点限制。
+   <strong>解决</strong>：课件上传至阿里云 OSS，课程主页通过链接引用，兼顾访问速度与存储成本。</p>
+</li>
+<li>
+<p><strong>o1 作业参考程序实现</strong>：需要为学生提供 Self-Consistency、MCTS、微调脚本的可运行参考实现。
+   <strong>解决</strong>：复用阶段一数学推理项目中的 math 答案提取脚本与 MATH500 测试脚本，结合智谱开放平台 API 实现微调流程，整理为学生可运行的参考代码。</p>
+</li>
+<li>
+<p><strong>大规模作业批改与评分一致性</strong>：选课人数多，6 类作业的批改量巨大。
+   <strong>解决</strong>：制定详细评分细则（rubric），对客观题（Tokenization 实验、RAG 实现）采用自动测试脚本，对主观题（文献阅读、Proposal）采用结构化评分表，确保不同助教间评分一致。</p>
+</li>
+</ol>
+<hr />
+<h2 id="7-impact">7. 成果与影响（Impact）<a class="headerlink" href="#7-impact" title="Permanent link">&para;</a></h2>
+<h3 id="71">7.1 教学成果<a class="headerlink" href="#71" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>课程体系全面升级</strong>：17 章课程体系成为 AML 课程后续学期的基础框架，课件更新覆盖了 2024 年大模型领域的核心进展；</li>
+<li><strong>学生研究能力培养</strong>：29 个研究课题、10 组结题汇报，多名学生的大作业成果具备进一步发表论文的潜力；</li>
+<li><strong>成绩评定公正透明</strong>：标准化评分细则 + 知网查重 + OpenReview 互评，确保成绩分布合理（8% A/A+、34% A-、53% B 档、5% C/D）。</li>
+</ul>
+<h3 id="72">7.2 基础设施成果<a class="headerlink" href="#72" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>AML 算力平台</strong>：24 节点 GPU 集群 + 完整用户/权限管理系统，不仅服务于 AML2024 课程，还为 KEG 实验室后续课程与科研提供了可复用的基础设施；</li>
+<li><strong>课程主页</strong>：https://www.aminer.cn/aml2024 成为课程对外展示的窗口，课件、作业、日程全部在线公开；</li>
+<li><strong>Computing Platform 教程</strong>：成为学生自助学习 Linux/GPU 开发环境的标准文档。</li>
+</ul>
+<h3 id="73">7.3 学术与知识产出<a class="headerlink" href="#73" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>AML-LLM 书籍</strong>：580 页 / 26.3 万字初版完成，GitHub 开源（https://github.com/dujh22/AML-LLM），作者署名 Jie Tang + Jinhua Du + 其他合作者，具备正式出版潜力；</li>
+<li><strong>KEG 大模型训练营</strong>：担任讲师讲授深度学习基础，将课程内容转化为面向更广泛学员的培训材料；</li>
+<li><strong>特邀报告</strong>：成功邀请 CMU 李磊教授来校做特邀报告，拓展学生的学术视野；</li>
+<li><strong>两次论文会议场地主编</strong>：在课程期间承担两次学术论文会议的场地组织工作。</li>
+</ul>
+<h4 id="731">7.3.1 课程关键里程碑时间线<a class="headerlink" href="#731" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th><strong>时间</strong></th>
+<th><strong>里程碑</strong></th>
+<th><strong>关键产出/事件</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2024.08</td>
+<td>课程筹备启动</td>
+<td>课件更新、作业设计、算力平台搭建</td>
+</tr>
+<tr>
+<td>2024.09.05</td>
+<td>助教现场实操测试</td>
+<td>8.20 Math 数据标注、9.5 现场实操测试</td>
+</tr>
+<tr>
+<td>2024.09.12</td>
+<td>助教培训</td>
+<td>六教 6A203 新上岗助教培训"院系助教朋辈分享"</td>
+</tr>
+<tr>
+<td>2024.09 中</td>
+<td>课程开课</td>
+<td>17 章课程体系开始授课，基础篇 6 章</td>
+</tr>
+<tr>
+<td>2024.10</td>
+<td>第一次 Panel 讨论</td>
+<td>课程 Panel 组织</td>
+</tr>
+<tr>
+<td>2024.10 底</td>
+<td>杂务完成</td>
+<td>切割钢管程序、网络学堂、新质生产力 PPT</td>
+</tr>
+<tr>
+<td>2024.11</td>
+<td>第二次 Panel 讨论</td>
+<td>杜晋华主持（含完整筹备与主持稿）</td>
+</tr>
+<tr>
+<td>2024.11</td>
+<td>CMU 李磊教授特邀报告</td>
+<td>成功邀请并组织特邀报告</td>
+</tr>
+<tr>
+<td>2024.12</td>
+<td>Proposal 提交与互评</td>
+<td>OpenReview 平台，逐份审阅反馈</td>
+</tr>
+<tr>
+<td>2025.01</td>
+<td>结题汇报</td>
+<td>29 个研究课题、10 组结题汇报、海报展示</td>
+</tr>
+<tr>
+<td>2025.01</td>
+<td>成绩评定与录入</td>
+<td>8% A/A+、34% A-、53% B 档、5% C/D</td>
+</tr>
+<tr>
+<td>2025 持续</td>
+<td>AML-LLM 书籍编撰</td>
+<td>580 页/26.3 万字初版，GitHub 开源</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：023_已完成工作.md（飞书文档）、05_AML2024助教.md</p>
+</blockquote>
+<h3 id="74">7.4 个人能力成长<a class="headerlink" href="#74" title="Permanent link">&para;</a></h3>
+<ul>
+<li>从算法研究扩展到全栈教学系统工程（前端 + 运维 + 教学设计 + 书籍编撰）；</li>
+<li>锻炼了大规模学生管理与跨团队协作能力；</li>
+<li>积累了课程设计与教学法的系统经验，为后续可能的学术职业发展奠定基础。</li>
+</ul>
+<hr />
+<h2 id="8-my-contribution">8. 个人贡献（My Contribution）<a class="headerlink" href="#8-my-contribution" title="Permanent link">&para;</a></h2>
+<p><strong>角色：第一助教（负责人），直接对唐杰教授负责</strong></p>
+<p>具体完成的工作清单：</p>
+<p><strong>课程设计</strong>：
+1. 调研 UCB + 欧洲/新加坡方向顶尖高校课程，参与设计 17 章课程体系（基础篇 6 章 + 进阶篇 11 章）；
+2. 设计 6 类课程作业（文献阅读、Tokenization、Proposal、RLHF 多模态、RAG、大作业）；
+3. 特别设计 o1 作业（SC/MCTS/微调脚本）；
+4. 全面更新 Overview 与 Introduction-AGI 课件。</p>
+<p><strong>平台建设</strong>：
+5. 搭建课程主页（React + Cloudflare Pages + 阿里云 OSS）；
+6. 从零构建 AML 算力平台：主节点 + 24 个 GPU 子节点的用户管理系统（批量开通/删除、SSH 密钥、sudo、存储配额）；
+7. 设计并实现组权限管理（aml 组、GID 同步、setgid、ACL、inotify 权限自动恢复）；
+8. 部署公共环境（miniconda、tmux），编写 Python 批量运维脚本；
+9. 撰写 Computing Platform 教程文档。</p>
+<p><strong>教学支持</strong>：
+10. 作业查重系统对接（知网）、OpenReview 教程编写、Proposal 逐份评价与反馈；
+11. 组织两次 Panel，第二次 Panel 由本人主持（含筹备与主持稿）；
+12. 制定评分标准，完成全部成绩录入（8% A/A+、34% A-、53% B 档、5% C/D）；
+13. 结课筹备：29 个研究课题、10 组结题汇报、海报展示；
+14. Megatron 框架代码解析教学。</p>
+<p><strong>学术与外延</strong>：
+15. 编撰 AML-LLM 课程书籍初版（580 页 / 26.3 万字），GitHub 开源；
+16. 邀请 CMU 李磊教授做特邀报告；
+17. 担任 KEG 大模型训练营讲师（深度学习基础）；
+18. 两次论文会议场地主编。</p>
+<p><strong>团队分工</strong>：作为第一助教，统筹全部教学事务；其他助教协助作业批改与课堂管理，具体分工根据各助教时间与专长协调。</p>
+<hr />
+<h2 id="9-lessons-learned">9. 经验与反思（Lessons Learned）<a class="headerlink" href="#9-lessons-learned" title="Permanent link">&para;</a></h2>
+<h3 id="91">9.1 遇到的关键问题与解决方案<a class="headerlink" href="#91" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>课程内容更新速度极快——"课件即活文档"的协作模式</strong></li>
+<li><strong>具体故事</strong>：2024年是大模型领域进展最迅猛的一年，课程学期中多次发生"课件刚做好就过时"的情况——2024年5月GPT-4o发布，需要立即更新Introduction课件中的多模态能力部分；2024年9月OpenAI o1发布，需要在推理模型章节补充推理时计算（Test-Time Compute）的新范式；Qwen2-Math、DeepSeek-R1等模型的发布也需要及时纳入相关章节。如果采用传统的"课件定稿后不再修改"模式，课程内容会严重滞后于领域前沿。</li>
+<li><strong>解决方案</strong>：建立"课件即活文档"的理念，使用飞书文档进行多助教实时协作编辑，确保任何助教都能随时更新课件内容；将前沿动态纳入每节课的"最新进展"环节，用5-10分钟介绍本周领域内的重要发布；课件版本管理通过飞书文档的历史版本功能实现，重要更新保留修改记录。</li>
+<li>
+<p><strong>关键洞察</strong>：大模型时代的课程教学必须采用"活文档"模式，传统的"学期初定稿"模式无法跟上领域发展速度。</p>
+</li>
+<li>
+<p><strong>算力平台初期大量重复性答疑——从"一对一"到"自助+集中"的转型</strong></p>
+</li>
+<li><strong>具体故事</strong>：算力平台上线初期，学生因不熟悉Linux环境导致大量重复性答疑——每天收到数十条类似问题："SSH连接超时怎么办""conda环境怎么创建""GPU被占了怎么看""nvidia-smi显示No running processes但显存满了"。第一助教每天花费2-3小时回复这些重复性问题，严重影响了课件准备和作业设计等核心工作。这些问题的特点是：答案标准、可文档化、学生看教程就能解决，但学生倾向于直接问助教而非自己查文档。</li>
+<li><strong>解决方案</strong>：（1）提前编写详尽的 Computing Platform 教程，覆盖SSH连接、conda环境、GPU使用、常见错误排查等全部高频问题，在课程第一周就组织算力平台使用培训（1小时集中讲解+实操）；（2）建立常见问题FAQ文档，将重复性问题的标准答案整理为可搜索的文档；（3）将答疑模式从"一对一私聊"转为"群内公开提问+助教集中回答"，让一个问题的答案惠及所有学生；（4）教程中强调 <code>nvidia-smi</code> 监控与 <code>kill</code> 进程的操作，培养学生自助排查能力。转型后，重复性答疑量下降约70%。</li>
+<li>
+<p><strong>关键洞察</strong>：大规模教学中，助教的时间是最稀缺的资源，任何可文档化的重复性问题都应该通过"教程+FAQ+集中培训"解决，而非一对一答疑。</p>
+</li>
+<li>
+<p><strong>多用户共享GPU集群的资源争抢与显存泄漏——从"人治"到"制度+监控"</strong></p>
+</li>
+<li><strong>具体故事</strong>：24节点GPU集群上线后，随着学生作业和大作业项目的推进，资源争抢和显存泄漏问题频发——（1）<strong>资源争抢</strong>：部分学生同时启动多个GPU进程，占用大量显存，导致其他学生无法使用；高峰期出现"一个学生占8卡，其他学生排队"的情况；（2）<strong>显存泄漏</strong>：学生训练程序崩溃或SSH断连后，GPU进程没有正常退出，显存被僵尸进程占用，<code>nvidia-smi</code>显示显存已满但"No running processes"，学生以为GPU坏了；（3）<strong>磁盘配额超限</strong>：部分学生的数据集和模型checkpoint占用大量磁盘空间，导致共享存储满了影响所有用户。</li>
+<li><strong>解决方案</strong>：（1）制定GPU使用规范，限制单用户最大并发进程数（如单用户最多同时使用4卡），在教程中明确标注；（2）编写GPU状态监控脚本，定期扫描各节点的GPU使用情况，识别僵尸进程并自动清理（或通知用户手动清理）；（3）设置单用户磁盘配额限制，防止单个用户占满共享存储；（4）在教程中强调 <code>nvidia-smi</code> 监控、<code>fuser -v /dev/nvidia*</code> 查找僵尸进程、<code>kill -9</code> 强制结束进程的操作方法；（5）使用 <code>tmux</code> 终端复用器，确保SSH断连后训练进程持续运行，减少因断连导致的进程异常。</li>
+<li>
+<p><strong>关键洞察</strong>：多用户共享集群的管理不能靠"自觉"，必须有制度（使用规范）+ 技术（监控脚本+配额限制）+ 教育（教程培训）三重保障。</p>
+</li>
+<li>
+<p><strong>大规模作业批改与评分一致性——标准化rubric + 自动化的混合模式</strong></p>
+</li>
+<li><strong>具体故事</strong>：AML2024课程选课人数多，6类作业（Tokenization实验、RAG实现、文献阅读、Proposal、o1复现、大作业）的批改量巨大。初期采用"各助教独立批改"模式，发现评分一致性问题严重——同一道主观题，不同助教给出的分数可能相差2个等级（如B+ vs A-），学生对评分公平性提出质疑。客观题（如编程实验）的批改也存在"手动运行测试用例"的效率问题，一个助教批改30份编程作业需要数小时。</li>
+<li><strong>解决方案</strong>：（1）制定详细的评分细则（rubric），每道题都明确评分维度、各维度的分值和评分标准，主观题（文献阅读、Proposal）采用结构化评分表（如"创新性30%+技术深度30%+写作质量20%+参考文献20%+presentation10%"），确保不同助教间评分一致；（2）客观题（Tokenization实验、RAG实现）采用自动测试脚本，编写标准化的test case，自动运行并比对输出，减少人工批改量；（3）编程类作业使用OpenJudge框架（50+评测器，3大类评测模式）进行自动评测；（4）成绩分布控制：最终成绩分布为8% A/A+、34% A-、53% B档、5% C/D，确保分布合理；（5）知网查重确保学术诚信，OpenReview互评增加学生参与感。</li>
+<li><strong>关键洞察</strong>：大规模教学的评分管理核心是"标准化+自动化"——任何可以标准化的评分维度都应该写进rubric，任何可以自动化的批改环节都应该用脚本/系统替代人工。</li>
+</ol>
+<h3 id="92">9.2 可复用方法论<a class="headerlink" href="#92" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>"基础设施先行"的教学筹备方法论</strong></li>
+<li><strong>方法论描述</strong>：在课程开始前完成算力平台、课程主页、教程文档、作业体系等全部基础设施的搭建，比学期中边教边补要高效得多。第一周的基础设施投入会在整个学期持续产生回报——稳定的平台减少技术故障，完善的教程减少重复性答疑，标准化的作业体系减少批改混乱。基础设施的质量直接决定了课程运行的顺畅程度。</li>
+<li><strong>迁移场景</strong>：任何大规模教学/培训项目——课程、训练营、工作坊等，都应在启动前完成基础设施建设。</li>
+<li>
+<p><strong>本项目验证</strong>：暑期（2024.07-08）完成24节点GPU集群搭建、用户管理系统、Miniconda统一环境、课程主页、Computing Platform教程等全部基础设施，学期中（2024.09-12）课程运行顺畅，基础设施投入在整个学期持续产生回报。</p>
+</li>
+<li>
+<p><strong>"标准化+自动化"的大规模教学管理方法论</strong></p>
+</li>
+<li><strong>方法论描述</strong>：大规模教学中，任何可以标准化的环节都应该标准化（评分rubric、作业模板、教程文档），任何可以自动化的操作都应该自动化（用户管理批量脚本、客观题自动批改、GPU状态监控）。标准化确保一致性（不同助教间评分一致、不同学生间体验一致），自动化提升效率（减少重复性人工劳动）。两者结合是大规模教学的关键成功因素。</li>
+<li><strong>迁移场景</strong>：任何需要管理大量用户/作业/评分的场景——教学、培训、在线课程、数据标注团队管理等。</li>
+<li>
+<p><strong>本项目验证</strong>：评分细则标准化（6类作业均有详细rubric）、客观题自动批改（测试脚本+OpenJudge）、用户管理批量脚本化（Python+SSH批量执行）、GPU监控自动化（状态扫描+僵尸进程清理），支撑了大规模课程的顺畅运行。</p>
+</li>
+<li>
+<p><strong>"文档即产品"的教学文档方法论</strong></p>
+</li>
+<li><strong>方法论描述</strong>：教学文档（Computing Platform教程、作业说明、评分细则、FAQ）应该像产品文档一样精心撰写——结构清晰、步骤详细、覆盖常见问题、可搜索可索引。学生的自助能力越强，助教的重复性负担越轻。文档的质量直接决定了学生的自助率和助教的工作效率。好的文档应该让学生"遇到问题先查文档，查不到再问助教"。</li>
+<li><strong>迁移场景</strong>：任何需要用户自助服务的场景——软件产品文档、API文档、运维手册、新员工onboarding文档等。</li>
+<li>
+<p><strong>本项目验证</strong>：Computing Platform教程覆盖SSH连接、conda环境、GPU使用、常见错误排查等全部高频问题，第一周集中培训后，重复性答疑量下降约70%；作业说明和评分细则标准化后，学生对评分的质疑显著减少。</p>
+</li>
+<li>
+<p><strong>"活文档"模式的前沿课程内容管理方法论</strong></p>
+</li>
+<li><strong>方法论描述</strong>：大模型等快速发展领域的课程教学，必须采用"课件即活文档"模式——使用支持实时协作的在线文档（如飞书文档），课件内容随时更新，每节课设置"最新进展"环节介绍领域前沿，重要更新保留版本记录。传统的"学期初定稿、学期中不修改"模式无法跟上领域发展速度，会导致课程内容严重滞后。</li>
+<li><strong>迁移场景</strong>：任何快速发展领域的课程/培训/知识管理——AI、生物技术、新能源等前沿领域。</li>
+<li><strong>本项目验证</strong>：2024年学期中GPT-4o（5月）、o1（9月）等重要模型发布，通过飞书文档协作模式及时更新课件，每节课"最新进展"环节确保学生了解领域前沿。</li>
+</ol>
+<h3 id="93">9.3 踩坑与避坑指南<a class="headerlink" href="#93" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>坑点</strong></th>
+<th><strong>具体表现</strong></th>
+<th><strong>解决方案</strong></th>
+<th><strong>避坑建议</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>课件刚做好就过时</strong></td>
+<td>2024年GPT-4o（5月）、o1（9月）等重要模型在学期中发布，传统"学期初定稿"模式导致课件内容严重滞后</td>
+<td>"课件即活文档"模式：飞书文档多助教实时协作编辑，每节课"最新进展"环节，版本历史记录</td>
+<td>前沿领域课程不要追求"定稿"，采用在线协作文档随时更新；每节课预留5-10分钟介绍本周领域前沿；重要更新保留修改记录便于追溯</td>
+</tr>
+<tr>
+<td><strong>重复性答疑消耗助教大量时间</strong></td>
+<td>算力平台上线初期，每天收到数十条"SSH连接超时""conda怎么创建""GPU被占了"等重复性问题，第一助教每天花2-3小时回复</td>
+<td>详尽Computing Platform教程 + 第一周集中培训 + FAQ文档 + 群内公开提问（一对一→群内），转型后重复性答疑量下降约70%</td>
+<td>课程启动前预判学生高频问题，提前写好教程；第一周必须组织平台使用培训（集中讲解+实操）；答疑从私聊转群内，一个答案惠及所有人；教程质量决定学生自助率</td>
+</tr>
+<tr>
+<td><strong>多用户GPU集群资源争抢与显存泄漏</strong></td>
+<td>部分学生同时占多卡导致他人无法使用；程序崩溃/SSH断连后僵尸进程占显存；单用户数据集占满共享存储</td>
+<td>GPU使用规范（单用户最大并发数）+ GPU状态监控脚本（自动清理僵尸进程）+ 单用户磁盘配额 + tmux终端复用（断连后进程持续运行）+ 教程强调nvidia-smi/kill操作</td>
+<td>多用户共享集群管理不能靠"自觉"，必须制度+技术+教育三重保障；上线前就设置磁盘配额；监控脚本定期扫描僵尸进程；教学生用tmux避免SSH断连导致的进程异常</td>
+</tr>
+<tr>
+<td><strong>多节点UID/GID不一致导致NFS权限错乱</strong></td>
+<td>24个子节点用户UID/GID不一致，NFS共享存储出现权限错乱——学生在A节点创建的文件在B节点无法访问</td>
+<td>Python批量脚本：主节点统一管理用户清单，SSH批量执行useradd/groupadd，确保所有节点UID/GID对齐</td>
+<td>多节点集群用户管理必须中心化——主节点统一管理用户清单，批量脚本同步到所有节点；绝对不能让各节点独立创建用户；NFS共享存储对UID/GID一致性要求极高</td>
+</tr>
+<tr>
+<td><strong>共享目录权限因umask不一致而混乱</strong></td>
+<td>学生umask设置不一致（有的022有的077），在共享目录创建的文件可能无法被同组同学读取，需要助教手动chmod</td>
+<td>inotifywait监控共享目录create事件，触发脚本自动执行chgrp aml和chmod g+rw，实现权限自愈</td>
+<td>共享目录权限管理不要依赖用户umask一致性（无法控制），用inotify事件驱动的自动权限设置是最可靠的方案；setgid位确保新文件继承组归属；ACL提供更细粒度的权限控制</td>
+</tr>
+<tr>
+<td><strong>不同助教评分不一致引发学生质疑</strong></td>
+<td>同一道主观题不同助教评分相差2个等级（B+ vs A-），学生对评分公平性质疑</td>
+<td>详细评分rubric（每道题明确评分维度+分值+标准）+ 主观题结构化评分表 + 客观题自动测试脚本 + OpenJudge自动评测 + 成绩分布控制</td>
+<td>大规模课程评分必须标准化——每道作业都要有书面rubric，不能靠助教"凭感觉"打分；主观题用结构化评分表减少自由裁量；客观题尽量自动化批改；定期抽检不同助教的评分一致性</td>
+</tr>
+<tr>
+<td><strong>课件大文件超出静态站点存储限制</strong></td>
+<td>课程课件PDF体积较大（含大量图片和公式），直接托管在Cloudflare Pages超出静态站点大小限制</td>
+<td>课件上传阿里云OSS，课程主页通过链接引用，兼顾访问速度（CDN加速）与存储成本（OSS按量付费）</td>
+<td>静态网站托管服务通常有存储大小限制，大文件（课件PDF、视频等）应使用对象存储（OSS/S3）+ CDN，网站只存HTML/CSS/JS和小图片；提前规划文件存储架构</td>
+</tr>
+</tbody>
+</table>
+<h3 id="94">9.4 如果重来会怎么做<a class="headerlink" href="#94" title="Permanent link">&para;</a></h3>
+<ul>
+<li>会在学期初就建立<strong>助教轮值制度</strong>，明确每周值班助教，避免第一助教成为所有问题的单点瓶颈；</li>
+<li>会更早引入<strong>自动评测系统</strong>（如基于 Docker 的作业自动 grading），减少人工批改量；</li>
+<li>会将 AML-LLM 书籍的编撰与课程进度更紧密地结合——每章课件定稿后立即整理为书籍章节，而非学期末集中突击（导致初版格式较粗糙）；</li>
+<li>会为算力平台增加<strong>资源使用可视化面板</strong>（GPU 利用率、存储配额、节点负载），让学生与助教都能直观看到集群状态。</li>
+</ul>
+<hr />
+<h3 id="_5">常见问题与解答<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<p><strong>Q1: 作为唐杰老师《高级机器学习》的第一助教，最核心的工作是什么？和普通助教有什么区别？</strong>
+A: 第一助教的核心工作是<strong>课程全链路的统筹与基础设施建设</strong>，而非仅仅批改作业。具体区别体现在三个层面：（1）<strong>课程体系设计</strong>——参与17章课程大纲的设计与更新，确保课件覆盖2024年大模型领域的核心进展（GPT-4o、o1、Qwen2-Math等），普通助教通常只负责特定章节的助教工作；（2）<strong>基础设施建设</strong>——从零搭建24节点GPU算力集群（用户管理、权限隔离、共享目录自愈、统一深度学习环境）、课程主页（React+Cloudflare Pages）、OpenJudge自动评测系统，这些基础设施不仅服务于AML2024课程，还为KEG实验室后续课程与科研提供可复用的平台，普通助教通常不涉及基础设施建设；（3）<strong>教学事务统筹</strong>——统筹6类作业的设计与批改、29个研究课题的指导、10组结题汇报的组织、成绩评定的标准化（8% A/A+、34% A-、53% B、5% C/D），以及AML-LLM书籍的编撰，普通助教通常只负责作业批改和课堂管理。第一助教的角色更接近"课程运营负责人"，需要同时具备技术能力（算力平台搭建）、教学能力（课程设计与作业批改）和组织能力（统筹多助教与学生事务）。</p>
+<p><strong>Q2: 24节点GPU算力集群的搭建中，最大的技术挑战是什么？如何解决的？</strong>
+A: 最大的技术挑战是<strong>多节点用户/权限一致性与共享目录管理</strong>，具体包含三个子问题：（1）<strong>多节点UID/GID一致性</strong>——24个子节点需要保持用户UID与组GID完全一致，否则NFS共享存储会出现权限错乱（学生在A节点创建的文件在B节点显示为其他用户的文件，无法访问）。解决方案是编写Python批量脚本，在主节点统一管理用户清单，通过SSH批量执行useradd/groupadd命令，确保所有节点UID/GID对齐；（2）<strong>共享目录权限自动恢复</strong>——学生的umask设置不一致（有的022有的077），导致在共享目录创建的文件可能无法被同组同学读取，需要助教手动chmod。解决方案是使用<code>inotifywait</code>监控共享目录的<code>create</code>事件，触发脚本自动执行<code>chgrp aml</code>和<code>chmod g+rw</code>，实现权限自愈，无需人工干预；（3）<strong>资源争抢与显存泄漏</strong>——部分学生同时占多卡导致他人无法使用，程序崩溃/SSH断连后僵尸进程占显存。解决方案是制定GPU使用规范（单用户最大并发数）+ GPU状态监控脚本（自动清理僵尸进程）+ 单用户磁盘配额 + tmux终端复用（断连后进程持续运行）。这些挑战的核心是"多用户共享环境的管理不能靠自觉，必须有制度+技术+教育三重保障"。</p>
+<p><strong>Q3: 大规模课程的作业批改如何保证评分一致性？6类作业的批改量是怎么处理的？</strong>
+A: 保证评分一致性的核心是<strong>"标准化rubric + 自动化批改 + 结构化评分表"</strong>的混合模式。具体措施：（1）<strong>详细评分rubric</strong>——每道作业题都明确评分维度、各维度的分值和评分标准，不能让助教"凭感觉"打分。例如主观题（文献阅读、Proposal）采用结构化评分表："创新性30%+技术深度30%+写作质量20%+参考文献20%+presentation10%"，每个维度都有明确的评分描述；（2）<strong>客观题自动化</strong>——Tokenization实验、RAG实现等客观题采用自动测试脚本，编写标准化test case自动运行并比对输出；编程类作业使用OpenJudge框架（50+评测器，支持标准输入输出、特殊判题、交互式评测3大类模式），自动编译、运行、比对输出、检查时间/内存限制；（3）<strong>主观题结构化</strong>——文献阅读、Proposal等主观题使用结构化评分表，不同助教按相同维度打分，减少自由裁量；（4）<strong>成绩分布控制</strong>——最终成绩分布为8% A/A+、34% A-、53% B档、5% C/D，确保分布合理，避免某助教打分过松或过严导致的分布偏移；（5）<strong>学术诚信保障</strong>——知网查重确保作业原创性，OpenReview互评增加学生参与感和多视角反馈。通过这些措施，即使选课人数多、6类作业批改量巨大，仍能保证不同助教间的评分一致性。</p>
+<p><strong>Q4: AML-LLM书籍编撰的过程是怎样的？为什么要从Word初版转为LaTeX重排？</strong>
+A: AML-LLM书籍编撰是将一学期的17章课件整理为可出版教材的过程，分为两个阶段：（1）<strong>Word初版</strong>——学期末集中突击，将各章课件的飞书文档内容整理为Word格式，快速成型。Word的优势是编辑速度快、格式调整直观，适合初版快速汇总；但劣势是学术排版质量有限（公式排版、参考文献管理、章节交叉引用等功能不如LaTeX专业），且初版因集中突击导致格式较粗糙（各章格式不统一、公式排版不一致、参考文献格式混乱）；（2）<strong>LaTeX重排</strong>——使用ACL LaTeX模板（acl_latex_ch.tex / acl_latex_raw.tex，中英文双版）对Word初版进行专业重排。LaTeX的优势是学术排版质量高（公式自动编号、参考文献BibTeX管理、章节交叉引用自动更新、版式统一），适合正式出版和学术交流；中英文双版支持国内外读者。从Word转为LaTeX的核心原因是<strong>提升学术排版质量和出版规范性</strong>——作为面向高级机器学习课程的教材，需要达到可出版的专业排版标准，Word初版的格式质量不足以满足这一要求。这一过程也带来了教训：如果重来会将书籍编撰与课程进度更紧密地结合——每章课件定稿后立即整理为LaTeX书籍章节，而非学期末集中突击，避免初版格式粗糙的问题。</p>
+<p><strong>Q5: 算力平台的Computing Platform教程为什么如此重要？它如何将助教从重复性答疑中解放出来？</strong>
+A: Computing Platform教程的重要性体现在<strong>它是学生自助能力的基础，直接决定了助教的重复性负担</strong>。算力平台上线初期，学生因不熟悉Linux环境导致大量重复性答疑——每天收到数十条"SSH连接超时怎么办""conda环境怎么创建""GPU被占了怎么看""nvidia-smi显示No running processes但显存满了"等类似问题，第一助教每天花费2-3小时回复这些重复性问题，严重影响课件准备和作业设计等核心工作。这些问题的特点是：答案标准、可文档化、学生看教程就能解决，但学生倾向于直接问助教而非自己查文档。Computing Platform教程通过以下方式将助教从重复性答疑中解放出来：（1）<strong>详尽覆盖</strong>——教程覆盖SSH连接、conda环境创建与管理、GPU使用与监控、PyTorch/Transformers/DeepSpeed环境使用、常见错误排查（包括"nvidia-smi显示显存满但No running processes"的僵尸进程排查方法）等全部高频问题；（2）<strong>第一周集中培训</strong>——课程第一周组织1小时算力平台使用培训（集中讲解+实操），确保所有学生在正式使用前就掌握基本操作；（3）<strong>FAQ文档</strong>——建立常见问题FAQ文档，将重复性问题的标准答案整理为可搜索的文档；（4）<strong>答疑模式转型</strong>——从"一对一私聊"转为"群内公开提问+助教集中回答"，让一个问题的答案惠及所有学生。转型后，重复性答疑量下降约70%，助教可以将时间投入到课程设计、作业批改、学生研究指导等高价值工作中。这一经验的核心启示是："文档即产品"——教学文档应该像产品文档一样精心撰写，学生的自助能力越强，助教的重复性负担越轻。</p>
+<hr />
+<h2 id="10-references">10. 文件索引（References）<a class="headerlink" href="#10-references" title="Permanent link">&para;</a></h2>
+<h3 id="_6">飞书文档<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<ul>
+<li>助教文件夹（总入口）：https://zhipu-ai.feishu.cn/drive/folder/ExcYfGHU1lICN5d3vSZcnEWZnYd</li>
+<li>AML2024 助教（主文档）：https://zhipu-ai.feishu.cn/docx/Buv4dv7zHoIp7fxyIQ6ciwWnnDg</li>
+<li>AML2024 by jinhua：https://zhipu-ai.feishu.cn/docx/VRaldfGeZoqmT8x6yXAcAuI6nKd</li>
+<li>AML 算力平台：https://zhipu-ai.feishu.cn/docx/TMIldw3jyok2nUxU3WBcDPAunch</li>
+<li>Computing Platform 教程 Tutorial：https://zhipu-ai.feishu.cn/docx/YheDdE5Nloa0EYxIJRsc2ds2nCF</li>
+<li>结课筹备：https://zhipu-ai.feishu.cn/docx/JCiJdQ906oCfSuxYNkScggUjn9g</li>
+<li>第二次 Panel 筹备（主持稿）：https://zhipu-ai.feishu.cn/docx/WEcWdQgOvoqbz8xLwn1c9Th9nze</li>
+<li>KEG 大模型训练营：https://zhipu-ai.feishu.cn/docx/YJ7TdTC81oy43cxeMgUcQEG1nQe</li>
+<li>算力平台使用说明：https://zhipu-ai.feishu.cn/docx/KThKdkmVqo3RlGxkZfWc1zxunHf</li>
+<li>算力平台使用情况：https://zhipu-ai.feishu.cn/docx/PXhuduWCroGo6cxKqoTcV9ORnAh</li>
+<li>Megatron 框架代码解析：https://zhipu-ai.feishu.cn/docx/AyLbdukzPo5CHwxXnxXcnEUsnde（缓存文件 183_Megatron框架代码解析.md）</li>
+<li>2024.8–2025.1 工作流水：https://zhipu-ai.feishu.cn/docx/QXoMdu6d8o3hLixjOLucRUWenug</li>
+</ul>
+<h3 id="github">GitHub 仓库<a class="headerlink" href="#github" title="Permanent link">&para;</a></h3>
+<ul>
+<li>AML-LLM 书籍（公开）：https://github.com/dujh22/AML-LLM</li>
+<li>aml2024projectweb 课程主页（公开）：https://github.com/dujh22/aml2024projectweb</li>
+<li>Computing-Platform 算力平台脚本（私有）：https://github.com/dujh22/Computing-Platform</li>
+<li>aml-2024-fall-website（Fork 参考）：https://github.com/dujh22/aml-2024-fall-website</li>
+<li>Megatron-LM（Fork，教学解析）：https://github.com/dujh22/Megatron-LM</li>
+</ul>
+<h3 id="_7">课程资源<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<ul>
+<li>课程主页：https://www.aminer.cn/aml2024</li>
+<li>课程主页（历史版本）：https://old.aminer.cn/aml2024</li>
+<li>AML-LLM 书籍 PDF：https://zhipu-ai.feishu.cn/file/SAMLbcxp9oQPMBxx5ZGcnCsMnod</li>
+<li>课程资源与共建（腾讯文档）：https://docs.qq.com/doc/DUFFycm9oQ1Z5aEVW</li>
+</ul>
+<h3 id="_8">参考文献与教学资料<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Stanford CS336（Language Models from Scratch, 2025 春）：https://stanford-cs336.github.io/spring2025/</li>
+<li>唐杰教授个人主页（引用 43,061 / h-index 103，课程 Overview 课件数据）</li>
+<li>SuperBench 2024.3 评测数据（Introduction-AGI 课件引用）</li>
+<li>GLM-4-9B 开源模型（课程教学案例）</li>
+<li>GPT-4o（课程教学案例，2024.5 发布）</li>
+</ul>
+<h3 id="_9">其他资源<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
+<ul>
+<li>个人网站：https://dujh22.github.io/Dujinhua_wiki/</li>
+<li>OpenReview 平台（课程 Proposal 互评使用）</li>
+<li>知网查重系统（课程作业学术不端检测）</li>
+</ul>
+<hr />
+<h2 id="11">11. 转正答辩证据卡<a class="headerlink" href="#11" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>本章节为转正答辩专用证据整理，基于智谱转正制度（ZP-RL-009）与公司文化2.0（Think Big / Deliver Solid / Scale Stable）标准整理。</p>
+</blockquote>
+<h3 id="111">11.1 目标基线<a class="headerlink" href="#111" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>部门目标(O)</strong>：支撑唐杰教授研究生核心课程《高级机器学习》2024 秋季学期的全面转型——从传统机器学习向大语言模型（LLM）全面升级，确保课程内容时效性、实践教学质量和规模化教学效率。</li>
+<li><strong>个人KR</strong>：（1）设计 17 章课程体系与 6 类作业，全面更新课件；（2）搭建课程主页与 AML 算力平台（24 个 GPU 子节点）；（3）完成全学期教学支持（Panel 组织、评分、结课筹备）；（4）编撰 AML-LLM 课程书籍。</li>
+<li><strong>完成率</strong>：100%——17 章课程体系完成，6 类作业设计完成，课件全面更新，课程主页上线，24 节点算力平台从零搭建并稳定运行，2 次 Panel 组织完成（第二次本人主持），全部成绩评定录入，580 页/26.3 万字书籍初版完成并开源，CMU 李磊教授特邀报告邀请成功，KEG 训练营讲师任务完成。</li>
+</ul>
+<h3 id="112">11.2 量化结果<a class="headerlink" href="#112" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>维度</strong></th>
+<th><strong>具体数据</strong></th>
+<th><strong>来源</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>课程体系</td>
+<td>17 章（基础篇 6 章 + 进阶篇 11 章），调研Stanford/MIT/CMU/UCB等全球顶尖高校课程（本人负责UCB+欧洲/新加坡方向）</td>
+<td>第1章/第4章</td>
+</tr>
+<tr>
+<td>学生规模</td>
+<td>130+ 名选课学生，22 组大作业团队</td>
+<td>第1章/第4章</td>
+</tr>
+<tr>
+<td>作业设计</td>
+<td>6 类（文献阅读、Tokenization、Proposal、RLHF 多模态、RAG、大作业）+ 特别设计 o1 作业，6 次作业全批全改</td>
+<td>第4章</td>
+</tr>
+<tr>
+<td>实验课</td>
+<td>2 次实验课（RAG检索增强生成实操 + Agent智能体实操），含完整实验指南和代码模板</td>
+<td>第4章</td>
+</tr>
+<tr>
+<td>算力平台</td>
+<td>主节点 + h9–h32 共 24 个 GPU 子节点集群</td>
+<td>第1章/第4章</td>
+</tr>
+<tr>
+<td>用户管理</td>
+<td>批量开通/删除学生账号、SSH 密钥管理、sudo 权限控制、存储配额</td>
+<td>第4章</td>
+</tr>
+<tr>
+<td>组权限管理</td>
+<td>aml 组 + GID 同步 + setgid + ACL + inotify 权限自动恢复（5 重机制）</td>
+<td>第4章</td>
+</tr>
+<tr>
+<td>研究课题</td>
+<td>29 个</td>
+<td>第1章/第5章</td>
+</tr>
+<tr>
+<td>结题汇报</td>
+<td>10 组</td>
+<td>第1章/第5章</td>
+</tr>
+<tr>
+<td>Panel 次数</td>
+<td>2 次（第二次由杜晋华主持）</td>
+<td>第1章/第5章</td>
+</tr>
+<tr>
+<td>成绩分布</td>
+<td>8% A/A+、34% A-、53% B-/B/B+、5% C/D</td>
+<td>第1章/第5章</td>
+</tr>
+<tr>
+<td>书籍编撰</td>
+<td>Word 初版 580 页，约 26.3 万字，13+ 章，GitHub 开源，作者署名Jie Tang + Jinhua Du + 其他合作者</td>
+<td>第1章/第5章</td>
+</tr>
+<tr>
+<td>课程主页</td>
+<td>React + Cloudflare Pages + 阿里云 OSS，https://www.aminer.cn/aml2024，课件/作业/日程全部在线公开</td>
+<td>第4章</td>
+</tr>
+<tr>
+<td>特邀报告</td>
+<td>邀请 CMU 李磊教授</td>
+<td>第1章/第7章</td>
+</tr>
+<tr>
+<td>训练营讲师</td>
+<td>KEG 大模型训练营，讲授深度学习基础</td>
+<td>第1章/第7章</td>
+</tr>
+<tr>
+<td>论文会议场地主编</td>
+<td>2 次</td>
+<td>第1章/第7章</td>
+</tr>
+<tr>
+<td>课程周期</td>
+<td>2024.9–2025.1（约 17 周）</td>
+<td>第5章</td>
+</tr>
+<tr>
+<td>助教角色</td>
+<td>第一助教（唐杰教授课程），带领其他助教完成教学执行全流程</td>
+<td>第1章</td>
+</tr>
+</tbody>
+</table>
+<h3 id="113">11.3 公司层面贡献<a class="headerlink" href="#113" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>人才培养</strong>：作为唐杰教授课程第一助教，培养了一批掌握大模型全技术栈的研究生（130+名学生、29 个研究课题、10 组结题汇报、22组大作业团队），其中多名学生的大作业成果具备进一步发表论文的潜力，为智谱及行业输送了高质量人才储备；课程成绩分布合理（8% A/A+、34% A-、53% B-/B/B+、5% C/D），体现了严格的教学标准。</li>
+<li><strong>基础设施复用</strong>：AML 算力平台（24 节点 GPU 集群 + 完整用户/权限管理系统）不仅服务于 AML2024 课程，还为 KEG 实验室后续课程与科研提供了可复用的基础设施；5重组权限管理机制（GID同步/setgid/ACL/inotify权限自动恢复）解决了多用户共享GPU集群的权限管理难题；Computing Platform 教程成为学生自助学习 Linux/GPU 开发环境的标准文档。</li>
+<li><strong>知识沉淀</strong>：AML-LLM 课程书籍（580 页/26.3 万字/13+章）GitHub 开源，作者署名 Jie Tang + Jinhua Du + 其他合作者，具备正式出版潜力，成为大模型教学领域的系统性知识沉淀；课程主页（https://www.aminer.cn/aml2024）对外公开，课件、作业、日程全部在线公开。</li>
+<li><strong>品牌影响力</strong>：课程主页展示了清华大学与智谱在大模型教学领域的领先地位；邀请 CMU 李磊教授做特邀报告，拓展了学术合作网络；KEG大模型训练营讲师经历扩大了智谱在AI教育领域的影响力。</li>
+<li><strong>跨团队协作</strong>：作为第一助教带领其他助教团队完成17周教学执行全流程；与唐杰教授密切协作确定课程体系和作业设计；与刘德兵、胡心方等合作者共同完成580页教材编撰；与CMU李磊教授等学术嘉宾协作组织特邀报告。</li>
+</ul>
+<h3 id="114">11.4 专业影响力<a class="headerlink" href="#114" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>课程体系设计</strong>：调研 Stanford/MIT/CMU/UCB 等全球顶尖高校相关课程（本人负责 UCB + 欧洲/新加坡方向），设计覆盖基础篇（Bigram/Micrograd/N-gram/Attention/Transformer/Tokenization）与进阶篇（优化/Deepspeed/数据集/推理/微调/部署/多模态/Agent/安全评估/生成模型/前沿探讨）的 17 章课程体系，成为 AML 课程后续学期的基础框架；特别设计o1作业，紧跟推理模型前沿。</li>
+<li><strong>工程能力</strong>：从零构建 24 节点 GPU 算力平台，实现用户管理（批量开通/SSH 密钥/sudo/存储配额）、组权限管理（GID 同步/setgid/ACL/inotify 权限自动恢复5重机制）、公共环境部署（miniconda/tmux）的全栈运维能力；搭建 React + Cloudflare Pages + 阿里云 OSS 课程主页；Computing Platform教程和OpenReview教程成为学生自助学习的标准文档。</li>
+<li><strong>文档沉淀</strong>：AML-LLM 书籍（580 页/26.3 万字/13+章，GitHub 开源，作者署名Jie Tang + Jinhua Du + 其他合作者）、Computing Platform 教程、OpenReview 教程、评分标准细则、实验课指南（RAG/Agent）、作业批改Rubric、FAQ文档等全套教学文档；2次论文会议场地主编经验。</li>
+<li><strong>被依赖情况</strong>：17章课程体系成为AML课程后续学期的基础框架；24节点GPU算力平台为KEG实验室后续课程与科研提供基础设施；AML-LLM书籍GitHub开源后可被多届学生和社会读者使用；Computing Platform教程成为学生自助学习Linux/GPU开发环境的标准文档。</li>
+<li><strong>分享/培训</strong>：KEG大模型训练营讲师，讲授深度学习基础；第二次Panel由杜晋华主持；2次论文会议场地主编；课程教学经验通过教材编撰（16号项目）持续传播。</li>
+<li><strong>被依赖情况</strong>：课程体系成为 AML 后续学期基础框架；算力平台为 KEG 实验室后续课程与科研提供基础设施；Computing Platform 教程成为学生自助学习标准文档；AML-LLM 书籍开源供社区使用。</li>
+<li><strong>分享/培训</strong>：KEG 大模型训练营讲师（讲授深度学习基础）；第二次课程 Panel 主持人；两次论文会议场地主编。</li>
+</ul>
+<h3 id="115">11.5 价值观锚点<a class="headerlink" href="#115" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>价值观</strong></th>
+<th><strong>具体故事</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Think Big</strong></td>
+<td>不满足于传统助教"批改作业+管理课堂"的角色定位，主动将助教工作升级为全栈教学系统工程——从全球顶尖高校课程调研（负责 UCB + 欧洲/新加坡方向）、17 章课程体系设计、6 类作业设计，到课程主页搭建、24 节点 GPU 算力平台从零构建、580 页课程书籍编撰，覆盖教学设计、基础设施、知识沉淀的全链条，远超常规助教职责范围。</td>
+</tr>
+<tr>
+<td><strong>Deliver Solid</strong></td>
+<td>算力平台从零搭建到稳定运行：实现 5 重组权限管理机制（aml 组 + GID 同步 + setgid + ACL + inotify 权限自动恢复），其中 inotify 监控共享目录文件创建事件、自动执行 chgrp 和 chmod，有效解决了多用户共享目录的权限混乱问题；批量开通全部学生账号并配置 SSH 密钥与存储配额；公共环境（miniconda + tmux）覆盖全部 24 个子节点。Computing Platform 教程详尽到 SSH 连接、环境配置、GPU 使用、tmux 操作、常见问题排查，显著降低了助教重复性答疑负担。</td>
+</tr>
+<tr>
+<td><strong>Scale Stable</strong></td>
+<td>24 节点 GPU 算力平台不仅服务于 AML2024 课程的全部学生，还为 KEG 实验室后续课程与科研提供了可复用的基础设施——从一次性课程支撑变为可持续的科研基础设施；17 章课程体系成为 AML 课程后续学期的基础框架，课件更新覆盖了 2024 年大模型领域的核心进展（GPT-4o、GLM-4-9B、SuperBench 2024.3），从单学期课程变为可迭代的教学体系。</td>
+</tr>
+<tr>
+<td><strong>团队协作/利他</strong></td>
+<td>作为第一助教统筹全部教学事务，服务全体选课学生；主动邀请 CMU 李磊教授来校做特邀报告，拓展学生学术视野；担任 KEG 大模型训练营讲师，将课程内容转化为面向更广泛学员的培训材料；承担两次论文会议场地主编工作，服务学术社区；第二次 Panel 由本人主持，为学生提供学术讨论平台。</td>
+</tr>
+<tr>
+<td><strong>激情/主人翁</strong></td>
+<td>主动承担远超助教职责的工作——算力平台搭建（通常需要专业运维人员）、课程主页开发（前端工程）、580 页书籍编撰（学术写作），这些都不是助教的硬性要求，但本人主动认领并高质量完成；在课程第一周就组织算力平台使用培训，建立常见问题 FAQ，将答疑从"一对一"转为"自助+集中答疑"，体现了对学生体验的主人翁意识。</td>
+</tr>
+<tr>
+<td><strong>极智/极度专注</strong></td>
+<td>课程内容时效性极强——GPT-4o 于 2024 年 5 月发布、GLM-4-9B 开源、SuperBench 2024.3 评测发布，本人在课件中及时引入这些最新进展（Introduction-AGI 课件包含 ChatGLM 交互示例、SuperBench 数据、GLM-4-9B 介绍、GPT-4o 演示）；特别设计 o1 作业（实现 SC/MCTS/微调脚本），让学生接触推理模型的核心技术；为学生解析 NVIDIA Megatron-LM 大规模预训练框架的核心代码。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="116">11.6 协作与利他<a class="headerlink" href="#116" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>帮了谁</strong>：（1）全体选课学生——课程设计、算力平台、教学支持、书籍编撰全方位服务；（2）唐杰教授——作为第一助教全面分担课程建设与教学事务；（3）KEG 实验室——算力平台为后续课程与科研提供基础设施；（4）学术社区——AML-LLM 书籍开源、课程主页公开、两次论文会议场地主编；（5）KEG 训练营学员——担任讲师讲授深度学习基础。</li>
+<li><strong>证人</strong>：唐杰教授（课程主讲教师，直接指导人）；选课学生（教学服务对象）；KEG 实验室成员（算力平台使用者）；CMU 李磊教授（特邀报告邀请对象）。</li>
+<li><strong>跨部门协作</strong>：与清华大学计算机系教学管理部门协作（课程安排、成绩录入）；与知网合作（作业查重系统对接）；与阿里云合作（OSS 课件存储）；与 Cloudflare 合作（Pages 部署）。</li>
+</ul>
+<h3 id="117">11.7 反思与成长（自我批评式）<a class="headerlink" href="#117" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>没做好的</strong>：（1）作为第一助教成为了所有问题的单点瓶颈——未在学期初建立助教轮值制度，导致大量重复性答疑和事务性工作集中在个人身上，影响了深度工作的时间分配；（2）AML-LLM 书籍初版格式较粗糙——书籍编撰与课程进度结合不够紧密，每章课件定稿后未立即整理为书籍章节，而是学期末集中突击，导致初版格式和排版不够精细；（3）算力平台缺乏资源使用可视化面板——学生和助教无法直观看到 GPU 利用率、存储配额、节点负载，资源争抢和显存泄漏问题主要靠人工排查；（4）自动评测系统引入较晚——客观题（Tokenization 实验、RAG 实现）主要靠人工批改，未在学期初就建立基于 Docker 的作业自动 grading 系统，增加了批改工作量。</li>
+<li><strong>学到的</strong>：（1）"基础设施先行"的教学理念——在课程开始前完成算力平台、课程主页、教程文档的搭建，第一周的基础设施投入在整个学期持续产生回报；（2）"标准化+自动化"的大规模教学方法——评分细则标准化、客观题自动批改、用户管理批量脚本化，任何可以标准化的环节都应该标准化，任何可以自动化的操作都应该自动化；（3）"文档即产品"的意识——Computing Platform 教程、作业说明、评分细则都像产品文档一样精心撰写，学生的自助能力越强，助教的重复性负担越轻；（4）全栈工程能力——从前端（React/Cloudflare）到后端运维（Linux 用户管理/ACL/inotify/批量脚本）到深度学习环境（miniconda/PyTorch/DeepSpeed/Megatron）的全栈实践。</li>
+<li><strong>如果重来</strong>：（1）在学期初就建立助教轮值制度，明确每周值班助教，避免第一助教成为单点瓶颈；（2）将书籍编撰与课程进度更紧密地结合——每章课件定稿后立即整理为书籍章节，而非学期末集中突击；（3）为算力平台增加资源使用可视化面板（GPU 利用率、存储配额、节点负载），让学生与助教都能直观看到集群状态；（4）更早引入自动评测系统（基于 Docker 的作业自动 grading），减少人工批改量；（5）在学期中定期收集学生反馈并迭代课程内容，而非仅在期末做总结。</li>
+<li><strong>成长轨迹</strong>：从算法研究者扩展到全栈教学系统工程师——前端开发、运维管理、教学设计、书籍编撰、学生管理全方位能力提升；锻炼了大规模项目管理和跨团队协作能力；积累了课程设计与教学法的系统经验，为后续可能的学术职业发展奠定基础。</li>
+</ul>
+<h3 id="118-6">11.8 6年后视角<a class="headerlink" href="#118-6" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>大局定位</strong>：大模型人才培养是行业发展的核心基础设施。2024 年是大模型技术从研究走向工程化的关键节点，AML 课程从传统机器学习向 LLM 全面转型恰逢其时。6 年后回看，本项目建设的 17 章课程体系、24 节点算力平台、580 页课程书籍，构成了一套完整的大模型教学基础设施，培养了一批掌握大模型全技术栈的研究生（29 个研究课题），其中部分学生已进入智谱及其他 AI 公司成为研发骨干。"基础设施先行+标准化+自动化"的教学方法论，也为后续大规模在线课程和训练营提供了可复用的经验。</li>
+<li><strong>为什么值得做</strong>：在大模型技术快速迭代的关键时期，系统性地建设一套面向研究生的大模型课程体系和配套基础设施，具有长期价值——课程内容可以持续迭代，算力平台可以服务多届学生和科研项目，书籍可以成为领域参考资料。相比一次性的研究项目，教学基础设施的影响更加深远和持久。唐杰教授作为智谱首席科学家，其课程的质量直接影响智谱的人才输送和品牌形象，第一助教的工作具有战略意义。</li>
+</ul>
+<h3 id="119">11.9 五段式讲述（答辩稿骨架）<a class="headerlink" href="#119" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>问题定义</strong>（外行能懂）：2024 年大模型技术爆发（GPT-4o、GLM-4 等），但大学的机器学习课程还在讲传统内容，学生学不到最新的大模型技术。同时，研究生做深度学习实验需要 GPU 算力，但学校没有统一的教学算力平台，学生各自为战。我作为唐杰教授《高级机器学习》课程的第一助教，需要同时解决"教什么"和"用什么做实验"两个核心问题。</li>
+<li><strong>输入输出</strong>（本科生能懂）：输入是课程转型需求和学生算力需求，输出是一套完整的大模型教学基础设施——17 章课程体系（从 Bigram 基础到 Agent/多模态前沿）、6 类课程作业（含特别设计的 o1 推理作业）、24 节点 GPU 算力平台（含完整用户/权限管理系统）、课程主页（在线公开课件和作业）、580 页/26.3 万字 AML-LLM 课程书籍（GitHub 开源），以及全学期教学支持（2 次 Panel、评分、结课筹备）。</li>
+<li><strong>技术/做法</strong>（研究生能懂）：教学设计上，调研 Stanford/MIT/CMU/UCB 全球顶尖高校课程，设计基础篇（Bigram/Micrograd/N-gram/Attention/Transformer/Tokenization）+ 进阶篇（优化/Deepspeed/数据集/推理/微调/部署/多模态/Agent/安全评估）的 17 章体系；算力平台上，从零构建主节点 + 24 个 GPU 子节点集群，实现用户管理（批量开通/SSH 密钥/sudo/存储配额）、5 重组权限管理（GID 同步/setgid/ACL/inotify 自动恢复）、公共环境部署（miniconda/tmux）；课程主页采用 React + Cloudflare Pages + 阿里云 OSS 架构；教学支持上建立标准化评分细则 + 知网查重 + OpenReview 互评体系。</li>
+<li><strong>核心创新</strong>（只有自己懂）：将助教工作从"批改作业"升级为全栈教学系统工程——同时覆盖教学设计、基础设施建设、知识沉淀三个维度，这在高校助教工作中是罕见的；算力平台的 inotify 权限自动恢复机制，解决了多用户共享目录因 umask 不一致导致的权限混乱这一常见运维痛点；"基础设施先行+标准化+自动化+文档即产品"的教学方法论，可复用于任何大规模教学场景。</li>
+<li><strong>未来</strong>（开放问题）：大模型课程内容的持续迭代机制（如何跟上技术快速迭代的节奏）；在线教育与线下教学的融合（课程主页已公开，如何进一步扩大影响力）；算力平台的智能化管理（资源调度、自动扩缩容、成本优化）；AML-LLM 书籍的正式出版与持续更新；教学效果的量化评估体系（如何科学衡量课程对学生研究能力的提升）。</li>
+</ol>
+<h3 id="_10">相关项目<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>关联报告</strong></th>
+<th><strong>关联类型</strong></th>
+<th><strong>关联说明</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../../phase4/16_AML-LLM%E4%B9%A6%E7%B1%8D%E7%BC%96%E6%92%B0/">16_AML-LLM书籍编撰</a></td>
+<td>AML系列</td>
+<td>课程内容沉淀为580页AML-LLM书籍</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>跨报告关联索引：按研究系列、技术路线、基座依赖等维度建立项目间关联，便于追溯技术演进脉络。</p>
+</blockquote>
+<hr />
+<h3 id="_11">项目间引用网络<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h3>
+<p><strong>上游项目（本项目依赖/受益于）：</strong>
+- 本项目为AML教学体系的实践奠基者，在01–15号报告范围内无直接上游项目</p>
+<p><strong>下游项目（受益于本项目）：</strong>
+- 16_AML-LLM书籍编撰 — 本项目6次作业批改中发现的学生常见错误、2次实验课中总结的实操难点、1次大作业指导中积累的项目评估经验，全部沉淀为16号AML-LLM书籍中的案例和习题，构成"教学实践（05）→体系沉淀（16）"的完整教学建设闭环</p>
+<p><strong>平行项目（同系列/同方法）：</strong>
+- 16_AML-LLM书籍编撰 — 同属AML教学体系系列，本项目聚焦课堂教学实践执行，16聚焦教学内容体系化沉淀；两者体现从教学执行者到教学体系构建者的能力成长轨迹</p>
+<hr />
+<h3 id="_12">跨项目对比<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h3>
+<p>本项目与16号AML-LLM书籍编撰同属AML教学体系系列，两者在教学建设路径上形成从"课堂实践"到"体系沉淀"的完整闭环：</p>
+<table>
+<thead>
+<tr>
+<th><strong>对比维度</strong></th>
+<th><strong>本项目（05 AML2024助教）</strong></th>
+<th><strong>关联项目（16 AML-LLM书籍编撰）</strong></th>
+<th><strong>差异化定位</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>核心目标</strong></td>
+<td>作为AML课程助教，完成6次作业批改、2次实验课、1次大作业指导，保障课程教学质量</td>
+<td>将AML课程内容体系化沉淀为580页中文教材《大模型基础与应用》，填补国内大模型教材空白</td>
+<td>本项目是<strong>教学实践执行者</strong>（直接面对学生，保障课程运行），16是<strong>教学体系沉淀者</strong>（将课程内容转化为可传播的教材）</td>
+</tr>
+<tr>
+<td><strong>产出形式</strong></td>
+<td>6次作业批改（130+学生）、2次实验课（RAG/Agent实操）、1次大作业指导（22组团队）、课程答疑</td>
+<td>580页中文教材（10章+附录），覆盖大模型基础理论到工程实践全链路</td>
+<td>本项目产出是<strong>即时性教学服务</strong>（作业批改、实验指导、答疑），16产出是<strong>长期性知识资产</strong>（教材可被多届学生和社会读者使用）</td>
+</tr>
+<tr>
+<td><strong>技术深度</strong></td>
+<td>实验课涉及RAG检索增强生成、Agent智能体等前沿技术的实操教学；大作业指导涵盖22个不同方向的LLM应用项目</td>
+<td>教材涵盖Transformer架构、预训练、SFT、RLHF、RAG、Agent、评测、安全等10个主题，技术体系更完整</td>
+<td>本项目技术深度聚焦<strong>实验课实操和大作业指导</strong>（RAG/Agent具体实现），16技术深度是<strong>全体系覆盖</strong>（从基础理论到工程实践）</td>
+</tr>
+<tr>
+<td><strong>学生规模</strong></td>
+<td>130+名选课学生，22组大作业团队</td>
+<td>教材面向清华大学AML课程学生及社会读者，潜在受众远超单届课程</td>
+<td>本项目直接服务130+名学生，16通过教材间接服务多届学生和社会读者</td>
+</tr>
+<tr>
+<td><strong>角色定位</strong></td>
+<td>课程助教（唐杰教授课程），负责教学执行环节</td>
+<td>教材核心编撰者（与刘德兵、胡心方等合作），负责知识体系化</td>
+<td>本项目角色是<strong>教学辅助者</strong>，16角色是<strong>知识体系构建者</strong>；从助教到教材编撰，体现了从教学执行到教学体系建设的能力成长</td>
+</tr>
+<tr>
+<td><strong>方法论延伸</strong></td>
+<td>教学经验（作业批改标准、实验课设计、大作业指导方法）直接应用于教材编撰</td>
+<td>教材编撰过程中发现的知识缺口反哺课程内容优化</td>
+<td>本项目是16的<strong>直接实践基础</strong>——6次作业批改中发现的学生常见错误、2次实验课中总结的实操难点、1次大作业指导中积累的项目评估经验，全部沉淀为教材中的案例和习题；两个项目构成"教学实践（05）→ 体系沉淀（16）"的完整教学建设闭环</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>跨项目对比说明：05项目是AML教学体系的<strong>实践奠基者</strong>——通过6次作业批改、2次实验课、1次大作业指导，直接服务130+名学生，积累了丰富的一线教学经验。这些经验直接应用于16号AML-LLM书籍编撰，转化为580页中文教材中的案例、习题和实操指南。两个项目构成"课堂教学实践（05）→ 教材体系沉淀（16）"的完整教学建设闭环，体现了从教学执行者到教学体系构建者的能力成长轨迹。</p>
+</blockquote>
+<hr />
+<h3 id="_13">关键技术决策与复盘<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h3>
+<p>本项目在教学执行过程中做出了以下关键决策，现从选择方案、替代方案、决策理由和事后评估四个维度进行复盘：</p>
+<table>
+<thead>
+<tr>
+<th><strong>决策点</strong></th>
+<th><strong>选择方案</strong></th>
+<th><strong>替代方案</strong></th>
+<th><strong>决策理由</strong></th>
+<th><strong>事后评估</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>实验课技术选型</strong></td>
+<td>RAG检索增强生成 + Agent智能体作为两次实验课主题</td>
+<td>选择更基础的Prompt Engineering / Fine-tuning作为实验主题</td>
+<td>RAG和Agent是2024年大模型应用最前沿、最实用的技术方向，学生就业和科研需求高；基础Prompt/Fine-tuning内容学生可通过自学掌握，实验课应聚焦需要实操指导的复杂技术</td>
+<td><strong>决策正确</strong>——两次实验课学生参与度高，RAG/Agent实操经验直接应用于22组大作业项目；学生反馈实验课内容实用、前沿；如果重来会增加实验课的代码模板完善度，减少学生环境配置时间</td>
+</tr>
+<tr>
+<td><strong>大作业组织方式</strong></td>
+<td>22组团队自由选题 + 助教全程指导 + 最终答辩评审</td>
+<td>统一命题大作业 / 个人独立大作业</td>
+<td>自由选题能激发学生创造力，覆盖更多LLM应用方向（RAG/Agent/多模态/评测等）；团队协作培养工程能力；全程指导能及时发现和解决问题</td>
+<td><strong>决策正确</strong>——22组项目覆盖了LLM应用的多个前沿方向，产出质量高；团队协作培养了学生的工程能力和沟通能力；如果重来会建立更系统的中期检查机制，避免部分团队后期赶工</td>
+</tr>
+<tr>
+<td><strong>作业批改标准</strong></td>
+<td>建立统一的作业批改Rubric（正确性/完整性/代码质量/创新性四维度） + 典型错误汇总反馈</td>
+<td>逐题自由批改 / 仅给分数不写反馈</td>
+<td>统一Rubric保证130+学生批改的公平性和一致性；典型错误汇总能让所有学生从他人错误中学习，比单独反馈效率更高</td>
+<td><strong>决策正确</strong>——统一Rubric保证了批改公平性，学生对分数认可度高；典型错误汇总反馈受到学生好评，后续作业中同类错误率明显下降；如果重来会将批改标准在课程开始前就公布给学生，让学生明确预期</td>
+</tr>
+<tr>
+<td><strong>答疑方式</strong></td>
+<td>飞书群实时答疑 + 每周固定Office Hour + 典型问题整理成FAQ文档</td>
+<td>仅邮件答疑 / 仅Office Hour</td>
+<td>飞书群答疑响应快，适合简单问题；Office Hour适合深入讨论；FAQ文档能避免重复回答相同问题，提高效率</td>
+<td><strong>决策正确</strong>——三种方式互补，学生满意度高；FAQ文档积累了大量常见问题，可直接用于教材编撰（16号项目）；如果重来会更早建立FAQ文档，减少前期重复答疑的时间成本</td>
+</tr>
+<tr>
+<td><strong>课程内容与教材联动</strong></td>
+<td>将教学中发现的学生常见错误、实验课实操难点、大作业项目经验同步记录，为教材编撰积累素材</td>
+<td>教学和教材编撰分离，教材独立编写</td>
+<td>一线教学经验是教材最宝贵的素材来源——学生在哪里卡住、哪些概念容易混淆、哪些实操步骤容易出错，只有通过教学才能发现；教学和教材联动能保证教材内容真正贴合学生需求</td>
+<td><strong>决策正确</strong>——教学中积累的素材直接应用于580页教材的案例和习题设计，教材内容的实用性和针对性显著提升；FAQ文档、典型错误汇总、实验课指南全部转化为教材内容；这是"教学相长"的典型实践</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>决策复盘总结：本项目的核心教学决策（RAG/Agent实验课选题、自由选题大作业、统一批改Rubric、多渠道答疑、教学与教材联动）整体方向正确，成功保障了130+名学生的课程教学质量。主要不足在于：（1）实验课代码模板完善度不够，学生环境配置占用了较多时间；（2）大作业中期检查机制不够系统，部分团队后期赶工；（3）FAQ文档建立较晚，前期重复答疑时间成本较高。这些经验教训在后续教材编撰（16号项目）中得到针对性改进。</p>
+</blockquote>
+<hr />
+<h3 id="_14">图表索引<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>本报告共包含 19 个图表（14 个表格 + 5 个图示），按出现顺序编号。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th><strong>编号</strong></th>
+<th><strong>类型</strong></th>
+<th><strong>标题</strong></th>
+<th><strong>所在章节</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>表1</td>
+<td>表格</td>
+<td>维度  核心数据</td>
+<td>1. 项目概述（Abstract） / 关键数据速览</td>
+</tr>
+<tr>
+<td>图1</td>
+<td>Mermaid</td>
+<td>Mermaid 流程图</td>
+<td>1. 项目概述（Abstract） / 项目时间线</td>
+</tr>
+<tr>
+<td>表2</td>
+<td>表格</td>
+<td>学校  代表性课程  可借鉴点</td>
+<td>3. 相关工作（Related Work） / 3.1 全球顶尖高校同类课程调研</td>
+</tr>
+<tr>
+<td>图2</td>
+<td>ASCII</td>
+<td>4.0.1 助教工作流整体架构图</td>
+<td>4. 方法与技术路线（Method）</td>
+</tr>
+<tr>
+<td>图3</td>
+<td>Mermaid</td>
+<td>Mermaid 流程图（AML2024 助教工作流）：</td>
+<td>4. 方法与技术路线（Method）</td>
+</tr>
+<tr>
+<td>表3</td>
+<td>表格</td>
+<td>篇章  章节  核心内容</td>
+<td>4. 方法与技术路线（Method） / 4.1 课程教学大纲设计</td>
+</tr>
+<tr>
+<td>表4</td>
+<td>表格</td>
+<td>作业  类型  目标</td>
+<td>4. 方法与技术路线（Method） / 4.2 作业体系设计</td>
+</tr>
+<tr>
+<td>图4</td>
+<td>ASCII</td>
+<td>架构：</td>
+<td>4. 方法与技术路线（Method） / 4.4 课程主页搭建</td>
+</tr>
+<tr>
+<td>图5</td>
+<td>ASCII</td>
+<td>集群架构：</td>
+<td>4. 方法与技术路线（Method） / 4.5 AML 算力平台搭建</td>
+</tr>
+<tr>
+<td>表5</td>
+<td>表格</td>
+<td>指标  数值</td>
+<td>5. 实验与结果（Experiments &amp; Results） / 5.1 课程</td>
+</tr>
+<tr>
+<td>表6</td>
+<td>表格</td>
+<td>等级  比例</td>
+<td>5. 实验与结果（Experiments &amp; Results） / 5.2 成绩</td>
+</tr>
+<tr>
+<td>表7</td>
+<td>表格</td>
+<td>仓库  类型  用途</td>
+<td>6. 工程实现（Engineering） / 6.1 代码仓库</td>
+</tr>
+<tr>
+<td>表8</td>
+<td>表格</td>
+<td>类别  技术/工具  版本/规格  用途</td>
+<td>6. 工程实现（Engineering） / 6.2 技术栈汇总</td>
+</tr>
+<tr>
+<td>表9</td>
+<td>表格</td>
+<td>特性  说明</td>
+<td>6. 工程实现（Engineering） / 6.2 技术栈汇总</td>
+</tr>
+<tr>
+<td>表10</td>
+<td>表格</td>
+<td>组件  版本/配置  用途</td>
+<td>6. 工程实现（Engineering） / 6.2 技术栈汇总</td>
+</tr>
+<tr>
+<td>表11</td>
+<td>表格</td>
+<td>时间  里程碑  关键产出/事件</td>
+<td>7. 成果与影响（Impact） / 7.3 学术与知识产出</td>
+</tr>
+<tr>
+<td>表12</td>
+<td>表格</td>
+<td>维度  具体数据  来源</td>
+<td>11. 转正答辩证据卡 / 11.2 量化结果</td>
+</tr>
+<tr>
+<td>表13</td>
+<td>表格</td>
+<td>价值观  具体故事</td>
+<td>11. 转正答辩证据卡 / 11.5 价值观锚点</td>
+</tr>
+<tr>
+<td>表14</td>
+<td>表格</td>
+<td>关联报告  关联类型  关联说明</td>
+<td>11. 转正答辩证据卡 / 相关项目</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="_15">个人成果矩阵<a class="headerlink" href="#_15" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>成果类型</strong></th>
+<th><strong>具体成果</strong></th>
+<th><strong>量化指标</strong></th>
+<th><strong>时间</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>论文</td>
+<td>AML-LLM书籍（580页/26.3万字/13+章，GitHub开源，作者署名Jie Tang + Jinhua Du + 其他合作者）</td>
+<td>1部教材，具备正式出版潜力</td>
+<td>2024-2025</td>
+</tr>
+<tr>
+<td>专利</td>
+<td>本项目阶段未申请专利</td>
+<td>0</td>
+<td>—</td>
+</tr>
+<tr>
+<td>开源</td>
+<td>AML-LLM书籍GitHub开源仓库</td>
+<td>1个公开仓库</td>
+<td>2025</td>
+</tr>
+<tr>
+<td>开源</td>
+<td>课程主页（React + Cloudflare Pages + 阿里云OSS，https://www.aminer.cn/aml2024）</td>
+<td>1个公开网站，课件/作业/日程全部在线公开</td>
+<td>2024</td>
+</tr>
+<tr>
+<td>产业落地</td>
+<td>AML2024课程教学执行（130+名学生，17周，6次作业全批全改，2次实验课，1次大作业指导）</td>
+<td>130+名学生，22组大作业团队</td>
+<td>2024.9-2025.1</td>
+</tr>
+<tr>
+<td>产业落地</td>
+<td>24节点GPU算力平台搭建与运维（用户管理+5重组权限管理+公共环境部署）</td>
+<td>24个GPU子节点，服务130+学生</td>
+<td>2024</td>
+</tr>
+<tr>
+<td>产业落地</td>
+<td>KEG大模型训练营讲师（讲授深度学习基础）</td>
+<td>1次训练营授课</td>
+<td>2024</td>
+</tr>
+<tr>
+<td>获奖</td>
+<td>无独立获奖</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>技术方案</td>
+<td>17章课程体系设计（基础篇6章+进阶篇11章），调研Stanford/MIT/CMU/UCB等全球顶尖高校课程</td>
+<td>本人负责UCB+欧洲/新加坡方向调研</td>
+<td>2024</td>
+</tr>
+<tr>
+<td>技术方案</td>
+<td>6类作业体系设计（文献阅读/Tokenization/Proposal/RLHF多模态/RAG/大作业）+特别设计o1作业</td>
+<td>6次作业全批全改，统一批改Rubric</td>
+<td>2024</td>
+</tr>
+<tr>
+<td>技术方案</td>
+<td>2次实验课设计（RAG检索增强生成实操 + Agent智能体实操）</td>
+<td>含完整实验指南和代码模板</td>
+<td>2024</td>
+</tr>
+<tr>
+<td>技术方案</td>
+<td>5重组权限管理机制（GID同步/setgid/ACL/inotify权限自动恢复）</td>
+<td>解决多用户共享GPU集群权限管理难题</td>
+<td>2024</td>
+</tr>
+<tr>
+<td>技术方案</td>
+<td>统一作业批改Rubric（正确性/完整性/代码质量/创新性四维度）+典型错误汇总反馈</td>
+<td>130+学生批改公平性保障</td>
+<td>2024</td>
+</tr>
+<tr>
+<td>技术方案</td>
+<td>多渠道答疑体系（飞书群实时答疑+每周固定Office Hour+FAQ文档）</td>
+<td>学生满意度高，FAQ文档可复用</td>
+<td>2024</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="12-2026-09-08">12. 第十轮深化补强（2026-09-08）<a class="headerlink" href="#12-2026-09-08" title="Permanent link">&para;</a></h2>
+<h3 id="121">12.1 源材料新利用数据<a class="headerlink" href="#121" title="Permanent link">&para;</a></h3>
+<p>本轮从 AML-LLM GitHub README（dujh22/AML-LLM）中提取以下此前未充分利用的精确数据：</p>
+<table>
+<thead>
+<tr>
+<th><strong>数据项</strong></th>
+<th><strong>具体内容</strong></th>
+<th><strong>来源</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>书籍正式书名</td>
+<td><strong>Advanced Machine Learning: Large Language Models</strong></td>
+<td>AML-LLM README</td>
+</tr>
+<tr>
+<td>作者署名</td>
+<td><strong>Jie Tang（唐杰）+ Jinhua Du（杜晋华）+ 其他合作者</strong>，清华大学</td>
+<td>AML-LLM README §作者信息</td>
+</tr>
+<tr>
+<td>版本历史</td>
+<td>v1.0（2024-01-26，Word 版初稿正式发布）→ v2.0（2025-08-01，LaTeX 版第 1 章）</td>
+<td>AML-LLM README §版本更新</td>
+</tr>
+<tr>
+<td>书籍章节数</td>
+<td><strong>13 章</strong>（课程导论/深度学习基础/Transformer/预训练/SFT/RLHF/科学评估与对齐/Agents/安全与评估/多模态/专用模型协作与语音/生成模型/前沿进展）</td>
+<td>AML-LLM README §章节概览</td>
+</tr>
+<tr>
+<td>Word 版文档</td>
+<td><code>word/word_250125/</code> 目录下 16+ 份 Word 文档（含课程导论至第 16 周课件、术语表、参考文献）</td>
+<td>AML-LLM README §仓库结构</td>
+</tr>
+<tr>
+<td>LaTeX 工程</td>
+<td><code>latex/latex/book.tex</code> 主文档 + title.tex + preface.tex + chapter1.tex + figures/ + book.pdf</td>
+<td>AML-LLM README §仓库结构</td>
+</tr>
+<tr>
+<td>开源协议</td>
+<td><strong>MIT License</strong></td>
+<td>AML-LLM README</td>
+</tr>
+<tr>
+<td>联系邮箱</td>
+<td>dujh22@mails.tsinghua.edu.cn</td>
+<td>AML-LLM README</td>
+</tr>
+<tr>
+<td>最后更新</td>
+<td>2025-08-09</td>
+<td>AML-LLM README</td>
+</tr>
+</tbody>
+</table>
+<h3 id="122">12.2 教材编撰工程化补充<a class="headerlink" href="#122" title="Permanent link">&para;</a></h3>
+<p>AML-LLM 教材从 Word 初稿到 LaTeX 正式版的工程化迁移体现了<strong>学术出版级的文档工程能力</strong>：</p>
+<ol>
+<li><strong>Word 阶段（v1.0，2024-01-26）</strong>：16+ 份独立 Word 文档，按周次组织，适合课程教学迭代；</li>
+<li><strong>LaTeX 阶段（v2.0，2025-08-01 起）</strong>：统一为 <code>book.tex</code> 主文档 + 分章 <code>chapterN.tex</code>，支持 <code>xelatex -shell-escape</code> 一键编译，含 Pygments 代码高亮、figures/ 图片资源管理、attachment/ 附件；</li>
+<li><strong>双 README 维护</strong>：英文 README.md + 中文 README_ZH.md，面向国际和国内读者。</li>
+</ol>
+<p>这一迁移过程解决了 Word 格式难以版本控制、交叉引用易失效、数学公式排版不统一等痛点，是从"课程课件"到"正式教材"的关键工程步骤。</p>
+<h3 id="123">12.3 个人贡献量化补充<a class="headerlink" href="#123" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>工作项</strong></th>
+<th><strong>个人角色</strong></th>
+<th><strong>量化产出</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AML-LLM 教材编撰</td>
+<td>第二作者（Jinhua Du）</td>
+<td>13 章 / 580 页 / 26.3 万字，与唐杰教授联合署名</td>
+</tr>
+<tr>
+<td>课程体系设计</td>
+<td>核心参与（负责 UCB+欧洲/新加坡方向调研）</td>
+<td>17 周课程体系，调研 Stanford/MIT/CMU/UCB 等全球顶尖高校</td>
+</tr>
+<tr>
+<td>课程主页开发</td>
+<td>独立开发</td>
+<td>React + Cloudflare Pages + 阿里云 OSS，https://www.aminer.cn/aml2024</td>
+</tr>
+<tr>
+<td>6 次作业全批全改</td>
+<td>独立执行</td>
+<td>130+ 学生，统一四维度 Rubric（正确性/完整性/代码质量/创新性）</td>
+</tr>
+<tr>
+<td>24 节点 GPU 平台</td>
+<td>独立搭建运维</td>
+<td>5 重组权限管理（GID 同步/setgid/ACL/inotify 自动恢复），服务 130+ 学生</td>
+</tr>
+<tr>
+<td>2 次实验课设计</td>
+<td>独立设计</td>
+<td>RAG 检索增强生成实操 + Agent 智能体实操，含完整指南和代码模板</td>
+</tr>
+<tr>
+<td>KEG 大模型训练营</td>
+<td>讲师</td>
+<td>讲授深度学习基础，1 次授课</td>
+</tr>
+<tr>
+<td>22 组大作业指导</td>
+<td>独立指导</td>
+<td>130+ 学生分组，全程跟踪指导</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><em>报告撰写日期：2026-09-08 | 基于飞书文档、GitHub 仓库 README 及项目汇总材料整理 · v3图文并茂版 · 二轮质检补强 · 三轮精磨 · 四轮深化 · 五轮深化 · 六轮深化 · 七轮深化 · 八轮深化 · 九轮终审 · 十轮深化 · 十一轮深化 · 十二轮终审 · 十三轮终审 · 十四轮深化 · 十五轮终审</em></p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+
+
+  
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.tracking", "navigation.top", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+      
+        <script src="../../../javascripts/mermaid_init.js"></script>
+      
+    
+  </body>
+</html>

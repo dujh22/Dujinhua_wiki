@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://dujh22.github.io/Dujinhua_wiki/sitemap.xml

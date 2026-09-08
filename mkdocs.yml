@@ -3,8 +3,8 @@ site_url: https://dujh22.github.io/Dujinhua_wiki/
 repo_url: https://github.com/dujh22/Dujinhua_wiki
 repo_name: dujh22/Dujinhua_wiki
 edit_uri: ""
-site_description: Bilingual academic homepage of Jinhua Du, featuring research, education, publications, honors, and project history.
-site_author: Jinhua Du
+site_description: 智谱AI研究实习项目报告集，涵盖大模型预训练、逻辑推理、数学推理、评测方法论等30个项目；同时包含个人学术主页（研究、教育、发表、荣誉）。
+site_author: Jinhua Du (杜晋华)
 
 theme:
   name: material
@@ -132,3 +132,33 @@ extra_css:
 extra_javascript:
   - https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js
   - javascripts/mermaid_init.js
+
+extra:
+  meta:
+    - name: keywords
+      content: "大语言模型, 逻辑推理, 数学推理, 预训练, RLHF, 评测, 智谱AI, 研究实习, LLM, Large Language Models, Reasoning, Evaluation"
+    - property: og:title
+      content: "Jinhua Du | 杜晋华 — 智谱AI研究实习项目报告集"
+    - property: og:description
+      content: "智谱AI研究实习项目报告集，涵盖大模型预训练、逻辑推理、数学推理、评测方法论等30个项目；个人学术主页（研究、教育、发表、荣誉）。"
+    - property: og:type
+      content: website
+    - property: og:url
+      content: https://dujh22.github.io/Dujinhua_wiki/
+    - property: og:site_name
+      content: "Jinhua Du | 杜晋华"
+    - property: og:locale
+      content: zh_CN
+    - name: twitter:card
+      content: summary_large_image
+    - name: twitter:title
+      content: "Jinhua Du | 杜晋华 — 智谱AI研究实习项目报告集"
+    - name: twitter:description
+      content: "智谱AI研究实习项目报告集，涵盖大模型预训练、逻辑推理、数学推理、评测方法论等30个项目。"
+    - name: author
+      content: "Jinhua Du (杜晋华)"
+    - name: robots
+      content: index, follow
+  analytics:
+    provider: google
+    property: G-XXXXXXXXXX  # [请补充GA ID] 替换为您的Google Analytics 4衡量ID

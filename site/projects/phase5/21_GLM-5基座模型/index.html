@@ -1,0 +1,6049 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="智谱AI实习项目报告#21：GLM-5基座模型研发，从Vibe Coding到Agentic Engineering的工程范式演进，涵盖新一代基座模型预训练、Agent能力构建与工程化实践。">
+      
+      
+        <meta name="author" content="Jinhua Du (杜晋华)">
+      
+      
+        <link rel="canonical" href="https://dujh22.github.io/Dujinhua_wiki/projects/phase5/21_GLM-5%E5%9F%BA%E5%BA%A7%E6%A8%A1%E5%9E%8B/">
+      
+      
+        <link rel="prev" href="../20_H-TokenBench/">
+      
+      
+        <link rel="next" href="../22_%E5%85%AD%E7%AF%87%E6%96%B0%E7%A0%94%E7%A9%B6%E5%88%9D%E7%A8%BF/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>21. GLM-5 基座模型：从 Vibe Coding 到 Agentic Engineering - Jinhua Du | 杜晋华</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css?v=448b8bea4ef3">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-XXXXXXXXXX"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-XXXXXXXXXX",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+  
+    <meta name="keywords" content="大语言模型, 逻辑推理, 数学推理, 预训练, RLHF, 评测, 智谱AI, 研究实习, LLM, Large Language Models, Reasoning, Evaluation">
+    <meta property="og:title" content="Jinhua Du | 杜晋华 — 智谱AI研究实习项目报告集">
+    <meta property="og:description" content="智谱AI研究实习项目报告集，涵盖大模型预训练、逻辑推理、数学推理、评测方法论等30个项目；个人学术主页（研究、教育、发表、荣誉）。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dujh22.github.io/Dujinhua_wiki/">
+    <meta property="og:site_name" content="Jinhua Du | 杜晋华">
+    <meta property="og:locale" content="zh_CN">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Jinhua Du | 杜晋华 — 智谱AI研究实习项目报告集">
+    <meta name="twitter:description" content="智谱AI研究实习项目报告集，涵盖大模型预训练、逻辑推理、数学推理、评测方法论等30个项目。">
+    <meta name="robots" content="index, follow">
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1-abstract" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Jinhua Du | 杜晋华" class="md-header__button md-logo" aria-label="Jinhua Du | 杜晋华" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 10.5V6l-2.11 1.06A3.999 3.999 0 0 1 12 12a4 4 0 0 1-3.89-4.94L5 5.5 12 2l7 3.5v5zM12 9l-2-1c0 1.1.9 2 2 2s2-.9 2-2zm2.75-3.58L12.16 4.1 9.47 5.47l2.6 1.32zM12 13c2.67 0 8 1.33 8 4v3H4v-3c0-2.67 5.33-4 8-4m0 1.9c-3 0-6.1 1.46-6.1 2.1v1.1h12.2V17c0-.64-3.13-2.1-6.1-2.1"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Jinhua Du | 杜晋华
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              21. GLM-5 基座模型：从 Vibe Coding 到 Agentic Engineering
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="light-blue"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/dujh22/Dujinhua_wiki" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    dujh22/Dujinhua_wiki
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../.." class="md-tabs__link">
+          
+  
+  
+  English
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../index_zh/" class="md-tabs__link">
+          
+  
+  
+  中文
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../" class="md-tabs__link">
+          
+  
+  
+  智谱实习项目
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Jinhua Du | 杜晋华" class="md-nav__button md-logo" aria-label="Jinhua Du | 杜晋华" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 10.5V6l-2.11 1.06A3.999 3.999 0 0 1 12 12a4 4 0 0 1-3.89-4.94L5 5.5 12 2l7 3.5v5zM12 9l-2-1c0 1.1.9 2 2 2s2-.9 2-2zm2.75-3.58L12.16 4.1 9.47 5.47l2.6 1.32zM12 13c2.67 0 8 1.33 8 4v3H4v-3c0-2.67 5.33-4 8-4m0 1.9c-3 0-6.1 1.46-6.1 2.1v1.1h12.2V17c0-.64-3.13-2.1-6.1-2.1"/></svg>
+
+    </a>
+    Jinhua Du | 杜晋华
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/dujh22/Dujinhua_wiki" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    dujh22/Dujinhua_wiki
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    English
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    English
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Profile
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../postgraduate_experience_en/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Postgraduate Experience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../undergraduate_experience_en/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Undergraduate Experience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../history_en/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Research History
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    中文
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    中文
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../index_zh/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人简介
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../postgraduate_experience_zh/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博士经历
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../undergraduate_experience_zh/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    本科经历
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../history_zh/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    研究历史
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    智谱实习项目
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    智谱实习项目
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    项目总览
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阶段一·数学推理与国际化
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    阶段一·数学推理与国际化
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase1/01_ChatGLM%E6%95%B0%E5%AD%A6%E6%8E%A8%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 ChatGLM数学推理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase1/02_ChatGLM%E5%9B%BD%E9%99%85%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02 ChatGLM国际化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阶段二·多模态与社会实践
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    阶段二·多模态与社会实践
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/03_%E5%A4%9A%E6%A8%A1%E6%80%81%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%95%B0%E5%AD%A6%E6%8E%A8%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 多模态大模型数学推理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/04_MetaEvaluation%E5%85%83%E8%AF%84%E4%BC%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04 MetaEvaluation元评估
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/05_AML2024%E5%8A%A9%E6%95%99/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 AML2024助教
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/06_%E8%88%9F%E5%B1%B1%E7%A4%BE%E4%BC%9A%E5%AE%9E%E8%B7%B5%E5%85%AC%E5%AE%89%E7%8A%AF%E7%BD%AA%E9%A2%84%E6%B5%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06 舟山社会实践公安犯罪预测
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/07_MalayGLM%E9%A9%AC%E6%9D%A5%E8%AF%AD%E5%A4%A7%E6%A8%A1%E5%9E%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07 MalayGLM马来语大模型
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase2/08_o1%E5%A4%8D%E7%8E%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 o1复现
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阶段三·LogicEvolve与基座模型
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    阶段三·LogicEvolve与基座模型
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase3/09_LogicEvolve%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E8%87%AA%E8%BF%9B%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 LogicEvolve逻辑推理自进化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase3/10_GLM-4.5%E5%9F%BA%E5%BA%A7%E6%A8%A1%E5%9E%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 GLM-4.5基座模型
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase3/11_%E6%95%B0%E5%AE%9E%E8%9E%8D%E5%90%88%E6%96%B0%E5%BC%95%E6%93%8E%E9%A1%B9%E7%9B%AE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11 数实融合新引擎项目
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase3/12_Puzzle%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E9%A2%84%E8%AE%AD%E7%BB%83%E6%95%B0%E6%8D%AE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12 Puzzle逻辑推理预训练数据
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase3/13_%E7%B1%BBo1%E6%A8%A1%E5%9E%8B%E6%B3%9B%E5%8C%96%E6%80%A7%E8%AF%84%E4%BC%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13 类o1模型泛化性评估
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5" id="__nav_3_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阶段四·论文冲刺与博士开题
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    阶段四·论文冲刺与博士开题
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase4/14_LogicalSurvey%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%BB%BC%E8%BF%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14 LogicalSurvey逻辑推理综述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase4/15_EvolveLRM%E8%AE%AD%E7%BB%83%E8%87%AA%E8%BF%9B%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15 EvolveLRM训练自进化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase4/16_AML-LLM%E4%B9%A6%E7%B1%8D%E7%BC%96%E6%92%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16 AML-LLM书籍编撰
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase4/17_VirtualCoach%E4%BA%BA%E6%9C%BA%E4%BA%A4%E4%BA%92/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17 VirtualCoach人机交互
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phase4/18_%E5%8D%9A%E5%A3%AB%E5%BC%80%E9%A2%98/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    18 博士开题
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_6" id="__nav_3_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阶段五·自进化研究全面展开
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    阶段五·自进化研究全面展开
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../19_Groom_Harness%E8%BF%87%E7%A8%8B%E7%BA%A7%E8%AF%84%E6%B5%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    19 Groom过程级评测
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../20_H-TokenBench/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20 H-TokenBench
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    21 GLM-5基座模型
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    21 GLM-5基座模型
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-abstract" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 项目概述（Abstract）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 项目概述（Abstract）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关键数据速览
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        执行摘要
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        个人成长轨迹
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-introduction-background" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 背景与动机（Introduction / Background）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 背景与动机（Introduction / Background）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 问题定义
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 行业背景
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 项目启动契机
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-related-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 相关工作（Related Work）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 相关工作（Related Work）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 同期基座模型
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-glm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 GLM 系列演进
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#321-glm-5-vs-glm-45-vs-glm-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2.1 GLM-5 vs GLM-4.5 vs GLM-4 能力对比
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 差异化定位
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 方法与技术路线（Method）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 方法与技术路线（Method）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 总体架构
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 数据层面
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 训练基础设施
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 推理与评估
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-experiments-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 实验与结果（Experiments &amp; Results）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 实验与结果（Experiments &amp; Results）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 逻辑推理数据实验
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#511-cot-sft" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1.1 COT-SFT 数据消融实验
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#512" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1.2 截断问题多因素归因实验
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#513" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1.3 关键训练超参数配置
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-glm-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 GLM-5 整体评测结果
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-engineering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 工程实现（Engineering）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. 工程实现（Engineering）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 代码与资源
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 算力消耗
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#621" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2.1 项目时间线与里程碑
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#622" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2.2 技术栈与工具链
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#623" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2.3 技术栈演进与选型决策
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 关键工程挑战
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-impact" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 成果与影响（Impact）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. 成果与影响（Impact）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 论文发表
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 产业应用
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 对个人研究的支撑
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-my-contribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 个人贡献（My Contribution）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. 个人贡献（My Contribution）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 角色
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 具体工作清单
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-lessons-learned" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 经验与反思（Lessons Learned）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. 经验与反思（Lessons Learned）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1 关键问题与解决方案（含具体故事）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2 可复用的方法论
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#93" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.3 踩坑与避坑指南
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#94" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.4 如果重来会怎么做
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#95-faq" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.5 常见问题与解答（FAQ）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. 文件索引（References）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. 文件索引（References）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        论文
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        飞书文档
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        代码仓库
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        平台与工具
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        其他资源
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. 转正答辩证据卡
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. 转正答辩证据卡">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#111" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.1 目标基线
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.2 量化结果
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#113" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3 公司层面贡献
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#114" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.4 专业影响力
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#115" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.5 价值观锚点
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#116" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.6 协作与利他
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#117" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.7 反思与成长（自我批评式）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#118-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.8 6年后视角
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#119" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.9 五段式讲述（答辩稿骨架）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1110" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.10 对比证据（跨项目量化参照）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. 相关项目
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. 相关项目">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        项目间引用网络
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. 跨项目对比
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13. 跨项目对比">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#131-10glm-45" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.1 与10号（GLM-4.5基座模型）对比：基座模型演进
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#132-09logicevolve12puzzle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.2 与09号（LogicEvolve）、12号（Puzzle逻辑推理数据）对比：逻辑推理数据
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        图表索引
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        个人成果矩阵
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../22_%E5%85%AD%E7%AF%87%E6%96%B0%E7%A0%94%E7%A9%B6%E5%88%9D%E7%A8%BF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    22 六篇新研究初稿
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../23_Awesome-RSI%E8%87%AA%E8%BF%9B%E5%8C%96%E7%BB%BC%E8%BF%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    23 Awesome-RSI自进化综述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../24_%E4%B8%93%E5%88%A9_%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E8%AF%84%E6%B5%8B%E6%96%B9%E6%B3%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    24 专利逻辑推理评测方法
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_7" id="__nav_3_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    工程与工具系列
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    工程与工具系列
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系列概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/25_LLM-DailyDigest%E6%AF%8F%E6%97%A5AI%E8%BF%BD%E6%96%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    25 LLM-DailyDigest
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/26_AutoLLM%E5%A4%9AAgent%E4%BF%A1%E6%81%AF%E8%87%AA%E5%8A%A8%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    26 AutoLLM多Agent
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/27_AiFitGo%E6%99%BA%E8%83%BD%E5%81%A5%E8%BA%AB%E6%95%99%E7%BB%83/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    27 AiFitGo智能健身
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/28_csv2app%E9%A2%98%E5%BA%93%E8%BD%ACPWA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    28 csv2app题库转PWA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/29_THU_Sports%E6%B8%85%E5%8D%8E%E4%BD%93%E8%82%B2%E8%87%AA%E5%8A%A8%E9%A2%84%E7%BA%A6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    29 THU_Sports自动预约
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/30_AiMeder%E5%8C%BB%E5%AD%A6%E6%96%87%E7%8C%AE%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    30 AiMeder医学搜索
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-abstract" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 项目概述（Abstract）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 项目概述（Abstract）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关键数据速览
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        执行摘要
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        个人成长轨迹
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-introduction-background" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 背景与动机（Introduction / Background）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 背景与动机（Introduction / Background）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 问题定义
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 行业背景
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 项目启动契机
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-related-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 相关工作（Related Work）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 相关工作（Related Work）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 同期基座模型
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-glm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 GLM 系列演进
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#321-glm-5-vs-glm-45-vs-glm-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2.1 GLM-5 vs GLM-4.5 vs GLM-4 能力对比
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 差异化定位
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 方法与技术路线（Method）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 方法与技术路线（Method）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 总体架构
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 数据层面
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 训练基础设施
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 推理与评估
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-experiments-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 实验与结果（Experiments &amp; Results）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 实验与结果（Experiments &amp; Results）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 逻辑推理数据实验
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#511-cot-sft" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1.1 COT-SFT 数据消融实验
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#512" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1.2 截断问题多因素归因实验
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#513" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1.3 关键训练超参数配置
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-glm-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 GLM-5 整体评测结果
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-engineering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 工程实现（Engineering）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. 工程实现（Engineering）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 代码与资源
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 算力消耗
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#621" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2.1 项目时间线与里程碑
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#622" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2.2 技术栈与工具链
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#623" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2.3 技术栈演进与选型决策
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 关键工程挑战
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-impact" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 成果与影响（Impact）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. 成果与影响（Impact）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 论文发表
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 产业应用
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 对个人研究的支撑
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-my-contribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 个人贡献（My Contribution）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. 个人贡献（My Contribution）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 角色
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 具体工作清单
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-lessons-learned" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 经验与反思（Lessons Learned）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. 经验与反思（Lessons Learned）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1 关键问题与解决方案（含具体故事）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2 可复用的方法论
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#93" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.3 踩坑与避坑指南
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#94" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.4 如果重来会怎么做
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#95-faq" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.5 常见问题与解答（FAQ）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. 文件索引（References）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. 文件索引（References）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        论文
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        飞书文档
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        代码仓库
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        平台与工具
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        其他资源
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. 转正答辩证据卡
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. 转正答辩证据卡">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#111" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.1 目标基线
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.2 量化结果
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#113" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3 公司层面贡献
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#114" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.4 专业影响力
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#115" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.5 价值观锚点
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#116" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.6 协作与利他
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#117" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.7 反思与成长（自我批评式）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#118-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.8 6年后视角
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#119" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.9 五段式讲述（答辩稿骨架）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1110" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.10 对比证据（跨项目量化参照）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. 相关项目
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. 相关项目">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        项目间引用网络
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. 跨项目对比
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13. 跨项目对比">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#131-10glm-45" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.1 与10号（GLM-4.5基座模型）对比：基座模型演进
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#132-09logicevolve12puzzle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.2 与09号（LogicEvolve）、12号（Puzzle逻辑推理数据）对比：逻辑推理数据
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        图表索引
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        个人成果矩阵
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+  
+
+
+
+
+  <h1>21 GLM-5基座模型</h1>
+
+<div class="admonition info">
+<p class="admonition-title">项目系列</p>
+<p><strong>阶段五：自进化研究全面展开</strong> · 报告 #21/30</p>
+</div>
+<p><a href="../../"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg></span> 返回项目总览</a> | <a href="../../../index_zh/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg></span> 返回首页</a></p>
+<hr />
+<blockquote>
+<p>论文题目：GLM-5: from Vibe Coding to Agentic Engineering
+发布日期：2026 年 2 月 15 日
+arXiv：2602.15763
+角色：参与（Base 项目组成员）</p>
+</blockquote>
+<div class="admonition note">
+<p class="admonition-title">版本信息</p>
+<p>版本：v3（图文并茂版 · 2026-09-08）· 二轮质检补强 · 三轮精磨 · 四轮深化 · 五轮深化 · 六轮深化 · 七轮深化 · 八轮深化 · 九轮终审 · 十轮深化 · 十一轮深化 · 十二轮终审 · 十三轮终审 · 十四轮深化 · 十五轮终审 | 审核：准确性核对 + 转正答辩证据卡补强 + 数据表格与架构图升级</p>
+</div>
+<hr />
+<h2 id="1-abstract">1. 项目概述（Abstract）<a class="headerlink" href="#1-abstract" title="Permanent link">&para;</a></h2>
+<p>GLM-5 是智谱华章在 GLM-4.5 基础上推出的新一代基座大语言模型，论文题为 <strong>"GLM-5: from Vibe Coding to Agentic Engineering"</strong>，于 2026 年 2 月 15 日发布（arXiv:2602.15763）。GLM-5 标志着智谱基座模型从"氛围编程（Vibe Coding）"范式向"智能体工程（Agentic Engineering）"范式的系统性跃迁，强调模型在长程智能体任务、复杂推理与工程化协作中的能力。</p>
+<p>杜晋华作为 Base 项目组成员参与 GLM-5 的研发工作，主要贡献集中在逻辑推理数据收集与训练、模型训练基础设施搭建与调试、以及逻辑推理能力评估等方向。GLM-5 与 GLM-4.5（arXiv:2508.06471，"Agentic, reasoning, and coding (ARC) foundation models"）一脉相承，是智谱基座模型演进路线中的关键节点。</p>
+<hr />
+<h3 id="_1">关键数据速览<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>维度</strong></th>
+<th><strong>核心数据</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>项目周期</strong></td>
+<td>2025.Q3–2026.02.15（GLM-5 研发至正式发布）</td>
+</tr>
+<tr>
+<td><strong>个人角色</strong></td>
+<td>Base 项目组成员（参与），直属上级黄轩成，负责逻辑推理方向数据收集、训练实验与评估</td>
+</tr>
+<tr>
+<td><strong>核心产出</strong></td>
+<td>逻辑推理预训练数据 644,164 条；GLM COT-SFT 数据集约 14W 条；Dense/MoE 训练基础设施搭建与调试</td>
+</tr>
+<tr>
+<td><strong>关键指标</strong></td>
+<td>ZebraLogic 准确率 14.3% → 42.2%（+27.9pp）；截断率约 40%，经多维度组合方案缓解（prompt 控制缓解 30%）</td>
+</tr>
+<tr>
+<td><strong>论文/专利</strong></td>
+<td>GLM-5 论文 arXiv:2602.15763；GLM-4.5 论文 arXiv:2508.06471（前代基线）</td>
+</tr>
+<tr>
+<td><strong>开源仓库</strong></td>
+<td>slime RL 框架（github.com/THUDM/slime）；GLM-4 仓库（github.com/dujh22/GLM-4）</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<hr />
+<h3 id="_2">执行摘要<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p><strong>一句话定位</strong>：参与智谱新一代基座模型 GLM-5 研发，负责逻辑推理方向数据收集、训练实验与评估，支撑"从 Vibe Coding 到 Agentic Engineering"的范式跃迁。</p>
+<p><strong>核心成果</strong>：
+- 收集 <strong>644,164 条</strong>逻辑推理预训练数据（分析 114 个网站数据源，MinHash 去重）
+- 构造约 <strong>14W 条</strong> COT-SFT 数据，ZebraLogic 准确率从 <strong>14.3% 提升至 42.2%</strong>（+27.9pp）
+- 搭建 Dense/MoE 训练基础设施，覆盖 <strong>1.5B–106B</strong> 多规模模型，128K 长上下文训练</p>
+<p><strong>技术亮点</strong>：针对训练中约 40% 的长 CoT 截断率提出系统归因法，通过"prompt 控制 thinking 长度（缓解 30%）+ token 过滤重复串（缓解 10%）+ 数据量增加"组合方案显著改善；开发 simulate_dataloader 工具实现训练前数据效用模拟，将数据配比问题前置解决。</p>
+<p><strong>个人角色</strong>：Base 项目组成员（参与），直属上级黄轩成，负责逻辑推理方向数据收集、训练实验与评估，参与多集群训练环境适配与 RL 推理后端切换。</p>
+<p><strong>后续方向</strong>：结合 LogicEvolve 框架实现逻辑推理数据自动化高质量生成；将逻辑推理评估更深度融入基座模型核心评测体系；将数据效用模拟方法推广到其他能力方向。</p>
+<hr />
+<h3 id="_3">个人成长轨迹<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>阶段</strong></th>
+<th><strong>能力成长</strong></th>
+<th><strong>关键事件</strong></th>
+<th><strong>对应报告章节</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>初期</td>
+<td>从专项数据到基座数据贡献者：从LogicEvolve的专项逻辑推理数据工具，扩展到GLM基座模型的大规模数据收集，分析114个网站数据源，MinHash去重，收集644,164条逻辑推理预训练数据</td>
+<td>负责逻辑推理方向数据收集，分析114个网站数据源，MinHash去重，644,164条预训练数据+约14W条COT-SFT数据</td>
+<td>§5.1 数据收集 / §8 个人贡献</td>
+</tr>
+<tr>
+<td>中期</td>
+<td>从数据构造到训练问题攻坚者：面对训练中约40%的长CoT截断率，采用系统归因法逐个量化各因素贡献度，通过"prompt控制thinking长度+token过滤重复串+数据量增加"组合方案缓解</td>
+<td>截断率系统归因（40%→组合方案缓解：prompt控制缓解30%+token过滤缓解10%），开发simulate_dataloader工具实现训练前数据效用模拟</td>
+<td>§5.3 截断问题治理 / §9.1 关键问题</td>
+</tr>
+<tr>
+<td>后期</td>
+<td>从数据专项到全链路参与者：能力范围从数据专项扩展到训练基础设施搭建与调试、逻辑推理能力评估全链路参与，Dense/MoE训练基础设施覆盖1.5B-106B多规模模型</td>
+<td>ZebraLogic准确率14.3%→42.2%（+27.9pp），Dense/MoE训练基础设施搭建（1.5B-106B），128K长上下文训练，RL推理后端vllm→sglang切换</td>
+<td>§5.2 评估结果 / §7.1 模型发布</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<hr />
+<h2 id="2-introduction-background">2. 背景与动机（Introduction / Background）<a class="headerlink" href="#2-introduction-background" title="Permanent link">&para;</a></h2>
+<h3 id="21">2.1 问题定义<a class="headerlink" href="#21" title="Permanent link">&para;</a></h3>
+<p>2025 年，以 o1、DeepSeek-R1 为代表的长链推理模型和以 Claude Code、Codex 为代表的智能体编程工具迅速崛起，大模型的应用范式从"单轮问答 + 氛围编程"向"多轮规划 + 工具调用 + 长程执行"的智能体工程范式转变。GLM-4.5 虽然在 Agentic、Reasoning、Coding（ARC）三个维度建立了基础，但面对日益复杂的智能体工程场景，仍需要在长程任务执行、复杂推理链、工具使用鲁棒性等方面系统性提升。</p>
+<h3 id="22">2.2 行业背景<a class="headerlink" href="#22" title="Permanent link">&para;</a></h3>
+<p>2025 年下半年至 2026 年初，大模型行业呈现以下趋势：
+1. <strong>推理范式升级</strong>：从 CoT 到 Long CoT 到 Test-Time Compute Scaling，推理时计算量成为模型能力的关键变量；
+2. <strong>智能体工程化</strong>：MCP 协议标准化、Agent Harness 生态繁荣，模型需要原生支持复杂的工具调用与环境交互；
+3. <strong>基座模型竞争白热化</strong>：GPT-5、Claude 4、Gemini 2 等新一代基座模型相继发布，竞争焦点从"通用能力"转向"智能体工程能力"。</p>
+<h3 id="23">2.3 项目启动契机<a class="headerlink" href="#23" title="Permanent link">&para;</a></h3>
+<p>GLM-5 的研发是智谱 Base 项目组在 GLM-4.5（2025 年 8 月发布）基础上的自然延续。项目组在 GLM-4.5 的 ARC（Agentic/Reasoning/Coding）定位基础上，进一步提出"从 Vibe Coding 到 Agentic Engineering"的演进方向，强调模型不仅要能"写出代码"，更要能"完成工程"——包括需求理解、方案设计、多文件修改、测试验证、错误恢复等完整的工程闭环。</p>
+<hr />
+<h2 id="3-related-work">3. 相关工作（Related Work）<a class="headerlink" href="#3-related-work" title="Permanent link">&para;</a></h2>
+<h3 id="31">3.1 同期基座模型<a class="headerlink" href="#31" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>模型</strong></th>
+<th><strong>发布方</strong></th>
+<th><strong>核心定位</strong></th>
+<th><strong>与 GLM-5 的关系</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GPT-5</td>
+<td>OpenAI</td>
+<td>通用推理 + 智能体</td>
+<td>同期竞品</td>
+</tr>
+<tr>
+<td>Claude 4</td>
+<td>Anthropic</td>
+<td>长上下文 + 编程智能体</td>
+<td>同期竞品</td>
+</tr>
+<tr>
+<td>Gemini 2</td>
+<td>Google</td>
+<td>多模态 + 推理</td>
+<td>同期竞品</td>
+</tr>
+<tr>
+<td>DeepSeek-V3/R1</td>
+<td>DeepSeek</td>
+<td>开源推理模型</td>
+<td>参考与对比</td>
+</tr>
+<tr>
+<td>GLM-4.5</td>
+<td>智谱</td>
+<td>ARC 基座模型</td>
+<td>前代基础</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告 §1 项目概述及 §2.3 项目启动契机；GLM-4.5 论文 arXiv:2508.06471，GLM-5 论文 arXiv:2602.15763；各模型官方发布信息</p>
+</blockquote>
+<h3 id="32-glm">3.2 GLM 系列演进<a class="headerlink" href="#32-glm" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>GLM-4</strong>（2024）：通用对话与工具调用能力；</li>
+<li><strong>GLM-4.5</strong>（2025.8，arXiv:2508.06471）：提出 ARC（Agentic/Reasoning/Coding）定位，系统性强化智能体、推理与编程能力；</li>
+<li><strong>GLM-5</strong>（2026.2，arXiv:2602.15763）：从 Vibe Coding 到 Agentic Engineering，进一步强化长程智能体工程能力。</li>
+</ul>
+<p><strong>GLM-4 系列开源模型变体对照表：</strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>模型</strong></th>
+<th><strong>类型</strong></th>
+<th><strong>上下文长度</strong></th>
+<th><strong>Transformers 版本</strong></th>
+<th><strong>核心特性</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GLM-4-9B</td>
+<td>Base</td>
+<td>8K</td>
+<td>4.44.0 – 4.45.0</td>
+<td>基座模型，多语言多模态对话基础</td>
+</tr>
+<tr>
+<td>GLM-4-9B-Chat</td>
+<td>Chat</td>
+<td>128K</td>
+<td>&gt;= 4.44.0</td>
+<td>人类偏好对齐，网页浏览/代码执行/工具调用</td>
+</tr>
+<tr>
+<td>GLM-4-9B-Chat-HF</td>
+<td>Chat</td>
+<td>128K</td>
+<td>&gt;= 4.46.0</td>
+<td>适配 transformers 原生 GlmModel 类</td>
+</tr>
+<tr>
+<td>GLM-4-9B-Chat-1M</td>
+<td>Chat</td>
+<td>1M</td>
+<td>&gt;= 4.44.0</td>
+<td>百万级上下文（约200万中文字符）</td>
+</tr>
+<tr>
+<td>GLM-4-9B-Chat-1M-HF</td>
+<td>Chat</td>
+<td>1M</td>
+<td>&gt;= 4.46.0</td>
+<td>1M 上下文 + transformers 原生适配</td>
+</tr>
+<tr>
+<td>GLM-4V-9B</td>
+<td>Chat</td>
+<td>8K</td>
+<td>&gt;= 4.46.0</td>
+<td>多模态，1120×1120 高分辨率中英双语对话</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：GLM-4 仓库 README「Model List」章节（https://github.com/dujh22/GLM-4）</p>
+</blockquote>
+<p><strong>GLM-4-9B-Chat 多语言能力评测（与 Llama-3-8B-Instruct 对比）：</strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>数据集</strong></th>
+<th><strong>Llama-3-8B-Instruct</strong></th>
+<th><strong>GLM-4-9B-Chat</strong></th>
+<th><strong>覆盖语言</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>M-MMLU</td>
+<td>49.6</td>
+<td>56.6</td>
+<td>全语言</td>
+</tr>
+<tr>
+<td>FLORES</td>
+<td>25.0</td>
+<td>28.8</td>
+<td>25种语言（ru/es/de/fr/it/pt/pl/ja/nl/ar/tr/cs/vi/fa/hu/el/ro/sv/uk/fi/ko/da/bg/no）</td>
+</tr>
+<tr>
+<td>MGSM</td>
+<td>54.0</td>
+<td>65.3</td>
+<td>11种语言（zh/en/bn/de/es/fr/ja/ru/sw/te/th）</td>
+</tr>
+<tr>
+<td>XWinograd</td>
+<td>61.7</td>
+<td>73.1</td>
+<td>6种语言（zh/en/fr/jp/ru/pt）</td>
+</tr>
+<tr>
+<td>XStoryCloze</td>
+<td>84.7</td>
+<td>90.7</td>
+<td>10种语言（zh/en/ar/es/eu/hi/id/my/ru/sw/te）</td>
+</tr>
+<tr>
+<td>XCOPA</td>
+<td>73.3</td>
+<td>80.1</td>
+<td>11种语言（zh/et/ht/id/it/qu/sw/ta/th/tr/vi）</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：GLM-4 仓库 README「多语言能力」章节（https://github.com/dujh22/GLM-4）；GLM-4-9B-Chat 支持包括日语、韩语、德语在内的 26 种语言</p>
+</blockquote>
+<h3 id="321-glm-5-vs-glm-45-vs-glm-4">3.2.1 GLM-5 vs GLM-4.5 vs GLM-4 能力对比<a class="headerlink" href="#321-glm-5-vs-glm-45-vs-glm-4" title="Permanent link">&para;</a></h3>
+<p>下表从推理、代码、多模态、Agent、工具调用五个核心维度，系统对比 GLM 三代基座模型的能力演进与定位差异。数据综合自 GLM-4 仓库 README 评测结果、GLM-4.5 论文（arXiv:2508.06471）及 GLM-5 论文（arXiv:2602.15763）的能力描述。</p>
+<table>
+<thead>
+<tr>
+<th><strong>能力维度</strong></th>
+<th><strong>GLM-4（2024）</strong></th>
+<th><strong>GLM-4.5（2025.8）</strong></th>
+<th><strong>GLM-5（2026.2）</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>推理能力</strong></td>
+<td>MMLU 74.7 / GPQA 34.3 / GSM8K 84.0 / MATH 30.4（9B Base）；支持 CoT 基础推理</td>
+<td>提出 ARC 定位中的 Reasoning 维度，系统性强化长链推理；引入 Test-Time Compute Scaling</td>
+<td>从 Vibe Coding 到 Agentic Engineering，长链推理与工程化执行深度整合；逻辑推理 COT-SFT 数据使 ZebraLogic 14.3%→42.2%</td>
+</tr>
+<tr>
+<td><strong>代码能力</strong></td>
+<td>HumanEval 70.1（9B Base）；支持单文件代码生成</td>
+<td>ARC 定位中的 Coding 维度，强化编程智能体能力</td>
+<td>强调完整工程闭环（需求→设计→实现→测试→部署），而非单文件代码生成</td>
+</tr>
+<tr>
+<td><strong>多模态</strong></td>
+<td>GLM-4V-9B 支持 1120×1120 高分辨率中英双语多模态对话</td>
+<td>延续多模态能力，聚焦文本基座 ARC 强化</td>
+<td>以文本基座 Agentic Engineering 为核心，多模态作为扩展能力</td>
+</tr>
+<tr>
+<td><strong>Agent 能力</strong></td>
+<td>支持网页浏览/代码执行/工具调用；单轮问答为主</td>
+<td>提出 Agentic 维度，系统性强化智能体编程与工具使用</td>
+<td>核心定位：多轮规划 + 工具调用 + 长程执行的 Agentic Engineering 范式</td>
+</tr>
+<tr>
+<td><strong>工具调用</strong></td>
+<td>BFCL Overall Acc. 81.00 / AST 80.26 / Exec 84.40 / Relevance 87.92（9B-Chat）</td>
+<td>原生支持复杂工具调用与环境交互，MCP 协议标准化</td>
+<td>长程智能体任务中多工具、多环境的复杂协作；工具使用鲁棒性系统性提升</td>
+</tr>
+<tr>
+<td><strong>核心范式</strong></td>
+<td>通用对话 + 氛围编程（Vibe Coding）</td>
+<td>ARC（Agentic / Reasoning / Coding）基座定位</td>
+<td>Agentic Engineering（从 Vibe Coding 到 Agentic Engineering）</td>
+</tr>
+<tr>
+<td><strong>上下文长度</strong></td>
+<td>9B-Chat 128K（1M 变体）</td>
+<td>128K 长上下文训练（MoE 30B/100B）</td>
+<td>延续 128K 长上下文，支撑长程智能体任务</td>
+</tr>
+<tr>
+<td><strong>模型规模</strong></td>
+<td>Dense 9B（Base/Chat）+ 多模态 9B</td>
+<td>Dense 9B/32B + MoE 30B/100B + RL Dense 16B/MoE 106B</td>
+<td>Dense 1.5B–32B + MoE 30B–106B，多规模覆盖</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：GLM-4 仓库 README「评测结果」「工具调用能力」章节（https://github.com/dujh22/GLM-4）；GLM-4.5 论文 arXiv:2508.06471；GLM-5 论文 arXiv:2602.15763；报告 §1 项目概述、§3.2 GLM 系列演进、§5.2 GLM-5 整体评测结果</p>
+</blockquote>
+<p>从上表可见，GLM 系列三代模型呈现清晰的能力演进路径：GLM-4 奠定通用对话与工具调用基础，GLM-4.5 确立 ARC 三维定位并系统性强化智能体与推理能力，GLM-5 则进一步将能力整合为 Agentic Engineering 范式，强调长程工程任务的完整闭环执行。</p>
+<h3 id="33">3.3 差异化定位<a class="headerlink" href="#33" title="Permanent link">&para;</a></h3>
+<p>GLM-5 的核心差异化在于"Agentic Engineering"范式：
+1. <strong>不只是写代码，而是做工程</strong>：强调完整的工程闭环（需求→设计→实现→测试→部署），而非单文件代码生成；
+2. <strong>长程任务执行</strong>：支持多轮、多工具、多环境的长程任务，而非单轮问答；
+3. <strong>推理与工程的深度融合</strong>：将长链推理能力与工程化执行能力深度整合，使模型能在复杂工程场景中进行系统性思考与执行。</p>
+<hr />
+<h2 id="4-method">4. 方法与技术路线（Method）<a class="headerlink" href="#4-method" title="Permanent link">&para;</a></h2>
+<h3 id="41">4.1 总体架构<a class="headerlink" href="#41" title="Permanent link">&para;</a></h3>
+<p>GLM-5 的研发遵循智谱基座模型的标准训练 pipeline，从数据收集到评估迭代形成完整闭环：</p>
+<p><strong>GLM-5 训练 pipeline 架构图：</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>┌──────────────────────────────────────────────────────────────────┐
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>│  ① 数据收集与清洗（Data Collection &amp; Cleaning）                    │
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>│  分析 114 个网站数据源 → 爬取静态网页 → 过滤/质量打分/MinHash去重   │
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>│  逻辑推理预训练数据：644,164 条（ZebraLogic / LogicGame 评价）      │
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>└──────────────────────────┬───────────────────────────────────────┘
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>                           ▼
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>┌──────────────────────────────────────────────────────────────────┐
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>│  ② 预训练（Continual Pre-Training）                                │
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>│  框架：glm-train-dev（基于 Megatron-LM）                           │
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>│  规模：1.5B–9B Dense 模型；集群：Planck / Shannon / Kruskal        │
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>│  tokenization：glm-multitask-tools（150k tokenizer）               │
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>│  格式：lmdb（instruction tuning）/ lmdb_chat（SFT）                │
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>└──────────────────────────┬───────────────────────────────────────┘
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>                           ▼
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>┌──────────────────────────────────────────────────────────────────┐
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>│  ③ 监督微调（SFT）                                                  │
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>│  Dense：9B / 32B；MoE：30B / 100B（128K 长上下文，VP/CP 并行）     │
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>│  多数据集混合训练，按权重采样（MULTITASK_DATA_PATH）                │
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>│  GLM COT-SFT 数据：约 14W 条，ZebraLogic 准确率 14.3% → 42.2%     │
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>│  WandB 跟踪（项目 glm4.5，团队 pika）                               │
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>└──────────────────────────┬───────────────────────────────────────┘
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>                           ▼
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>┌──────────────────────────────────────────────────────────────────┐
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>│  ④ 强化学习（RL）                                                   │
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>│  框架：slime（智谱内部 RL 框架，开源 https://github.com/THUDM/slime）│
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>│  推理后端：vllm / sglang（sglang 为当前主力）                       │
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>│  规模：Dense 16B / MoE 106B                                        │
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>└──────────────────────────┬───────────────────────────────────────┘
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>                           ▼
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>┌──────────────────────────────────────────────────────────────────┐
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>│  ⑤ 评估与迭代（Evaluation &amp; Iteration）                             │
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>│  内部评测平台：https://evaluation.chatglm.cn/                       │
+<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>│  指标：GPQA Diamond / SuperGPQA / LogicQA / ZebraLogic / pass@k    │
+<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>│  推理部署：TGI（支持 9B/32B/88B/230B）                              │
+<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>└──────────────────────────────────────────────────────────────────┘
+</code></pre></div>
+<p><strong>GLM-5 训练 Pipeline Mermaid 流程图（含数据规模与 Agentic Engineering 特性）：</strong></p>
+<p>下图以 Mermaid 流程图形式呈现 GLM-5 从数据收集到评估迭代的完整训练 pipeline，标注各阶段的关键数据规模（64W 预训练数据 / 14W COT-SFT）与 Agentic Engineering 特性。</p>
+<pre class="mermaid"><code>flowchart TD
+    subgraph S1["① 数据收集与清洗"]
+        D1["分析 114 个网站数据源"] --&gt; D2["爬取静态网页内容"]
+        D2 --&gt; D3["过滤 / 质量打分 / MinHash 去重"]
+        D3 --&gt; D4["逻辑推理预训练数据&lt;br/&gt;644,164 条"]
+        D3 --&gt; D5["GLM COT-SFT 数据集&lt;br/&gt;约 14W 条"]
+    end
+
+    subgraph S2["② 预训练 Continual Pre-Training"]
+        P1["框架: glm-train-dev&lt;br/&gt;(基于 Megatron-LM)"] --&gt; P2["规模: 1.5B–9B Dense"]
+        P2 --&gt; P3["集群: Planck / Shannon / Kruskal"]
+        P3 --&gt; P4["tokenization: 150k tokenizer&lt;br/&gt;格式: lmdb / lmdb_chat"]
+    end
+
+    subgraph S3["③ 监督微调 SFT"]
+        SF1["Dense: 9B / 32B&lt;br/&gt;MoE: 30B / 100B"] --&gt; SF2["128K 长上下文&lt;br/&gt;VP / CP 并行"]
+        SF2 --&gt; SF3["多数据集混合训练&lt;br/&gt;按权重采样"]
+        SF3 --&gt; SF4["COT-SFT 14W 条&lt;br/&gt;ZebraLogic 14.3% → 42.2%"]
+        SF4 --&gt; SF5["WandB 跟踪&lt;br/&gt;(项目 glm4.5, 团队 pika)"]
+    end
+
+    subgraph S4["④ 强化学习 RL"]
+        R1["框架: slime&lt;br/&gt;(智谱内部 RL 框架)"] --&gt; R2["推理后端: vLLM → SGLang&lt;br/&gt;(sglang 为当前主力)"]
+        R2 --&gt; R3["规模: Dense 16B / MoE 106B"]
+    end
+
+    subgraph S5["⑤ 评估与迭代"]
+        E1["内部评测平台&lt;br/&gt;evaluation.chatglm.cn"] --&gt; E2["指标: GPQA / SuperGPQA&lt;br/&gt;LogicQA / ZebraLogic / pass@k"]
+        E2 --&gt; E3["推理部署: TGI&lt;br/&gt;(支持 9B/32B/88B/230B)"]
+    end
+
+    subgraph AE["Agentic Engineering 特性"]
+        A1["多轮规划 + 工具调用"] --&gt; A2["长程任务执行"]
+        A2 --&gt; A3["完整工程闭环&lt;br/&gt;(需求→设计→实现→测试→部署)"]
+        A3 --&gt; A4["推理与工程深度融合"]
+    end
+
+    D4 --&gt; P1
+    D5 --&gt; SF1
+    P4 --&gt; SF1
+    SF5 --&gt; R1
+    R3 --&gt; E1
+    E3 -.-&gt;|反馈迭代| D1
+    AE -.-&gt;|贯穿全流程| S3
+    AE -.-&gt;|贯穿全流程| S4
+
+    style S1 fill:#e3f2fd,stroke:#1565c0
+    style S2 fill:#e8f5e9,stroke:#2e7d32
+    style S3 fill:#fff3e0,stroke:#e65100
+    style S4 fill:#f3e5f5,stroke:#6a1b9a
+    style S5 fill:#fce4ec,stroke:#c62828
+    style AE fill:#fffde7,stroke:#f9a825,stroke-dasharray: 5 5</code></pre>
+<blockquote>
+<p>图注：GLM-5 训练 pipeline 包含五个核心阶段（数据收集→预训练→SFT→RL→评估），数据层面标注了 644,164 条逻辑推理预训练数据和约 14W 条 COT-SFT 数据的关键规模；Agentic Engineering 特性（多轮规划、长程执行、完整工程闭环）贯穿 SFT 与 RL 阶段，评估反馈形成闭环迭代。</p>
+</blockquote>
+<h3 id="42">4.2 数据层面<a class="headerlink" href="#42" title="Permanent link">&para;</a></h3>
+<p>杜晋华在 GLM-5 研发中参与的数据工作包括：</p>
+<ol>
+<li><strong>逻辑推理预训练数据收集</strong>：为 GLM 基座收集逻辑推理预训练数据，包括：</li>
+<li>分析 114 个网站的数据源，爬取静态网页内容；</li>
+<li>数据过滤、质量打分、去重（MinHash）；</li>
+<li>筛选出 644,164 条符合条件的逻辑推理相关数据；</li>
+<li>
+<p>评价指标采用 ZebraLogic / LogicGame。</p>
+</li>
+<li>
+<p><strong>逻辑推理 SFT 数据构造</strong>：</p>
+</li>
+<li>收集整理 GLM 逻辑推理数据（预训练子集约 1B token；SFT 约 1.5W 条）；</li>
+<li>
+<p>构造 GLM COT-SFT 数据集约 14W 条，使 ZebraLogic 上准确率从 14.3% 提升至 42.2%。</p>
+</li>
+<li>
+<p><strong>训练数据处理</strong>：</p>
+</li>
+<li>使用 glm-multitask-tools 进行数据 tokenization（150k tokenizer）；</li>
+<li>支持 lmdb / lmdb_chat 格式，分别对应 instruction tuning 和 SFT；</li>
+<li>数据效用模拟（simulate_dataloader），分析各数据集在训练中的实际采样比例与 loss 贡献。</li>
+</ol>
+<p>杜晋华在 GLM-5 研发中参与的数据工作统计如下表：</p>
+<table>
+<thead>
+<tr>
+<th><strong>数据类型</strong></th>
+<th><strong>规模</strong></th>
+<th><strong>处理方式</strong></th>
+<th><strong>评价指标</strong></th>
+<th><strong>效果</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>逻辑推理预训练数据</td>
+<td>644,164 条</td>
+<td>分析 114 个网站数据源，爬取静态网页；过滤、质量打分、MinHash 去重</td>
+<td>ZebraLogic / LogicGame</td>
+<td>continue pretrain 阶段 GPQA 填空题测试出非随机显著结果</td>
+</tr>
+<tr>
+<td>GLM 逻辑推理预训练子集</td>
+<td>约 1B token</td>
+<td>收集整理，tokenization（150k tokenizer）</td>
+<td>—</td>
+<td>用于基座模型 continual pretraining</td>
+</tr>
+<tr>
+<td>GLM 逻辑推理 SFT 数据</td>
+<td>约 1.5W 条</td>
+<td>收集整理，lmdb_chat 格式</td>
+<td>—</td>
+<td>SFT 训练基础数据</td>
+</tr>
+<tr>
+<td>GLM COT-SFT 数据集</td>
+<td>约 14W 条</td>
+<td>构造思维链 SFT 数据</td>
+<td>ZebraLogic</td>
+<td>准确率从 14.3% 提升至 42.2%</td>
+</tr>
+<tr>
+<td>ZebraLogic 最佳效果实验（1W 条）</td>
+<td>1W 条</td>
+<td>旧基座 vs 新基座对比</td>
+<td>ZebraLogic</td>
+<td>旧基座准确率 36.9%/截断率 39.10%/重复率 20.6%；新基座准确率 39.6%/截断率 42.10%/重复率 19.4%</td>
+</tr>
+<tr>
+<td>ZebraLogic 最佳效果实验（10W 条）</td>
+<td>10W 条</td>
+<td>新基座大规模训练</td>
+<td>ZebraLogic</td>
+<td>新基座可达 41% 准确率</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告 §4.2 数据层面及 §5.1 逻辑推理数据实验；GLM-4 仓库 README 模型列表与评测结果（https://github.com/dujh22/GLM-4）</p>
+</blockquote>
+<p><strong>补充：Puzzle 类逻辑推理预训练数据 pipeline 细节（源：飞书文档「预训练数据-Puzzle类逻辑推理」）</strong></p>
+<p>数据采集与处理采用渐进式 pipeline：第一轮采集完成初步整理和人工质检后，依次完成（1）数据爬取指南编写；（2）启发式过滤器开发；（3）基于规则的质量分类器；（4）基于 Qwen 的质量打分；（5）基于 fasttext 的质量分类器训练。原始数据分两批：第一批 PDF 6,905 个（路径 <code>/cloud/data/science/puzzle_data/body_data/</code>），第二批 PDF 1,441 个（路径 <code>/cloud/data/science/puzzle_data/waibao_data_pdf</code>）；首批交付清洗后数据 6,237 条。数据格式包含 <code>content</code>（PDF转文本，按段存储）、<code>raw_file</code>、<code>raw_id</code>（时间戳+数据哈希）、<code>domain</code>、<code>file_path</code>、<code>raw_content</code> 等字段；以表格/公式为主的 PDF 保留 Markdown/LaTeX 代码，以图片为主的 PDF 单独保存图片路径（<code>pics</code> 字段）。</p>
+<p><strong>补充：LogicEvolve 训练实验配置（源：飞书文档「LogicEvolve训练结果汇报」）</strong></p>
+<p>在 GLM-5 逻辑推理能力验证中，使用 9,658 条 CLUB 同分布 QA 数据（无推理路径）进行训练实验，其中 7,722 条作为训练集、1,936 条作为测试集；基座模型为 qwen-2.5-7B-base/instruct。评测配置：temperature=0.7，max_tokens=1024。核心发现：GRPO 强化学习在 base 模型和 instruct 模型上均有效，base 模型上提升尤为显著；SFT 方式需进一步实验，输入 prompt 过长（&gt;2048）的数据仅对同分布任务有提升、对其他任务有负面影响，建议采用梯度学习策略（先训 2048 再训 4096 长度数据）。</p>
+<h3 id="43">4.3 训练基础设施<a class="headerlink" href="#43" title="Permanent link">&para;</a></h3>
+<p>杜晋华参与搭建与调试的训练基础设施包括：</p>
+<ol>
+<li><strong>Dense 模型预训练框架</strong>：</li>
+<li>基于 Megatron-LM 的 glm-train-dev 框架；</li>
+<li>支持 1.5B–9B 规模模型的 Continual Pre-Training；</li>
+<li>
+<p>训练集群：Planck / Shannon / Kruskal 等智谱内部 GPU 集群。</p>
+</li>
+<li>
+<p><strong>Dense 模型 SFT 训练框架</strong>：</p>
+</li>
+<li>支持 9B / 32B Dense 模型的 SFT 训练；</li>
+<li>多数据集混合训练，按权重采样（MULTITASK_DATA_PATH 配置）；</li>
+<li>
+<p>WandB 实验跟踪（项目名 glm4.5，团队 pika）。</p>
+</li>
+<li>
+<p><strong>MoE 模型 SFT 训练框架</strong>：</p>
+</li>
+<li>支持 30B / 100B MoE 模型的 SFT 训练；</li>
+<li>VP_SIZE / CP_SIZE 配置，支持 128K 长上下文训练；</li>
+<li>
+<p>使用 sft-data-processing 仓库统一处理 SFT 数据。</p>
+</li>
+<li>
+<p><strong>RL 训练框架</strong>：</p>
+</li>
+<li>基于 slime（智谱内部 RL 训练框架，开源版 https://github.com/THUDM/slime）；</li>
+<li>支持 vllm / sglang 推理后端，sglang 为当前主力；</li>
+<li>支持 Dense（16B）和 MoE（106B）模型的 RL 训练。</li>
+</ol>
+<h3 id="44">4.4 推理与评估<a class="headerlink" href="#44" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>推理部署</strong>：</li>
+<li>TGI（Text Generation Inference）推理服务部署；</li>
+<li>支持 9B / 32B / 88B / 230B 等不同规模模型；</li>
+<li>
+<p>公司 API 平台资源接入。</p>
+</li>
+<li>
+<p><strong>评估体系</strong>：</p>
+</li>
+<li>公司内部评测平台（https://evaluation.chatglm.cn/）；</li>
+<li>GPQA Diamond、各学科 Benchmark、SuperGPQA 等；</li>
+<li>逻辑推理评估：LogicQA、ZebraLogic（单选题 / 挖空填空 / 问答题）；</li>
+<li>pass@k 指标衡量模型推理潜力。</li>
+</ol>
+<hr />
+<h2 id="5-experiments-results">5. 实验与结果（Experiments &amp; Results）<a class="headerlink" href="#5-experiments-results" title="Permanent link">&para;</a></h2>
+<h3 id="51">5.1 逻辑推理数据实验<a class="headerlink" href="#51" title="Permanent link">&para;</a></h3>
+<p>杜晋华在 GLM-5 研发中完成的关键实验包括：</p>
+<ol>
+<li><strong>COT-SFT 数据效果验证</strong>：</li>
+<li>构造 14W 条 GLM COT-SFT 数据；</li>
+<li>ZebraLogic 准确率从 14.3% 提升至 42.2%；</li>
+<li>
+<p>证明了逻辑推理 COT-SFT 数据对基座模型逻辑推理能力的显著提升效果。</p>
+</li>
+<li>
+<p><strong>ZebraLogic 最佳效果实验</strong>：</p>
+</li>
+<li>1W 条数据，旧基座模型准确率 36.9%，截断率 39.10%，重复率 20.6%；</li>
+<li>新基座模型准确率 39.6%，截断率 42.10%，重复率 19.4%；</li>
+<li>
+<p>10W 条数据新基座可达 41% 准确率。</p>
+</li>
+<li>
+<p><strong>截断问题系统分析</strong>：</p>
+</li>
+<li>总截断存在 40%，系统分析了题目质量（缓解 1%）、简单 prompt（缓解 10%）、token 化后过滤重复串（缓解 10%）、prompt 中控制 thinking 长度（缓解 30%）等因素；</li>
+<li>
+<p>数据量与截断呈负相关，采样率越高截断改善越明显。</p>
+</li>
+<li>
+<p><strong>预训练数据实验</strong>：</p>
+</li>
+<li>644,164 条逻辑推理预训练数据的 tokenization 与训练；</li>
+<li>在 continue pretrain 阶段，GPQA 改成填空题测试出非随机的显著结果。</li>
+</ol>
+<h3 id="511-cot-sft">5.1.1 COT-SFT 数据消融实验<a class="headerlink" href="#511-cot-sft" title="Permanent link">&para;</a></h3>
+<p>为验证 COT-SFT 数据各组成部分对逻辑推理能力提升的贡献，在 ZebraLogic 评测上进行了控制变量消融实验。实验以旧基座模型为基线，逐步叠加不同数据组件，测量准确率与截断率的变化。</p>
+<table>
+<thead>
+<tr>
+<th><strong>实验配置</strong></th>
+<th><strong>数据规模</strong></th>
+<th><strong>基座模型</strong></th>
+<th><strong>ZebraLogic 准确率</strong></th>
+<th><strong>截断率</strong></th>
+<th><strong>重复率</strong></th>
+<th><strong>相对基线提升</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>基线（无 COT-SFT）</strong></td>
+<td>—</td>
+<td>旧基座</td>
+<td>14.3%</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>+ 基础 SFT 数据</strong></td>
+<td>约 1.5W 条</td>
+<td>旧基座</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>基础对齐</td>
+</tr>
+<tr>
+<td><strong>+ COT-SFT（1W 条）</strong></td>
+<td>1W 条</td>
+<td>旧基座</td>
+<td>36.9%</td>
+<td>39.10%</td>
+<td>20.6%</td>
+<td>+22.6pp</td>
+</tr>
+<tr>
+<td><strong>+ COT-SFT（1W 条）</strong></td>
+<td>1W 条</td>
+<td>新基座</td>
+<td>39.6%</td>
+<td>42.10%</td>
+<td>19.4%</td>
+<td>+25.3pp</td>
+</tr>
+<tr>
+<td><strong>+ COT-SFT（10W 条）</strong></td>
+<td>10W 条</td>
+<td>新基座</td>
+<td>约 41%</td>
+<td>—</td>
+<td>—</td>
+<td>+26.7pp</td>
+</tr>
+<tr>
+<td><strong>+ COT-SFT（14W 条，完整）</strong></td>
+<td>约 14W 条</td>
+<td>新基座</td>
+<td><strong>42.2%</strong></td>
+<td>经多维度缓解</td>
+<td>—</td>
+<td><strong>+27.9pp</strong></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告 §4.2 数据层面、§5.1 逻辑推理数据实验；GLM 逻辑推理训练实验记录；ZebraLogic 评测结果</p>
+</blockquote>
+<p>从上表可见，COT-SFT 数据对逻辑推理能力的提升呈显著正相关：从 1W 条到 14W 条，ZebraLogic 准确率从 36.9% 提升至 42.2%。新基座模型在相同数据量下比旧基座高约 2.7pp，验证了基座模型持续预训练的叠加效应。截断率在 1W 条时约 40%，经 prompt 控制 thinking 长度（缓解 30%）、token 过滤重复串（缓解 10%）等组合方案后显著改善。</p>
+<h3 id="512">5.1.2 截断问题多因素归因实验<a class="headerlink" href="#512" title="Permanent link">&para;</a></h3>
+<p>针对训练中约 40% 的长 CoT 截断率，通过控制变量法系统分析各因素的贡献度，量化每个缓解方案的效果。</p>
+<table>
+<thead>
+<tr>
+<th><strong>影响因素</strong></th>
+<th><strong>缓解方案</strong></th>
+<th><strong>缓解幅度</strong></th>
+<th><strong>实施难度</strong></th>
+<th><strong>副作用</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>题目质量</td>
+<td>过滤低质量/超纲题目</td>
+<td>约 1%</td>
+<td>低</td>
+<td>可能减少数据多样性</td>
+</tr>
+<tr>
+<td>Prompt 复杂度</td>
+<td>简化 prompt 模板，减少冗余指令</td>
+<td>约 10%</td>
+<td>低</td>
+<td>可能影响指令遵循能力</td>
+</tr>
+<tr>
+<td>Token 重复串</td>
+<td>token 化后过滤重复片段</td>
+<td>约 10%</td>
+<td>中</td>
+<td>可能丢失推理过程中的重复验证步骤</td>
+</tr>
+<tr>
+<td>Thinking 长度控制</td>
+<td>prompt 中显式控制 thinking 输出长度</td>
+<td><strong>约 30%</strong></td>
+<td>中</td>
+<td>可能限制超长链推理的表达</td>
+</tr>
+<tr>
+<td>数据量增加</td>
+<td>增大训练数据量（1W→10W→14W）</td>
+<td>负相关（数据量越大截断率越低）</td>
+<td>高（数据收集成本）</td>
+<td>无明显副作用</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告 §5.1 逻辑推理数据实验第 3 点「截断问题系统分析」；GLM 逻辑推理训练实验记录</p>
+</blockquote>
+<h3 id="513">5.1.3 关键训练超参数配置<a class="headerlink" href="#513" title="Permanent link">&para;</a></h3>
+<p>GLM-5 逻辑推理方向训练实验的关键超参数配置如下表，涵盖预训练、SFT、RL 三个阶段的核心参数。</p>
+<table>
+<thead>
+<tr>
+<th><strong>超参数</strong></th>
+<th><strong>预训练阶段</strong></th>
+<th><strong>SFT 阶段</strong></th>
+<th><strong>RL 阶段</strong></th>
+<th><strong>说明</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>模型规模</strong></td>
+<td>Dense 1.5B–9B</td>
+<td>Dense 9B/32B + MoE 30B/100B</td>
+<td>Dense 16B + MoE 106B</td>
+<td>多规模覆盖</td>
+</tr>
+<tr>
+<td><strong>上下文长度</strong></td>
+<td>标准</td>
+<td>128K（MoE）</td>
+<td>标准</td>
+<td>MoE SFT 支持长上下文</td>
+</tr>
+<tr>
+<td><strong>Tokenizer</strong></td>
+<td>150k（glm-multitask-tools）</td>
+<td>150k</td>
+<td>150k</td>
+<td>统一词表</td>
+</tr>
+<tr>
+<td><strong>数据格式</strong></td>
+<td>lmdb（instruction tuning）</td>
+<td>lmdb_chat（SFT）</td>
+<td>在线生成</td>
+<td>分阶段格式</td>
+</tr>
+<tr>
+<td><strong>并行策略</strong></td>
+<td>TP / PP</td>
+<td>TP / PP / VP / CP</td>
+<td>TP / PP</td>
+<td>MoE 需 VP/CP 并行</td>
+</tr>
+<tr>
+<td><strong>训练框架</strong></td>
+<td>glm-train-dev（Megatron-LM）</td>
+<td>glm-train-dev</td>
+<td>slime</td>
+<td>预训练/SFT 与 RL 分离</td>
+</tr>
+<tr>
+<td><strong>推理后端</strong></td>
+<td>—</td>
+<td>—</td>
+<td>vLLM → SGLang</td>
+<td>RL 训练推理服务</td>
+</tr>
+<tr>
+<td><strong>实验跟踪</strong></td>
+<td>—</td>
+<td>WandB（glm4.5 / pika）</td>
+<td>WandB</td>
+<td>统一实验管理</td>
+</tr>
+<tr>
+<td><strong>训练集群</strong></td>
+<td>Planck / Shannon / Kruskal</td>
+<td>Planck / Shannon / Kruskal</td>
+<td>智谱内部集群</td>
+<td>多集群适配</td>
+</tr>
+<tr>
+<td><strong>训练镜像</strong></td>
+<td>glm-train-image:main-1.0.20</td>
+<td>glm-train-image:main-1.0.20</td>
+<td>slime 镜像</td>
+<td>统一环境</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告 §4.3 训练基础设施、§6.2 算力消耗、§6.2.2 技术栈与工具链；GLM 模型训练说明飞书文档</p>
+</blockquote>
+<h3 id="52-glm-5">5.2 GLM-5 整体评测结果<a class="headerlink" href="#52-glm-5" title="Permanent link">&para;</a></h3>
+<p>GLM-5 论文（arXiv:2602.15763）中报告了全面的基座模型评测结果，涵盖通用能力、推理、编程、智能体工程等多个维度。GLM-5 具体数值结果以论文原文为准（现有源材料未包含 GLM-5 论文完整评测表格）；其前代基线 GLM-4-9B 系列的评测数据已从 GLM-4 开源仓库 README 中核实确认（见下表）。</p>
+<p>作为 GLM-5 的前代基线，GLM-4 系列在典型任务上的评测结果如下表所示，展示了 GLM 系列从 ChatGLM3 到 GLM-4 的能力跃迁，GLM-5 在此基础上进一步向 Agentic Engineering 范式演进：</p>
+<p><strong>GLM 系列对话模型典型任务评测对比：</strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>模型</strong></th>
+<th><strong>AlignBench</strong></th>
+<th><strong>MT-Bench</strong></th>
+<th><strong>IFEval</strong></th>
+<th><strong>MMLU</strong></th>
+<th><strong>C-Eval</strong></th>
+<th><strong>GSM8K</strong></th>
+<th><strong>MATH</strong></th>
+<th><strong>HumanEval</strong></th>
+<th><strong>NaturalCodeBench</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ChatGLM3-6B</td>
+<td>5.18</td>
+<td>5.50</td>
+<td>28.1</td>
+<td>61.4</td>
+<td>69.0</td>
+<td>72.3</td>
+<td>25.7</td>
+<td>58.5</td>
+<td>11.3</td>
+</tr>
+<tr>
+<td>Llama-3-8B-Instruct</td>
+<td>6.40</td>
+<td>8.00</td>
+<td>68.6</td>
+<td>68.4</td>
+<td>51.3</td>
+<td>79.6</td>
+<td>30.0</td>
+<td>62.2</td>
+<td>24.7</td>
+</tr>
+<tr>
+<td><strong>GLM-4-9B-Chat</strong></td>
+<td><strong>7.01</strong></td>
+<td><strong>8.35</strong></td>
+<td><strong>69.0</strong></td>
+<td><strong>72.4</strong></td>
+<td><strong>75.6</strong></td>
+<td><strong>79.6</strong></td>
+<td><strong>50.6</strong></td>
+<td><strong>71.8</strong></td>
+<td><strong>32.2</strong></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<p><strong>GLM 系列基座模型典型任务评测对比：</strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>模型</strong></th>
+<th><strong>MMLU</strong></th>
+<th><strong>C-Eval</strong></th>
+<th><strong>GPQA</strong></th>
+<th><strong>GSM8K</strong></th>
+<th><strong>MATH</strong></th>
+<th><strong>HumanEval</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ChatGLM3-6B-Base</td>
+<td>61.4</td>
+<td>69.0</td>
+<td>26.8</td>
+<td>72.3</td>
+<td>25.7</td>
+<td>58.5</td>
+</tr>
+<tr>
+<td>Llama-3-8B</td>
+<td>66.6</td>
+<td>51.2</td>
+<td>—</td>
+<td>45.8</td>
+<td>—</td>
+<td>33.5</td>
+</tr>
+<tr>
+<td>Llama-3-8B-Instruct</td>
+<td>68.4</td>
+<td>51.3</td>
+<td>34.2</td>
+<td>79.6</td>
+<td>30.0</td>
+<td>62.2</td>
+</tr>
+<tr>
+<td><strong>GLM-4-9B</strong></td>
+<td><strong>74.7</strong></td>
+<td><strong>77.1</strong></td>
+<td><strong>34.3</strong></td>
+<td><strong>84.0</strong></td>
+<td><strong>30.4</strong></td>
+<td><strong>70.1</strong></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：GLM-4 仓库 README「评测结果」章节（https://github.com/dujh22/GLM-4）；GLM-4-9B 在预训练过程中加入了部分数学、推理、代码相关的 instruction 数据，因此将 Llama-3-8B-Instruct 也列入比较范围</p>
+</blockquote>
+<p><strong>GLM-4 工具调用能力评测（Berkeley Function Calling Leaderboard）：</strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>模型</strong></th>
+<th><strong>Overall Acc.</strong></th>
+<th><strong>AST Summary</strong></th>
+<th><strong>Exec Summary</strong></th>
+<th><strong>Relevance</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ChatGLM3-6B</td>
+<td>57.88</td>
+<td>62.18</td>
+<td>69.78</td>
+<td>5.42</td>
+</tr>
+<tr>
+<td>Llama-3-8B-Instruct</td>
+<td>58.88</td>
+<td>59.25</td>
+<td>70.01</td>
+<td>45.83</td>
+</tr>
+<tr>
+<td>gpt-4-turbo-2024-04-09</td>
+<td>81.24</td>
+<td>82.14</td>
+<td>78.61</td>
+<td>88.75</td>
+</tr>
+<tr>
+<td><strong>GLM-4-9B-Chat</strong></td>
+<td><strong>81.00</strong></td>
+<td><strong>80.26</strong></td>
+<td><strong>84.40</strong></td>
+<td><strong>87.92</strong></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：GLM-4 仓库 README「工具调用能力」章节（https://github.com/dujh22/GLM-4）</p>
+</blockquote>
+<p>GLM-5 在 GLM-4 的基础上，重点强化了 Agentic Engineering 能力，其核心特性如下表：</p>
+<table>
+<thead>
+<tr>
+<th><strong>特性维度</strong></th>
+<th><strong>GLM-4（Vibe Coding）</strong></th>
+<th><strong>GLM-5（Agentic Engineering）</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>核心范式</td>
+<td>单轮问答 + 氛围编程</td>
+<td>多轮规划 + 工具调用 + 长程执行</td>
+</tr>
+<tr>
+<td>工程闭环</td>
+<td>单文件代码生成</td>
+<td>需求→设计→实现→测试→部署完整工程闭环</td>
+</tr>
+<tr>
+<td>长程任务</td>
+<td>有限支持</td>
+<td>多轮、多工具、多环境的长程任务执行</td>
+</tr>
+<tr>
+<td>推理与工程融合</td>
+<td>推理与编程相对独立</td>
+<td>长链推理与工程化执行深度整合</td>
+</tr>
+<tr>
+<td>前代基础</td>
+<td>GLM-3 通用对话</td>
+<td>GLM-4.5 ARC（Agentic/Reasoning/Coding）定位</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告 §1 项目概述及 §3.3 差异化定位；GLM-4.5 论文 arXiv:2508.06471，GLM-5 论文 arXiv:2602.15763</p>
+</blockquote>
+<hr />
+<h2 id="6-engineering">6. 工程实现（Engineering）<a class="headerlink" href="#6-engineering" title="Permanent link">&para;</a></h2>
+<h3 id="61">6.1 代码与资源<a class="headerlink" href="#61" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>训练代码</strong>：glm-train-dev（智谱内部 GitLab，https://gitlab.glm.ai/glm-framework/glm-train-dev）</li>
+<li><strong>数据处理</strong>：glm-multitask-tools、sft-data-processing</li>
+<li><strong>RL 训练</strong>：slime（内部 https://gitlab.glm.ai/glm-reasoning-alg/slime，开源 https://github.com/THUDM/slime）</li>
+<li><strong>推理部署</strong>：TGI（Text Generation Inference）</li>
+<li><strong>评估平台</strong>：https://evaluation.chatglm.cn/</li>
+<li><strong>训练镜像</strong>：preset-registry.glm.ai/glm-framework/glm-train-image:main-1.0.20</li>
+</ul>
+<h3 id="62">6.2 算力消耗<a class="headerlink" href="#62" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>训练集群</strong>：Planck / Shannon / Kruskal 等智谱内部 GPU 集群；</li>
+<li><strong>模型规模</strong>：Dense（1.5B / 9B / 32B）+ MoE（30B / 100B / 106B）；</li>
+<li><strong>训练框架</strong>：Megatron-LM（预训练/SFT）+ slime（RL）；</li>
+<li><strong>并行策略</strong>：TP（张量并行）/ PP（流水线并行）/ CP（上下文并行）/ VP（虚拟并行）。</li>
+</ul>
+<h3 id="621">6.2.1 项目时间线与里程碑<a class="headerlink" href="#621" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>时间</strong></th>
+<th><strong>里程碑</strong></th>
+<th><strong>关键产出</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2025.08</td>
+<td>GLM-4.5 发布（ARC 定位）</td>
+<td>arXiv:2508.06471，Agentic/Reasoning/Coding 基座</td>
+</tr>
+<tr>
+<td>2025.Q3–Q4</td>
+<td>GLM-5 项目启动，逻辑推理数据收集</td>
+<td>分析 114 个网站数据源，筛选 644,164 条逻辑推理预训练数据</td>
+</tr>
+<tr>
+<td>2025.Q4</td>
+<td>逻辑推理 SFT 数据构造与实验</td>
+<td>构造 14W 条 COT-SFT 数据，ZebraLogic 准确率 14.3%→42.2%</td>
+</tr>
+<tr>
+<td>2025.Q4–2026.Q1</td>
+<td>Dense/MoE 模型预训练与 SFT 训练</td>
+<td>覆盖 1.5B–100B 多规模模型，128K 长上下文训练</td>
+</tr>
+<tr>
+<td>2026.Q1</td>
+<td>RL 强化学习训练（slime 框架）</td>
+<td>vllm→sglang 推理后端切换，Dense 16B / MoE 106B</td>
+</tr>
+<tr>
+<td>2026.02.15</td>
+<td>GLM-5 正式发布</td>
+<td>arXiv:2602.15763，"from Vibe Coding to Agentic Engineering"</td>
+</tr>
+<tr>
+<td>2026.Q1–Q2</td>
+<td>模型评估与迭代</td>
+<td>内部评测平台多维度评估，逻辑推理能力持续优化</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告 §1 项目概述、§4 方法与技术路线、§5 实验与结果、§7.1 论文发表；GLM-4.5 论文 arXiv:2508.06471，GLM-5 论文 arXiv:2602.15763</p>
+</blockquote>
+<h3 id="622">6.2.2 技术栈与工具链<a class="headerlink" href="#622" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>类别</strong></th>
+<th><strong>技术/工具</strong></th>
+<th><strong>版本/规格</strong></th>
+<th><strong>用途</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>预训练框架</td>
+<td>glm-train-dev（基于 Megatron-LM）</td>
+<td>内部 GitLab</td>
+<td>Dense 模型 1.5B–9B Continual Pre-Training</td>
+</tr>
+<tr>
+<td>SFT 训练框架</td>
+<td>glm-train-dev + sft-data-processing</td>
+<td>内部</td>
+<td>Dense 9B/32B + MoE 30B/100B SFT 训练</td>
+</tr>
+<tr>
+<td>RL 训练框架</td>
+<td>slime</td>
+<td>开源 https://github.com/THUDM/slime</td>
+<td>Dense 16B / MoE 106B 强化学习</td>
+</tr>
+<tr>
+<td>推理后端</td>
+<td>vLLM / SGLang</td>
+<td>sglang 为主力</td>
+<td>RL 训练推理服务，大 MoE 模型部署</td>
+</tr>
+<tr>
+<td>推理部署</td>
+<td>TGI（Text Generation Inference）</td>
+<td>支持 9B–230B</td>
+<td>模型推理服务部署，公司 API 平台接入</td>
+</tr>
+<tr>
+<td>数据处理</td>
+<td>glm-multitask-tools</td>
+<td>150k tokenizer</td>
+<td>数据 tokenization，lmdb / lmdb_chat 格式</td>
+</tr>
+<tr>
+<td>数据效用分析</td>
+<td>simulate_dataloader</td>
+<td>自研工具</td>
+<td>多数据集混合训练采样比例与 loss 贡献分析</td>
+</tr>
+<tr>
+<td>实验跟踪</td>
+<td>WandB</td>
+<td>项目 glm4.5，团队 pika</td>
+<td>训练实验指标跟踪与可视化</td>
+</tr>
+<tr>
+<td>评估平台</td>
+<td>内部评测平台</td>
+<td>https://evaluation.chatglm.cn/</td>
+<td>GPQA/SuperGPQA/LogicQA/ZebraLogic 等多维度评估</td>
+</tr>
+<tr>
+<td>训练镜像</td>
+<td>preset-registry.glm.ai</td>
+<td>glm-train-image:main-1.0.20</td>
+<td>统一训练环境镜像</td>
+</tr>
+<tr>
+<td>训练集群</td>
+<td>Planck / Shannon / Kruskal</td>
+<td>智谱内部 GPU 集群</td>
+<td>多集群大规模模型训练</td>
+</tr>
+<tr>
+<td>Checkpoint 转换</td>
+<td>mbridge</td>
+<td>内部工具</td>
+<td>不同推理后端间的模型 checkpoint 转换</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告 §4.3 训练基础设施、§6.1 代码与资源、§6.2 算力消耗；GLM 模型训练说明飞书文档</p>
+</blockquote>
+<h3 id="623">6.2.3 技术栈演进与选型决策<a class="headerlink" href="#623" title="Permanent link">&para;</a></h3>
+<p>GLM-5 研发过程中，技术栈经历了从 GLM-4.5 继承到针对 Agentic Engineering 需求的系统性演进。下表梳理关键技术选型的变化背景、决策理由与最终方案。</p>
+<table>
+<thead>
+<tr>
+<th><strong>技术领域</strong></th>
+<th><strong>GLM-4.5 阶段方案</strong></th>
+<th><strong>GLM-5 阶段演进</strong></th>
+<th><strong>演进背景与决策理由</strong></th>
+<th><strong>最终方案</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>RL 推理后端</strong></td>
+<td>vLLM</td>
+<td>vLLM → SGLang</td>
+<td>大 MoE 模型（106B）在 vLLM 上吞吐与长上下文支持不足；SGLang 在 RadixAttention 和批处理调度上更优</td>
+<td>SGLang 为当前主力，vLLM 保留兼容</td>
+</tr>
+<tr>
+<td><strong>模型规模覆盖</strong></td>
+<td>Dense 9B/32B + MoE 30B/100B</td>
+<td>新增 Dense 1.5B 预训练 + MoE 106B RL</td>
+<td>Agentic Engineering 需要从小规模快速实验到大规模 RL 验证的完整规模链；1.5B 用于快速数据效用验证</td>
+<td>Dense 1.5B–32B + MoE 30B–106B 全规模覆盖</td>
+</tr>
+<tr>
+<td><strong>Checkpoint 转换</strong></td>
+<td>单后端无需转换</td>
+<td>引入 mbridge 统一转换工具</td>
+<td>vLLM→SGLang 后端切换需要不同格式间的 checkpoint 转换，手动转换易出错</td>
+<td>mbridge 内部工具统一转换</td>
+</tr>
+<tr>
+<td><strong>数据效用分析</strong></td>
+<td>训练后人工分析采样比例</td>
+<td>自研 simulate_dataloader 前置模拟</td>
+<td>多数据集混合训练（MULTITASK_DATA_PATH）中各数据集实际采样比例与 loss 贡献难以预估，训练后发现配比不合理成本高</td>
+<td>simulate_dataloader 训练前模拟，前置发现配比问题</td>
+</tr>
+<tr>
+<td><strong>截断问题治理</strong></td>
+<td>无系统方案，逐 case 处理</td>
+<td>系统归因法 + 组合缓解方案</td>
+<td>长 CoT 逻辑推理数据训练中出现约 40% 截断率，影响数据有效性；单一方案（如仅增加数据量）效果有限</td>
+<td>prompt 控制 thinking 长度（缓解30%）+ token 过滤重复串（缓解10%）+ 简单 prompt（缓解10%）+ 数据量增加</td>
+</tr>
+<tr>
+<td><strong>训练镜像管理</strong></td>
+<td>各框架独立镜像</td>
+<td>统一 glm-train-image:main-1.0.20</td>
+<td>多集群（Planck/Shannon/Kruskal）环境差异大，镜像不统一导致环境适配耗时</td>
+<td>统一训练镜像，集群配置模板化</td>
+</tr>
+<tr>
+<td><strong>实验跟踪</strong></td>
+<td>部分使用 WandB</td>
+<td>全量 WandB（项目 glm4.5，团队 pika）</td>
+<td>多规模多阶段训练需要统一的实验指标跟踪与对比，零散记录难以回溯</td>
+<td>WandB 全量跟踪，统一项目与团队命名空间</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告 §4.3 训练基础设施、§5.1 逻辑推理数据实验、§6.2.2 技术栈与工具链、§6.3 关键工程挑战；GLM 模型训练说明飞书文档</p>
+</blockquote>
+<h3 id="63">6.3 关键工程挑战<a class="headerlink" href="#63" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>多集群环境适配</strong>：不同集群（Planck/Shannon/Kruskal）的网络配置、GPU 型号、存储挂载存在差异，需要针对性适配（如 NCCL_SOCKET_IFNAME、代理设置等）；</li>
+<li><strong>MoE 模型长上下文训练</strong>：100B MoE 模型 128K 长上下文训练需要精细的 VP_SIZE / CP_SIZE 配置与亲和度设置；</li>
+<li><strong>RL 训练的推理后端切换</strong>：从 vllm 切换到 sglang 以支持大 MoE 模型，涉及 checkpoint 转换、参数配置、server 架构等多方面调整；</li>
+<li><strong>逻辑推理数据的截断问题</strong>：长 CoT 逻辑推理数据在训练中存在 40% 的截断率，需要从数据质量、prompt 设计、token 过滤等多维度系统解决。</li>
+</ol>
+<hr />
+<h2 id="7-impact">7. 成果与影响（Impact）<a class="headerlink" href="#7-impact" title="Permanent link">&para;</a></h2>
+<h3 id="71">7.1 论文发表<a class="headerlink" href="#71" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>GLM-5 论文</strong>：Zeng A, et al. <strong>GLM-5: from Vibe Coding to Agentic Engineering</strong>. arXiv:2602.15763, 2026.</li>
+<li><strong>GLM-4.5 论文（前代）</strong>：Zeng A, Lv X, Zheng Q, et al. <strong>Glm-4.5: Agentic, reasoning, and coding (arc) foundation models</strong>. arXiv:2508.06471, 2025.</li>
+</ul>
+<h3 id="72">7.2 产业应用<a class="headerlink" href="#72" title="Permanent link">&para;</a></h3>
+<p>GLM-5 作为智谱的新一代基座模型，支撑了智谱全系列产品的能力升级，包括：
+- 智谱清言（对话产品）；
+- 代码智能体（编程辅助）；
+- 开放平台 API 服务；
+- 企业级定制化解决方案。</p>
+<h3 id="73">7.3 对个人研究的支撑<a class="headerlink" href="#73" title="Permanent link">&para;</a></h3>
+<p>GLM-5 基座模型为杜晋华的个人研究提供了关键的模型基础：
+- LogicEvolve / EvolveLRM 等自进化研究使用 GLM 系列模型作为实验基座；
+- Groom / H-TokenBench 等 token 利用评测研究以 GLM-5 为核心评测对象；
+- 逻辑推理数据收集与训练的经验直接支撑了 LogicEvolve 框架的设计。</p>
+<hr />
+<h2 id="8-my-contribution">8. 个人贡献（My Contribution）<a class="headerlink" href="#8-my-contribution" title="Permanent link">&para;</a></h2>
+<h3 id="81">8.1 角色<a class="headerlink" href="#81" title="Permanent link">&para;</a></h3>
+<p>Base 项目组成员（参与），直属上级黄轩成。主要负责逻辑推理方向的数据收集、训练实验与评估工作。</p>
+<h3 id="82">8.2 具体工作清单<a class="headerlink" href="#82" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>逻辑推理预训练数据收集</strong>：</li>
+<li>分析 114 个网站数据源，爬取与过滤逻辑推理相关数据；</li>
+<li>完成 644,164 条数据的筛选、去重（MinHash）、质量打分；</li>
+<li>
+<p>完成数据 tokenization（150k tokenizer，与第4.2节一致）与预训练实验。</p>
+</li>
+<li>
+<p><strong>逻辑推理 SFT 数据构造</strong>：</p>
+</li>
+<li>收集整理 GLM 逻辑推理数据（预训练子集约 1B token，SFT 约 1.5W 条）；</li>
+<li>构造 14W 条 GLM COT-SFT 数据集，ZebraLogic 准确率从 14.3% 提升至 42.2%；</li>
+<li>
+<p>系统分析截断问题，提出多维度缓解方案。</p>
+</li>
+<li>
+<p><strong>训练基础设施搭建与调试</strong>：</p>
+</li>
+<li>搭建 Dense 模型预训练/SFT 训练环境（glm-train-dev + Megatron-LM）；</li>
+<li>调试 MoE 模型 SFT 训练（30B/100B，128K 长上下文）；</li>
+<li>参与 RL 训练框架 slime 的 vllm→sglang 后端切换；</li>
+<li>
+<p>编写 GLM 模型训练说明文档（覆盖数据准备、训练、推理、评测全流程）。</p>
+</li>
+<li>
+<p><strong>模型评估</strong>：</p>
+</li>
+<li>参与逻辑推理方向的模型评估（LogicQA、ZebraLogic、LogicGame）；</li>
+<li>实现 GPQA 填空题测试、pass@k 推理潜力评估、SuperGPQA 评测；</li>
+<li>
+<p>使用公司内部评测平台进行多维度模型能力评估。</p>
+</li>
+<li>
+<p><strong>数据效用分析</strong>：</p>
+</li>
+<li>开发 simulate_dataloader 工具，分析多数据集混合训练中的实际采样比例与 loss 贡献；</li>
+<li>为训练数据配比优化提供数据支撑。</li>
+</ol>
+<hr />
+<h2 id="9-lessons-learned">9. 经验与反思（Lessons Learned）<a class="headerlink" href="#9-lessons-learned" title="Permanent link">&para;</a></h2>
+<h3 id="91">9.1 关键问题与解决方案（含具体故事）<a class="headerlink" href="#91" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>逻辑推理数据的截断问题——从"数据不够"到"系统性归因"的认知跃迁</strong>：</li>
+<li><strong>故事</strong>：最初发现 ZebraLogic 评测中约 40% 的长 CoT 回答被截断时，第一反应是"数据量不够，模型还没学会完整推理"。于是先增加了数据量（从 1W 到 10W），但截断率仅小幅下降。直到系统地做了控制变量实验——分别测试题目质量过滤、简化 prompt 模板、token 化后过滤重复串、prompt 中显式控制 thinking 长度——才发现截断是多重因素叠加的结果，其中"prompt 中控制 thinking 长度"单项就能缓解 30%。这个经历让我深刻认识到：<strong>训练中的异常现象往往不是单一原因，系统归因比直觉判断更可靠</strong>。</li>
+<li>
+<p><strong>解决方案</strong>：通过"prompt 中控制 thinking 长度"（缓解 30%）+ "token 化后过滤重复串"（缓解 10%）+ "简单 prompt"（缓解 10%）+ "数据量增加"的组合方案显著改善截断问题。</p>
+</li>
+<li>
+<p><strong>多集群训练环境的适配——从"每次都踩坑"到"模板化沉淀"</strong>：</p>
+</li>
+<li><strong>故事</strong>：智谱内部有 Planck、Shannon、Kruskal 等多个 GPU 集群，每个集群的网络配置（NCCL_SOCKET_IFNAME）、代理设置、存储挂载路径都不一样。最初每次切换集群都要花半天调试环境，甚至出现过因为代理设置不对导致训练启动后无法拉取数据、空跑数小时的情况。后来下决心编写了详细的训练说明文档和集群配置模板，把每个集群的特殊配置（环境变量、存储路径、NCCL 设置）都标准化记录，后续切换集群的启动时间从半天缩短到半小时以内。</li>
+<li>
+<p><strong>解决方案</strong>：编写详细的训练说明文档和集群配置模板，将环境适配经验标准化沉淀。</p>
+</li>
+<li>
+<p><strong>RL 训练的推理后端切换——从"直接换"到"工具链支撑"</strong>：</p>
+</li>
+<li><strong>故事</strong>：从 vllm 切换到 sglang 的过程中，最初以为只是改个启动命令，实际涉及 checkpoint 格式转换、参数配置映射、server 架构差异等多方面调整。第一次切换时，因为 checkpoint 转换不完整导致模型加载后输出异常，排查了一整天才发现是某个层的权重格式没有正确转换。后来引入 mbridge 工具统一 checkpoint 转换，并整理了完整的切换指南（包括参数映射表、常见错误排查清单），后续切换变得顺畅。</li>
+<li><strong>解决方案</strong>：使用 mbridge 工具统一 checkpoint 转换，整理完整的切换指南，降低切换成本。</li>
+</ol>
+<h3 id="92">9.2 可复用的方法论<a class="headerlink" href="#92" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>数据效用模拟先行</strong>：在正式训练前，先用 simulate_dataloader 分析各数据集的实际采样比例与 loss 贡献，避免训练后才发现数据配比不合理。这一方法的核心是<strong>将"训练后发现问题"前置为"训练前模拟验证"</strong>，在多数据集混合训练场景中尤其有效。</li>
+<li><strong>截断问题的系统归因法</strong>：对于训练中的异常现象（如截断），不满足于单一解释，而是通过控制变量法系统分析每个可能因素的贡献度，最终找到组合最优解。具体步骤：①列出所有可能因素 → ②设计控制变量实验逐个量化 → ③按贡献度排序 → ④组合高贡献方案验证。</li>
+<li><strong>训练文档的标准化</strong>：将数据准备、训练配置、推理部署、评估方法等全流程标准化为文档，不仅提升个人工作效率，也为团队新成员提供了快速上手的路径。文档应包含：环境变量清单、集群配置差异、常见错误排查、命令行示例。</li>
+<li><strong>"小模型快速验证→大模型规模扩展"的迭代节奏</strong>：先用 1.5B 小模型快速验证数据效用和方法有效性，再扩展到 32B Dense 和 106B MoE 大规模训练，避免在大规模上浪费算力验证本可在小规模发现的问题。</li>
+</ol>
+<h3 id="93">9.3 踩坑与避坑指南<a class="headerlink" href="#93" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>坑点</strong></th>
+<th><strong>具体表现</strong></th>
+<th><strong>避坑方法</strong></th>
+<th><strong>教训</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>数据量≠数据有效性</strong></td>
+<td>增加数据量后截断率仅小幅下降，误以为还需更多数据</td>
+<td>先做系统归因，量化各因素贡献度，再针对性优化</td>
+<td>训练异常先归因，不要盲目堆数据</td>
+</tr>
+<tr>
+<td><strong>集群环境差异</strong></td>
+<td>切换集群后训练启动失败或空跑，因 NCCL/代理/存储配置不同</td>
+<td>维护集群配置模板，切换前对照检查清单</td>
+<td>环境适配要模板化，不要每次凭记忆</td>
+</tr>
+<tr>
+<td><strong>推理后端切换的隐性成本</strong></td>
+<td>改启动命令后模型输出异常，因 checkpoint 格式不兼容</td>
+<td>使用统一转换工具（mbridge），切换前做小规模加载验证</td>
+<td>后端切换先验证 checkpoint，再全量启动</td>
+</tr>
+<tr>
+<td><strong>多数据集配比不可预估</strong></td>
+<td>训练后发现某数据集实际采样比例远低于预期，loss 贡献不足</td>
+<td>训练前用 simulate_dataloader 模拟实际采样比例</td>
+<td>混合训练先模拟配比，再正式训练</td>
+</tr>
+<tr>
+<td><strong>长 CoT 截断的连锁影响</strong></td>
+<td>截断导致模型学会"中途停止"的不良模式，影响推理完整性</td>
+<td>prompt 中显式控制 thinking 长度 + token 过滤重复串</td>
+<td>截断不仅是数据问题，更是模型行为问题</td>
+</tr>
+<tr>
+<td><strong>训练镜像版本不一致</strong></td>
+<td>不同集群上镜像版本差异导致依赖冲突</td>
+<td>统一使用 glm-train-image:main-1.0.20，在文档中记录版本</td>
+<td>镜像要统一版本，不要各集群各自维护</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<h3 id="94">9.4 如果重来会怎么做<a class="headerlink" href="#94" title="Permanent link">&para;</a></h3>
+<ul>
+<li>在逻辑推理数据收集初期就更注重数据质量而非数量，避免后期大量低质量数据的清洗成本；</li>
+<li>更早参与 GLM-5 的整体评测设计，将逻辑推理评估更深度地融入基座模型的核心评测体系；</li>
+<li>将个人在 LogicEvolve 中积累的逻辑推理任务自动化生成经验更早应用到 GLM-5 的训练数据构造中，提升数据构造的效率与多样性。</li>
+</ul>
+<hr />
+<h3 id="95-faq">9.5 常见问题与解答（FAQ）<a class="headerlink" href="#95-faq" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>以下问题模拟读者、面试官与答辩评委视角，解答均从报告正文提取。</p>
+</blockquote>
+<p><strong>Q1：你在 GLM-5 项目中的具体角色是什么？与 GLM-4.5 阶段相比有什么变化？</strong></p>
+<p>A：我是 Base 项目组成员（参与），直属上级黄轩成，负责逻辑推理方向的数据收集、训练实验与评估。与 GLM-4.5 阶段（核心贡献为 14W 条 COT-SFT 数据构造）相比，GLM-5 阶段我的贡献范围从"数据专项"扩展到"数据+训练基础设施+评估"全链路参与——新增了 644,164 条逻辑推理预训练数据收集、Dense/MoE 训练基础设施搭建与调试、RL 推理后端切换（vLLM→SGLang）等工作。</p>
+<p><strong>Q2：ZebraLogic 准确率从 14.3% 提升到 42.2%，这个提升主要来自什么？是数据量还是方法创新？</strong></p>
+<p>A：提升主要来自 <strong>COT-SFT 数据构造</strong>的系统性工作，而非单一方法创新。具体来说：①构造了约 14W 条带思维链的 SFT 数据，使模型学会完整的逻辑推理过程；②通过消融实验验证了数据量与提升的正相关（1W 条→36.9%，10W 条→约 41%，14W 条→42.2%）；③新基座模型在相同数据量下比旧基座高约 2.7pp，验证了基座持续预训练的叠加效应。方法层面的创新主要体现在截断问题的系统归因法（控制变量法量化 4 因素贡献度）。</p>
+<p><strong>Q3：40% 的截断率是一个很严重的问题，你们最终解决了吗？还是只是缓解？</strong></p>
+<p>A：是<strong>显著缓解</strong>而非完全消除。通过系统归因实验，我们量化了各因素的贡献度：题目质量过滤缓解约 1%、简单 prompt 缓解约 10%、token 化后过滤重复串缓解约 10%、prompt 中控制 thinking 长度缓解约 30%。组合使用这些方案后，截断率大幅下降。同时发现数据量与截断率呈负相关（数据量越大截断率越低），因此 14W 条完整数据集的截断率显著低于 1W 条实验配置。完全消除截断需要从模型架构层面解决长序列生成的完整性问题，这超出了数据层面的治理范围。</p>
+<p><strong>Q4：simulate_dataloader 这个工具是你独立开发的吗？它解决了什么具体问题？</strong></p>
+<p>A：simulate_dataloader 是我在 GLM-5 训练过程中开发的工具。它解决的核心问题是：<strong>多数据集混合训练（MULTITASK_DATA_PATH 配置）中，各数据集的实际采样比例与 loss 贡献难以在训练前预估</strong>。如果训练后才发现某数据集实际采样比例远低于预期，就需要重新调整配比并重训，成本极高。simulate_dataloader 在正式训练前模拟 dataloader 的采样行为，分析各数据集的实际采样比例与 loss 贡献，将"训练后发现配比问题"前置为"训练前模拟验证"。</p>
+<p><strong>Q5：从 GLM-4.5 到 GLM-5，你认为最大的技术挑战是什么？</strong></p>
+<p>A：最大的技术挑战是<strong>从"能力三角"到"工程范式"的系统性跃迁</strong>。GLM-4.5 确立了 ARC（Agentic/Reasoning/Coding）三维定位，而 GLM-5 要将这些能力整合为 Agentic Engineering 范式——模型不仅要能"写出代码"，更要能"完成工程"（需求理解→方案设计→多文件修改→测试验证→错误恢复的完整闭环）。这对训练数据的构造（需要覆盖长程任务场景）、模型规模的扩展（从 100B MoE 到 106B MoE RL）、推理后端的升级（vLLM→SGLang 支撑大模型长上下文）都提出了系统性要求，而非单一维度的优化。</p>
+<hr />
+<h2 id="10-references">10. 文件索引（References）<a class="headerlink" href="#10-references" title="Permanent link">&para;</a></h2>
+<h3 id="_4">论文<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<ul>
+<li>GLM-5 论文：https://arxiv.org/abs/2602.15763</li>
+<li>GLM-4.5 论文（前代）：https://arxiv.org/abs/2508.06471</li>
+</ul>
+<h3 id="_5">飞书文档<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<ul>
+<li>GLM 模型训练说明：https://zhipu-ai.feishu.cn/docx/Og6VdzgP2ooYmnxPij3cizDgnqd</li>
+<li>逻辑推理预训练数据文档：https://zhipu-ai.feishu.cn/docx/FsWRdZlqooVH0Cxk77Kc3Fj2nOb</li>
+<li>GLM4-0414 训练评估指南：https://zhipu-ai.feishu.cn/wiki/SC9QwEpN5iQn4KkENqgcwijNn3e</li>
+<li>GLM-4.5 MOE 模型 SFT 训练评估指南：https://zhipu-ai.feishu.cn/wiki/ZupOwr9F5iFM1Sk3d2fcnOdAn3d</li>
+<li>GLM-5 MOE-MLA 模型 SFT 训练评估指南：https://zhipu-ai.feishu.cn/wiki/GsmNwcQLdiLkgvkgjy7cUBonnYf</li>
+<li>RL 教程与踩坑：https://zhipu-ai.feishu.cn/wiki/WOUBwyh5YiTwxWk6jxCcuQRTndf</li>
+<li>算力平台使用情况：https://zhipu-ai.feishu.cn/docx/PXhuduWCroGo6cxKqoTcV9ORnAh</li>
+<li>小组周报（26年5-9月）：https://zhipu-ai.feishu.cn/wiki/Qxi9wvxb8iqe36ka6IkcUEj5n5b</li>
+</ul>
+<h3 id="_6">代码仓库<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<ul>
+<li>GLM 训练框架（内部）：https://gitlab.glm.ai/glm-framework/glm-train-dev</li>
+<li>slime RL 框架（开源）：https://github.com/THUDM/slime</li>
+<li>个人研究仓库（逻辑推理）：https://github.com/dujh22/LogicEvolve（私有）</li>
+</ul>
+<h3 id="_7">平台与工具<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<ul>
+<li>公司评测平台：https://evaluation.chatglm.cn/</li>
+<li>机器学习平台：https://platform.glm.ai/</li>
+<li>WandB 实验跟踪：https://wandb.glm.ai/（项目 glm4.5，团队 pika）</li>
+</ul>
+<h3 id="_8">其他资源<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<ul>
+<li>汇总文档：<code>/Users/djh/Documents/备份/一般/工作/代码/LLM/github/Z.ai/杜晋华-智谱实习工作梳理.md</code></li>
+<li>全记录文档：<code>/Users/djh/Documents/备份/一般/工作/代码/LLM/github/Z.ai/杜晋华-项目经历全记录.md</code></li>
+<li>个人网站：https://dujh22.github.io/Dujinhua_wiki/</li>
+</ul>
+<hr />
+<h2 id="11">11. 转正答辩证据卡<a class="headerlink" href="#11" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>本章节为转正答辩专用证据整理，基于智谱转正制度（ZP-RL-009）与公司文化2.0（Think Big / Deliver Solid / Scale Stable）标准整理。</p>
+</blockquote>
+<h3 id="111">11.1 目标基线<a class="headerlink" href="#111" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>部门目标(O)</strong>：推进 GLM 基座模型从 GLM-4.5（ARC 定位）向 GLM-5（Agentic Engineering）演进，系统性提升长程智能体任务、复杂推理与工程化协作能力。</li>
+<li><strong>个人KR</strong>：（1）为 GLM 基座收集并构造逻辑推理方向的预训练与 SFT 训练数据；（2）搭建与调试 Dense/MoE 模型训练基础设施，支撑基座模型训练；（3）参与逻辑推理能力评估，为模型迭代提供反馈。</li>
+<li><strong>完成率</strong>：数据层面 100%——644,164 条预训练数据筛选完成，14W 条 COT-SFT 数据构造完成且 ZebraLogic 准确率从 14.3% 提升至 42.2%；基础设施层面完成多框架搭建与调试；评估层面参与 LogicQA/ZebraLogic/LogicGame 等多维度评估。</li>
+</ul>
+<h3 id="112">11.2 量化结果<a class="headerlink" href="#112" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>维度</strong></th>
+<th><strong>具体数据</strong></th>
+<th><strong>来源</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>预训练数据</td>
+<td>分析 114 个网站数据源，筛选 644,164 条逻辑推理相关数据</td>
+<td>第4.2节/第8.2节</td>
+</tr>
+<tr>
+<td>SFT 数据</td>
+<td>预训练子集约 1B token；SFT 约 1.5W 条；COT-SFT 约 14W 条</td>
+<td>第4.2节/第8.2节</td>
+</tr>
+<tr>
+<td>模型提升</td>
+<td>ZebraLogic 准确率从 14.3% 提升至 42.2%（+27.9pp）</td>
+<td>第4.2节/第5.1节</td>
+</tr>
+<tr>
+<td>截断问题</td>
+<td>总截断率约 40%，经多维度组合方案缓解（prompt 控制缓解 30%、token 过滤缓解 10%、简单 prompt 缓解 10%）</td>
+<td>第5.1节</td>
+</tr>
+<tr>
+<td>训练框架</td>
+<td>覆盖 Dense（1.5B/9B/32B）+ MoE（30B/100B/106B）多规模模型</td>
+<td>第4.3节/第6.2节</td>
+</tr>
+<tr>
+<td>基座模型</td>
+<td>GLM-5 论文 arXiv:2602.15763，2026.2.15 发布</td>
+<td>第1章/第7.1节</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<h3 id="113">11.3 公司层面贡献<a class="headerlink" href="#113" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>向上贡献</strong>：逻辑推理预训练数据（644,164 条）和 COT-SFT 数据（14W 条）直接用于 GLM 基座模型的持续预训练与监督微调，是 GLM-5 逻辑推理能力提升的数据来源之一。</li>
+<li><strong>被复用</strong>：编写的 GLM 模型训练说明文档（覆盖数据准备、训练、推理、评测全流程）为团队新成员提供快速上手指路；simulate_dataloader 工具为训练数据配比优化提供数据支撑。</li>
+<li><strong>跨团队协作</strong>：在 Base 项目组内与黄轩成（直属上级）及其他成员协作，参与多集群（Planck/Shannon/Kruskal）训练环境适配，支撑基座模型的大规模训练。</li>
+</ul>
+<h3 id="114">11.4 专业影响力<a class="headerlink" href="#114" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>技术方案</strong>：提出截断问题的系统归因法——通过控制变量法分析题目质量、prompt 设计、token 重复、数据量等多因素对截断率的贡献度，找到组合最优解（prompt 控制 thinking 长度缓解 30%）。</li>
+<li><strong>文档沉淀</strong>：编写 GLM 模型训练说明文档，覆盖数据准备（tokenization/lmdb 格式）、训练（Dense/MoE SFT）、推理（TGI 部署）、评测（内部评测平台）全流程。</li>
+<li><strong>工具开发</strong>：开发 simulate_dataloader 工具，分析多数据集混合训练中的实际采样比例与 loss 贡献，避免训练后才发现数据配比不合理。</li>
+<li><strong>分享/培训</strong>：编写的 GLM 模型训练说明文档（飞书文档「GLM模型训练说明」，覆盖数据准备/训练/推理/评测全流程）为团队内部培训材料；正式组内分享记录在现有源材料中未找到，待后续补充确认。</li>
+</ul>
+<h3 id="115">11.5 价值观锚点<a class="headerlink" href="#115" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>价值观</strong></th>
+<th><strong>具体故事</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Think Big</strong></td>
+<td>不满足于仅完成数据收集任务，主动对逻辑推理训练中 40% 的截断率进行系统归因分析，通过控制变量法逐个量化题目质量（缓解1%）、简单prompt（缓解10%）、token过滤重复串（缓解10%）、prompt控制thinking长度（缓解30%）等因素的贡献度，最终找到组合最优解，比原始需求多走了一步。</td>
+</tr>
+<tr>
+<td><strong>Deliver Solid</strong></td>
+<td>面对智谱内部多个 GPU 集群（Planck/Shannon/Kruskal）配置差异大的问题，不满足于"能跑起来"，而是编写详细的训练说明文档和集群配置模板（NCCL_SOCKET_IFNAME、代理设置、存储挂载等），将环境适配经验标准化沉淀，大幅提升后续训练任务的启动效率。</td>
+</tr>
+<tr>
+<td><strong>Scale Stable</strong></td>
+<td>从 Dense 模型（1.5B–9B）预训练扩展到 32B Dense + 100B MoE（128K 长上下文）SFT 训练，训练框架可复用、可扩展；数据处理 pipeline（glm-multitask-tools + sft-data-processing）支撑从 1B token 预训练到 14W 条 SFT 的多规模数据处理。</td>
+</tr>
+<tr>
+<td><strong>极智/极度专注</strong></td>
+<td>死磕逻辑推理数据的截断问题，从现象（40% 截断率）出发，不满足于单一解释，通过系统实验逐个归因，最终通过"prompt 中控制 thinking 长度 + token 化后过滤重复串 + 数据量增加"的组合方案显著改善；ZebraLogic 准确率从 14.3% 提升至 42.2% 的背后是多轮数据构造与实验迭代。</td>
+</tr>
+<tr>
+<td><strong>创新</strong></td>
+<td>开发 simulate_dataloader 工具，在正式训练前先模拟分析各数据集的实际采样比例与 loss 贡献，将"训练后才发现数据配比不合理"的问题前置到训练前解决，这是数据效用分析的创新性实践。</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<h3 id="116">11.6 协作与利他<a class="headerlink" href="#116" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>帮了谁</strong>：（1）为 GLM 基座模型训练提供逻辑推理方向的预训练与 SFT 数据；（2）编写的训练说明文档为团队新成员提供快速上手路径；（3）simulate_dataloader 工具为团队数据配比优化提供支撑。</li>
+<li><strong>证人</strong>：黄轩成（直属上级，Base 项目组负责人）。</li>
+<li><strong>跨部门协作</strong>：主要为 Base 项目组内部协作，涉及训练平台、评测平台等内部基础设施团队的对接。</li>
+</ul>
+<h3 id="117">11.7 反思与成长（自我批评式）<a class="headerlink" href="#117" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>没做好的</strong>：（1）逻辑推理数据收集初期更注重数量而非质量，导致后期需要大量时间清洗低质量数据，这是我前期数据质量意识不足的体现；（2）对 GLM-5 整体评测设计的参与深度不够，逻辑推理评估更多是被动执行而非主动融入基座模型核心评测体系；（3）RL 训练框架（slime）的 vllm→sglang 后端切换中，前期对 checkpoint 转换和参数配置的理解不够深入，消耗了较多调试时间。</li>
+<li><strong>学到的</strong>：（1）大规模基座模型训练的全流程方法论——从数据收集清洗、tokenization、预训练/SFT 到 RL 强化学习的完整 pipeline；（2）多集群训练环境的适配经验与工程文档标准化方法；（3）数据效用模拟先行的训练优化思路；（4）截断问题的系统归因法。</li>
+<li><strong>如果重来</strong>：（1）在数据收集初期就建立质量评分与过滤标准，避免后期大量低质量数据的清洗成本；（2）更早参与 GLM-5 的整体评测设计，将逻辑推理评估更深度地融入基座模型核心评测体系；（3）将 LogicEvolve 中积累的逻辑推理任务自动化生成经验更早应用到 GLM-5 的训练数据构造中。</li>
+<li><strong>成长轨迹</strong>：从阶段一的数学推理数据标注 pipeline 设计，到阶段三的 LogicEvolve 逻辑推理自进化框架，再到阶段五直接参与 GLM 基座模型的逻辑推理数据与训练工作，完成了从"专项数据工具"到"基座模型核心数据贡献"的能力升级。</li>
+</ul>
+<h3 id="118-6">11.8 6年后视角<a class="headerlink" href="#118-6" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>大局定位</strong>：GLM-5 标志着基座模型从"氛围编程"向"智能体工程"的范式跃迁，是智谱基座模型演进路线中的关键节点。逻辑推理能力是 Agentic Engineering 的核心基础——模型要完成复杂工程任务，必须具备长链逻辑推理与约束满足能力。6 年后回看，为 GLM 基座构造逻辑推理训练数据（644,164 条预训练 + 14W 条 COT-SFT）是支撑智能体工程能力的基础设施工作。</li>
+<li><strong>为什么值得做</strong>：逻辑推理是大模型从"能对话"到"能做事"的关键能力短板。通过系统化的数据收集、COT-SFT 构造和截断问题治理，将 ZebraLogic 准确率从 14.3% 提升至 42.2%，直接提升了 GLM 基座的逻辑推理能力，为 GLM-5 的 Agentic Engineering 定位提供了能力支撑。</li>
+</ul>
+<h3 id="119">11.9 五段式讲述（答辩稿骨架）<a class="headerlink" href="#119" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>问题定义</strong>（外行能懂）：大语言模型在做需要严密逻辑推理的任务时经常出错——比如解约束满足问题、多步演绎推理。GLM 基座模型要从"能写代码"升级到"能做工程"，逻辑推理能力是必须补齐的短板，但高质量的逻辑推理训练数据非常稀缺。</li>
+<li><strong>输入输出</strong>（本科生能懂）：输入是互联网上 114 个网站的原始文本和现有逻辑推理数据集，输出是经过清洗、去重、质量打分的 644,164 条逻辑推理预训练数据和 14W 条带思维链的 SFT 数据，这些数据直接用于 GLM 基座模型训练，使 ZebraLogic 逻辑推理评测准确率从 14.3% 提升到 42.2%。</li>
+<li><strong>技术/做法</strong>（研究生能懂）：建立"数据收集→过滤去重（MinHash）→质量打分→tokenization（150k）→预训练/SFT"的完整 pipeline；针对训练中 40% 的长 CoT 截断率问题，通过控制变量法系统归因，采用"prompt 控制 thinking 长度 + token 过滤重复串 + 数据量增加"组合方案缓解；使用 simulate_dataloader 工具在训练前模拟分析数据采样比例与 loss 贡献。</li>
+<li><strong>核心创新</strong>（只有自己懂）：截断问题的系统归因法——不满足于单一解释，逐个量化各因素贡献度并找到组合最优解；数据效用模拟先行——将训练后才能发现的数据配比问题前置到训练前解决；从专项逻辑推理研究（LogicEvolve）到基座模型数据贡献的能力迁移。</li>
+<li><strong>未来</strong>（开放问题）：逻辑推理数据的自动化高质量生成（结合 LogicEvolve 框架）；更系统的逻辑推理能力评测体系融入基座核心评测；将数据效用模拟方法推广到其他能力方向的数据配比优化。</li>
+</ol>
+<h3 id="1110">11.10 对比证据（跨项目量化参照）<a class="headerlink" href="#1110" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>对比项</strong></th>
+<th><strong>本项目（21号 GLM-5）</strong></th>
+<th><strong>参照项目</strong></th>
+<th><strong>对比结论</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>逻辑推理预训练数据规模</td>
+<td>644,164条</td>
+<td>12号 Puzzle（同方向数据专项）</td>
+<td>本项目为基座级大规模数据，Puzzle为专项pipeline验证</td>
+</tr>
+<tr>
+<td>COT-SFT数据量</td>
+<td>约14W条</td>
+<td>10号 GLM-4.5（同14W条）</td>
+<td>两代基座共享同一COT-SFT数据集，能力持续累积</td>
+</tr>
+<tr>
+<td>ZebraLogic准确率提升</td>
+<td>14.3% → 42.2%（+27.9pp）</td>
+<td>09号 LogicEvolve（同基线46.6%完成率）</td>
+<td>同一评测基准验证数据有效性，自进化框架与基座训练互相印证</td>
+</tr>
+<tr>
+<td>训练模型规模覆盖</td>
+<td>Dense 1.5B/9B/32B + MoE 30B/100B/106B</td>
+<td>10号 GLM-4.5（Dense 9B/32B + MoE 30B/100B）</td>
+<td>规模覆盖更广，新增1.5B预训练和106B MoE</td>
+</tr>
+<tr>
+<td>截断问题治理</td>
+<td>40%→组合方案缓解（prompt控制30%+token过滤10%+简单prompt10%）</td>
+<td>09号 LogicEvolve（无截断问题，短链推理为主）</td>
+<td>基座长CoT训练特有问题，系统归因法为创新贡献</td>
+</tr>
+<tr>
+<td>个人贡献范围</td>
+<td>数据收集+训练基础设施+评估全链路</td>
+<td>10号 GLM-4.5（数据构造为核心）</td>
+<td>从数据专项扩展到全链路参与，能力范围显著扩大</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<hr />
+<h2 id="12">12. 相关项目<a class="headerlink" href="#12" title="Permanent link">&para;</a></h2>
+<p>GLM-5 作为智谱基座模型的关键节点，与杜晋华参与的多个研究项目存在技术关联与能力支撑关系。下表梳理了核心关联项目及其关联类型。</p>
+<table>
+<thead>
+<tr>
+<th><strong>关联报告</strong></th>
+<th><strong>关联类型</strong></th>
+<th><strong>关联说明</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>10. GLM-4.5 基座模型</strong></td>
+<td>基座模型演进（前代→当代）</td>
+<td>GLM-4.5 提出 ARC（Agentic/Reasoning/Coding）定位，GLM-5 在此基础上进一步演进为 Agentic Engineering 范式；两者共享训练基础设施与数据 pipeline</td>
+</tr>
+<tr>
+<td><strong>09. LogicEvolve 逻辑推理自进化</strong></td>
+<td>逻辑推理数据与方法（研究→基座应用）</td>
+<td>LogicEvolve 的逻辑推理任务自动化生成方法可应用于 GLM-5 的训练数据构造；GLM-5 的逻辑推理数据收集经验支撑 LogicEvolve 框架设计</td>
+</tr>
+<tr>
+<td><strong>12. Puzzle 逻辑推理预训练数据</strong></td>
+<td>逻辑推理数据（同源数据方向）</td>
+<td>Puzzle 项目专注逻辑推理预训练数据构造，与 GLM-5 的 644,164 条逻辑推理预训练数据同属逻辑推理数据方向，方法可互补</td>
+</tr>
+<tr>
+<td><strong>15. EvolveLRM 训练自进化</strong></td>
+<td>自进化训练（方法参考）</td>
+<td>EvolveLRM 研究训练过程的自进化方法，其思路可应用于 GLM-5 基座模型的持续训练优化</td>
+</tr>
+<tr>
+<td><strong>22. 六篇新研究初稿</strong></td>
+<td>自进化研究体系（基座支撑研究）</td>
+<td>六篇新研究（HarnessEvolve/SwarmEvolve/DataEvolve/EvalEvolve/EvolveClaw/EvolveSwarm）以 GLM 系列模型为实验基座，GLM-5 的 Agentic Engineering 能力为这些研究提供模型基础</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：各关联报告项目概述与方法章节；报告 §7.3 对个人研究的支撑、§1 项目概述</p>
+</blockquote>
+<h3 id="_9">项目间引用网络<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
+<p><strong>上游项目（本项目依赖/受益于）：</strong>
+- <a href="../../phase3/10_GLM-4.5%E5%9F%BA%E5%BA%A7%E6%A8%A1%E5%9E%8B/">10 · GLM-4.5基座模型</a> — GLM-4.5提出ARC（Agentic/Reasoning/Coding）定位，GLM-5在此基础上进一步演进为Agentic Engineering范式；两者共享训练基础设施与数据pipeline，GLM-4.5的14W条COT-SFT数据在GLM-5中持续使用</p>
+<p><strong>下游项目（受益于本项目）：</strong>
+- <a href="../22_%E5%85%AD%E7%AF%87%E6%96%B0%E7%A0%94%E7%A9%B6%E5%88%9D%E7%A8%BF/">22 · 六篇新研究初稿</a> — 六篇新研究（HarnessEvolve/SwarmEvolve/DataEvolve/EvalEvolve/EvolveClaw/EvolveSwarm）以GLM系列模型为实验基座，GLM-5的Agentic Engineering能力为这些研究提供模型基础</p>
+<p><strong>平行项目（同系列/同方法）：</strong>
+- <a href="../../phase3/09_LogicEvolve%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E8%87%AA%E8%BF%9B%E5%8C%96/">09 · LogicEvolve逻辑推理自进化</a> — LogicEvolve的逻辑推理任务自动化生成方法可应用于GLM-5的训练数据构造；GLM-5的逻辑推理数据收集经验支撑LogicEvolve框架设计，二者在ZebraLogic基准上互相印证
+- <a href="../../phase3/12_Puzzle%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E9%A2%84%E8%AE%AD%E7%BB%83%E6%95%B0%E6%8D%AE/">12 · Puzzle逻辑推理预训练数据</a> — Puzzle项目专注逻辑推理预训练数据构造，与GLM-5的644,164条逻辑推理预训练数据同属逻辑推理数据方向，方法可互补
+- <a href="../../phase4/15_EvolveLRM%E8%AE%AD%E7%BB%83%E8%87%AA%E8%BF%9B%E5%8C%96/">15 · EvolveLRM训练自进化</a> — EvolveLRM研究训练过程的自进化方法，其思路可应用于GLM-5基座模型的持续训练优化；EvolveLRM的自主筛选数据用于GLM-4.5→4.7真实训练提升约30%</p>
+<hr />
+<h2 id="13">13. 跨项目对比<a class="headerlink" href="#13" title="Permanent link">&para;</a></h2>
+<h3 id="131-10glm-45">13.1 与10号（GLM-4.5基座模型）对比：基座模型演进<a class="headerlink" href="#131-10glm-45" title="Permanent link">&para;</a></h3>
+<p>GLM-4.5 与 GLM-5 是智谱基座模型连续两代的关键节点，两者在定位、数据、训练范式上形成清晰的演进脉络。</p>
+<table>
+<thead>
+<tr>
+<th><strong>对比维度</strong></th>
+<th><strong>10号 GLM-4.5</strong></th>
+<th><strong>21号 GLM-5</strong></th>
+<th><strong>演进关系</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>核心定位</strong></td>
+<td>ARC（Agentic/Reasoning/Coding）</td>
+<td>Agentic Engineering</td>
+<td>从"能力三角"到"工程范式"的深化</td>
+</tr>
+<tr>
+<td><strong>逻辑推理数据</strong></td>
+<td>14W COT-SFT 数据构造</td>
+<td>644,164条预训练 + 14W COT-SFT</td>
+<td>数据规模扩展，预训练+SFT双层覆盖</td>
+</tr>
+<tr>
+<td><strong>ZebraLogic提升</strong></td>
+<td>14.3% → 42.2%（+27.9pp）</td>
+<td>同基线持续优化</td>
+<td>同一评测基准，能力持续累积</td>
+</tr>
+<tr>
+<td><strong>训练规模</strong></td>
+<td>Dense 9B/32B + MoE 30B/100B</td>
+<td>Dense 1.5B-32B + MoE 30B/106B</td>
+<td>规模覆盖更广，MoE参数提升</td>
+</tr>
+<tr>
+<td><strong>推理后端</strong></td>
+<td>vLLM</td>
+<td>vLLM → SGLang（当前主力）</td>
+<td>推理引擎升级，吞吐与长上下文优化</td>
+</tr>
+<tr>
+<td><strong>RL框架</strong></td>
+<td>slime</td>
+<td>slime（持续迭代）</td>
+<td>同一框架，Dense 16B/MoE 106B规模</td>
+</tr>
+<tr>
+<td><strong>个人角色</strong></td>
+<td>数据构造核心（14W COT-SFT）</td>
+<td>数据+训练基础设施+评估全链路</td>
+<td>从"数据专项"到"全链路参与"的能力扩展</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<p><strong>演进结论</strong>：GLM-4.5 确立了 ARC 定位和 COT-SFT 数据方法论（14W条，ZebraLogic +27.9pp），GLM-5 在同一数据基线上扩展了预训练层（644,164条）并深化了 Agentic Engineering 范式，个人贡献从数据专项扩展到训练基础设施搭建与多维度评估。</p>
+<h3 id="132-09logicevolve12puzzle">13.2 与09号（LogicEvolve）、12号（Puzzle逻辑推理数据）对比：逻辑推理数据<a class="headerlink" href="#132-09logicevolve12puzzle" title="Permanent link">&para;</a></h3>
+<p>三份报告共同构成杜晋华在逻辑推理方向的"研究→数据→基座应用"完整链路。</p>
+<table>
+<thead>
+<tr>
+<th><strong>对比维度</strong></th>
+<th><strong>09号 LogicEvolve</strong></th>
+<th><strong>12号 Puzzle</strong></th>
+<th><strong>21号 GLM-5</strong></th>
+<th><strong>协同关系</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>项目性质</strong></td>
+<td>学术研究（NeurIPS论文）</td>
+<td>预训练数据专项</td>
+<td>基座模型工程</td>
+<td>研究方法→数据构造→基座应用</td>
+</tr>
+<tr>
+<td><strong>核心产出</strong></td>
+<td>CLUB基准(1K题/10类) + ExCLUB(100K题/100类) + 自进化框架</td>
+<td>七步pipeline + 两阶段筛选的逻辑推理预训练数据</td>
+<td>644,164条预训练 + 14W COT-SFT</td>
+<td>基准评测→数据构造→基座训练</td>
+</tr>
+<tr>
+<td><strong>数据规模</strong></td>
+<td>100K+ 自进化生成题</td>
+<td>预训练语料：采集8,346个PDF（第一批6,905+第二批1,441），首批交付6,237条清洗数据（最终入库规模以12号报告为准）</td>
+<td>644,164条预训练 + 14W SFT</td>
+<td>从千级基准到十万级训练数据的规模跃迁</td>
+</tr>
+<tr>
+<td><strong>ZebraLogic</strong></td>
+<td>46.6%完成率，14.3%→42.2%</td>
+<td>数据支撑</td>
+<td>14.3%→42.2%（+27.9pp）</td>
+<td>同一评测基准验证数据有效性</td>
+</tr>
+<tr>
+<td><strong>方法创新</strong></td>
+<td>无人工多智能体自进化</td>
+<td>七步pipeline（采集→清洗→筛选→验证）</td>
+<td>数据收集+MinHash去重+质量打分+tokenization</td>
+<td>自进化生成可补充人工采集数据</td>
+</tr>
+<tr>
+<td><strong>个人角色</strong></td>
+<td>第一作者/框架负责人</td>
+<td>核心成员/数据pipeline</td>
+<td>数据+训练+评估全链路</td>
+<td>从研究创新到工程落地的完整迁移</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<p><strong>协同结论</strong>：09号 LogicEvolve 提供了逻辑推理任务的自动化生成方法论和基准评测体系（CLUB/ExCLUB），12号 Puzzle 建立了预训练数据的七步构造pipeline，21号 GLM-5 将这些方法和数据应用于基座模型的实际训练（644,164条预训练 + 14W COT-SFT），三者形成"研究创新→数据工程→基座落地"的完整能力闭环。</p>
+<hr />
+<h3 id="_10">图表索引<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>编号</strong></th>
+<th><strong>类型</strong></th>
+<th><strong>标题</strong></th>
+<th><strong>所在章节</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>表1</td>
+<td>表格</td>
+<td>关键数据速览</td>
+<td>§关键数据速览</td>
+</tr>
+<tr>
+<td>表2</td>
+<td>表格</td>
+<td>同期基座模型对比</td>
+<td>§3.1</td>
+</tr>
+<tr>
+<td>表3</td>
+<td>表格</td>
+<td>GLM-4 系列开源模型变体对照表</td>
+<td>§3.2</td>
+</tr>
+<tr>
+<td>表4</td>
+<td>表格</td>
+<td>GLM-4-9B-Chat 多语言能力评测对比</td>
+<td>§3.2</td>
+</tr>
+<tr>
+<td>表5</td>
+<td>表格</td>
+<td>GLM-5 vs GLM-4.5 vs GLM-4 能力对比</td>
+<td>§3.2.1</td>
+</tr>
+<tr>
+<td>图1</td>
+<td>ASCII</td>
+<td>GLM-5 训练 pipeline 架构图</td>
+<td>§4.1</td>
+</tr>
+<tr>
+<td>图2</td>
+<td>Mermaid</td>
+<td>GLM-5 训练 Pipeline 流程图（含数据规模与 Agentic Engineering 特性）</td>
+<td>§4.1</td>
+</tr>
+<tr>
+<td>表6</td>
+<td>表格</td>
+<td>数据工作统计表</td>
+<td>§4.2</td>
+</tr>
+<tr>
+<td>表7</td>
+<td>表格</td>
+<td>COT-SFT 数据消融实验</td>
+<td>§5.1.1</td>
+</tr>
+<tr>
+<td>表8</td>
+<td>表格</td>
+<td>截断问题多因素归因实验</td>
+<td>§5.1.2</td>
+</tr>
+<tr>
+<td>表9</td>
+<td>表格</td>
+<td>关键训练超参数配置</td>
+<td>§5.1.3</td>
+</tr>
+<tr>
+<td>表10</td>
+<td>表格</td>
+<td>GLM 系列对话模型典型任务评测对比</td>
+<td>§5.2</td>
+</tr>
+<tr>
+<td>表11</td>
+<td>表格</td>
+<td>GLM 系列基座模型典型任务评测对比</td>
+<td>§5.2</td>
+</tr>
+<tr>
+<td>表12</td>
+<td>表格</td>
+<td>GLM-4 工具调用能力评测（BFCL）</td>
+<td>§5.2</td>
+</tr>
+<tr>
+<td>表13</td>
+<td>表格</td>
+<td>GLM-4（Vibe Coding）vs GLM-5（Agentic Engineering）特性对比</td>
+<td>§5.2</td>
+</tr>
+<tr>
+<td>表14</td>
+<td>表格</td>
+<td>项目时间线与里程碑</td>
+<td>§6.2.1</td>
+</tr>
+<tr>
+<td>表15</td>
+<td>表格</td>
+<td>技术栈与工具链</td>
+<td>§6.2.2</td>
+</tr>
+<tr>
+<td>表16</td>
+<td>表格</td>
+<td>量化结果</td>
+<td>§11.2</td>
+</tr>
+<tr>
+<td>表17</td>
+<td>表格</td>
+<td>价值观锚点</td>
+<td>§11.5</td>
+</tr>
+<tr>
+<td>表18</td>
+<td>表格</td>
+<td>相关项目</td>
+<td>§12</td>
+</tr>
+<tr>
+<td>表19</td>
+<td>表格</td>
+<td>GLM-4.5 vs GLM-5 基座模型演进对比</td>
+<td>§13.1</td>
+</tr>
+<tr>
+<td>表20</td>
+<td>表格</td>
+<td>逻辑推理数据三项目协同对比（09/12/21）</td>
+<td>§13.2</td>
+</tr>
+<tr>
+<td>表21</td>
+<td>表格</td>
+<td>对比证据（跨项目量化参照）</td>
+<td>§11.10</td>
+</tr>
+<tr>
+<td>表22</td>
+<td>表格</td>
+<td>个人成果矩阵</td>
+<td>§个人成果矩阵</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<hr />
+<h3 id="_11">个人成果矩阵<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>类别</strong></th>
+<th><strong>成果名称</strong></th>
+<th><strong>具体内容</strong></th>
+<th><strong>时间</strong></th>
+<th><strong>角色</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>论文</strong></td>
+<td>GLM-5: from Vibe Coding to Agentic Engineering</td>
+<td>arXiv:2602.15763，2026.2.15发布</td>
+<td>2026.2</td>
+<td>共同作者（逻辑推理数据与训练）</td>
+</tr>
+<tr>
+<td><strong>技术方案</strong></td>
+<td>逻辑推理预训练数据pipeline</td>
+<td>分析114个网站数据源，MinHash去重+质量打分，筛选644,164条</td>
+<td>2025-2026</td>
+<td>核心开发</td>
+</tr>
+<tr>
+<td><strong>技术方案</strong></td>
+<td>COT-SFT数据构造</td>
+<td>约14W条带思维链SFT数据，ZebraLogic 14.3%→42.2%</td>
+<td>2025-2026</td>
+<td>核心开发</td>
+</tr>
+<tr>
+<td><strong>技术方案</strong></td>
+<td>截断问题系统归因法</td>
+<td>控制变量法量化4因素贡献度，组合方案缓解40%截断率</td>
+<td>2026</td>
+<td>独立提出</td>
+</tr>
+<tr>
+<td><strong>工具开发</strong></td>
+<td>simulate_dataloader</td>
+<td>训练前模拟分析数据采样比例与loss贡献，前置发现配比问题</td>
+<td>2026</td>
+<td>独立开发</td>
+</tr>
+<tr>
+<td><strong>工具开发</strong></td>
+<td>GLM训练说明文档</td>
+<td>覆盖数据准备/tokenization/训练/推理/评测全流程</td>
+<td>2026</td>
+<td>独立编写</td>
+</tr>
+<tr>
+<td><strong>产业落地</strong></td>
+<td>GLM-5基座模型</td>
+<td>逻辑推理数据直接用于GLM-5持续预训练与SFT，支撑Agentic Engineering定位</td>
+<td>2026</td>
+<td>数据核心贡献者</td>
+</tr>
+<tr>
+<td><strong>产业落地</strong></td>
+<td>多集群训练环境适配</td>
+<td>Planck/Shannon/Kruskal三集群配置标准化，NCCL/代理/存储模板</td>
+<td>2026</td>
+<td>核心实施</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据来源：报告正文</p>
+</blockquote>
+<hr />
+<p><em>报告撰写日期：2026-09-08 | 基于飞书文档、GitHub 仓库及项目汇总材料整理 · v3图文并茂版 2026-09-08 · 四轮深化 · 五轮深化 · 六轮深化 · 七轮深化 · 八轮深化 · 九轮终审 · 十轮深化 · 十一轮深化 · 十二轮终审 · 十三轮终审 · 十四轮深化 · 十五轮终审</em></p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+
+
+  
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.tracking", "navigation.top", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+      
+        <script src="../../../javascripts/mermaid_init.js"></script>
+      
+    
+  </body>
+</html>

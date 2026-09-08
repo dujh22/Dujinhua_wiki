@@ -1,5 +1,7 @@
 ---
 title: "ChatGLM 数学推理：基于过程奖励模型（PRM）与 PPO/RLHF 的数学推理能力提升"
+description: "智谱AI实习项目报告#01：基于过程奖励模型（PRM）与PPO/RLHF强化学习提升ChatGLM数学推理能力，涵盖自动化数据标注、奖励模型训练、强化学习微调与数学评测全流程。"
+keywords: "ChatGLM, 数学推理, PRM, 过程奖励模型, PPO, RLHF, 强化学习, 自动化数据标注, 数学评测, 智谱AI"
 hide:
   - navigation
 ---

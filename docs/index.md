@@ -1,3 +1,9 @@
+---
+title: "Jinhua Du | 杜晋华 — 个人学术主页与智谱AI研究实习项目报告集"
+description: "清华大学计算机科学与技术系博士生（KEG实验室，唐杰教授指导），研究方向为大语言模型、机器学习与自然语言处理。智谱AI研究实习项目报告集，涵盖大模型预训练、逻辑推理、数学推理、评测方法论等30个项目。"
+keywords: "杜晋华, Jinhua Du, 清华大学, KEG实验室, 大语言模型, 自然语言处理, 机器学习, 智谱AI, 研究实习, 逻辑推理, 数学推理, 个人学术主页"
+---
+
 # Jinhua Du
 
 <div class="page-language-switch" aria-label="Language switcher">
