@@ -23,16 +23,16 @@ _HREF_RE = re.compile(
 
 # Global SEO meta tags injected into every page's <head>
 _GLOBAL_META_TAGS = """
-    <meta name="keywords" content="大语言模型, 逻辑推理, 数学推理, 预训练, RLHF, 评测, 智谱AI, 研究实习, LLM, Large Language Models, Reasoning, Evaluation">
-    <meta property="og:title" content="Jinhua Du | 杜晋华 — 智谱AI研究实习项目报告集">
-    <meta property="og:description" content="智谱AI研究实习项目报告集，涵盖大模型预训练、逻辑推理、数学推理、评测方法论等30个项目；个人学术主页（研究、教育、发表、荣誉）。">
+    <meta name="keywords" content="大语言模型, 逻辑推理, 数学推理, 预训练, RLHF, 评测, LLM, Large Language Models, Reasoning, Evaluation">
+    <meta property="og:title" content="Jinhua Du | 杜晋华 — 个人学术主页">
+    <meta property="og:description" content="个人学术主页 - 研究、教育、发表、荣誉">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://dujh22.github.io/Dujinhua_wiki/">
     <meta property="og:site_name" content="Jinhua Du | 杜晋华">
     <meta property="og:locale" content="zh_CN">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Jinhua Du | 杜晋华 — 智谱AI研究实习项目报告集">
-    <meta name="twitter:description" content="智谱AI研究实习项目报告集，涵盖大模型预训练、逻辑推理、数学推理、评测方法论等30个项目。">
+    <meta name="twitter:title" content="Jinhua Du | 杜晋华 — 个人学术主页">
+    <meta name="twitter:description" content="个人学术主页 - 研究、教育、发表、荣誉">
     <meta name="robots" content="index, follow">
 """
 

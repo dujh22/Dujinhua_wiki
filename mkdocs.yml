@@ -3,7 +3,7 @@ site_url: https://dujh22.github.io/Dujinhua_wiki/
 repo_url: https://github.com/dujh22/Dujinhua_wiki
 repo_name: dujh22/Dujinhua_wiki
 edit_uri: ""
-site_description: 智谱AI研究实习项目报告集，涵盖大模型预训练、逻辑推理、数学推理、评测方法论等30个项目；同时包含个人学术主页（研究、教育、发表、荣誉）。
+site_description: 个人学术主页 - 研究、教育、发表、荣誉
 site_author: Jinhua Du (杜晋华)
 
 theme:
@@ -50,51 +50,6 @@ nav:
       - 博士经历: postgraduate_experience_zh.md
       - 本科经历: undergraduate_experience_zh.md
       - 研究历史: history_zh.md
-  - 智谱实习项目:
-      - 项目总览: projects/index.md
-      - 阶段一·数学推理与国际化:
-          - 系列概述: projects/phase1/index.md
-          - 01 ChatGLM数学推理: projects/phase1/01_ChatGLM数学推理.md
-          - 02 ChatGLM国际化: projects/phase1/02_ChatGLM国际化.md
-      - 阶段二·多模态与社会实践:
-          - 系列概述: projects/phase2/index.md
-          - 03 多模态大模型数学推理: projects/phase2/03_多模态大模型数学推理.md
-          - 04 MetaEvaluation元评估: projects/phase2/04_MetaEvaluation元评估.md
-          - 05 AML2024助教: projects/phase2/05_AML2024助教.md
-          - 06 舟山社会实践公安犯罪预测: projects/phase2/06_舟山社会实践公安犯罪预测.md
-          - 07 MalayGLM马来语大模型: projects/phase2/07_MalayGLM马来语大模型.md
-          - 08 o1复现: projects/phase2/08_o1复现.md
-      - 阶段三·LogicEvolve与基座模型:
-          - 系列概述: projects/phase3/index.md
-          - 09 LogicEvolve逻辑推理自进化: projects/phase3/09_LogicEvolve逻辑推理自进化.md
-          - 10 GLM-4.5基座模型: projects/phase3/10_GLM-4.5基座模型.md
-          - 11 数实融合新引擎项目: projects/phase3/11_数实融合新引擎项目.md
-          - 12 Puzzle逻辑推理预训练数据: projects/phase3/12_Puzzle逻辑推理预训练数据.md
-          - 13 类o1模型泛化性评估: projects/phase3/13_类o1模型泛化性评估.md
-      - 阶段四·论文冲刺与博士开题:
-          - 系列概述: projects/phase4/index.md
-          - 14 LogicalSurvey逻辑推理综述: projects/phase4/14_LogicalSurvey逻辑推理综述.md
-          - 15 EvolveLRM训练自进化: projects/phase4/15_EvolveLRM训练自进化.md
-          - 16 AML-LLM书籍编撰: projects/phase4/16_AML-LLM书籍编撰.md
-          - 17 VirtualCoach人机交互: projects/phase4/17_VirtualCoach人机交互.md
-          - 18 博士开题: projects/phase4/18_博士开题.md
-      - 阶段五·自进化研究全面展开:
-          - 系列概述: projects/phase5/index.md
-          - 19 Groom过程级评测: projects/phase5/19_Groom_Harness过程级评测.md
-          - 20 H-TokenBench: projects/phase5/20_H-TokenBench.md
-          - 21 GLM-5基座模型: projects/phase5/21_GLM-5基座模型.md
-          - 22 六篇新研究初稿: projects/phase5/22_六篇新研究初稿.md
-          - 23 Awesome-RSI自进化综述: projects/phase5/23_Awesome-RSI自进化综述.md
-          - 24 专利逻辑推理评测方法: projects/phase5/24_专利_逻辑推理评测方法.md
-      - 工程与工具系列:
-          - 系列概述: projects/tools/index.md
-          - 25 LLM-DailyDigest: projects/tools/25_LLM-DailyDigest每日AI追新.md
-          - 26 AutoLLM多Agent: projects/tools/26_AutoLLM多Agent信息自动化.md
-          - 27 AiFitGo智能健身: projects/tools/27_AiFitGo智能健身教练.md
-          - 28 csv2app题库转PWA: projects/tools/28_csv2app题库转PWA.md
-          - 29 THU_Sports自动预约: projects/tools/29_THU_Sports清华体育自动预约.md
-          - 30 AiMeder医学搜索: projects/tools/30_AiMeder医学文献搜索引擎.md
-
 hooks:
   - hooks.py
 
